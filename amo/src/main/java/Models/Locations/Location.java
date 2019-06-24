@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 public class Location {
 	private String FreeFormatAddress ;
     private String City ;
-    private BigDecimal Longitude ;
-    private BigDecimal Latitude ;
+    private String Longitude ;
+    private String Latitude ;
     private String Street ;
     private String Apartement ;
     private String PostalCode;
@@ -39,25 +39,25 @@ public class Location {
 	/**
 	 * @return the longitude
 	 */
-	public BigDecimal getLongitude() {
+	public String getLongitude() {
 		return Longitude;
 	}
 	/**
 	 * @param longitude the longitude to set
 	 */
-	public void setLongitude(BigDecimal longitude) {
+	public void setLongitude(String longitude) {
 		Longitude = longitude;
 	}
 	/**
 	 * @return the latitude
 	 */
-	public BigDecimal getLatitude() {
+	public String getLatitude() {
 		return Latitude;
 	}
 	/**
 	 * @param latitude the latitude to set
 	 */
-	public void setLatitude(BigDecimal latitude) {
+	public void setLatitude(String latitude) {
 		Latitude = latitude;
 	}
 	/**
