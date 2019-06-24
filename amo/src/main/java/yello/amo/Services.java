@@ -9,8 +9,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONObject;
+
 import BLL.*;
 import Models.ServerResponse;
+import Models.Firebase.FBLocation.FBLocationEnum;
+import Models.Firebase.FBLocation.HttpConnectionHelper;
 import Models.Locations.Location;
 import Models.Users.*;
 
@@ -35,12 +39,53 @@ public class Services {
     
         return Response.ok(UserManager.login(req.getEmailOrPAN(), req.getPassword())).build();
     }
-    @Path("locations")
+    
+    @Path("addLocation")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response adddLocation(Location loc) {
-    	return Response.ok(LocationManager.addLocation(loc)).build();
+    public Response addLocation(Location location) 
+    {
+//    	ServerResponse serverResponse = LocationManager.addLocation(location);
+//    	if(Integer.parseInt(serverResponse.getResponseHexCode(), 16) == 0x00)
+//    	{
+//    		// At This Point i know that the Insertion In DB is ok
+//    		JSONObject fbLocationObj = new JSONObject();
+//    		
+//    		fbLocationObj.put(FBLocationEnum.Address.getJsonKey(), location.getFreeFormatAddress());
+//    		fbLocationObj.put(FBLocationEnum.Longitude.getJsonKey(), location.getLongitude());
+//    		fbLocationObj.put(FBLocationEnum.Latitude.getJsonKey(), location.getLatitude());
+//    		
+//    		HttpConnectionHelper httpConnectionHelper = new HttpConnectionHelper();
+//    		try 
+//    		{
+//				httpConnectionHelper.sendPost(FBLocationEnum.FBLocationsURL.getJsonKey(), fbLocationObj);
+//			}
+//    		catch (Exception e) 
+//    		{
+//    			System.err.println("Error Sending Location Post Request: " + e);
+//				e.printStackTrace();
+//			}
+//    	}
+    	// At This Point i know that the Insertion In DB is ok
+		JSONObject fbLocationObj = new JSONObject();
+		
+		fbLocationObj.put(FBLocationEnum.Address.getJsonKey(), location.getFreeFormatAddress());
+		fbLocationObj.put(FBLocationEnum.Longitude.getJsonKey(), location.getLongitude());
+		fbLocationObj.put(FBLocationEnum.Latitude.getJsonKey(), location.getLatitude());
+		
+		HttpConnectionHelper httpConnectionHelper = new HttpConnectionHelper();
+		try 
+		{
+			System.out.println("sdsd");
+			httpConnectionHelper.sendPost(FBLocationEnum.FBLocationsURL.getJsonKey(), fbLocationObj);
+		}
+		catch (Exception e) 
+		{
+			System.err.println("Error Sending Location Post Request: " + e);
+			e.printStackTrace();
+		}
+    	return Response.ok().build();
     }
     
 	/*
