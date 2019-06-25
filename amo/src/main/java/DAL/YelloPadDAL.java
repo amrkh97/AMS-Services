@@ -40,6 +40,7 @@ public class YelloPadDAL {
 			cstmt.registerOutParameter(2, Types.NVARCHAR); //YelloPadStatus
 			cstmt.registerOutParameter(3, Types.NVARCHAR); //YelloPadStatusCode
 			cstmt.registerOutParameter(4, Types.NVARCHAR); //YelloPadNetworkCardNo
+			cstmt.registerOutParameter(5, Types.NVARCHAR); //YelloPadPicture
 			
 			RS=cstmt.executeQuery();
 			
