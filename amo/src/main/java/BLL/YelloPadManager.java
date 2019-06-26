@@ -1,25 +1,25 @@
 package BLL;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.ArrayList;
 
 import DAL.YelloPadDAL;
+import Models.YelloPad.YelloPadModel;
 
 
 public class YelloPadManager {
-	public static JSONArray getYelloPads(){
+	public static ArrayList<YelloPadModel> getYelloPads(){
 		return YelloPadDAL.getYelloPads();
 	}
 	
-	public static JSONObject searchYelloPad(String ID) {
+	public static YelloPadModel searchYelloPad(String ID) {
 		return YelloPadDAL.searchYelloPad(ID);
 	}
 
-	public static JSONObject getYelloPadStatus(String ID) {
+	public static YelloPadModel getYelloPadStatus(String ID) {
 		return YelloPadDAL.getYelloPadStatus(ID);
 	}
 	
-	public static JSONObject getYelloPadNetworkCardNo(String ID) {
+	public static YelloPadModel getYelloPadNetworkCardNo(String ID) {
 	
 		return YelloPadDAL.getYelloPadNetworkCardNo(ID);
 	}
