@@ -1,12 +1,14 @@
 package BLL;
+import java.util.ArrayList;
+
 import DAL.AmbulanceVehicleDAL;
-import Models.AmbulanceVehicleModel;
+import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.ServerResponse;
 public class AmbulanceVehicleManger {
 
 	
 	//Get all Cars
-		 public AmbulanceVehicleModel[] getAllCars()
+		 public static ArrayList<AmbulanceVehicleModel> getAllCars()
 		 {
 			 
 			
@@ -14,7 +16,7 @@ public class AmbulanceVehicleManger {
 			 
 		 }
 		//Get all Car by ID
-			 public AmbulanceVehicleModel getAllCars(int VIN)
+			 public static AmbulanceVehicleModel getCarById(int VIN)
 			 {
 				 
 				
@@ -25,16 +27,16 @@ public class AmbulanceVehicleManger {
 		 //New Car insertion
 		 public static ServerResponse insertCar(AmbulanceVehicleModel Car)
 		 {
-			 System.out.println("IM bll");
+			
 			 
 			ServerResponse X=		 AmbulanceVehicleDAL.insertCar(Car);
-			 System.out.println("IM 1");
+			
 
 			return X;
 		 }
 		 
 		//Update  a Car insertion
-		 public boolean UpdateCar (AmbulanceVehicleModel Car)
+		 public static ServerResponse UpdateCar (AmbulanceVehicleModel Car)
 		 {
 			 
 			
@@ -42,13 +44,23 @@ public class AmbulanceVehicleManger {
 			 
 		 }
 		 //delete car
-		 public boolean DeleteCars(int vin)
+		 public static ServerResponse DeleteCars(int vin)
 		 {
 			 
 			
 			return AmbulanceVehicleDAL.DeleteCars( vin);
 			 
 		 }
-		
+		 public static ArrayList<AmbulanceVehicleModel>  getCarsByBrand(String Brand)
+		 {
+			 return AmbulanceVehicleDAL.getCarsByBrand(Brand);
+		 }
 
-}
+		 public static ArrayList<AmbulanceVehicleModel>  getCarsBySts(String Sts)
+		 {
+			 return AmbulanceVehicleDAL.getCarsBySts(Sts);
+		 }
+		 
+		 }
+		 
+		

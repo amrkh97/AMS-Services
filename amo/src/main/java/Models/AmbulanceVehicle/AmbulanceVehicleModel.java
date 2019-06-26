@@ -1,4 +1,4 @@
-package Models;
+package Models.AmbulanceVehicle;
 
 import java.sql.Date;
 import javax.ws.rs.Path;
@@ -20,10 +20,12 @@ public class AmbulanceVehicleModel {
     private String chasiahNumber ;
     private String model ;
     private String driverPhoneNumber ;
-    private int  vehicleStatus ;
+    private String AssignedYPID;
+    private String  vehicleStatus ;
+
 
     public AmbulanceVehicleModel(){
-    	setVehicleStatus(1);
+    	setVehicleStatus("1");
     }
 
 	public int getVin() {
@@ -124,11 +126,11 @@ public class AmbulanceVehicleModel {
 		this.driverPhoneNumber = driverPhoneNumber;
 	}
 
-	public int getVehicleStatus() {
+	public String getVehicleStatus() {
 		return vehicleStatus;
 	}
 
-	public void setVehicleStatus(int vehicleStatus) {
+	public void setVehicleStatus(String vehicleStatus) {
 		this.vehicleStatus = vehicleStatus;
 	}
 
@@ -154,6 +156,14 @@ public class AmbulanceVehicleModel {
 
 	public void setProductionYear(String productionYear) {
 		this.productionYear = productionYear;
+	}
+
+	public String getAssignedYPID() {
+		return AssignedYPID;
+	}
+
+	public void setAssignedYPID(String assignedYPID) {
+		AssignedYPID = assignedYPID;
 	}
 
 }
