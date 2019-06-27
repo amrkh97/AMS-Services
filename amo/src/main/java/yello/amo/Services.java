@@ -19,6 +19,7 @@ import Models.ServerResponse;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
 import Models.Locations.Location;
+import Models.Medicine.Medicine;
 import Models.Users.*;
 
 
@@ -178,6 +179,85 @@ public class Services {
     {
 		return Response.ok(AmbulanceVehicleManger.UpdateCar(Car)).build();
     }
+    
+    @Path("GetMedicines")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllMedicines () 
+    {
+		return Response.ok(MedicineManager.getAllMedicines()).build();
+    }
+
+    
+    @Path("GetMedicines/BarCode")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMedicineByBC (Medicine MED) 
+    {
+		return Response.ok(MedicineManager.getMedicineByBC(MED.getBarCode())).build();
+    }
+    @Path("GetMedicines/ActiveComponent")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMedicineByActiveComponent (Medicine MED) 
+    {
+		return Response.ok(MedicineManager.getMedicineByActiveComponent(MED.getActiveComponent())).build();
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////
+    
+    @Path("GetMedicines/CompanyName")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMedicineByComName (Medicine MED) 
+    {
+		return Response.ok().build();
+    	//.ok(MedicineManager.getMedicineByCompanyName(MED.get())).build();
+    }   
+
+    @Path("GetMedicines/CompanyStatus")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMedicineByCompanyStatus (Medicine MED) 
+    {
+    	//MedicineManager.getMedicineByCompanyStatus(MED.getActiveComponent())
+		return Response.ok().build();
+    }   
+
+    @Path("GetMedicines/ContactPerson")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMedicineByContactPerson(Medicine MED) 
+    {//MedicineManager.getMedicineByContactPerson(MED.getActiveComponent())
+		return Response.ok().build();
+    }   
+  ///////////////////////////////////////////////////////////////////////////////////////////
+ ///////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
+    @Path("GetMedicines/Name")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMedicineByName (Medicine MED) 
+    {
+		return Response.ok(MedicineManager.getMedicineByName(MED.getMedicineName())).build();
+    }   
+    @Path("GetMedicines/Status")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMedicineByStatus (Medicine MED) 
+    {
+		return Response.ok(MedicineManager.getMedicineByStatus(MED.getMedicineStatus())).build();
+    }   
+
     
 	/*
 	 * @Path("locations/{id}")

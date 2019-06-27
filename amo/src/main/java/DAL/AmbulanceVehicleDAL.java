@@ -36,6 +36,7 @@ public class AmbulanceVehicleDAL {
 			        ResultSet rs = cstmt.executeQuery();
 			     
 			        while(rs.next()) {
+			        	_AmbulanceVehicle  =new AmbulanceVehicleModel();
 			        	 _AmbulanceVehicle.setVin(rs.getInt("Vin"));
 			        	_AmbulanceVehicle.setImplication(rs.getNString("Implication"));
 				        _AmbulanceVehicle.setMake(rs.getString("Make"));
@@ -171,7 +172,7 @@ public class AmbulanceVehicleDAL {
 				        ResultSet rs = cstmt.executeQuery();
 				     
 				        while(rs.next()) {
-				        	System.out.println(rs.getInt("Vin"));
+				        	_AmbulanceVehicle  =new AmbulanceVehicleModel();
 				        	 _AmbulanceVehicle.setVin(rs.getInt("Vin"));
 				        	_AmbulanceVehicle.setImplication(rs.getNString("Implication"));
 					        _AmbulanceVehicle.setMake(rs.getString("Make"));
@@ -238,7 +239,8 @@ public class AmbulanceVehicleDAL {
 				        ResultSet rs = cstmt.executeQuery();
 				     
 				        while(rs.next()) {
-				        	System.out.println(rs.getInt("Vin"));
+				        	_AmbulanceVehicle  =new AmbulanceVehicleModel();
+
 				        	 _AmbulanceVehicle.setVin(rs.getInt("Vin"));
 				        	_AmbulanceVehicle.setImplication(rs.getNString("Implication"));
 					        _AmbulanceVehicle.setMake(rs.getString("Make"));
@@ -382,8 +384,6 @@ public class AmbulanceVehicleDAL {
 			        cstmt.setString(15,Car.getDriverPhoneNumber());
 			        cstmt.setString(16,Car.getAssignedYPID());
 			        cstmt.setString(17,Car.getVehicleStatus());
-
-				    System.out.println(Car.getAssignedYPID());
 			       cstmt.registerOutParameter(18, Types.NVARCHAR);
 					cstmt.registerOutParameter(19, Types.NVARCHAR);
 					  cstmt.execute();
