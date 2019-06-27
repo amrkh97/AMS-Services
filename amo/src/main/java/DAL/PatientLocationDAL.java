@@ -82,6 +82,7 @@ public class PatientLocationDAL {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
 		return patientLocations;
 	}
 }
