@@ -16,7 +16,7 @@ public class UserDAL {
 
 	public static LoginResponse login(String emailOrPAN, String Password) {
 
-		String SPsql = "use KAN_AMO; EXEC [dbo].[usp_Employee_Login] ?,?,?,?";
+		String SPsql = "use KAN_AMO; EXEC [dbo].[usp_Employee_Login] ?,?,?,?,?";
 		Connection conn = DBManager.getDBConn();
 		LoginResponse _LoginResponse = new LoginResponse();
 		
@@ -26,10 +26,13 @@ public class UserDAL {
 			cstmt.setString(2, Password);
 			cstmt.registerOutParameter(3, Types.NVARCHAR);
 			cstmt.registerOutParameter(4, Types.NVARCHAR);
+			cstmt.registerOutParameter(5, Types.NVARCHAR);
 			cstmt.execute();
 
 			_LoginResponse.setResponseHexCode(cstmt.getString(3));
 			_LoginResponse.setResponseMsg(cstmt.getString(4));
+			_LoginResponse.setJobID(cstmt.getString(5));
+			_LoginResponse.setToken("token");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
