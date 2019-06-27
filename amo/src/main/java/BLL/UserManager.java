@@ -10,8 +10,10 @@ public class UserManager {
 	public static LoginResponse login(String emailOrPAN, String Password) {
 		LoginResponse res = new LoginResponse();
 		if (Password.length() > 8) {
-			if (!emailOrPAN.matches(".+[@].+[.].+")) {
-				if (!emailOrPAN.matches("[0-9]{14}")) {
+			if (!emailOrPAN.matches(".+[@].+[.].+")) 
+			{
+				if (!emailOrPAN.matches("[0-9]{14}"))
+				{
 					if (!emailOrPAN.matches("[0-9]{16,20}")) {
 						res.setResponseMsg("Wrong Email or PAN or National ID format");
 						return res;
