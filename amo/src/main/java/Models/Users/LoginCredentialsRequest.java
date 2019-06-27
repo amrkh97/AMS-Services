@@ -2,21 +2,22 @@ package Models.Users;
 
 public class LoginCredentialsRequest {
 	
-	private String domain;
+	// private String domain;
 	private String emailOrPAN;
 	private String password;
+	
 	/**
 	 * @return the domain
 	 */
-	public String getDomain() {
-		return domain;
-	}
+	//public String getDomain() {
+	//	return domain;
+	//}
 	/**
 	 * @param domain the domain to set
 	 */
-	public void setDomain(String domain) {
-		this.domain = domain;
-	}
+	//public void setDomain(String domain) {
+	//	this.domain = domain;
+	//}
 	/**
 	 * @return the emailOrPAN
 	 */

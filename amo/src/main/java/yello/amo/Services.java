@@ -31,6 +31,7 @@ public class Services {
     public String getIt() {
         return "Server is Running ..!";
     }
+    
     @Path("login")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -38,6 +39,15 @@ public class Services {
     public Response login(LoginCredentialsRequest req) {
     
         return Response.ok(UserManager.login(req.getEmailOrPAN(), req.getPassword())).build();
+    }
+    
+    @Path("signup")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response signup(SignUp req) {
+    
+        return Response.ok(UserManager.signup(req)).build();
     }
     
     @Path("addLocation")
