@@ -36,6 +36,7 @@ public class AmbulanceVehicleDAL {
 			        ResultSet rs = cstmt.executeQuery();
 			     
 			        while(rs.next()) {
+			        	_AmbulanceVehicle  =new AmbulanceVehicleModel();
 			        	 _AmbulanceVehicle.setVin(rs.getInt("Vin"));
 			        	_AmbulanceVehicle.setImplication(rs.getNString("Implication"));
 				        _AmbulanceVehicle.setMake(rs.getString("Make"));
@@ -171,7 +172,7 @@ public class AmbulanceVehicleDAL {
 				        ResultSet rs = cstmt.executeQuery();
 				     
 				        while(rs.next()) {
-				        	System.out.println(rs.getInt("Vin"));
+				        	_AmbulanceVehicle  =new AmbulanceVehicleModel();
 				        	 _AmbulanceVehicle.setVin(rs.getInt("Vin"));
 				        	_AmbulanceVehicle.setImplication(rs.getNString("Implication"));
 					        _AmbulanceVehicle.setMake(rs.getString("Make"));
@@ -238,7 +239,8 @@ public class AmbulanceVehicleDAL {
 				        ResultSet rs = cstmt.executeQuery();
 				     
 				        while(rs.next()) {
-				        	System.out.println(rs.getInt("Vin"));
+				        	_AmbulanceVehicle  =new AmbulanceVehicleModel();
+
 				        	 _AmbulanceVehicle.setVin(rs.getInt("Vin"));
 				        	_AmbulanceVehicle.setImplication(rs.getNString("Implication"));
 					        _AmbulanceVehicle.setMake(rs.getString("Make"));
