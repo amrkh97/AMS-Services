@@ -1,10 +1,11 @@
 package yello.amo;
 
+import java.util.ArrayList;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -12,6 +13,7 @@ import javax.ws.rs.core.Response;
 import org.json.JSONObject;
 
 import BLL.*;
+import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.ServerResponse;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
@@ -27,7 +29,10 @@ import Models.Users.*;
 public class Services {
 
   
-    @GET
+    private static final AmbulanceVehicleModel Null = null;
+
+
+	@GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
         return "Server is Running ..!";
@@ -88,6 +93,129 @@ public class Services {
 		}
     	return Response.ok().build();
     }
+    @Path("addAmbulanceVehicle")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addAmbulanceVehicle(AmbulanceVehicleModel CAR) 
+    {
+    	
+		return Response.ok(AmbulanceVehicleManger.insertCar(CAR)).build() ;
+    }
+    
+    @Path("GetAmbulanceVehicles/ID")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetAmbulanceVehicleID (AmbulanceVehicleModel CAR) 
+    {
+    	if (CAR.getVin()==0){		return Response.ok("Bad Request No VIN").build(); }
+    
+    	AmbulanceVehicleModel X =	AmbulanceVehicleManger.getCarById(CAR.getVin());
+    	
+    	if (X == null){    return Response.ok(" unknown error with database  ").build();}
+		return Response.ok(AmbulanceVehicleManger.getCarById(CAR.getVin())).build();
+    }
+    
+    
+    
+    
+    @Path("GetAmbulanceVehicles/Brand")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetAmbulanceVehicleBrand(AmbulanceVehicleModel CAR) 
+    { 
+    	System.out.println(CAR.getBrand());
+    	if (CAR.getBrand()==null)
+       {return Response.ok("Bad Request No VIN").build();}
+	     ArrayList<AmbulanceVehicleModel> X =	AmbulanceVehicleManger.getCarsByBrand(CAR.getBrand());
+	   if (X == null)
+	    {return Response.ok(" unknown error with database  ").build();}
+		return Response.ok().build();
+    }
+    
+    
+    
+    
+    
+    
+    @Path("GetAmbulanceVehicles/Status")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetAmbulanceVehicleSts(AmbulanceVehicleModel CAR) 
+    { 
+    	if (CAR.getVehicleStatus()==null)
+        {return Response.ok("Bad Request No VIN").build();}
+	     ArrayList<AmbulanceVehicleModel> X =	AmbulanceVehicleManger.getCarsBySts(CAR.getVehicleStatus());
+	   if (X == null)
+	    {return Response.ok(" unknown error with database  ").build();}
+		return Response.ok(X).build();
+  }
+    
+    
+    
+    
+    
+    
+    
+    @Path("GetAmbulanceVehicles")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetAmbulanceVehicle () 
+    {
+		return Response.ok(AmbulanceVehicleManger.getAllCars()).build();
+    }
+    
+
+    @Path("UpdateAmbulanceVehicles")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response UpdateAmbulanceVehicle (AmbulanceVehicleModel Car) 
+    {
+		return Response.ok(AmbulanceVehicleManger.UpdateCar(Car)).build();
+    }
+    
+    @Path("getAllYelloPads")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllYelloPads() {
+    	
+    	return Response.ok().entity(YelloPadManager.getYelloPads()).build();
+    }
+    
+    @Path("searchYelloPad")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response searchYelloPad(String ID) {
+    	
+    	return Response.ok().entity(YelloPadManager.searchYelloPad(ID)).build();
+    }
+    
+    @Path("getYelloPadStatus")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getYelloPadStatus(String ID) {
+    	
+    	return Response.ok().entity(YelloPadManager.getYelloPadStatus(ID)).build();
+    }
+    
+    @Path("getYelloPadNetworkCardNo")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getYelloPadNetworkCardNo(String ID) {
+    	
+    	return Response.ok().entity(YelloPadManager.getYelloPadNetworkCardNo(ID)).build();
+    }
+    
+    
+    
     
     @Path("Patient/addLocation")
     @POST
