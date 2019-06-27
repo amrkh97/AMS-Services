@@ -59,7 +59,6 @@ public class YelloPadDAL {
 			}
 		}
 
-	//	return jArray;
 		return allYelloPads;
 	}
 	

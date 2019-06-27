@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 import BLL.*;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
-import Models.ServerResponse;
+import Models.Company.CompanyModel;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
 import Models.Locations.Location;
@@ -164,10 +164,6 @@ public class Services {
     
     
     
-    
-    
-    
-    
     @Path("GetAmbulanceVehicles")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -188,7 +184,7 @@ public class Services {
     }
     
     @Path("getAllYelloPads")
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllYelloPads() {
     	
@@ -238,7 +234,7 @@ public class Services {
     
     
     
-    @Path("Patient/getAllLocations")
+    @Path("patient/getAllLocations")
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
@@ -247,6 +243,72 @@ public class Services {
     
     	return Response.ok(PatientLocationManager.getAllPatientLocations(PatientNationalID)).build();
     }
+    
+    
+    @Path("pharmaCompany/getAllCompanies")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllCompanies() 
+    {
+    
+    	return Response.ok(CompanyManager.getAllCompanies()).build();
+    }
+    
+    @Path("pharmaCompany/getCompanyByID")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCompanyByID(Integer companyID) 
+    {
+    	return Response.ok(CompanyManager.getCompanyByID(companyID)).build();
+    }
+    
+    @Path("pharmaCompany/getCompanyByStatus")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCompanyByStatus(Integer companyStatus) 
+    {
+    	return Response.ok(CompanyManager.getCompanyByStatus(companyStatus)).build();
+    }
+    
+    @Path("pharmaCompany/getCompanyByName")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCompanyByName(String companyName) 
+    {
+    	return Response.ok(CompanyManager.getCompanyByName(companyName)).build();
+    }
+    
+    @Path("pharmaCompany/addCompany")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addCompany(CompanyModel companyToBeAdded) 
+    {
+    	return Response.ok(CompanyManager.addCompany(companyToBeAdded)).build();
+    }
+    
+    
+    @Path("pharmaCompany/updateCompany")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateCompany(CompanyModel companyToBeAdded) 
+    {
+    	return Response.ok(CompanyManager.updateCompany(companyToBeAdded)).build();
+    }
+    
+    @Path("pharmaCompany/deleteCompany")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteCompany(Integer companyToBeAdded) 
+    {
+    	return Response.ok(CompanyManager.deleteCompany(companyToBeAdded)).build();
+    }
+    
     
     
 	/*
