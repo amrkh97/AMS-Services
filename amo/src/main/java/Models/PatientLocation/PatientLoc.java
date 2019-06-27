@@ -1,12 +1,11 @@
 package Models.PatientLocation;
 
-import java.math.BigDecimal;
 
 public class PatientLoc {
 	int nationalID;
 	String address;
-	BigDecimal latitude;
-	BigDecimal longitude;
+	String latitude;
+	String longitude;
 	
 	public int getNationalID() {
 		return nationalID;
@@ -20,16 +19,16 @@ public class PatientLoc {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public BigDecimal getLatitude() {
+	public String getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(BigDecimal latitude) {
+	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
-	public BigDecimal getLongitude() {
+	public String getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(BigDecimal longitude) {
+	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
 	

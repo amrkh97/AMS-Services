@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.math.BigDecimal;
 
 import DB.DBManager;
 import Models.Locations.Location;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 
 public class PatientLocationDAL {
 	
-	public static String AddPatientLocation(int nationalID,String addressPatient,BigDecimal Latitude, BigDecimal Longitude) {
+	public static String addPatientLocation(int nationalID,String addressPatient,String latitude, String longitude) {
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_Patient_Locations] ?,?,?,?,?";
 		//ResultSet RS;
 		String Result = "";
@@ -24,8 +23,8 @@ public class PatientLocationDAL {
 			
 			cstmt.setInt(1, nationalID);
 			cstmt.setString(2, addressPatient);
-			cstmt.setBigDecimal(3, Latitude);
-			cstmt.setBigDecimal(4, Longitude);
+			cstmt.setString(3, latitude);
+			cstmt.setString(4, longitude);
 			cstmt.registerOutParameter(5, Types.NVARCHAR);
 			
 			//RS = cstmt.executeQuery();
@@ -68,7 +67,7 @@ public class PatientLocationDAL {
 				_location.setFreeFormatAddress(RS.getString("FreeFormatAddress"));
 				_location.setCity(RS.getString("City"));
 				_location.setLatitude(RS.getString("Latitude"));
-				_location.setLongitude(RS.getString("longitude"));
+				_location.setLongitude(RS.getString("Longitude"));
 				patientLocations.add(_location);
 			}
 			

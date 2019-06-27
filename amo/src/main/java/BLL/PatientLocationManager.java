@@ -1,6 +1,5 @@
 package BLL;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import DAL.PatientLocationDAL;
@@ -8,9 +7,9 @@ import Models.Locations.Location;
 
 public class PatientLocationManager {
 
-	public static String AddPatientLocation(int nationalID,String addressPatient,BigDecimal Latitude, BigDecimal Longitude) {
+	public static String addPatientLocation(int nationalID,String addressPatient,String latitude, String longitude) {
 		
-		return PatientLocationDAL.AddPatientLocation(nationalID, addressPatient, Latitude, Longitude);
+		return PatientLocationDAL.addPatientLocation(nationalID, addressPatient, latitude, longitude);
 	}
 	
 	

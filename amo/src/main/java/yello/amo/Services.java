@@ -224,7 +224,7 @@ public class Services {
     public Response addPatientLocation(PatientLoc location) 
     {
     
-    	return Response.ok(PatientLocationManager.AddPatientLocation(location.getNationalID(),
+    	return Response.ok(PatientLocationManager.addPatientLocation(location.getNationalID(),
     			location.getAddress(), location.getLatitude(), location.getLongitude())).build();
     }
     
