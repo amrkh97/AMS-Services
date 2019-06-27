@@ -14,7 +14,7 @@ public class IncidentTypeDAL {
 	 public static ArrayList<IncidentType>  getIncidentType()
 	 {
 		 
-		 String SPsql = "EXEC usp_Incident_GetAll";
+		 String SPsql = "EXEC usp_IncidentType_GetAll";
 		 Connection conn = DBManager.getDBConn();
 		ArrayList<IncidentType> Array = new ArrayList<IncidentType>()  ;
 		 	
