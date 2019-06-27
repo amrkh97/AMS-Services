@@ -46,6 +46,14 @@ public class Services {
         return Response.ok(UserManager.login(req.getEmailOrPAN(), req.getPassword())).build();
     }
     
+    @Path("incidentType")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getIncidentType() {
+    
+        return Response.ok(IncidentTypeManager.getIncidentType()).build();
+    }
+    
     @Path("addLocation")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
