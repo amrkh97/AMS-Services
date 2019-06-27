@@ -16,6 +16,7 @@ import Models.ServerResponse;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
 import Models.Locations.Location;
+import Models.PatientLocation.PatientLoc;
 import Models.Users.*;
 
 
@@ -87,6 +88,30 @@ public class Services {
 		}
     	return Response.ok().build();
     }
+    
+    @Path("Patient/addLocation")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addPatientLocation(PatientLoc location) 
+    {
+    
+    	return Response.ok(PatientLocationManager.AddPatientLocation(location.getNationalID(),
+    			location.getAddress(), location.getLatitude(), location.getLongitude())).build();
+    }
+    
+    
+    
+    @Path("Patient/getAllLocations")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllPatientLocations(String PatientNationalID) 
+    {
+    
+    	return Response.ok(PatientLocationManager.getAllPatientLocations(PatientNationalID)).build();
+    }
+    
     
 	/*
 	 * @Path("locations/{id}")
