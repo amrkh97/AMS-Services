@@ -36,7 +36,14 @@ public class PatientLocationDAL {
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
-		}
+		}finally {
+			try {
+				conn.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 		System.out.println("Result is:"+ Result);
 		return Result;
@@ -58,15 +65,22 @@ public class PatientLocationDAL {
 			while(RS.next()) {
 				_location = new Location();
 				_location.setFreeFormatAddress(RS.getString("FreeFormatAddress"));
-				_location.setCity("City");
-				_location.setLatitude("Latitude");
-				_location.setLongitude("Longitude");
+				_location.setCity(RS.getString("City"));
+				_location.setLatitude(RS.getString("Latitude"));
+				_location.setLongitude(RS.getString("longitude"));
 				patientLocations.add(_location);
 			}
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
-		}
+		}finally {
+			try {
+				conn.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		return patientLocations;
 	}
 }
