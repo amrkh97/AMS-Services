@@ -14,21 +14,21 @@ public class IncidentTypeDAL {
 	 public static ArrayList<IncidentType>  getIncidentType()
 	 {
 		 
-		 String SPsql = "EXEC usp_IncidentType_GetAll";
+		 String incidentSP = "EXEC usp_IncidentType_GetAll";
 		 Connection conn = DBManager.getDBConn();
-		ArrayList<IncidentType> Array = new ArrayList<IncidentType>()  ;
+		ArrayList<IncidentType> incidentTypeArray = new ArrayList<IncidentType>()  ;
 		 	
 	
 		IncidentType incidentType;
 			try {
-					CallableStatement cstmt  = conn.prepareCall(SPsql);
+					CallableStatement cstmt  = conn.prepareCall(incidentSP);
 			        ResultSet rs = cstmt.executeQuery();
 			     
 			        while(rs.next()) {
 			        	incidentType = new IncidentType();
 			        	incidentType.setTypeID(rs.getInt("IncidentTypeID"));
 			        	incidentType.setTypeName(rs.getString("TypeName"));
-			        	Array.add(incidentType);
+			        	incidentTypeArray.add(incidentType);
 			        }
 		         }catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -43,6 +43,6 @@ public class IncidentTypeDAL {
 					e.printStackTrace();
 				}
 			}
-			return Array;
+			return incidentTypeArray;
 		}
 }
