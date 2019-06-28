@@ -19,7 +19,7 @@ public class CompanyManager {
 		return CompanyDAL.getCompanyByID(companyID);
 	}
 	
-	public static ArrayList<CompanyModel> getCompanyByStatus(String companyStatus) {
+	public static CompanyModel getCompanyByStatus(Integer companyStatus) {
 		return CompanyDAL.getCompanyByStatus(companyStatus);
 	}
 	

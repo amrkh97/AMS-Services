@@ -31,7 +31,7 @@ public static ArrayList<CompanyModel> getAllCompanies() {
 				currentCompany.setCompanyAddress(RS.getString("CompanyAddress"));
 				currentCompany.setCompanyContactPerson(RS.getString("ContactPerson"));
 				currentCompany.setCompanyName(RS.getString("CompanyName"));
-				currentCompany.setCompanyStatus(RS.getString("CompanyStatus"));
+				currentCompany.setCompanyStatus(RS.getInt("CompanyStatus"));
 				currentCompany.setCompanyPhoneNumber(RS.getString("CompanyPhone"));
 				
 				allCompanies.add(currentCompany);
@@ -74,7 +74,7 @@ public static CompanyModel getCompanyByName(String companyName) {
 				currentCompany.setCompanyAddress(RS.getString("CompanyAddress"));
 				currentCompany.setCompanyContactPerson(RS.getString("ContactPerson"));
 				currentCompany.setCompanyName(RS.getString("CompanyName"));
-				currentCompany.setCompanyStatus(RS.getString("CompanyStatus"));
+				currentCompany.setCompanyStatus(RS.getInt("CompanyStatus"));
 				currentCompany.setCompanyPhoneNumber(RS.getString("CompanyPhone"));
 
 
@@ -115,7 +115,7 @@ public static CompanyModel getCompanyByID(Integer companyID) {
 			currentCompany.setCompanyAddress(RS.getString("CompanyAddress"));
 			currentCompany.setCompanyContactPerson(RS.getString("ContactPerson"));
 			currentCompany.setCompanyName(RS.getString("CompanyName"));
-			currentCompany.setCompanyStatus(RS.getString("CompanyStatus"));
+			currentCompany.setCompanyStatus(RS.getInt("CompanyStatus"));
 			currentCompany.setCompanyPhoneNumber(RS.getString("CompanyPhone"));
 
 
@@ -137,19 +137,19 @@ public static CompanyModel getCompanyByID(Integer companyID) {
 	return currentCompany;
 }
 
-public static ArrayList<CompanyModel> getCompanyByStatus(String companyStatus) {
+public static CompanyModel getCompanyByStatus(Integer companyStatus) {
 	
 	String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_SelectBySts] ?";
 	ResultSet RS;
 	Connection conn = DBManager.getDBConn();
-	ArrayList<CompanyModel> allCompanies = new ArrayList<>();
+	
 	CompanyModel currentCompany= new CompanyModel();
 	try {
 		CallableStatement cstmt = conn.prepareCall(SPsql);	
-		cstmt.setString(1, companyStatus);
+		cstmt.setInt(1, companyStatus);
 		RS=cstmt.executeQuery();
 		
-		while(RS.next()) {
+		RS.next();
 			
 			currentCompany= new CompanyModel();
 			
@@ -157,10 +157,10 @@ public static ArrayList<CompanyModel> getCompanyByStatus(String companyStatus) {
 			currentCompany.setCompanyAddress(RS.getString("CompanyAddress"));
 			currentCompany.setCompanyContactPerson(RS.getString("ContactPerson"));
 			currentCompany.setCompanyName(RS.getString("CompanyName"));
-			currentCompany.setCompanyStatus(RS.getString("CompanyStatus"));
+			currentCompany.setCompanyStatus(RS.getInt("CompanyStatus"));
 			currentCompany.setCompanyPhoneNumber(RS.getString("CompanyPhone"));
-			allCompanies.add(currentCompany);
-		}
+
+
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -176,7 +176,7 @@ public static ArrayList<CompanyModel> getCompanyByStatus(String companyStatus) {
 	
 	
 	
-	return allCompanies;
+	return currentCompany;
 }
 
 public static String addCompany(CompanyModel companyToBeAdded) {

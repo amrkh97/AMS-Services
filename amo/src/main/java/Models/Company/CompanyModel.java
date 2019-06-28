@@ -3,7 +3,7 @@ package Models.Company;
 public class CompanyModel {
 	private String companyName;
 	private String companyContactPerson;
-	private String companyStatus;
+	private Integer companyStatus;
 	private String companyAddress;
 	private String companyPhoneNumber;
 	private Integer companyID;
@@ -20,10 +20,10 @@ public class CompanyModel {
 	public void setCompanyContactPerson(String companyContactPerson) {
 		this.companyContactPerson = companyContactPerson;
 	}
-	public String getCompanyStatus() {
+	public Integer getCompanyStatus() {
 		return companyStatus;
 	}
-	public void setCompanyStatus(String companyStatus) {
+	public void setCompanyStatus(Integer companyStatus) {
 		this.companyStatus = companyStatus;
 	}
 	public String getCompanyAddress() {

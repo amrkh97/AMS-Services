@@ -38,7 +38,7 @@ public class YelloPadDAL {
 				
 				YelloPadModel currentYelloPad= new YelloPadModel();
 				currentYelloPad.setUniqueID(RS.getString("YelloPadUniqueID"));
-				currentYelloPad.setStatus(RS.getString("YelloPadStatus"));		
+				currentYelloPad.setStatus(RS.getString("YelloPadStatus"));
 				currentYelloPad.setNetworkCard(RS.getString("YellopadNetworkcardNo"));
 		    	currentYelloPad.setPicture(RS.getString("YelloPadPicture"));
 				
@@ -88,7 +88,7 @@ public class YelloPadDAL {
 			rs=cstmt.executeQuery();
 			rs.next();
 			currentYelloPad.setUniqueID(rs.getString("YelloPadUniqueID"));
-			currentYelloPad.setStatus(rs.getString("YelloPadStatus"));		
+			currentYelloPad.setStatus(rs.getString("YelloPadStatus"));	
 			currentYelloPad.setNetworkCard(rs.getString("YellopadNetworkcardNo"));
 	    	currentYelloPad.setPicture(rs.getString("YelloPadPicture"));
 			
@@ -124,7 +124,7 @@ public class YelloPadDAL {
 			
 			rs.next();
 			
-			currentYelloPad.setStatus(rs.getString("YelloPadStatus"));	
+			currentYelloPad.setStatus(rs.getString("YelloPadStatus"));
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -146,16 +146,16 @@ public class YelloPadDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_NetworkCard] ?";
 		Connection conn = DBManager.getDBConn();
+		ResultSet rs;
 		YelloPadModel currentYelloPad= new YelloPadModel();
-		ResultSet RS;
+		
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 	
 			cstmt.setString(1, ID);
-			RS=cstmt.executeQuery();
-			RS.next();
-			currentYelloPad.setNetworkCard(RS.getString("YellopadNetworkcardNo"));
-		
+			rs = cstmt.executeQuery();
+			rs.next();
+			currentYelloPad.setNetworkCard(rs.getString(1));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
