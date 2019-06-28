@@ -267,7 +267,7 @@ public class Services {
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCompanyByStatus(String companyStatus) 
+    public Response getCompanyByStatus(Integer companyStatus) 
     {
     	return Response.ok(CompanyManager.getCompanyByStatus(companyStatus)).build();
     }

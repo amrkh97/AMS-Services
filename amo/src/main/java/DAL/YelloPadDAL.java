@@ -38,7 +38,8 @@ public class YelloPadDAL {
 				
 				YelloPadModel currentYelloPad= new YelloPadModel();
 				currentYelloPad.setUniqueID(RS.getString("YelloPadUniqueID"));
-				currentYelloPad.setStatus(RS.getString("YelloPadStatus"));		
+				currentYelloPad.setStatus(RS.getString("StatusName"));
+				currentYelloPad.setStatusCode(RS.getString("StatusNote"));		
 				currentYelloPad.setNetworkCard(RS.getString("YellopadNetworkcardNo"));
 		    	currentYelloPad.setPicture(RS.getString("YelloPadPicture"));
 				
@@ -88,7 +89,8 @@ public class YelloPadDAL {
 			rs=cstmt.executeQuery();
 			rs.next();
 			currentYelloPad.setUniqueID(rs.getString("YelloPadUniqueID"));
-			currentYelloPad.setStatus(rs.getString("YelloPadStatus"));		
+			currentYelloPad.setStatus(rs.getString("StatusName"));
+			currentYelloPad.setStatusCode(rs.getString("StatusNote"));		
 			currentYelloPad.setNetworkCard(rs.getString("YellopadNetworkcardNo"));
 	    	currentYelloPad.setPicture(rs.getString("YelloPadPicture"));
 			
@@ -124,7 +126,10 @@ public class YelloPadDAL {
 			
 			rs.next();
 			
-			currentYelloPad.setStatus(rs.getString("YelloPadStatus"));	
+			currentYelloPad.setStatus(rs.getString("StatusName"));
+			System.out.println("StatusCode: "+ rs.getString("StatusName"));
+			currentYelloPad.setStatusCode(rs.getString("StatusNote"));
+			System.out.println("StatusCodeNote: "+ rs.getString("StatusNote"));
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -144,17 +149,19 @@ public class YelloPadDAL {
 	
 	public static YelloPadModel getYelloPadNetworkCardNo(String ID) {
 
-		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_NetworkCard] ?";
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_NetworkCard] ?,?";
 		Connection conn = DBManager.getDBConn();
 		YelloPadModel currentYelloPad= new YelloPadModel();
-		ResultSet RS;
+		
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 	
 			cstmt.setString(1, ID);
-			RS=cstmt.executeQuery();
-			RS.next();
-			currentYelloPad.setNetworkCard(RS.getString("YellopadNetworkcardNo"));
+			cstmt.registerOutParameter(2, Types.NVARCHAR); //YelloPadStatus
+			cstmt.execute();
+			
+			currentYelloPad.setNetworkCard(cstmt.getString(2));
+			System.out.println("NetworkCard: "+cstmt.getString(2));
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
