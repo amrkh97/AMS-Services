@@ -31,8 +31,9 @@ public class UserDAL {
 
 			_LoginResponse.setResponseHexCode(cstmt.getString(3));
 			_LoginResponse.setResponseMsg(cstmt.getString(4));
+			if (cstmt.getString(3).equals("00"))
+				_LoginResponse.setToken(cstmt.getString(1) + cstmt.getString(2));
 			_LoginResponse.setJobID(cstmt.getString(5));
-			_LoginResponse.setToken("token");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -98,7 +99,7 @@ public class UserDAL {
 	
 	public static LogoutResponse logout(String token) {
 
-		String SPsql = "use KAN_AMO; EXEC [dbo].[usp_Employee_Login] ?,?,?,?";
+		String SPsql = "use KAN_AMO; EXEC [dbo].[usp_Employee_Login] ?,?,?";
 		Connection conn = DBManager.getDBConn();
 		LogoutResponse _LogoutResponse = new LogoutResponse();
 		try {

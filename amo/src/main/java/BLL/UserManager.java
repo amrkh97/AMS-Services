@@ -9,12 +9,12 @@ import Models.Users.SignUp;
 public class UserManager {
 	public static LoginResponse login(String emailOrPAN, String Password) {
 		LoginResponse res = new LoginResponse();
-		if (Password.length() > 8) {
-			if (!emailOrPAN.matches(".+[@].+[.].+")) 
+		if (Password.length() + 1 > 8) {
+			if (!isEmail(emailOrPAN)) 
 			{
-				if (!emailOrPAN.matches("[0-9]{14}"))
+				if (!isNationalID(emailOrPAN))
 				{
-					if (!emailOrPAN.matches("[0-9]{16,20}")) {
+					if (!isPAN(emailOrPAN)) {
 						res.setResponseMsg("Wrong Email or PAN or National ID format");
 						return res;
 					} else {
@@ -41,5 +41,17 @@ public class UserManager {
 
 	public static LogoutResponse logout(String token) {
 		return UserDAL.logout(token);
+	}
+	
+	private static boolean isEmail(String email) {
+		return (email.matches(".+[@].+[.].+")) ? true : false;
+	}
+	
+	private static boolean isPAN(String PAN) {
+		return (PAN.matches("[0-9]{16,20}")) ? true : false;
+	}
+	
+	private static boolean isNationalID(String NID) {
+		return (NID.matches("[0-9]{14}")) ? true : false;
 	}
 }
