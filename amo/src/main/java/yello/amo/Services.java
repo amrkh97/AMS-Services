@@ -46,7 +46,7 @@ public class Services {
         return Response.ok(UserManager.login(req.getEmailOrPAN(), req.getPassword())).build();
     }
     
-    @Path("incidentType")
+    @Path("incidents/incidentType")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response getIncidentType() {
@@ -101,7 +101,7 @@ public class Services {
 		}
     	return Response.ok().build();
     }
-    @Path("addAmbulanceVehicle")
+    @Path("ambulance/addAmbulanceVehicle")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -111,7 +111,7 @@ public class Services {
 		return Response.ok(AmbulanceVehicleManger.insertCar(CAR)).build() ;
     }
     
-    @Path("GetAmbulanceVehicles/ID")
+    @Path("ambulance/getAmbulanceVehicles/ID")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -128,7 +128,7 @@ public class Services {
     
     
     
-    @Path("GetAmbulanceVehicles/Brand")
+    @Path("ambulance/getAmbulanceVehicles/Brand")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -143,12 +143,7 @@ public class Services {
 		return Response.ok().build();
     }
     
-    
-    
-    
-    
-    
-    @Path("GetAmbulanceVehicles/Status")
+    @Path("ambulance/getAmbulanceVehicles/Status")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -162,9 +157,7 @@ public class Services {
 		return Response.ok(X).build();
   }
     
-    
-    
-    @Path("GetAmbulanceVehicles")
+    @Path("ambulance/getAmbulanceVehicles")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -172,9 +165,8 @@ public class Services {
     {
 		return Response.ok(AmbulanceVehicleManger.getAllCars()).build();
     }
-    
 
-    @Path("UpdateAmbulanceVehicles")
+    @Path("ambulance/updateAmbulanceVehicles")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -183,7 +175,7 @@ public class Services {
 		return Response.ok(AmbulanceVehicleManger.UpdateCar(Car)).build();
     }
     
-    @Path("getAllYelloPads")
+    @Path("yelloPad/getAllYelloPads")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllYelloPads() {
@@ -191,7 +183,7 @@ public class Services {
     	return Response.ok().entity(YelloPadManager.getYelloPads()).build();
     }
     
-    @Path("searchYelloPad")
+    @Path("yelloPad/searchYelloPad")
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
@@ -200,7 +192,7 @@ public class Services {
     	return Response.ok().entity(YelloPadManager.searchYelloPad(ID)).build();
     }
     
-    @Path("getYelloPadStatus")
+    @Path("yelloPad/getYelloPadStatus")
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
@@ -209,7 +201,7 @@ public class Services {
     	return Response.ok().entity(YelloPadManager.getYelloPadStatus(ID)).build();
     }
     
-    @Path("getYelloPadNetworkCardNo")
+    @Path("yelloPad/getYelloPadNetworkCardNo")
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
@@ -221,7 +213,7 @@ public class Services {
     
     
     
-    @Path("Patient/addLocation")
+    @Path("patient/addLocation")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
