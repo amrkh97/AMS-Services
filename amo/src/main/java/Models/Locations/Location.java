@@ -1,6 +1,5 @@
 package Models.Locations;
 
-import java.math.BigDecimal;
 
 public class Location {
 	private String FreeFormatAddress ;

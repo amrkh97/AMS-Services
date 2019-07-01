@@ -1,10 +1,11 @@
 package yello.amo;
 
+import java.util.ArrayList;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -12,10 +13,12 @@ import javax.ws.rs.core.Response;
 import org.json.JSONObject;
 
 import BLL.*;
-import Models.ServerResponse;
+import Models.AmbulanceVehicle.AmbulanceVehicleModel;
+import Models.Company.CompanyModel;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
 import Models.Locations.Location;
+import Models.PatientLocation.PatientLoc;
 import Models.Users.*;
 
 
@@ -26,7 +29,10 @@ import Models.Users.*;
 public class Services {
 
   
-    @GET
+    private static final AmbulanceVehicleModel Null = null;
+
+
+	@GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
         return "Server is Running ..!";
@@ -38,6 +44,14 @@ public class Services {
     public Response login(LoginCredentialsRequest req) {
     
         return Response.ok(UserManager.login(req.getEmailOrPAN(), req.getPassword())).build();
+    }
+    
+    @Path("incidents/incidentType")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getIncidentType() {
+    
+        return Response.ok(IncidentTypeManager.getIncidentType()).build();
     }
     
     @Path("addLocation")
@@ -87,6 +101,206 @@ public class Services {
 		}
     	return Response.ok().build();
     }
+    @Path("ambulance/addAmbulanceVehicle")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addAmbulanceVehicle(AmbulanceVehicleModel CAR) 
+    {
+    	
+		return Response.ok(AmbulanceVehicleManger.insertCar(CAR)).build() ;
+    }
+    
+    @Path("ambulance/getAmbulanceVehicles/ID")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetAmbulanceVehicleID (AmbulanceVehicleModel CAR) 
+    {
+    	if (CAR.getVin()==0){		return Response.ok("Bad Request No VIN").build(); }
+    
+    	AmbulanceVehicleModel X =	AmbulanceVehicleManger.getCarById(CAR.getVin());
+    	
+    	if (X == null){    return Response.ok(" unknown error with database  ").build();}
+		return Response.ok(AmbulanceVehicleManger.getCarById(CAR.getVin())).build();
+    }
+    
+    
+    
+    
+    @Path("ambulance/getAmbulanceVehicles/Brand")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetAmbulanceVehicleBrand(AmbulanceVehicleModel CAR) 
+    { 
+    	System.out.println(CAR.getBrand());
+    	if (CAR.getBrand()==null)
+       {return Response.ok("Bad Request No VIN").build();}
+	     ArrayList<AmbulanceVehicleModel> X =	AmbulanceVehicleManger.getCarsByBrand(CAR.getBrand());
+	   if (X == null)
+	    {return Response.ok(" unknown error with database  ").build();}
+		return Response.ok().build();
+    }
+    
+    @Path("ambulance/getAmbulanceVehicles/Status")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetAmbulanceVehicleSts(AmbulanceVehicleModel CAR) 
+    { 
+    	if (CAR.getVehicleStatus()==null)
+        {return Response.ok("Bad Request No VIN").build();}
+	     ArrayList<AmbulanceVehicleModel> X =	AmbulanceVehicleManger.getCarsBySts(CAR.getVehicleStatus());
+	   if (X == null)
+	    {return Response.ok(" unknown error with database  ").build();}
+		return Response.ok(X).build();
+  }
+    
+    @Path("ambulance/getAmbulanceVehicles")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetAmbulanceVehicle () 
+    {
+		return Response.ok(AmbulanceVehicleManger.getAllCars()).build();
+    }
+
+    @Path("ambulance/updateAmbulanceVehicles")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response UpdateAmbulanceVehicle (AmbulanceVehicleModel Car) 
+    {
+		return Response.ok(AmbulanceVehicleManger.UpdateCar(Car)).build();
+    }
+    
+    @Path("yelloPad/getAllYelloPads")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllYelloPads() {
+    	
+    	return Response.ok().entity(YelloPadManager.getYelloPads()).build();
+    }
+    
+    @Path("yelloPad/searchYelloPad")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response searchYelloPad(String ID) {
+    	
+    	return Response.ok().entity(YelloPadManager.searchYelloPad(ID)).build();
+    }
+    
+    @Path("yelloPad/getYelloPadStatus")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getYelloPadStatus(String ID) {
+    	
+    	return Response.ok().entity(YelloPadManager.getYelloPadStatus(ID)).build();
+    }
+    
+    @Path("yelloPad/getYelloPadNetworkCardNo")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getYelloPadNetworkCardNo(String ID) {
+    	
+    	return Response.ok().entity(YelloPadManager.getYelloPadNetworkCardNo(ID)).build();
+    }
+    
+    
+    
+    
+    @Path("patient/addLocation")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addPatientLocation(PatientLoc location) 
+    {
+    
+    	return Response.ok(PatientLocationManager.addPatientLocation(location.getNationalID(),
+    			location.getAddress(), location.getLatitude(), location.getLongitude())).build();
+    }
+    
+    
+    
+    @Path("patient/getAllLocations")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllPatientLocations(String PatientNationalID) 
+    {
+    
+    	return Response.ok(PatientLocationManager.getAllPatientLocations(PatientNationalID)).build();
+    }
+    
+    
+    @Path("pharmaCompany/getAllCompanies")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllCompanies() 
+    {
+    
+    	return Response.ok(CompanyManager.getAllCompanies()).build();
+    }
+    
+    @Path("pharmaCompany/getCompanyByID")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCompanyByID(Integer companyID) 
+    {
+    	return Response.ok(CompanyManager.getCompanyByID(companyID)).build();
+    }
+    
+    @Path("pharmaCompany/getCompanyByStatus")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCompanyByStatus(Integer companyStatus) 
+    {
+    	return Response.ok(CompanyManager.getCompanyByStatus(companyStatus)).build();
+    }
+    
+    @Path("pharmaCompany/getCompanyByName")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCompanyByName(String companyName) 
+    {
+    	return Response.ok(CompanyManager.getCompanyByName(companyName)).build();
+    }
+    
+    @Path("pharmaCompany/addCompany")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addCompany(CompanyModel companyToBeAdded) 
+    {
+    	return Response.ok(CompanyManager.addCompany(companyToBeAdded)).build();
+    }
+    
+    
+    @Path("pharmaCompany/updateCompany")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateCompany(CompanyModel companyToBeAdded) 
+    {
+    	return Response.ok(CompanyManager.updateCompany(companyToBeAdded)).build();
+    }
+    
+    @Path("pharmaCompany/deleteCompany")
+    @POST
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteCompany(Integer companyToBeAdded) 
+    {
+    	return Response.ok(CompanyManager.deleteCompany(companyToBeAdded)).build();
+    }
+    
+    
     
 	/*
 	 * @Path("locations/{id}")
