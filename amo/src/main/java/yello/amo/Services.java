@@ -17,6 +17,7 @@ import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
+import Models.Job.Job;
 import Models.Locations.Location;
 import Models.PatientLocation.PatientLoc;
 import Models.Users.*;
@@ -300,7 +301,57 @@ public class Services {
     	return Response.ok(CompanyManager.deleteCompany(companyToBeAdded)).build();
     }
     
+    @Path("job/addJob")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addJob(Job Joba) 
+    {
+    	return Response.ok(JobManager.addJob(Joba)).build();
+    }
     
+    @Path("job/updateJob")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateJob(Job Joba) 
+    {
+    	return Response.ok(JobManager.updateJob(Joba)).build();
+    }
+    @Path("job/getAllJobs")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllJobs() 
+    {
+    
+    	return Response.ok(JobManager.getAllJobs()).build();
+    }
+    @Path("job/getJobByTitle")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response getJobByTitle(String jobTitle) 
+    {
+    
+    	return Response.ok(JobManager.getJobByTitle(jobTitle)).build();
+    }
+    @Path("job/getJobByStatus")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response getJobByStatus(String jobStatus) 
+    {
+    
+    	return Response.ok(JobManager.getJobByStatus(jobStatus)).build();
+    }
+    @Path("job/deleteJob")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
+    public Response deleteJob(String JobID) 
+    {
+    	return Response.ok(JobManager.deleteJob(JobID)).build();
+    }
     
 	/*
 	 * @Path("locations/{id}")
