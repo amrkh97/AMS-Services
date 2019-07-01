@@ -43,6 +43,15 @@ public class Services {
 
     return Response.ok(UserManager.login(req.getEmailOrPAN(), req.getPassword())).build();
   }
+  
+  @Path("logout")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response logout(LogoutResponse req) {
+
+    return Response.ok(UserManager.logout(req.getUserID())).build();
+  }
 
   @Path("signup")
   @POST
