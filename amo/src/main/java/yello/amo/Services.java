@@ -19,6 +19,7 @@ import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
 import Models.Job.Job;
 import Models.Locations.Location;
+import Models.MedicalRecord.MedicalRecord;
 import Models.PatientLocation.PatientLoc;
 import Models.Users.*;
 
@@ -373,6 +374,19 @@ public class Services {
     public Response deleteJob(String JobID) 
     {
     	return Response.ok(JobManager.deleteJob(JobID)).build();
+    }
+    
+    
+    
+    
+    
+    @Path("medicalRecord/addMedicalRecord")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addMedicalRecord(MedicalRecord MedicalRecorda) 
+    {
+    	return Response.ok(MedicalRecordManager.addMedicalRecord(MedicalRecorda)).build();
     }
     
 	/*
