@@ -25,7 +25,7 @@ public class AmbulanceVehicleDAL {
 	 public static ArrayList<AmbulanceVehicleModel>  getAllCars()
 	 {
 		 
-		 String SPsql = "EXEC usp_AmbulanceVehicle_SelectAll";
+		 String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_SelectAll";
 		 Connection conn = DBManager.getDBConn();
 		ArrayList<AmbulanceVehicleModel>  Array=  new 	ArrayList<AmbulanceVehicleModel>()  ;
 		 	
@@ -88,13 +88,14 @@ public class AmbulanceVehicleDAL {
 		///////////////////////////////////////////////////GEt car by ID///////////////////////////////////////////////////////////
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	 
 					
-		 public static AmbulanceVehicleModel getCarByID(int VIN)
+		 public static ArrayList<AmbulanceVehicleModel> getCarByID(int VIN)
 		 {
 			 
 				
 					String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_SelectByVIN ?,?,?";
 					Connection conn = DBManager.getDBConn();
 					AmbulanceVehicleModel _AmbulanceVehicle = new AmbulanceVehicleModel();
+					ArrayList<AmbulanceVehicleModel>  Array=  new 	ArrayList<AmbulanceVehicleModel>();
 					ServerResponse _ServerResponse=new  ServerResponse();
 					try {
 							CallableStatement cstmt  = conn.prepareCall(SPsql);
@@ -111,8 +112,9 @@ public class AmbulanceVehicleDAL {
 						       }
 
 								ResultSet resultSet =  cstmt.executeQuery();
-						        resultSet.next();
-
+						    
+						        while(resultSet.next()) {
+						        	 _AmbulanceVehicle = new AmbulanceVehicleModel();
 					        _AmbulanceVehicle.setVin(resultSet.getInt("Vin"));
 					        _AmbulanceVehicle.setImplication(resultSet.getString("Implication"));
 					        _AmbulanceVehicle.setMake( resultSet.getString("Make"));
@@ -131,8 +133,8 @@ public class AmbulanceVehicleDAL {
 				            _AmbulanceVehicle.setAssignedYPID( resultSet.getString("AssignedYPID"));
 				            _AmbulanceVehicle.setVehicleStatus( resultSet.getString("VehicleStatus"));
 					   			        
-					        
-					        
+				            Array.add( _AmbulanceVehicle);
+						        }    
 				         }catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -147,7 +149,7 @@ public class AmbulanceVehicleDAL {
 					}
 						
 					
-					return _AmbulanceVehicle;
+					return Array;
 				}
 
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -158,7 +160,7 @@ public class AmbulanceVehicleDAL {
 		 public static ArrayList<AmbulanceVehicleModel>  getCarsByBrand(String Brand)
 		 {
 			 
-			 String SPsql = "EXEC usp_AmbulanceVehicle_SelectByBrand ?,?,?";
+			 String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_SelectByBrand ?,?,?";
 			 Connection conn = DBManager.getDBConn();
 			ArrayList<AmbulanceVehicleModel>  Array=  new 	ArrayList<AmbulanceVehicleModel>()  ;
 			 	
@@ -225,7 +227,7 @@ public class AmbulanceVehicleDAL {
 		 public static ArrayList<AmbulanceVehicleModel>  getCarsBySts(String Sts)
 		 {
 			 
-			 String SPsql = "EXEC usp_AmbulanceVehicle_SelectBySts ?,?,?";
+			 String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_SelectBySts ?,?,?";
 			 Connection conn = DBManager.getDBConn();
 			ArrayList<AmbulanceVehicleModel>  Array=  new 	ArrayList<AmbulanceVehicleModel>()  ;
 			 	
@@ -294,7 +296,7 @@ public class AmbulanceVehicleDAL {
 	 //New Car insertion
 	 public static ServerResponse insertCar(AmbulanceVehicleModel Car)
 	 {
-			String SPsql = "EXEC usp_AmbulanceVehicle_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
+			String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
 			Connection conn = DBManager.getDBConn();
 			ServerResponse _ServerResponse = new ServerResponse();
 		
@@ -302,7 +304,7 @@ public class AmbulanceVehicleDAL {
 
 
 					CallableStatement cstmt  = conn.prepareCall(SPsql);
-					
+	
 			        cstmt.setInt(1, Car.getVin());
 			        cstmt.setString(2, Car.getImplication());
 			        cstmt.setString(3, Car.getMake());
@@ -319,8 +321,9 @@ public class AmbulanceVehicleDAL {
 			        cstmt.setString(14,Car.getModel());
 			        cstmt.setString(15,Car.getDriverPhoneNumber());
 			        cstmt.setString(16,Car.getAssignedYPID());
-			        cstmt.setString(17,Car.getVehicleStatus());
-				    System.out.println(Car.getAssignedYPID());
+			        cstmt.setString(17,Car.getAmbulanceVehiclePicture());
+					
+				       
 			       
 				    cstmt.registerOutParameter(18, Types.NVARCHAR);
 					cstmt.registerOutParameter(19, Types.NVARCHAR);
@@ -358,7 +361,7 @@ public class AmbulanceVehicleDAL {
 	 public static ServerResponse UpdateCar (AmbulanceVehicleModel Car)
 	 {
 		 
-		 String SPsql = "EXEC usp_AmbulanceVehicle_Update ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
+		 String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_Update ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
 			Connection conn = DBManager.getDBConn();
 			ServerResponse _ServerResponse = new ServerResponse();
 		
@@ -383,12 +386,12 @@ public class AmbulanceVehicleDAL {
 			        cstmt.setString(14,Car.getModel());
 			        cstmt.setString(15,Car.getDriverPhoneNumber());
 			        cstmt.setString(16,Car.getAssignedYPID());
-			        cstmt.setString(17,Car.getVehicleStatus());
-			       cstmt.registerOutParameter(18, Types.NVARCHAR);
+			        cstmt.setString(17,Car.getAmbulanceVehiclePicture());	       
+			        cstmt.registerOutParameter(18, Types.NVARCHAR);
 					cstmt.registerOutParameter(19, Types.NVARCHAR);
 					  cstmt.execute();
 
-			       _ServerResponse.setResponseHexCode(cstmt.getString("responseCode"));
+			       _ServerResponse.setResponseHexCode(cstmt.getString(18));
 			      
 			       _ServerResponse.setResponseMsg(cstmt.getString("responseMessage"));
 						
@@ -415,7 +418,7 @@ public class AmbulanceVehicleDAL {
 	 {
 		 
 		
-		 String SPsql = "EXEC usp_AmbulanceVehicle_Delete ?";	
+		 String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_Delete ?";	
 			Connection conn = DBManager.getDBConn();
 			ServerResponse _ServerResponse = new ServerResponse();
 

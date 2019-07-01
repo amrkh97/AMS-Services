@@ -15,6 +15,7 @@ import org.json.JSONObject;
 
 import BLL.*;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
+import Models.Company.CompanyModel;
 import Models.ServerResponse;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
@@ -94,14 +95,25 @@ public class Services {
 		}
     	return Response.ok().build();
     }
+    
+    
+    
+    
+    
+    
+    
     @Path("addAmbulanceVehicle")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addAmbulanceVehicle(AmbulanceVehicleModel CAR) 
     {
-    	
-		return Response.ok(AmbulanceVehicleManger.insertCar(CAR)).build() ;
+    	if (CAR.getVin()==0){		return Response.ok("Bad Request No VIN").build(); }
+  	
+    	  ServerResponse X =AmbulanceVehicleManger.insertCar(CAR);
+      	if(X==null){		return Response.ok("404 the Ambulance Vehicle already there ").build(); }
+
+		return Response.ok(X).build() ;
     }
     
     @Path("GetAmbulanceVehicles/ID")
@@ -112,10 +124,8 @@ public class Services {
     {
     	if (CAR.getVin()==0){		return Response.ok("Bad Request No VIN").build(); }
     
-    	AmbulanceVehicleModel X =	AmbulanceVehicleManger.getCarById(CAR.getVin());
-    	
-    	if (X == null){    return Response.ok(" unknown error with database  ").build();}
-		return Response.ok(AmbulanceVehicleManger.getCarById(CAR.getVin())).build();
+
+    	return Response.ok(AmbulanceVehicleManger.getCarById(CAR.getVin())).build();
     }
     
     
@@ -127,13 +137,14 @@ public class Services {
     @Produces(MediaType.APPLICATION_JSON)
     public Response GetAmbulanceVehicleBrand(AmbulanceVehicleModel CAR) 
     { 
-    	System.out.println(CAR.getBrand());
+    
     	if (CAR.getBrand()==null)
-       {return Response.ok("Bad Request No VIN").build();}
+       {return Response.ok("Bad Request No Brand").build();}
+    	
 	     ArrayList<AmbulanceVehicleModel> X =	AmbulanceVehicleManger.getCarsByBrand(CAR.getBrand());
 	   if (X == null)
 	    {return Response.ok(" unknown error with database  ").build();}
-		return Response.ok().build();
+		return Response.ok(X).build();
     }
     
     
@@ -148,7 +159,7 @@ public class Services {
     public Response GetAmbulanceVehicleSts(AmbulanceVehicleModel CAR) 
     { 
     	if (CAR.getVehicleStatus()==null)
-        {return Response.ok("Bad Request No VIN").build();}
+        {return Response.ok("Bad Request No VehicleStatus").build();}
 	     ArrayList<AmbulanceVehicleModel> X =	AmbulanceVehicleManger.getCarsBySts(CAR.getVehicleStatus());
 	   if (X == null)
 	    {return Response.ok(" unknown error with database  ").build();}
@@ -177,8 +188,31 @@ public class Services {
     @Produces(MediaType.APPLICATION_JSON)
     public Response UpdateAmbulanceVehicle (AmbulanceVehicleModel Car) 
     {
-		return Response.ok(AmbulanceVehicleManger.UpdateCar(Car)).build();
+     	ServerResponse X =AmbulanceVehicleManger.UpdateCar(Car);
+    	if(X==null){		return Response.ok("404 the Ambulance Vehicle not found").build(); }
+
+		return Response.ok(X).build();
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     @Path("GetMedicines")
     @POST
@@ -214,29 +248,27 @@ public class Services {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMedicineByComName (Medicine MED) 
+    public Response getMedicineByComName (CompanyModel COMP) 
     {
-		return Response.ok().build();
-    	//.ok(MedicineManager.getMedicineByCompanyName(MED.get())).build();
+		return Response.ok(MedicineManager.getMedicineByCompanyName(COMP.getCompanyName())).build();
     }   
 
     @Path("GetMedicines/CompanyStatus")
-    @POST
+    @POST                                                          
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMedicineByCompanyStatus (Medicine MED) 
+    public Response getMedicineByCompanyStatus (CompanyModel COMP) 
     {
-    	//MedicineManager.getMedicineByCompanyStatus(MED.getActiveComponent())
-		return Response.ok().build();
+		return Response.ok(MedicineManager.getMedicineByCompanyStatus(COMP.getCompanyStatus())).build();
     }   
 
     @Path("GetMedicines/ContactPerson")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMedicineByContactPerson(Medicine MED) 
-    {//MedicineManager.getMedicineByContactPerson(MED.getActiveComponent())
-		return Response.ok().build();
+    public Response getMedicineByContactPerson(CompanyModel COMP) 
+    {
+		return Response.ok(MedicineManager.getMedicineByContactPerson(COMP.getCompanyContactPerson())).build();
     }   
   ///////////////////////////////////////////////////////////////////////////////////////////
  ///////////////////////////////////////////////////////////////////////////////////////////
@@ -258,6 +290,37 @@ public class Services {
 		return Response.ok(MedicineManager.getMedicineByStatus(MED.getMedicineStatus())).build();
     }   
 
+    @Path("InsertMedicines")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response insert_Medicine (Medicine MED) 
+    {
+    	System.out.println(MED);
+    	if (MED.getBarCode()==null){		return Response.ok("Bad Request No VIN").build(); }
+        
+		return Response.ok(MedicineManager.insertMedicine(MED)).build();
+    }   
+    @Path("UpdatetMedicines")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response Update_Medicine (Medicine MED) 
+    {
+    	ServerResponse X =MedicineManager.UpdateMedicine(MED);
+    	if(X==null){		return Response.ok("404 the medicine not found").build(); }
+		return Response.ok(X).build();
+    }   
+    @Path("deleteMedicines")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response Detele_Medicine (Medicine MED) 
+    {  
+    	
+    	ServerResponse X =MedicineManager.DeleteMedicine(MED.getBarCode());
+		return Response.ok(X).build();
+    }   
     
 	/*
 	 * @Path("locations/{id}")

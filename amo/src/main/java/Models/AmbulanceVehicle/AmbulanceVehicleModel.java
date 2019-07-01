@@ -22,7 +22,7 @@ public class AmbulanceVehicleModel {
     private String driverPhoneNumber ;
     private String AssignedYPID;
     private String  vehicleStatus ;
-
+    private String 	ambulanceVehiclePicture;
 
     public AmbulanceVehicleModel(){
     	setVehicleStatus("1");
@@ -164,6 +164,14 @@ public class AmbulanceVehicleModel {
 
 	public void setAssignedYPID(String assignedYPID) {
 		AssignedYPID = assignedYPID;
+	}
+
+	public String getAmbulanceVehiclePicture() {
+		return ambulanceVehiclePicture;
+	}
+
+	public void setAmbulanceVehiclePicture(String ambulanceVehiclePicture) {
+		this.ambulanceVehiclePicture = ambulanceVehiclePicture;
 	}
 
 }

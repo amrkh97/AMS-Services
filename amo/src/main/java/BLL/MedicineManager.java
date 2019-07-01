@@ -14,7 +14,7 @@ public class MedicineManager {
 		 
 	 }
 	//Get all Car by ID
-	 public static Medicine getMedicineByBC(String BarCode)
+	 public static  ArrayList<Medicine> getMedicineByBC(String BarCode)
 	 {
 		 
 			
@@ -25,7 +25,12 @@ public class MedicineManager {
 	 public static ServerResponse insertMedicine(Medicine MED)
 	 {
 		
-		
+		 ArrayList<Medicine> Array =new ArrayList<Medicine>();
+		 Array = MedicineDAL.getMedicineByBC(MED.getBarCode());
+		if (Array.size()!=0)
+		{
+			return null;
+		}
 
 		return MedicineDAL.insertMedicine(MED);
 	 }
@@ -33,15 +38,26 @@ public class MedicineManager {
 	//Update  a Car insertion
 	 public static ServerResponse UpdateMedicine (Medicine MED)
 	 {
+		 // check if the medicine with this bar code exists
 		 
-		
+		 ArrayList<Medicine> Array =new ArrayList<Medicine>();
+		 Array = MedicineDAL.getMedicineByBC(MED.getBarCode());
+		if (Array.size()==0)
+		{
+			return null;
+		}
 		return MedicineDAL.UpdateMedicine(MED);
 		 
 	 }
 	 //delete car
 	 public static ServerResponse DeleteMedicine(String BarCode)
 	 {
-		 
+		 ArrayList<Medicine> Array =new ArrayList<Medicine>();
+		 Array = MedicineDAL.getMedicineByBC(BarCode);
+		if (Array.size()==0)
+		{
+			return null;
+		}
 		 return MedicineDAL.DeleteMedicine(BarCode);
 	 }
 	 public static  ArrayList<Medicine>  getMedicineByActiveComponent(String ActiveComponent)

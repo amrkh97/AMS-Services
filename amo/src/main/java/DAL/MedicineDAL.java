@@ -12,16 +12,7 @@ import Models.ServerResponse;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Medicine.Medicine;
 
-/*private String BarCode;
-private String MedicineName;
-private String Price;
-private String CountInStock;
-private String Implications;
-private String MedicineUsage ;
-private String SideEffects;
-private String ActiveComponent;
-private String MedicineStatus ;
-*/
+
 public class MedicineDAL {
 
 	 public static ArrayList<Medicine> getAllMedicines()
@@ -76,22 +67,26 @@ public class MedicineDAL {
 		}
 
 	//Get all Car by ID
-		 public static Medicine getMedicineByBC(String BarCode)
+		 public static  ArrayList<Medicine> getMedicineByBC(String BarCode)
 		 {
 			 
 			
 
 			 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByBCode ?";
 			 Connection conn = DBManager.getDBConn();
-
-			     Medicine _Medicine  =new Medicine();
+			 ArrayList<Medicine>  Array=  new 	ArrayList<Medicine>()  ;
+			 	
+				
 				try {
 						CallableStatement cstmt  = conn.prepareCall(SPsql);
 					     cstmt.setString(1,BarCode);
 					      
 				        ResultSet rs = cstmt.executeQuery();
-				        rs.next();
+				        while(rs.next()) {
+						     Medicine _Medicine  =new Medicine();
+
 				        	_Medicine.setBarCode(rs.getString("BarCode"));
+				        
 				        	_Medicine.setPrice(rs.getString("Price"));
 				        	_Medicine.setCountInStock(rs.getString("CountInStock"));
 				        	_Medicine.setImplications(rs.getString("Implications"));
@@ -100,7 +95,8 @@ public class MedicineDAL {
 				        	_Medicine.setActiveComponent(rs.getString("ActiveComponent"));
 				        	_Medicine.setMedicineStatus(rs.getString("MedicineStatus"));
 				        	_Medicine.setMedicineName(rs.getString("MedicineName"));
-				
+                             Array.add(_Medicine); 
+				        }
 				        
 				   			        
 				       
@@ -121,44 +117,41 @@ public class MedicineDAL {
 				}
 					
 				
-				return  _Medicine;
+				return  Array;
 			}
 
 	 //New Car insertion
 	 public static ServerResponse insertMedicine(Medicine _Medicine)
 	 {
 		
-			String SPsql = "EXEC usp_Medicine_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
+			String SPsql = "EXEC usp_Medicine_Insert ?,?,?,?,?,?,?,?,?,?";
 				Connection conn = DBManager.getDBConn();
 				ServerResponse _ServerResponse = new ServerResponse();
 			
 				try {
-
-
-						CallableStatement cstmt  = conn.prepareCall(SPsql);
-						
-				    
-						
+				
+						CallableStatement cstmt  = conn.prepareCall(SPsql);	
 			
-					    cstmt.setString(2, _Medicine.getBarCode());
-				        cstmt.setString(3, _Medicine.getMedicineName());
-				        cstmt.setString(4, _Medicine.getPrice());
-				        cstmt.setNString(5, _Medicine.getCountInStock());
-				        cstmt.setString(6, _Medicine.getImplications());
-				        cstmt.setString(7, _Medicine.getMedicineUsage());
-				        cstmt.setString(8, _Medicine.getSideEffects());
-				        cstmt.setString(9, _Medicine.getActiveComponent());
-				        cstmt.setString(10,_Medicine.getMedicineStatus()));
+					    cstmt.setString(1, _Medicine.getBarCode());
+				        cstmt.setString(2, _Medicine.getMedicineName());
+				        cstmt.setString(3, _Medicine.getCountInStock());
+				        cstmt.setNString(4,_Medicine.getPrice() );
+				        cstmt.setString(5, _Medicine.getImplications());
+				        cstmt.setString(6, _Medicine.getMedicineUsage());
+				        cstmt.setString(7, _Medicine.getSideEffects());
+				        cstmt.setString(8, _Medicine.getActiveComponent());
+			
 				        
-			//		    cstmt.registerOutParameter(18, Types.NVARCHAR);
-				//		cstmt.registerOutParameter(19, Types.NVARCHAR);
+			         cstmt.registerOutParameter(9, Types.NVARCHAR);
+					cstmt.registerOutParameter(10, Types.NVARCHAR);
 						  cstmt.execute();
 
-				  //     _ServerResponse.setResponseHexCode(cstmt.getString("responseCode"));
+				      _ServerResponse.setResponseHexCode(cstmt.getString("responseCode"));
 				      
-				    //   _ServerResponse.setResponseMsg(cstmt.getString("responseMessage"));
+				       _ServerResponse.setResponseMsg(cstmt.getString("responseMessage"));
 							
-					      
+					   System.out.println(cstmt.getString(10));   
+				       
 			         }catch (SQLException e) {
 			        	 System.out.println("i hav error");
 					// TODO Auto-generated catch block
@@ -179,12 +172,53 @@ public class MedicineDAL {
 	 }
 	 
 	//Update  a Car insertion
-	 public static ServerResponse UpdateMedicine (Medicine MED)
+	 public static ServerResponse UpdateMedicine (Medicine _Medicine)
 	 {
 		 
+
+			String SPsql = "EXEC usp_Medicine_Update ?,?,?,?,?,?,?,?,?,?";
+				Connection conn = DBManager.getDBConn();
+				ServerResponse _ServerResponse = new ServerResponse();
+			
+				try {
+				
+						CallableStatement cstmt  = conn.prepareCall(SPsql);	
+			
+					    cstmt.setString(1, _Medicine.getBarCode());
+				        cstmt.setString(2, _Medicine.getMedicineName());
+				        cstmt.setString(3, _Medicine.getCountInStock());
+				        cstmt.setNString(4,_Medicine.getPrice() );
+				        cstmt.setString(5, _Medicine.getImplications());
+				        cstmt.setString(6, _Medicine.getMedicineUsage());
+				        cstmt.setString(7, _Medicine.getSideEffects());
+				        cstmt.setString(8, _Medicine.getActiveComponent());
+			
+				        
+			    cstmt.registerOutParameter(9, Types.NVARCHAR);
+					cstmt.registerOutParameter(10, Types.NVARCHAR);
+						  cstmt.execute();
+
+				      _ServerResponse.setResponseHexCode(cstmt.getString("responseCode"));
+				      
+				       _ServerResponse.setResponseMsg(cstmt.getString("responseMessage"));
+							
+					      
+			         }catch (SQLException e) {
+			        	 System.out.println("i hav error");
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}finally {
+					try {
+						conn.close();
+						System.out.println("Connention Closed");
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				return _ServerResponse;
+					
 		
-		return null;
-		 
 	 }
 	 //delete car
 	 public static ServerResponse DeleteMedicine(String BarCode)
