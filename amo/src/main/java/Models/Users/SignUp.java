@@ -10,13 +10,12 @@ public class SignUp {
 	private String contactNumber;
 	private String country;
 	private String city;
-	private String addressState;
-	private String addressStreet;
-	private String addressPcode;
+	private String state;
+	private String street;
+	private String postalCode;
 	private String pan;
 	private String nationalID;
 	private String photo;
-	private String age;
 	
 	public String getFirstName() {
 		return firstName;
@@ -81,25 +80,25 @@ public class SignUp {
 		this.city = city;
 	}
 	
-	public String getAddressState() {
-		return addressState;
+	public String getState() {
+		return state;
 	}
-	public void setAddressState(String addressState) {
-		this.addressState = addressState;
+	public void setState(String state) {
+		this.state = state;
 	}
 	
-	public String getAddressStreet() {
-		return addressStreet;
+	public String getStreet() {
+		return street;
 	}	
-	public void setAddressStreet(String addressStreet) {
-		this.addressStreet = addressStreet;
+	public void setStreet(String street) {
+		this.street = street;
 	}
 	
-	public String getAddressPcode() {
-		return addressPcode;
+	public String getPostalCode() {
+		return postalCode;
 	}
-	public void setAddressPcode(String addressPcode) {
-		this.addressPcode = addressPcode;
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
 	}
 	
 	public String getPan() {
@@ -121,12 +120,5 @@ public class SignUp {
 	}
 	public void setPhoto(String photo) {
 		this.photo = photo;
-	}
-	
-	public String getAge() {
-		return age;
-	}
-	public void setAge(String age) {
-		this.age = age;
 	}
 }

@@ -3,12 +3,8 @@ package Models.Users;
 import Models.ServerResponse;
 
 public class LoginResponse extends ServerResponse {
-
-
 	private String token;
 	private String jobID;
-
-
 	/**
 	 * @return the responseMsg
 	 */

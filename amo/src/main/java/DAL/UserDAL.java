@@ -2,6 +2,7 @@ package DAL;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
@@ -15,8 +16,8 @@ import Models.Users.SignUp;
 public class UserDAL {
 
 	public static LoginResponse login(String emailOrPAN, String Password) {
-
-		String SPsql = "use KAN_AMO; EXEC [dbo].[usp_Employee_Login] ?,?,?,?,?";
+		ResultSet RS;
+		String SPsql = "use KAN_AMO; EXEC [dbo].[usp_Employee_Login] ?,?";
 		Connection conn = DBManager.getDBConn();
 		LoginResponse _LoginResponse = new LoginResponse();
 		
@@ -24,16 +25,25 @@ public class UserDAL {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setString(1, emailOrPAN);
 			cstmt.setString(2, Password);
-			cstmt.registerOutParameter(3, Types.NVARCHAR);
-			cstmt.registerOutParameter(4, Types.NVARCHAR);
-			cstmt.registerOutParameter(5, Types.NVARCHAR);
-			cstmt.execute();
+			// cstmt.registerOutParameter(3, Types.NVARCHAR);
+			// cstmt.registerOutParameter(4, Types.NVARCHAR);
+			// cstmt.registerOutParameter(5, Types.NVARCHAR);
+			RS = cstmt.executeQuery();
 
-			_LoginResponse.setResponseHexCode(cstmt.getString(3));
-			_LoginResponse.setResponseMsg(cstmt.getString(4));
-			if (cstmt.getString(3).equals("00"))
-				_LoginResponse.setToken(cstmt.getString(1) + ',' + cstmt.getString(2));
-			_LoginResponse.setJobID(cstmt.getString(5));
+			_LoginResponse.setResponseHexCode(RS.getString(1));
+
+			_LoginResponse.setResponseMsg(RS.getString(2));
+
+			_LoginResponse.setJobID(RS.getString(3));
+
+			if (RS.getString(1).equals("00")) {
+				// Tokenize
+				// String EmployeeID = RS.getString(4)
+				// _LoginResponse.setResponseMsg(RS.getString(2));
+
+				// Dummy token
+				_LoginResponse.setToken(emailOrPAN + "," + Password);
+			}
 
 		} catch (SQLException e) {
 			
@@ -52,7 +62,7 @@ public class UserDAL {
 	}
 	
 	public static SignUpResponse signup(SignUp user) {
-
+		ResultSet RS;
 		String SPsql = "use KAN_AMO; EXEC [dbo].[usp_Employee_SignUp] ?,?,?,?";
 		Connection conn = DBManager.getDBConn();
 		SignUpResponse _SignUpResponse = new SignUpResponse();
@@ -67,15 +77,14 @@ public class UserDAL {
 			cstmt.setString(7, user.getContactNumber());
 			cstmt.setString(8, user.getCountry());
 			cstmt.setString(9, user.getCity());
-			cstmt.setString(10, user.getAddressState());
-			cstmt.setString(11, user.getAddressStreet());
-			cstmt.setString(12, user.getAddressPcode());
+			cstmt.setString(10, user.getState());
+			cstmt.setString(11, user.getStreet());
+			cstmt.setString(12, user.getPostalCode());
 			cstmt.setString(13, user.getPan());
 			cstmt.setString(14, user.getNationalID());
 			cstmt.setString(15, user.getPhoto());
-			cstmt.setString(16, user.getAge());
+			cstmt.registerOutParameter(16, Types.NVARCHAR);
 			cstmt.registerOutParameter(17, Types.NVARCHAR);
-			cstmt.registerOutParameter(18, Types.NVARCHAR);
 			cstmt.execute();
 
 			_SignUpResponse.setResponseHexCode(cstmt.getString(17));
@@ -98,19 +107,19 @@ public class UserDAL {
 	}
 	
 	public static LogoutResponse logout(String token) {
-
-		String SPsql = "use KAN_AMO; EXEC [dbo].[usp_Employee_Login] ?,?,?";
+		ResultSet RS;
+		String SPsql = "use KAN_AMO; EXEC [dbo].[usp_Employee_Logout] ?";
 		Connection conn = DBManager.getDBConn();
 		LogoutResponse _LogoutResponse = new LogoutResponse();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setString(1, token);
-			cstmt.registerOutParameter(3, Types.NVARCHAR);
-			cstmt.registerOutParameter(4, Types.NVARCHAR);
-			cstmt.execute();
+			// cstmt.registerOutParameter(3, Types.NVARCHAR);
+			// cstmt.registerOutParameter(4, Types.NVARCHAR);
+			RS = cstmt.executeQuery();
 
-			_LogoutResponse.setResponseHexCode(cstmt.getString(3));
-			_LogoutResponse.setResponseMsg(cstmt.getString(4));
+			_LogoutResponse.setResponseHexCode(RS.getString(1));
+			_LogoutResponse.setResponseMsg(RS.getString(2));
 
 		} catch (SQLException e) {
 			
