@@ -82,7 +82,7 @@ public class Services {
 //			}
 //    	}
     	// At This Point i know that the Insertion In DB is ok
-		JSONObject fbLocationObj = new JSONObject();
+		/*JSONObject fbLocationObj = new JSONObject();
 		
 		fbLocationObj.put(FBLocationEnum.Address.getJsonKey(), location.getFreeFormatAddress());
 		fbLocationObj.put(FBLocationEnum.Longitude.getJsonKey(), location.getLongitude());
@@ -99,7 +99,29 @@ public class Services {
 			System.err.println("Error Sending Location Post Request: " + e);
 			e.printStackTrace();
 		}
-    	return Response.ok().build();
+    	return Response.ok().build();*/
+    	if(!(location.getFreeFormatAddress() == null || location.getFreeFormatAddress().equals("")))
+    	{
+    		if(!(location.getLongitude() == "0" || location.getLongitude() == null || location.getLongitude().equals("none")))
+    		{
+    			if(!(location.getLatitude() == "0" || location.getLatitude() == null || location.getLatitude().equals("none")))
+        		{
+    				return Response.ok(LocationManager.addLocation(location)).build() ;
+        		}
+    			else 
+    			{
+    				return Response.ok(" No Latitude Provided ").build();
+    			}
+    		}
+    		else
+    		{
+    			return Response.ok(" No Longitude Provided ").build();
+    		}
+    	}
+    	else
+    	{
+    		return Response.ok(" No Address Provided ").build();
+    	}
     }
     @Path("ambulance/addAmbulanceVehicle")
     @POST
