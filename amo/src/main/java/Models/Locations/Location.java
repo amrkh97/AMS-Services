@@ -2,122 +2,68 @@ package Models.Locations;
 
 
 public class Location {
-	private String FreeFormatAddress ;
-    private String City ;
-    private String Longitude ;
-    private String Latitude ;
-    private String Street ;
-    private String Apartement ;
-    private String PostalCode;
-    private String FloorLevel;
-	private String HouseNumber ;
-	/**
-	 * @return the freeFormatAddress
-	 */
+	private String freeFormatAddress ;
+    private String city ;
+    private String longitude ;
+    private String latitude ;
+    private String street ;
+    private String apartement ;
+    private String postalCode;
+    private String floorLevel;
+	private String houseNumber ;
 	public String getFreeFormatAddress() {
-		return FreeFormatAddress;
+		return freeFormatAddress;
 	}
-	/**
-	 * @param freeFormatAddress the freeFormatAddress to set
-	 */
 	public void setFreeFormatAddress(String freeFormatAddress) {
-		FreeFormatAddress = freeFormatAddress;
+		this.freeFormatAddress = freeFormatAddress;
 	}
-	/**
-	 * @return the city
-	 */
 	public String getCity() {
-		return City;
+		return city;
 	}
-	/**
-	 * @param city the city to set
-	 */
 	public void setCity(String city) {
-		City = city;
+		this.city = city;
 	}
-	/**
-	 * @return the longitude
-	 */
 	public String getLongitude() {
-		return Longitude;
+		return longitude;
 	}
-	/**
-	 * @param longitude the longitude to set
-	 */
 	public void setLongitude(String longitude) {
-		Longitude = longitude;
+		this.longitude = longitude;
 	}
-	/**
-	 * @return the latitude
-	 */
 	public String getLatitude() {
-		return Latitude;
+		return latitude;
 	}
-	/**
-	 * @param latitude the latitude to set
-	 */
 	public void setLatitude(String latitude) {
-		Latitude = latitude;
+		this.latitude = latitude;
 	}
-	/**
-	 * @return the street
-	 */
 	public String getStreet() {
-		return Street;
+		return street;
 	}
-	/**
-	 * @param street the street to set
-	 */
 	public void setStreet(String street) {
-		Street = street;
+		this.street = street;
 	}
-	/**
-	 * @return the apartement
-	 */
 	public String getApartement() {
-		return Apartement;
+		return apartement;
 	}
-	/**
-	 * @param apartement the apartement to set
-	 */
 	public void setApartement(String apartement) {
-		Apartement = apartement;
+		this.apartement = apartement;
 	}
-	/**
-	 * @return the postalCode
-	 */
 	public String getPostalCode() {
-		return PostalCode;
+		return postalCode;
 	}
-	/**
-	 * @param postalCode the postalCode to set
-	 */
 	public void setPostalCode(String postalCode) {
-		PostalCode = postalCode;
+		this.postalCode = postalCode;
 	}
-	/**
-	 * @return the floorLevel
-	 */
 	public String getFloorLevel() {
-		return FloorLevel;
+		return floorLevel;
 	}
-	/**
-	 * @param floorLevel the floorLevel to set
-	 */
 	public void setFloorLevel(String floorLevel) {
-		FloorLevel = floorLevel;
+		this.floorLevel = floorLevel;
 	}
-	/**
-	 * @return the houseNumber
-	 */
 	public String getHouseNumber() {
-		return HouseNumber;
+		return houseNumber;
 	}
-	/**
-	 * @param houseNumber the houseNumber to set
-	 */
 	public void setHouseNumber(String houseNumber) {
-		HouseNumber = houseNumber;
+		this.houseNumber = houseNumber;
 	}
 	
 	
