@@ -40,7 +40,7 @@ public class PatientLocationDAL {
 				conn.close();
 				System.out.println("Connection Closed");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			 }
 			}
@@ -78,7 +78,7 @@ public class PatientLocationDAL {
 				conn.close();
 				System.out.println("Connection Closed");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}

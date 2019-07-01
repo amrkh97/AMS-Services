@@ -38,14 +38,14 @@ public static ArrayList<CompanyModel> getAllCompanies() {
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} finally {
 			try {
 				conn.close();
 				System.out.println("Connection Closed");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -79,14 +79,14 @@ public static CompanyModel getCompanyByName(String companyName) {
 
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} finally {
 			try {
 				conn.close();
 				System.out.println("Connection Closed");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -120,14 +120,14 @@ public static CompanyModel getCompanyByID(Integer companyID) {
 
 
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
+		
 		e.printStackTrace();
 	} finally {
 		try {
 			conn.close();
 			System.out.println("Connection Closed");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
@@ -162,14 +162,14 @@ public static CompanyModel getCompanyByStatus(Integer companyStatus) {
 
 
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
+		
 		e.printStackTrace();
 	} finally {
 		try {
 			conn.close();
 			System.out.println("Connection Closed");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

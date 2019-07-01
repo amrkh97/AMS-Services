@@ -31,14 +31,14 @@ public class IncidentTypeDAL {
 			        	incidentTypeArray.add(incidentType);
 			        }
 		         }catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}finally {
 				try {
 					conn.close();
 					System.out.println("Connention Closed");
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+					
 					
 					e.printStackTrace();
 				}

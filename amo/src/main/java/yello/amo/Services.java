@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.json.JSONObject;
+// import org.json.JSONObject;
 
 import BLL.*;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
@@ -106,7 +106,7 @@ public class Services {
     //   System.err.println("Error Sending Location Post Request: " + e);
     //   e.printStackTrace();
     // }
-    // return Response.ok().build();
+    return Response.ok().build();
   }
 
   @Path("ambulance/addAmbulanceVehicle")
