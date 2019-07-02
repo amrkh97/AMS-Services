@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+// import org.json.JSONArray;
+// import org.json.JSONObject;
 
 import DB.DBManager;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
@@ -63,14 +63,14 @@ public class AmbulanceVehicleDAL {
 			        
 			        
 		         }catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}finally {
 				try {
 					conn.close();
 					System.out.println("Connention Closed");
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+					
 					
 					e.printStackTrace();
 				}
@@ -133,14 +133,14 @@ public class AmbulanceVehicleDAL {
 					        
 					        
 				         }catch (SQLException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}finally {
 						try {
 							conn.close();
 							System.out.println("Connention Closed");
 						} catch (SQLException e) {
-							// TODO Auto-generated catch block
+							
 							e.printStackTrace();
 						}
 					}
@@ -199,14 +199,14 @@ public class AmbulanceVehicleDAL {
 				        
 				        
 			         }catch (SQLException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}finally {
 					try {
 						conn.close();
 						System.out.println("Connention Closed");
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
+						
 						
 						e.printStackTrace();
 					}
@@ -266,14 +266,14 @@ public class AmbulanceVehicleDAL {
 				        
 				        
 			         }catch (SQLException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}finally {
 					try {
 						conn.close();
 						System.out.println("Connention Closed");
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
+						
 						
 						e.printStackTrace();
 					}
@@ -331,14 +331,14 @@ public class AmbulanceVehicleDAL {
 				      
 		         }catch (SQLException e) {
 		        	 System.out.println("i hav error");
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}finally {
 				try {
 					conn.close();
 					System.out.println("Connention Closed");
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
@@ -395,14 +395,14 @@ public class AmbulanceVehicleDAL {
 				      
 		         }catch (SQLException e) {
 		        	 System.out.println("i hav error");
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}finally {
 				try {
 					conn.close();
 					System.out.println("Connention Closed");
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
@@ -432,14 +432,14 @@ public class AmbulanceVehicleDAL {
 				      
 		         }catch (SQLException e) {
 		        	 System.out.println("i hav error");
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}finally {
 				try {
 					conn.close();
 					System.out.println("Connention Closed");
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}

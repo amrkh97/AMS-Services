@@ -28,7 +28,7 @@ public class DBManager {
 			conn = DriverManager.getConnection(db_server+db_name, db_userid, db_password);
 			System.out.println("Connection Open");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		return conn;
