@@ -5,7 +5,7 @@ import Models.ServerResponse;
 import Models.Locations.*;
 
 public class LocationManager {
-	public static ServerResponse addLocation(Location loc) {
+	public static LocationResponse addLocation(Location loc) {
 		return LocationsDAL.addLocation(loc);
 	}
 
