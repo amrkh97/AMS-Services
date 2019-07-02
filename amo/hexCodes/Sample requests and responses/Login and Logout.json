@@ -1,0 +1,10 @@
+Login
+{
+	"emailOrPAN":"emial-pan-nationalID",
+	"password":"minimum-8-characters"
+}
+
+Logout
+{
+	"userID":"emial-pan-nationalID"
+}
