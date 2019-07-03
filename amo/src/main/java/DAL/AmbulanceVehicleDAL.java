@@ -391,7 +391,7 @@ public class AmbulanceVehicleDAL {
 					cstmt.registerOutParameter(19, Types.NVARCHAR);
 					  cstmt.execute();
 
-			       _ServerResponse.setResponseHexCode(cstmt.getString(18));
+			       _ServerResponse.setResponseHexCode(cstmt.getString("responseCode"));
 			      
 			       _ServerResponse.setResponseMsg(cstmt.getString("responseMessage"));
 						
@@ -418,7 +418,7 @@ public class AmbulanceVehicleDAL {
 	 {
 		 
 		
-		 String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_Delete ?";	
+		 String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_Delete ?,?,?";	
 			Connection conn = DBManager.getDBConn();
 			ServerResponse _ServerResponse = new ServerResponse();
 
@@ -426,11 +426,12 @@ public class AmbulanceVehicleDAL {
 
 
 					CallableStatement cstmt  = conn.prepareCall(SPsql);
-			       cstmt.registerOutParameter(1, Types.NVARCHAR);
+					  cstmt.setInt(1, vin); 
 					cstmt.registerOutParameter(2, Types.NVARCHAR);
+					cstmt.registerOutParameter(3, Types.NVARCHAR);
 					  cstmt.execute();
-			       _ServerResponse.setResponseHexCode(cstmt.getString("responseCode"));
-			       _ServerResponse.setResponseMsg(cstmt.getString("responseMessage"));
+			       _ServerResponse.setResponseHexCode(cstmt.getString(2));
+			       _ServerResponse.setResponseMsg(cstmt.getString(3));
 						
 				      
 		         }catch (SQLException e) {
@@ -448,6 +449,42 @@ public class AmbulanceVehicleDAL {
 			}
 			return _ServerResponse;
 				
+	 }
+	 public static ServerResponse UpdateCarStatus(int Vin ,String newStatus)
+	 {
+		 String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_UpdateStatus ?,?,?,?";	
+			Connection conn = DBManager.getDBConn();
+			ServerResponse _ServerResponse = new ServerResponse();
+
+			try {
+
+
+					CallableStatement cstmt  = conn.prepareCall(SPsql);
+					  cstmt.setInt(2, Vin);  
+					  cstmt.setString(1, newStatus);
+					cstmt.registerOutParameter(3, Types.NVARCHAR);
+					cstmt.registerOutParameter(4, Types.NVARCHAR);
+					  
+					cstmt.execute();
+					  
+			       _ServerResponse.setResponseHexCode(cstmt.getString(3));
+			       _ServerResponse.setResponseMsg(cstmt.getString(4));
+						
+				      
+		         }catch (SQLException e) {
+		        	 System.out.println("i hav error");
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				try {
+					conn.close();
+					System.out.println("Connention Closed");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return _ServerResponse;
 	 }
 	 
 	 

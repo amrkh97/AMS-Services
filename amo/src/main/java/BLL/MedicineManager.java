@@ -1,91 +1,146 @@
 package BLL;
 
 import java.util.ArrayList;
+
+import DAL.AmbulanceVehicleDAL;
 import DAL.MedicineDAL;
 import Models.ServerResponse;
 import Models.Medicine.Medicine;
 
 public class MedicineManager {
+	
+	
+	
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////GET ALL Medicines ///////////////////////////////////////////
+
+	
 	 public static ArrayList<Medicine> getAllMedicines()
 	 {
 		 
-		
 		return MedicineDAL.getAllMedicines();
-		 
 	 }
-	//Get all Car by ID
-	 public static  ArrayList<Medicine> getMedicineByBC(String BarCode)
-	 {
-		 
-			
-			return MedicineDAL.getMedicineByBC(BarCode);
-			 
-		 }
-	 
-	 public static ServerResponse insertMedicine(Medicine MED)
-	 {
 		
+//////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////GET  Medicines by BARCODE //////////////////////////////////////
+
+	 public static  ArrayList<Medicine> getMedicineByBC(String BarCode)
+	 {	
+			return MedicineDAL.getMedicineByBC(BarCode);	 
+	 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////// GET  Medicines by Name //////////////////////////////////////
+	
+	
+	public static ArrayList<Medicine>    getMedicineByName(String Name)
+	{
+	return MedicineDAL.getMedicineByName(Name);
+	}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////// GET  Medicines by Status //////////////////////////////////////
+
+	
+	public static ArrayList<Medicine>    getMedicineByStatus(String Status)
+	{
+	return MedicineDAL.getMedicineByStatus(Status);
+	}
+		 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////// GET  Medicines by Active Component //////////////////////////////////////
+
+		 
+	 public static  ArrayList<Medicine>  getMedicineByActiveComponent(String ActiveComponent)
+	 {
+		 return MedicineDAL.getMedicineByActiveComponent(ActiveComponent);
+	 }	 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////// GET  Medicines by Company Name //////////////////////////////////////
+
+	 
+	 public static ArrayList<Medicine>    getMedicineByCompanyName(String CompanyName)
+	 {
+		 return MedicineDAL.getMedicineByCompanyName(CompanyName);
+	 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////// GET  Medicines by Company status //////////////////////////////////////
+	 
+	 public static ArrayList<Medicine>    getMedicineByCompanyStatus(String CompanyStatus)
+	 {
+		 return MedicineDAL.getMedicineByCompanyStatus(CompanyStatus);
+	 }
+	 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////// GET  Medicines by Contact Person //////////////////////////////////////
+	 
+	 public static ArrayList<Medicine>    getMedicineByContactPerson(String ContactPerson)
+	 {
+		 return MedicineDAL.getMedicineByContactPerson(ContactPerson);
+	 }
+	 
+	
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////INSERT ///////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+	 public static ServerResponse insertMedicine(Medicine MED)
+	 {	 
 		 ArrayList<Medicine> Array =new ArrayList<Medicine>();
 		 Array = MedicineDAL.getMedicineByBC(MED.getBarCode());
-		if (Array.size()!=0)
-		{
-			return null;
+		if (Array.size()!=0)			
+		{ 
+			if (Array.get(0).getMedicineStatus().equals("FF"))
+			{ 
+				return MedicineDAL.UpdateMedicineStatus(Array.get(0).getBarCode(), "00");
+			}
+			ServerResponse S =new ServerResponse(); 
+			S.setResponseHexCode("01");
+			S.setResponseMsg("You already have this medicine in database");
+			return S;
 		}
-
 		return MedicineDAL.insertMedicine(MED);
-	 }
+	 }	 
 	 
-	//Update  a Car insertion
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////UPDATE ///////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
 	 public static ServerResponse UpdateMedicine (Medicine MED)
 	 {
-		 // check if the medicine with this bar code exists
-		 
+		 // check if the medicine with this bar code exists 
 		 ArrayList<Medicine> Array =new ArrayList<Medicine>();
 		 Array = MedicineDAL.getMedicineByBC(MED.getBarCode());
 		if (Array.size()==0)
 		{
-			return null;
+			 ServerResponse S =new ServerResponse(); 
+				S.setResponseHexCode("FF");
+				S.setResponseMsg("Not found medicine in database");
+				return S;	
+				
 		}
-		return MedicineDAL.UpdateMedicine(MED);
-		 
+		return MedicineDAL.UpdateMedicine(MED);	 
 	 }
-	 //delete car
+	 	 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////DELETE ///////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////	 
+	 
 	 public static ServerResponse DeleteMedicine(String BarCode)
 	 {
 		 ArrayList<Medicine> Array =new ArrayList<Medicine>();
 		 Array = MedicineDAL.getMedicineByBC(BarCode);
 		if (Array.size()==0)
 		{
-			return null;
-		}
+			 ServerResponse S =new ServerResponse(); 
+				S.setResponseHexCode("FF");
+				S.setResponseMsg("Not found medicine in database");
+				return S;
+			}
 		 return MedicineDAL.DeleteMedicine(BarCode);
 	 }
-	 public static  ArrayList<Medicine>  getMedicineByActiveComponent(String ActiveComponent)
-	 {
-		 return MedicineDAL.getMedicineByActiveComponent(ActiveComponent);
-	 }
-
-	 public static ArrayList<Medicine>    getMedicineByCompanyName(String CompanyName)
-	 {
-		 return MedicineDAL.getMedicineByCompanyName(CompanyName);
-	 }
-
-	 public static ArrayList<Medicine>    getMedicineByCompanyStatus(String CompanyStatus)
-	 {
-		 return MedicineDAL.getMedicineByCompanyStatus(CompanyStatus);
-	 }
-	 public static ArrayList<Medicine>    getMedicineByContactPerson(String ContactPerson)
-	 {
-		 return MedicineDAL.getMedicineByContactPerson(ContactPerson);
-	 }
-	 public static ArrayList<Medicine>    getMedicineByName(String Name)
-	 {
-		 return MedicineDAL.getMedicineByName(Name);
-	 }
-	 public static ArrayList<Medicine>    getMedicineByStatus(String Status)
-	 {
-		 return MedicineDAL.getMedicineByStatus(Status);
-	 }
-
+	  
 
 }

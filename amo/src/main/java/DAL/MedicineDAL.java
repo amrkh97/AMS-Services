@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import DB.DBManager;
 import Models.ServerResponse;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
+import Models.Medicine.CompanyMedicineMap;
 import Models.Medicine.Medicine;
 
 
@@ -194,9 +195,9 @@ public class MedicineDAL {
 				        cstmt.setString(8, _Medicine.getActiveComponent());
 			
 				        
-			    cstmt.registerOutParameter(9, Types.NVARCHAR);
-					cstmt.registerOutParameter(10, Types.NVARCHAR);
-						  cstmt.execute();
+			           cstmt.registerOutParameter(9, Types.NVARCHAR);
+					   cstmt.registerOutParameter(10, Types.NVARCHAR);
+					   cstmt.execute();
 
 				      _ServerResponse.setResponseHexCode(cstmt.getString("responseCode"));
 				      
@@ -224,9 +225,40 @@ public class MedicineDAL {
 	 public static ServerResponse DeleteMedicine(String BarCode)
 	 {
 		 
-		
-		return null;
-		 
+		System.out.println(BarCode);
+
+			
+		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_Delete ?,?,?";	
+			Connection conn = DBManager.getDBConn();
+			ServerResponse _ServerResponse = new ServerResponse();
+
+			try {
+
+
+					CallableStatement cstmt  = conn.prepareCall(SPsql);
+					 
+				  cstmt.setString(1, BarCode);
+			      cstmt.registerOutParameter(2, Types.NVARCHAR);
+				  cstmt.registerOutParameter(3, Types.NVARCHAR);
+			      cstmt.execute();
+			       _ServerResponse.setResponseHexCode(cstmt.getString(2));
+			       _ServerResponse.setResponseMsg(cstmt.getString(3));
+						
+				      
+		         }catch (SQLException e) {
+		        		// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				try {
+					conn.close();
+					System.out.println("Connention Closed");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return _ServerResponse;
+						 
 	 }
 	 public static  ArrayList<Medicine>  getMedicineByActiveComponent(String ActiveComponent)
 	 {
@@ -379,6 +411,7 @@ public class MedicineDAL {
 			
 			return Array;
 		}
+	 
 	 public static ArrayList<Medicine>    getMedicineByContactPerson(String ContactPerson)
 	 {
 
@@ -529,5 +562,44 @@ public class MedicineDAL {
 			
 			return Array;
 		}
+	 public static ServerResponse UpdateMedicineStatus(String Barcode ,String newStatus)
+	 {
+		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_UpdateStatus ?,?,?,?";	
+			Connection conn = DBManager.getDBConn();
+			ServerResponse _ServerResponse = new ServerResponse();
+
+			try {
+
+
+					CallableStatement cstmt  = conn.prepareCall(SPsql);
+					  cstmt.setString(2, Barcode);  
+					  cstmt.setString(1, newStatus);
+					cstmt.registerOutParameter(3, Types.NVARCHAR);
+					cstmt.registerOutParameter(4, Types.NVARCHAR);
+					  
+					cstmt.execute();
+					  
+			       _ServerResponse.setResponseHexCode(cstmt.getString(3));
+			       _ServerResponse.setResponseMsg(cstmt.getString(4));
+						
+				      
+		         }catch (SQLException e) {
+		        	 System.out.println("i hav error");
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				try {
+					conn.close();
+					System.out.println("Connention Closed");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return _ServerResponse;
+	 }
+
+	 
+	
 
 }
