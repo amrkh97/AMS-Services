@@ -52,7 +52,6 @@ public class AmbulanceVehicleDAL {
 				        _AmbulanceVehicle.setChasiahNumber(rs.getString("ChasiahNumber"));
 				        _AmbulanceVehicle.setModel(rs.getString("Model"));
 				        _AmbulanceVehicle.setDriverPhoneNumber(rs.getString("DriverPhoneNumber"));
-				        _AmbulanceVehicle.setAssignedYPID(rs.getString("AssignedYPID"));
 				        _AmbulanceVehicle.setVehicleStatus(rs.getString("VehicleStatus"));
 				        _AmbulanceVehicle.setAmbulanceVehiclePicture(rs.getString("AmbulanceVehiclePicture"));
 					       
