@@ -1,34 +1,35 @@
 package Models.AmbulanceMap;
 
 public class AmbulanceMapModel {
-	private Integer VIN;
-	private Integer ParamedicID;
-	private Integer DriverID;
-	private Integer YellopadID;
-	
+	private Integer vin;
+	private Integer paramedicID;
+	private Integer driverID;
+	private Integer yellopadID;
 	public Integer getYellopadID() {
-		return YellopadID;
+		return yellopadID;
 	}
 	public void setYellopadID(Integer yellopadID) {
-		YellopadID = yellopadID;
+		this.yellopadID = yellopadID;
 	}
 	public Integer getDriverID() {
-		return DriverID;
+		return driverID;
 	}
 	public void setDriverID(Integer driverID) {
-		DriverID = driverID;
+		this.driverID = driverID;
 	}
 	public Integer getParamedicID() {
-		return ParamedicID;
+		return paramedicID;
 	}
 	public void setParamedicID(Integer paramedicID) {
-		ParamedicID = paramedicID;
+		this.paramedicID = paramedicID;
 	}
-	public Integer getVIN() {
-		return VIN;
+	public Integer getVin() {
+		return vin;
 	}
-	public void setVIN(Integer vIN) {
-		VIN = vIN;
+	public void setVin(Integer vin) {
+		this.vin = vin;
 	}
+	
+
 
 }

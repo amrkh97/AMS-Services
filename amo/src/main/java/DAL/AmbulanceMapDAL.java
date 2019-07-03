@@ -24,7 +24,7 @@ public class AmbulanceMapDAL {
 			cstmt.setInt(1, ID);
 			rs = cstmt.executeQuery();
 			rs.next();
-			currentAmbulanceMap.setVIN(rs.getInt(1));
+			currentAmbulanceMap.setVin(rs.getInt(1));
 			currentAmbulanceMap.setParamedicID(rs.getInt(2));
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
@@ -58,7 +58,7 @@ public class AmbulanceMapDAL {
 			cstmt.setInt(1, ID);
 			rs = cstmt.executeQuery();
 			rs.next();
-			currentAmbulanceMap.setVIN(rs.getInt(1));
+			currentAmbulanceMap.setVin(rs.getInt(1));
 			currentAmbulanceMap.setParamedicID(rs.getInt(2));
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
@@ -92,7 +92,7 @@ public class AmbulanceMapDAL {
 			cstmt.setInt(1, ID);
 			rs = cstmt.executeQuery();
 			rs.next();
-			currentAmbulanceMap.setVIN(rs.getInt(1));
+			currentAmbulanceMap.setVin(rs.getInt(1));
 			currentAmbulanceMap.setParamedicID(rs.getInt(2));
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
@@ -126,7 +126,7 @@ public class AmbulanceMapDAL {
 			cstmt.setInt(1, ID);
 			rs = cstmt.executeQuery();
 			rs.next();
-			currentAmbulanceMap.setVIN(rs.getInt(1));
+			currentAmbulanceMap.setVin(rs.getInt(1));
 			currentAmbulanceMap.setParamedicID(rs.getInt(2));
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
@@ -154,8 +154,7 @@ public class AmbulanceMapDAL {
 		String addStatus = "FF";
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
-	
-			cstmt.setInt(1, currentAmbulanceMap.getVIN());
+			cstmt.setInt(1, currentAmbulanceMap.getVin());
 			cstmt.setInt(2, currentAmbulanceMap.getParamedicID());
 			cstmt.setInt(3, currentAmbulanceMap.getDriverID());
 			cstmt.setInt(4, currentAmbulanceMap.getYellopadID());
@@ -176,6 +175,31 @@ public class AmbulanceMapDAL {
 		return addStatus;
 	}
 	
+	//-------------------------------------------------------------------//
+	
+	public static Integer deleteAmbulanceMap(Integer currentAmbulanceMap) {
+
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_deleteAmbulanceMap] ?";
+		Connection conn = DBManager.getDBConn();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+	
+			cstmt.setInt(1, currentAmbulanceMap);
+			cstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return currentAmbulanceMap;
+	}
 	
 	
 	

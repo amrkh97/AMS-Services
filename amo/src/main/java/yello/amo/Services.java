@@ -342,7 +342,13 @@ public class Services {
     return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByYelloPadID(ID)).build();
   }
   
-  
+  @Path("ambulanceMap/deleteAmbulanceMap")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response deleteAmbulanceMap(Integer AmbulanceToBeAdded) {
+    return Response.ok(AmbulanceMapManager.deleteAmbulanceMap(AmbulanceToBeAdded)).build();
+  }
   
 
   /*

@@ -25,4 +25,8 @@ public class AmbulanceMapManager {
 		return AmbulanceMapDAL.addAmbulanceMap(currentAmbulanceMap);
 	}
 	
+	public static Integer deleteAmbulanceMap(Integer currentAmbulanceMap) {
+		 return AmbulanceMapManager.deleteAmbulanceMap(currentAmbulanceMap);
+	}
+	
 }
