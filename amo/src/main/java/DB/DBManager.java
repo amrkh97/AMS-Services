@@ -10,7 +10,7 @@ public class DBManager {
 	private static String db_server = "jdbc:sqlserver://AMRKHALED97;";
 	private static String db_name = "databaseName=KAN_AMO";
 	private static String db_userid = "admin";
-	private static String db_password = "1234";
+	private static String db_password = "12345";
 	private static Connection conn;
 
 	public static ResultSet ExecuteQuery(String SelectStatement) {
