@@ -3,12 +3,8 @@ package Models.Users;
 import Models.ServerResponse;
 
 public class LoginResponse extends ServerResponse {
-
-
 	private String token;
-	private String userName;
-
-
+	private String jobID;
 	/**
 	 * @return the responseMsg
 	 */
@@ -37,18 +33,11 @@ public class LoginResponse extends ServerResponse {
 		this.token = token;
 	}
 
-	/**
-	 * @return the userName
-	 */
-	public String getUserName() {
-		return userName;
+	public String getJobID() {
+		return jobID;
 	}
 
-	/**
-	 * @param userName the userName to set
-	 */
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setJobID(String jobID) {
+		this.jobID = jobID;
 	}
-
 }

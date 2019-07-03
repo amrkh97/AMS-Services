@@ -8,14 +8,15 @@ import java.sql.Types;
 import DB.DBManager;
 import Models.ServerResponse;
 import Models.Locations.Location;
+import Models.Locations.LocationResponse;
 
 public class LocationsDAL 
 {
-	public static ServerResponse addLocation(Location loc) {
+	public static LocationResponse addLocation(Location loc) {
 
-		String SPsql = "EXEC usp_Locations_Insert ?,?,?,?,?,?,?,?,?,?,?";
+		String SPsql = "EXEC usp_InsertNewLocation ?,?,?,?,?,?,?,?,?,?,?,?";
 		Connection conn = DBManager.getDBConn();
-		ServerResponse _ServerResponse = new ServerResponse();
+		LocationResponse locResponse = new LocationResponse();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setString(1, loc.getFreeFormatAddress());
@@ -27,26 +28,27 @@ public class LocationsDAL
 			cstmt.setString(7, loc.getPostalCode());
 			cstmt.setString(8, loc.getFloorLevel());
 			cstmt.setString(9, loc.getHouseNumber());
-			cstmt.registerOutParameter(10, Types.INTEGER);
+			cstmt.registerOutParameter(10, Types.NVARCHAR);
 			cstmt.registerOutParameter(11, Types.NVARCHAR);
+			cstmt.registerOutParameter(12, Types.INTEGER);
 			cstmt.execute();
-			_ServerResponse.setResponseHexCode(cstmt.getString(10));
-			_ServerResponse.setResponseMsg(cstmt.getString(11));
-
+			locResponse.setLocationID(cstmt.getInt(12));
+			locResponse.setResponseMessage(cstmt.getString(11));
+			locResponse.setReturnHex(cstmt.getString(10));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} finally {
 			try {
 				conn.close();
 				System.out.println("Connention Closed");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
 
-		return _ServerResponse;
+		return locResponse;
 	}
 
 }

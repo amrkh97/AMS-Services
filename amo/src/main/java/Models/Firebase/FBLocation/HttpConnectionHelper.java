@@ -5,7 +5,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.json.JSONObject;
+// import org.json.JSONObject;
 
 public class HttpConnectionHelper 
 {
@@ -17,15 +17,15 @@ public class HttpConnectionHelper
 	}
 	
 	
-	public void sendPost(String url, JSONObject jsonObject) throws Exception
-	{
-		HttpPost httpPostRequest = new HttpPost(url);
-	    StringEntity params =new StringEntity(jsonObject.toString());
-	    httpPostRequest.addHeader("content-type", "application/json");
-	    httpPostRequest.setEntity(params);
+	// public void sendPost(String url, JSONObject jsonObject) throws Exception
+	// {
+	// 	HttpPost httpPostRequest = new HttpPost(url);
+	//     StringEntity params =new StringEntity(jsonObject.toString());
+	//     httpPostRequest.addHeader("content-type", "application/json");
+	//     httpPostRequest.setEntity(params);
 	    
-	    HttpResponse response = httpClient.execute(httpPostRequest);
+	//     HttpResponse response = httpClient.execute(httpPostRequest);
 	    
-	    //TODO Handle the incoming response
-	}
+	//     //TODO Handle the incoming response
+	// }
 }
