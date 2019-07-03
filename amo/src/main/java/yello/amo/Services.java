@@ -13,12 +13,12 @@ import javax.ws.rs.core.Response;
 // import org.json.JSONObject;
 
 import BLL.*;
+import Models.AmbulanceMap.AmbulanceMapModel;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
 import Models.Locations.Location;
-import Models.MedicalRecord.MedicalRecord;
 import Models.PatientLocation.PatientLoc;
 import Models.Users.*;
 
@@ -302,15 +302,54 @@ public class Services {
     return Response.ok(CompanyManager.deleteCompany(companyToBeAdded)).build();
   }
   
-  @Path("medicalRecord/addMedicalRecord")
+  @Path("ambulanceMap/addAmbulanceMap")
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
-  public Response addMedicalRecord(MedicalRecord MedicalRecorda) 
-  {
-  	return Response.ok(MedicalRecordManager.addMedicalRecord(MedicalRecorda)).build();
+  public Response addAmbulanceMap(AmbulanceMapModel AmbulanceToBeAdded) {
+    return Response.ok(AmbulanceMapManager.addAmbulanceMap(AmbulanceToBeAdded)).build();
   }
-
+  
+  @Path("ambulanceMap/getByCarID")
+  @POST
+  @Consumes(MediaType.TEXT_PLAIN)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getAmbulanceMapbyVIN(Integer ID) {
+    return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByCarID(ID)).build();
+  }
+ 
+  @Path("ambulanceMap/getByDriverID")
+  @POST
+  @Consumes(MediaType.TEXT_PLAIN)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getAmbulanceCarMapByDriverID(Integer ID) {
+    return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByDriverID(ID)).build();
+  }
+  
+  @Path("ambulanceMap/getByParamedicID")
+  @POST
+  @Consumes(MediaType.TEXT_PLAIN)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getAmbulanceCarMapByParamedicID(Integer ID) {
+    return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByParamedicID(ID)).build();
+  }
+  
+  @Path("ambulanceMap/getByYelloPadID")
+  @POST
+  @Consumes(MediaType.TEXT_PLAIN)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getAmbulanceCarMapByYelloPadID(Integer ID) {
+    return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByYelloPadID(ID)).build();
+  }
+  
+  @Path("ambulanceMap/deleteAmbulanceMap")
+  @POST
+  @Consumes(MediaType.TEXT_PLAIN)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response deleteAmbulanceMap(Integer AmbulanceToBeAdded) {
+    return Response.ok(AmbulanceMapManager.deleteAmbulanceMap(AmbulanceToBeAdded)).build();
+  }
+  
 
   /*
    * @Path("locations/{id}")
