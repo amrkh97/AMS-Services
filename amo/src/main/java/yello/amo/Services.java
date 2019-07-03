@@ -19,7 +19,6 @@ import Models.Company.CompanyModel;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
 import Models.Locations.Location;
-import Models.MedicalRecord.MedicalRecord;
 import Models.PatientLocation.PatientLoc;
 import Models.Users.*;
 
@@ -303,15 +302,6 @@ public class Services {
     return Response.ok(CompanyManager.deleteCompany(companyToBeAdded)).build();
   }
   
-  @Path("medicalRecord/addMedicalRecord")
-  @POST
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response addMedicalRecord(MedicalRecord MedicalRecorda) 
-  {
-  	return Response.ok(MedicalRecordManager.addMedicalRecord(MedicalRecorda)).build();
-  }
-  
   @Path("ambulanceMap/addAmbulanceMap")
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
@@ -354,7 +344,6 @@ public class Services {
   
   
   
-
 
   /*
    * @Path("locations/{id}")
