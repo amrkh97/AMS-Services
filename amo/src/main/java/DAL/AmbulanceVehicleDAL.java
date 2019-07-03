@@ -25,7 +25,7 @@ public class AmbulanceVehicleDAL {
 	 public static ArrayList<AmbulanceVehicleModel>  getAllCars()
 	 {
 		 
-		 String SPsql = "EXEC usp_AmbulanceVehicle_SelectAll";
+		 String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_SelectAll";
 		 Connection conn = DBManager.getDBConn();
 		ArrayList<AmbulanceVehicleModel>  Array=  new 	ArrayList<AmbulanceVehicleModel>()  ;
 		 	
@@ -36,6 +36,7 @@ public class AmbulanceVehicleDAL {
 			        ResultSet rs = cstmt.executeQuery();
 			     
 			        while(rs.next()) {
+			        	_AmbulanceVehicle  =new AmbulanceVehicleModel();
 			        	 _AmbulanceVehicle.setVin(rs.getInt("Vin"));
 			        	_AmbulanceVehicle.setImplication(rs.getNString("Implication"));
 				        _AmbulanceVehicle.setMake(rs.getString("Make"));
@@ -52,7 +53,8 @@ public class AmbulanceVehicleDAL {
 				        _AmbulanceVehicle.setModel(rs.getString("Model"));
 				        _AmbulanceVehicle.setDriverPhoneNumber(rs.getString("DriverPhoneNumber"));
 				        _AmbulanceVehicle.setVehicleStatus(rs.getString("VehicleStatus"));
-			       
+				        _AmbulanceVehicle.setAmbulanceVehiclePicture(rs.getString("AmbulanceVehiclePicture"));
+					       
 			        	Array.add(_AmbulanceVehicle);
 			        }
 			      
@@ -86,13 +88,14 @@ public class AmbulanceVehicleDAL {
 		///////////////////////////////////////////////////GEt car by ID///////////////////////////////////////////////////////////
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	 
 					
-		 public static AmbulanceVehicleModel getCarByID(int VIN)
+		 public static ArrayList<AmbulanceVehicleModel> getCarByID(int VIN)
 		 {
 			 
 				
 					String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_SelectByVIN ?,?,?";
 					Connection conn = DBManager.getDBConn();
 					AmbulanceVehicleModel _AmbulanceVehicle = new AmbulanceVehicleModel();
+					ArrayList<AmbulanceVehicleModel>  Array=  new 	ArrayList<AmbulanceVehicleModel>();
 					ServerResponse _ServerResponse=new  ServerResponse();
 					try {
 							CallableStatement cstmt  = conn.prepareCall(SPsql);
@@ -109,8 +112,9 @@ public class AmbulanceVehicleDAL {
 						       }
 
 								ResultSet resultSet =  cstmt.executeQuery();
-						        resultSet.next();
-
+						    
+						        while(resultSet.next()) {
+						        	 _AmbulanceVehicle = new AmbulanceVehicleModel();
 					        _AmbulanceVehicle.setVin(resultSet.getInt("Vin"));
 					        _AmbulanceVehicle.setImplication(resultSet.getString("Implication"));
 					        _AmbulanceVehicle.setMake( resultSet.getString("Make"));
@@ -128,9 +132,10 @@ public class AmbulanceVehicleDAL {
           				    _AmbulanceVehicle.setDriverPhoneNumber( resultSet.getString("DriverPhoneNumber"));
 				            _AmbulanceVehicle.setAssignedYPID( resultSet.getString("AssignedYPID"));
 				            _AmbulanceVehicle.setVehicleStatus( resultSet.getString("VehicleStatus"));
-					   			        
-					        
-					        
+				            _AmbulanceVehicle.setAmbulanceVehiclePicture(resultSet.getString("AmbulanceVehiclePicture"));
+						       	        
+				            Array.add( _AmbulanceVehicle);
+						        }    
 				         }catch (SQLException e) {
 						
 						e.printStackTrace();
@@ -145,7 +150,7 @@ public class AmbulanceVehicleDAL {
 					}
 						
 					
-					return _AmbulanceVehicle;
+					return Array;
 				}
 
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,7 +161,7 @@ public class AmbulanceVehicleDAL {
 		 public static ArrayList<AmbulanceVehicleModel>  getCarsByBrand(String Brand)
 		 {
 			 
-			 String SPsql = "EXEC usp_AmbulanceVehicle_SelectByBrand ?,?,?";
+			 String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_SelectByBrand ?,?,?";
 			 Connection conn = DBManager.getDBConn();
 			ArrayList<AmbulanceVehicleModel>  Array=  new 	ArrayList<AmbulanceVehicleModel>()  ;
 			 	
@@ -170,7 +175,7 @@ public class AmbulanceVehicleDAL {
 				        ResultSet rs = cstmt.executeQuery();
 				     
 				        while(rs.next()) {
-				        	System.out.println(rs.getInt("Vin"));
+				        	_AmbulanceVehicle  =new AmbulanceVehicleModel();
 				        	 _AmbulanceVehicle.setVin(rs.getInt("Vin"));
 				        	_AmbulanceVehicle.setImplication(rs.getNString("Implication"));
 					        _AmbulanceVehicle.setMake(rs.getString("Make"));
@@ -188,7 +193,8 @@ public class AmbulanceVehicleDAL {
 					        _AmbulanceVehicle.setDriverPhoneNumber(rs.getString("DriverPhoneNumber"));
 					        _AmbulanceVehicle.setAssignedYPID(rs.getString("AssignedYPID"));
 					        _AmbulanceVehicle.setVehicleStatus(rs.getString("VehicleStatus"));
-				       
+					        _AmbulanceVehicle.setAmbulanceVehiclePicture(rs.getString("AmbulanceVehiclePicture"));
+						       
 				        	Array.add(_AmbulanceVehicle);
 				        }
 				      
@@ -216,14 +222,14 @@ public class AmbulanceVehicleDAL {
 			}
 
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			///////////////////////////////////////////////////GEt cars by Brand///////////////////////////////////////////////////////////
+			///////////////////////////////////////////////////GEt cars by STatus///////////////////////////////////////////////////////////
 			////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	 
 			
 
 		 public static ArrayList<AmbulanceVehicleModel>  getCarsBySts(String Sts)
 		 {
 			 
-			 String SPsql = "EXEC usp_AmbulanceVehicle_SelectBySts ?,?,?";
+			 String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_SelectBySts ?,?,?";
 			 Connection conn = DBManager.getDBConn();
 			ArrayList<AmbulanceVehicleModel>  Array=  new 	ArrayList<AmbulanceVehicleModel>()  ;
 			 	
@@ -237,7 +243,8 @@ public class AmbulanceVehicleDAL {
 				        ResultSet rs = cstmt.executeQuery();
 				     
 				        while(rs.next()) {
-				        	System.out.println(rs.getInt("Vin"));
+				        	_AmbulanceVehicle  =new AmbulanceVehicleModel();
+
 				        	 _AmbulanceVehicle.setVin(rs.getInt("Vin"));
 				        	_AmbulanceVehicle.setImplication(rs.getNString("Implication"));
 					        _AmbulanceVehicle.setMake(rs.getString("Make"));
@@ -255,7 +262,7 @@ public class AmbulanceVehicleDAL {
 					        _AmbulanceVehicle.setDriverPhoneNumber(rs.getString("DriverPhoneNumber"));
 					        _AmbulanceVehicle.setAssignedYPID(rs.getString("AssignedYPID"));
 					        _AmbulanceVehicle.setVehicleStatus(rs.getString("VehicleStatus"));
-				       
+				          _AmbulanceVehicle.setAmbulanceVehiclePicture(rs.getString("AmbulanceVehiclePicture"));
 				        	Array.add(_AmbulanceVehicle);
 				        }
 				      
@@ -291,7 +298,7 @@ public class AmbulanceVehicleDAL {
 	 //New Car insertion
 	 public static ServerResponse insertCar(AmbulanceVehicleModel Car)
 	 {
-			String SPsql = "EXEC usp_AmbulanceVehicle_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
+			String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
 			Connection conn = DBManager.getDBConn();
 			ServerResponse _ServerResponse = new ServerResponse();
 		
@@ -299,7 +306,7 @@ public class AmbulanceVehicleDAL {
 
 
 					CallableStatement cstmt  = conn.prepareCall(SPsql);
-					
+	
 			        cstmt.setInt(1, Car.getVin());
 			        cstmt.setString(2, Car.getImplication());
 			        cstmt.setString(3, Car.getMake());
@@ -316,8 +323,9 @@ public class AmbulanceVehicleDAL {
 			        cstmt.setString(14,Car.getModel());
 			        cstmt.setString(15,Car.getDriverPhoneNumber());
 			        cstmt.setString(16,Car.getAssignedYPID());
-			        cstmt.setString(17,Car.getVehicleStatus());
-				    System.out.println(Car.getAssignedYPID());
+			        cstmt.setString(17,Car.getAmbulanceVehiclePicture());
+					
+				       
 			       
 				    cstmt.registerOutParameter(18, Types.NVARCHAR);
 					cstmt.registerOutParameter(19, Types.NVARCHAR);
@@ -351,11 +359,11 @@ public class AmbulanceVehicleDAL {
 
 
 	
-	//Update  a Car insertion
+
 	 public static ServerResponse UpdateCar (AmbulanceVehicleModel Car)
 	 {
 		 
-		 String SPsql = "EXEC usp_AmbulanceVehicle_Update ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
+		 String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_Update ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
 			Connection conn = DBManager.getDBConn();
 			ServerResponse _ServerResponse = new ServerResponse();
 		
@@ -380,10 +388,8 @@ public class AmbulanceVehicleDAL {
 			        cstmt.setString(14,Car.getModel());
 			        cstmt.setString(15,Car.getDriverPhoneNumber());
 			        cstmt.setString(16,Car.getAssignedYPID());
-			        cstmt.setString(17,Car.getVehicleStatus());
-
-				    System.out.println(Car.getAssignedYPID());
-			       cstmt.registerOutParameter(18, Types.NVARCHAR);
+			        cstmt.setString(17,Car.getAmbulanceVehiclePicture());	       
+			        cstmt.registerOutParameter(18, Types.NVARCHAR);
 					cstmt.registerOutParameter(19, Types.NVARCHAR);
 					  cstmt.execute();
 
@@ -409,12 +415,14 @@ public class AmbulanceVehicleDAL {
 				
 		 
 	 }
-	 //delete car
-	 public static ServerResponse DeleteCars(int vin)
+	 
+	 
+	 
+	 //////////////////////////////////////status
+
+	 public static ServerResponse UpdateCarStatus(int Vin ,String newStatus)
 	 {
-		 
-		
-		 String SPsql = "EXEC usp_AmbulanceVehicle_Delete ?";	
+		 String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_UpdateStatus ?,?,?,?";	
 			Connection conn = DBManager.getDBConn();
 			ServerResponse _ServerResponse = new ServerResponse();
 
@@ -422,11 +430,59 @@ public class AmbulanceVehicleDAL {
 
 
 					CallableStatement cstmt  = conn.prepareCall(SPsql);
-			       cstmt.registerOutParameter(1, Types.NVARCHAR);
+					  cstmt.setInt(2, Vin);  
+					  cstmt.setString(1, newStatus);
+					cstmt.registerOutParameter(3, Types.NVARCHAR);
+					cstmt.registerOutParameter(4, Types.NVARCHAR);
+					  
+					cstmt.execute();
+					  
+			       _ServerResponse.setResponseHexCode(cstmt.getString(3));
+			       _ServerResponse.setResponseMsg(cstmt.getString(4));
+						
+				      
+		         }catch (SQLException e) {
+		        	 System.out.println("i hav error");
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				try {
+					conn.close();
+					System.out.println("Connention Closed");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			return _ServerResponse;
+	 }
+	 
+	 
+	
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////delete Car///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+ public static ServerResponse DeleteCars(int vin)
+	 {
+		 
+		
+		 String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_Delete ?,?,?";	
+			Connection conn = DBManager.getDBConn();
+			ServerResponse _ServerResponse = new ServerResponse();
+
+			try {
+
+
+					CallableStatement cstmt  = conn.prepareCall(SPsql);
+					  cstmt.setInt(1, vin); 
 					cstmt.registerOutParameter(2, Types.NVARCHAR);
+					cstmt.registerOutParameter(3, Types.NVARCHAR);
 					  cstmt.execute();
-			       _ServerResponse.setResponseHexCode(cstmt.getString("responseCode"));
-			       _ServerResponse.setResponseMsg(cstmt.getString("responseMessage"));
+			       _ServerResponse.setResponseHexCode(cstmt.getString(2));
+			       _ServerResponse.setResponseMsg(cstmt.getString(3));
 						
 				      
 		         }catch (SQLException e) {
@@ -444,8 +500,4 @@ public class AmbulanceVehicleDAL {
 			}
 			return _ServerResponse;
 				
-	 }
-	 
-	 
-	
-}
+	 }}

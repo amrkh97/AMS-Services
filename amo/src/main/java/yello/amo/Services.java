@@ -13,7 +13,11 @@ import javax.ws.rs.core.Response;
 // import org.json.JSONObject;
 
 import BLL.*;
+<<<<<<< HEAD
+import Models.ServerResponse;
+=======
 import Models.AmbulanceMap.AmbulanceMapModel;
+>>>>>>> master
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.ServerResponse;
@@ -136,6 +140,11 @@ public class Services {
     return Response.ok(AmbulanceVehicleManger.insertCar(CAR)).build();
   }
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////// GET ///////////////////////////////////////////////////
+
+///////////////////////////////////////////// BY VIN
   @Path("ambulance/getAmbulanceVehicles/ID")
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
@@ -145,14 +154,10 @@ public class Services {
       return Response.ok("Bad Request No VIN").build();
     }
 
-    AmbulanceVehicleModel X = AmbulanceVehicleManger.getCarById(CAR.getVin());
-
-    if (X == null) {
-      return Response.ok(" unknown error with database  ").build();
-    }
+  
     return Response.ok(AmbulanceVehicleManger.getCarById(CAR.getVin())).build();
   }
-
+///////////////////////////////////////////// BY BRAND
   @Path("ambulance/getAmbulanceVehicles/Brand")
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
@@ -254,6 +259,7 @@ public class Services {
 	    {return Response.ok(" unknown error with database  ").build();}
 		return Response.ok(X).build();
   }
+<<<<<<< HEAD
     
     
    /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -489,8 +495,94 @@ public class Services {
 	 * getLocation(@PathParam("id") int id) { return
 	 * Response.ok(LocationManager.getLocation(id)).build(); }
 	 */
+=======
+  
+
+  /////////////////////////////	DeActivated
+  @Path("ambulance/getDeactivatedAmbulanceVehicles")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response GetAmbulanceVehicle() { 
+	    ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getDeActivatedCars();
+	    
+	    return Response.ok(X).build();
+  }
+
+  /////////////////////////////	Activated  
+   @Path("ambulance/getActivatedAmbulanceVehicles")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response GetAmbulanceVehicleSts() {
+    
+	   ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getActivatedCars();
+		 
+    return Response.ok(X).build();
+
+  }
+  
+  /////////////////////////////	Deleted 
+
+  @Path("ambulance/getDeletedAmbulanceVehicles")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response GetDeletedAmbulanceVehicle() {
+    
+    ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getDeletedCars();
+    
+    return Response.ok(X).build();
+  }
+ 
+  //////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////// update ////////////////////////////////////////////
+  
+>>>>>>> master
 
 
+  ///////////////////////////////////////////status/////////////////////////////////////////////////
+  ////////////////////////////FREE
+  @Path("ambulance/status/free")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response setCarFree(AmbulanceVehicleModel Car) {
+    return Response.ok(AmbulanceVehicleManger.SetCarFree(Car.getVin())).build();
+  }
+	 
+  ////////////////////////////////////BUSY
+  @Path("ambulance/status/busy")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response setCarBusy(AmbulanceVehicleModel Car) {
+	    return Response.ok(AmbulanceVehicleManger.SetCarBusy(Car.getVin())).build();
+  }
+
+	////////////////////////////////////MAINTAINANCE
+  @Path("ambulance/status/maintainance")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response setCarMaintainance(AmbulanceVehicleModel Car) {
+	    return Response.ok(AmbulanceVehicleManger.SetCarMaintain(Car.getVin())).build();
+  }
+	  
+  
+//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////DELETE ////////////////////////////////////////////
+	
+	@Path("ambulance/delete")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response DeleteCar(AmbulanceVehicleModel Car) {
+	return Response.ok(AmbulanceVehicleManger.DeleteCars(Car.getVin()) ).build();
+	}
+
+  ///////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////
   @Path("yelloPad/getAllYelloPads")
   @POST
   @Produces(MediaType.APPLICATION_JSON)
