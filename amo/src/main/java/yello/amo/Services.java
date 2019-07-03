@@ -388,7 +388,59 @@ public class Services {
     {
     	return Response.ok(MedicalRecordManager.addMedicalRecord(MedicalRecorda)).build();
     }
+    @Path("medicalRecord/getAllMedicalRecords")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllMedicalRecords() 
+    {
     
+    	return Response.ok(MedicalRecordManager.getAllMedicalRecords()).build();
+    }
+    @Path("medicalRecord/getMedicalRecordByID")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getMedicalRecordByID(MedicalRecord MedicalRecorda ) 
+    {
+    
+    	return Response.ok(MedicalRecordManager.getMedicalRecordByID(MedicalRecorda.getMedicalRecordID())).build();
+    }
+    @Path("medicalRecord/getMedicalRecordByStatus")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getMedicalRecordByStatus(MedicalRecord MedicalRecorda ) 
+    {
+    
+    	return Response.ok(MedicalRecordManager.getMedicalRecordByStatus(MedicalRecorda.getmRStatus() )).build();
+    }
+    @Path("medicalRecord/updateMedicalRecord")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateMedicalRecord(MedicalRecord MedicalRecorda) 
+    {
+    	return Response.ok(MedicalRecordManager.updateMedicalRecord(MedicalRecorda)).build();
+    }
+    @Path("medicalRecord/deleteMedicalRecord")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response deleteMedicalReport(MedicalRecord MedicalRecorda) 
+    {
+    	return Response.ok(MedicalRecordManager.deleteMedicalRecord(MedicalRecorda.getMedicalRecordID() )).build();
+    }
+    
+    
+    @Path("medicalRecord/getMedicalRecordByPatientID")
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getMedicalRecordByPatientID(MedicalRecord MedicalRecorda ) 
+    {
+    
+    	return Response.ok(MedicalRecordManager.getMedicalRecordByPatientID(MedicalRecorda.getPatientID())).build();
+    }
 	/*
 	 * @Path("locations/{id}")
 	 * 

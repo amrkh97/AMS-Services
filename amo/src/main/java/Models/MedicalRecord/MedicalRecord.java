@@ -2,7 +2,7 @@ package Models.MedicalRecord;
 
 public class MedicalRecord {
 	private Integer  medicalRecordID;
-    private String   respSQN ;
+    private Integer  respSQN ;
     private Integer  patientID;
     private String   bloodType;
 	private String   bloodPressure;
@@ -37,10 +37,10 @@ public class MedicalRecord {
 	public void setMedicalRecordID(Integer medicalRecordID) {
 		this.medicalRecordID = medicalRecordID;
 	}
-	public String getRespSQN() {
+	public Integer getRespSQN() {
 		return respSQN;
 	}
-	public void setRespSQN(String respSQN) {
+	public void setRespSQN(Integer respSQN) {
 		this.respSQN = respSQN;
 	}
 	public Integer getPatientID() {
