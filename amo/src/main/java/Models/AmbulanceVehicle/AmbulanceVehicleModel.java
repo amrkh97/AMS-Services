@@ -21,6 +21,8 @@ public class AmbulanceVehicleModel {
     private String model ;
     private String driverPhoneNumber ;
     private String AssignedYPID;
+    
+    private String AmbulanceVehiclePicture ;
     private String  vehicleStatus ;
 
 
@@ -164,6 +166,15 @@ public class AmbulanceVehicleModel {
 
 	public void setAssignedYPID(String assignedYPID) {
 		AssignedYPID = assignedYPID;
+	}
+
+	public String getAmbulanceVehiclePicture() {
+		// TODO Auto-generated method stub
+		return AmbulanceVehiclePicture ;
+	}
+
+	public void setAmbulanceVehiclePicture(String ambulanceVehiclePicture) {
+		AmbulanceVehiclePicture = ambulanceVehiclePicture;
 	}
 
 }
