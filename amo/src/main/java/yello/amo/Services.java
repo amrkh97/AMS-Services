@@ -18,6 +18,7 @@ import Models.Company.CompanyModel;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
 import Models.Locations.Location;
+import Models.MedicalRecord.MedicalRecord;
 import Models.PatientLocation.PatientLoc;
 import Models.Users.*;
 
@@ -300,6 +301,16 @@ public class Services {
   public Response deleteCompany(Integer companyToBeAdded) {
     return Response.ok(CompanyManager.deleteCompany(companyToBeAdded)).build();
   }
+  
+  @Path("medicalRecord/addMedicalRecord")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response addMedicalRecord(MedicalRecord MedicalRecorda) 
+  {
+  	return Response.ok(MedicalRecordManager.addMedicalRecord(MedicalRecorda)).build();
+  }
+
 
   /*
    * @Path("locations/{id}")
