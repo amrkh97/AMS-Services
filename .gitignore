@@ -1,0 +1,6 @@
+
+*.class
+
+*.MF
+
+amo/\.classpath
