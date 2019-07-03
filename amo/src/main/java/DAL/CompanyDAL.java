@@ -31,21 +31,21 @@ public static ArrayList<CompanyModel> getAllCompanies() {
 				currentCompany.setCompanyAddress(RS.getString("CompanyAddress"));
 				currentCompany.setCompanyContactPerson(RS.getString("ContactPerson"));
 				currentCompany.setCompanyName(RS.getString("CompanyName"));
-				currentCompany.setCompanyStatus(RS.getInt("CompanyStatus"));
+				currentCompany.setCompanyStatus(RS.getString("CompanyStatus"));
 				currentCompany.setCompanyPhoneNumber(RS.getString("CompanyPhone"));
 				
 				allCompanies.add(currentCompany);
 			}
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} finally {
 			try {
 				conn.close();
 				System.out.println("Connection Closed");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -74,19 +74,19 @@ public static CompanyModel getCompanyByName(String companyName) {
 				currentCompany.setCompanyAddress(RS.getString("CompanyAddress"));
 				currentCompany.setCompanyContactPerson(RS.getString("ContactPerson"));
 				currentCompany.setCompanyName(RS.getString("CompanyName"));
-				currentCompany.setCompanyStatus(RS.getInt("CompanyStatus"));
+				currentCompany.setCompanyStatus(RS.getString("CompanyStatus"));
 				currentCompany.setCompanyPhoneNumber(RS.getString("CompanyPhone"));
 
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} finally {
 			try {
 				conn.close();
 				System.out.println("Connection Closed");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -115,19 +115,19 @@ public static CompanyModel getCompanyByID(Integer companyID) {
 			currentCompany.setCompanyAddress(RS.getString("CompanyAddress"));
 			currentCompany.setCompanyContactPerson(RS.getString("ContactPerson"));
 			currentCompany.setCompanyName(RS.getString("CompanyName"));
-			currentCompany.setCompanyStatus(RS.getInt("CompanyStatus"));
+			currentCompany.setCompanyStatus(RS.getString("CompanyStatus"));
 			currentCompany.setCompanyPhoneNumber(RS.getString("CompanyPhone"));
 
 
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
+		
 		e.printStackTrace();
 	} finally {
 		try {
 			conn.close();
 			System.out.println("Connection Closed");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
@@ -157,19 +157,19 @@ public static CompanyModel getCompanyByStatus(Integer companyStatus) {
 			currentCompany.setCompanyAddress(RS.getString("CompanyAddress"));
 			currentCompany.setCompanyContactPerson(RS.getString("ContactPerson"));
 			currentCompany.setCompanyName(RS.getString("CompanyName"));
-			currentCompany.setCompanyStatus(RS.getInt("CompanyStatus"));
+			currentCompany.setCompanyStatus(RS.getString("CompanyStatus"));
 			currentCompany.setCompanyPhoneNumber(RS.getString("CompanyPhone"));
 
 
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
+		
 		e.printStackTrace();
 	} finally {
 		try {
 			conn.close();
 			System.out.println("Connection Closed");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

@@ -36,14 +36,14 @@ public class LocationsDAL
 			locResponse.setResponseMessage(cstmt.getString(11));
 			locResponse.setReturnHex(cstmt.getString(10));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} finally {
 			try {
 				conn.close();
 				System.out.println("Connention Closed");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}

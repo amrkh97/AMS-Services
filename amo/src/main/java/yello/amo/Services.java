@@ -1,7 +1,7 @@
 package yello.amo;
 
 import java.util.ArrayList;
-
+import BLL.*;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -9,10 +9,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import org.json.JSONObject;
-
-import BLL.*;
+import Models.ServerResponse;
+import Models.AmbulanceMap.AmbulanceMapModel;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.Firebase.FBLocation.FBLocationEnum;
@@ -23,189 +21,202 @@ import Models.MedicalRecord.MedicalRecord;
 import Models.PatientLocation.PatientLoc;
 import Models.Users.*;
 
-
 /**
  * Root resource (exposed at "api" path)
  */
 @Path("api")
 public class Services {
 
-  
-    private static final AmbulanceVehicleModel Null = null;
+  private static final AmbulanceVehicleModel Null = null;
 
-
-	@GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Server is Running ..!";
-    }
-    @Path("login")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response login(LoginCredentialsRequest req) {
-    
-        return Response.ok(UserManager.login(req.getEmailOrPAN(), req.getPassword())).build();
-    }
-    
-    @Path("incidents/incidentType")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getIncidentType() {
-    
-        return Response.ok(IncidentTypeManager.getIncidentType()).build();
-    }
-    
-    @Path("addLocation")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addLocation(Location location) 
-    {
-//    	ServerResponse serverResponse = LocationManager.addLocation(location);
-//    	if(Integer.parseInt(serverResponse.getResponseHexCode(), 16) == 0x00)
-//    	{
-//    		// At This Point i know that the Insertion In DB is ok
-//    		JSONObject fbLocationObj = new JSONObject();
-//    		
-//    		fbLocationObj.put(FBLocationEnum.Address.getJsonKey(), location.getFreeFormatAddress());
-//    		fbLocationObj.put(FBLocationEnum.Longitude.getJsonKey(), location.getLongitude());
-//    		fbLocationObj.put(FBLocationEnum.Latitude.getJsonKey(), location.getLatitude());
-//    		
-//    		HttpConnectionHelper httpConnectionHelper = new HttpConnectionHelper();
-//    		try 
-//    		{
-//				httpConnectionHelper.sendPost(FBLocationEnum.FBLocationsURL.getJsonKey(), fbLocationObj);
-//			}
-//    		catch (Exception e) 
-//    		{
-//    			System.err.println("Error Sending Location Post Request: " + e);
-//				e.printStackTrace();
-//			}
-//    	}
-    	// At This Point i know that the Insertion In DB is ok
-		/*JSONObject fbLocationObj = new JSONObject();
-		
-		fbLocationObj.put(FBLocationEnum.Address.getJsonKey(), location.getFreeFormatAddress());
-		fbLocationObj.put(FBLocationEnum.Longitude.getJsonKey(), location.getLongitude());
-		fbLocationObj.put(FBLocationEnum.Latitude.getJsonKey(), location.getLatitude());
-		
-		HttpConnectionHelper httpConnectionHelper = new HttpConnectionHelper();
-		try 
-		{
-			System.out.println("sdsd");
-			httpConnectionHelper.sendPost(FBLocationEnum.FBLocationsURL.getJsonKey(), fbLocationObj);
-		}
-		catch (Exception e) 
-		{
-			System.err.println("Error Sending Location Post Request: " + e);
-			e.printStackTrace();
-		}
-    	return Response.ok().build();*/
-    	if(!(location.getFreeFormatAddress() == null || location.getFreeFormatAddress().equals("")))
-    	{
-    		if(!(location.getLongitude() == "0" || location.getLongitude() == null || location.getLongitude().equals("none")))
-    		{
-    			if(!(location.getLatitude() == "0" || location.getLatitude() == null || location.getLatitude().equals("none")))
-        		{
-    				return Response.ok(LocationManager.addLocation(location)).build() ;
-        		}
-    			else 
-    			{
-    				return Response.ok(" No Latitude Provided ").build();
-    			}
-    		}
-    		else
-    		{
-    			return Response.ok(" No Longitude Provided ").build();
-    		}
-    	}
-    	else
-    	{
-    		return Response.ok(" No Address Provided ").build();
-    	}
-    }
-    @Path("ambulance/addAmbulanceVehicle")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addAmbulanceVehicle(AmbulanceVehicleModel CAR) 
-    {
-    	
-		return Response.ok(AmbulanceVehicleManger.insertCar(CAR)).build() ;
-    }
-    
-    @Path("ambulance/getAmbulanceVehicles/ID")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response GetAmbulanceVehicleID (AmbulanceVehicleModel CAR) 
-    {
-    	if (CAR.getVin()==0){		return Response.ok("Bad Request No VIN").build(); }
-    
-    	AmbulanceVehicleModel X =	AmbulanceVehicleManger.getCarById(CAR.getVin());
-    	
-    	if (X == null){    return Response.ok(" unknown error with database  ").build();}
-		return Response.ok(AmbulanceVehicleManger.getCarById(CAR.getVin())).build();
-    }
-    
-    
-    
-    
-    @Path("ambulance/getAmbulanceVehicles/Brand")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response GetAmbulanceVehicleBrand(AmbulanceVehicleModel CAR) 
-    { 
-    	System.out.println(CAR.getBrand());
-    	if (CAR.getBrand()==null)
-       {return Response.ok("Bad Request No VIN").build();}
-	     ArrayList<AmbulanceVehicleModel> X =	AmbulanceVehicleManger.getCarsByBrand(CAR.getBrand());
-	   if (X == null)
-	    {return Response.ok(" unknown error with database  ").build();}
-		return Response.ok().build();
-    }
-    
-    @Path("ambulance/getAmbulanceVehicles/Status")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response GetAmbulanceVehicleSts(AmbulanceVehicleModel CAR) 
-    { 
-    	if (CAR.getVehicleStatus()==null)
-        {return Response.ok("Bad Request No VIN").build();}
-	     ArrayList<AmbulanceVehicleModel> X =	AmbulanceVehicleManger.getCarsBySts(CAR.getVehicleStatus());
-	   if (X == null)
-	    {return Response.ok(" unknown error with database  ").build();}
-		return Response.ok(X).build();
+  @GET
+  @Produces(MediaType.TEXT_PLAIN)
+  public String getIt() {
+    return "Server is Running ..!";
   }
-    
-    @Path("ambulance/getAmbulanceVehicles")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response GetAmbulanceVehicle () 
-    {
-		return Response.ok(AmbulanceVehicleManger.getAllCars()).build();
+
+  @Path("login")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response login(LoginCredentialsRequest req) {
+
+    return Response.ok(UserManager.login(req.getEmailOrPAN(), req.getPassword())).build();
+  }
+  
+  @Path("logout")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response logout(LogoutResponse req) {
+
+    return Response.ok(UserManager.logout(req.getUserID())).build();
+  }
+
+  @Path("signup")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response signup(SignUp req) {
+
+    return Response.ok(UserManager.signup(req)).build();
+  }
+
+  @Path("incidents/incidentType")
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getIncidentType() {
+
+    return Response.ok(IncidentTypeManager.getIncidentType()).build();
+  }
+  @Path("incidnets/incidentPriority")
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getIncidentPriority() {
+  
+      return Response.ok(IncidentPriorityManager.getIncidentPriority()).build();
+  }
+
+  @Path("incidents/alarmLevel")
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getAlarmLevel() {
+  
+      return Response.ok(AlarmLevelManager.getAlarmLevel()).build();
+  }
+
+  @Path("addLocation")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response addLocation(Location location) {
+    // ServerResponse serverResponse = LocationManager.addLocation(location);
+    // if(Integer.parseInt(serverResponse.getResponseHexCode(), 16) == 0x00)
+    // {
+    // // At This Point i know that the Insertion In DB is ok
+    // JSONObject fbLocationObj = new JSONObject();
+    //
+    // fbLocationObj.put(FBLocationEnum.Address.getJsonKey(),
+    // location.getFreeFormatAddress());
+    // fbLocationObj.put(FBLocationEnum.Longitude.getJsonKey(),
+    // location.getLongitude());
+    // fbLocationObj.put(FBLocationEnum.Latitude.getJsonKey(),
+    // location.getLatitude());
+    //
+    // HttpConnectionHelper httpConnectionHelper = new HttpConnectionHelper();
+    // try
+    // {
+    // httpConnectionHelper.sendPost(FBLocationEnum.FBLocationsURL.getJsonKey(),
+    // fbLocationObj);
+    // }
+    // catch (Exception e)
+    // {
+    // System.err.println("Error Sending Location Post Request: " + e);
+    // e.printStackTrace();
+    // }
+    // }
+    // At This Point i know that the Insertion In DB is ok
+    // JSONObject fbLocationObj = new JSONObject();
+
+    // fbLocationObj.put(FBLocationEnum.Address.getJsonKey(), location.getFreeFormatAddress());
+    // fbLocationObj.put(FBLocationEnum.Longitude.getJsonKey(), location.getLongitude());
+    // fbLocationObj.put(FBLocationEnum.Latitude.getJsonKey(), location.getLatitude());
+
+    // HttpConnectionHelper httpConnectionHelper = new HttpConnectionHelper();
+    // try {
+    //   System.out.println("sdsd");
+    //   httpConnectionHelper.sendPost(FBLocationEnum.FBLocationsURL.getJsonKey(), fbLocationObj);
+    // } catch (Exception e) {
+    //   System.err.println("Error Sending Location Post Request: " + e);
+    //   e.printStackTrace();
+    // }
+    return Response.ok().build();
+  }
+
+  @Path("ambulance/addAmbulanceVehicle")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response addAmbulanceVehicle(AmbulanceVehicleModel CAR) {
+
+    return Response.ok(AmbulanceVehicleManger.insertCar(CAR)).build();
+  }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////// GET ///////////////////////////////////////////////////
+
+///////////////////////////////////////////// BY VIN
+  @Path("ambulance/getAmbulanceVehicles/ID")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response GetAmbulanceVehicleID(AmbulanceVehicleModel CAR) {
+    if (CAR.getVin() == 0) {
+      return Response.ok("Bad Request No VIN").build();
     }
 
-    @Path("ambulance/updateAmbulanceVehicles")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response UpdateAmbulanceVehicle (AmbulanceVehicleModel Car) 
-    {
-		return Response.ok(AmbulanceVehicleManger.UpdateCar(Car)).build();
+  
+    return Response.ok(AmbulanceVehicleManger.getCarById(CAR.getVin())).build();
+  }
+///////////////////////////////////////////// BY BRAND
+  @Path("ambulance/getAmbulanceVehicles/Brand")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response GetAmbulanceVehicleBrand(AmbulanceVehicleModel CAR) {
+    System.out.println(CAR.getBrand());
+    if (CAR.getBrand() == null) {
+      return Response.ok("Bad Request No VIN").build();
     }
-    
-    @Path("yelloPad/getAllYelloPads")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllYelloPads() {
-    	
-    	return Response.ok().entity(YelloPadManager.getYelloPads()).build();
+    ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getCarsByBrand(CAR.getBrand());
+    if (X == null) {
+      return Response.ok(" unknown error with database  ").build();
     }
+    return Response.ok().build();
+  }
+  
+
+  /////////////////////////////	DeActivated
+  @Path("ambulance/getDeactivatedAmbulanceVehicles")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response GetAmbulanceVehicle() { 
+	    ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getDeActivatedCars();
+	    
+	    return Response.ok(X).build();
+  }
+
+  /////////////////////////////	Activated  
+   @Path("ambulance/getActivatedAmbulanceVehicles")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response GetAmbulanceVehicleSts() {
     
+	   ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getActivatedCars();
+		 
+    return Response.ok(X).build();
+
+  }
+  
+  /////////////////////////////	Deleted 
+
+  @Path("ambulance/getDeletedAmbulanceVehicles")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response GetDeletedAmbulanceVehicle() {
+    
+    ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getDeletedCars();
+    
+    return Response.ok(X).build();
+  }
+ 
+  //////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////// update ////////////////////////////////////////////
+  
     @Path("yelloPad/searchYelloPad")
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
@@ -450,5 +461,123 @@ public class Services {
 	 * getLocation(@PathParam("id") int id) { return
 	 * Response.ok(LocationManager.getLocation(id)).build(); }
 	 */
+
+  @Path("ambulance/updateAmbulanceVehicles")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response UpdateAmbulanceVehicle(AmbulanceVehicleModel Car) {
+    return Response.ok(AmbulanceVehicleManger.UpdateCar(Car)).build();
+  }
+
+  ///////////////////////////////////////////status/////////////////////////////////////////////////
+  ////////////////////////////FREE
+  @Path("ambulance/status/free")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response setCarFree(AmbulanceVehicleModel Car) {
+    return Response.ok(AmbulanceVehicleManger.SetCarFree(Car.getVin())).build();
+  }
+	 
+  ////////////////////////////////////BUSY
+  @Path("ambulance/status/busy")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response setCarBusy(AmbulanceVehicleModel Car) {
+	    return Response.ok(AmbulanceVehicleManger.SetCarBusy(Car.getVin())).build();
+  }
+
+	////////////////////////////////////MAINTAINANCE
+  @Path("ambulance/status/maintainance")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response setCarMaintainance(AmbulanceVehicleModel Car) {
+	    return Response.ok(AmbulanceVehicleManger.SetCarMaintain(Car.getVin())).build();
+  }
+	  
+  
+//////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////DELETE ////////////////////////////////////////////
+	
+	@Path("ambulance/delete")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response DeleteCar(AmbulanceVehicleModel Car) {
+	return Response.ok(AmbulanceVehicleManger.DeleteCars(Car.getVin()) ).build();
+	}
+
+  ///////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////
+  @Path("yelloPad/getAllYelloPads")
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getAllYelloPads() {
+
+    return Response.ok().entity(YelloPadManager.getYelloPads()).build();
+  }
+
+  
+  @Path("ambulanceMap/addAmbulanceMap")
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response addAmbulanceMap(AmbulanceMapModel AmbulanceToBeAdded) {
+    return Response.ok(AmbulanceMapManager.addAmbulanceMap(AmbulanceToBeAdded)).build();
+  }
+  
+  @Path("ambulanceMap/getByCarID")
+  @POST
+  @Consumes(MediaType.TEXT_PLAIN)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getAmbulanceMapbyVIN(Integer ID) {
+    return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByCarID(ID)).build();
+  }
+ 
+  @Path("ambulanceMap/getByDriverID")
+  @POST
+  @Consumes(MediaType.TEXT_PLAIN)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getAmbulanceCarMapByDriverID(Integer ID) {
+    return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByDriverID(ID)).build();
+  }
+  
+  @Path("ambulanceMap/getByParamedicID")
+  @POST
+  @Consumes(MediaType.TEXT_PLAIN)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getAmbulanceCarMapByParamedicID(Integer ID) {
+    return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByParamedicID(ID)).build();
+  }
+  
+  @Path("ambulanceMap/getByYelloPadID")
+  @POST
+  @Consumes(MediaType.TEXT_PLAIN)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getAmbulanceCarMapByYelloPadID(Integer ID) {
+    return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByYelloPadID(ID)).build();
+  }
+  
+  @Path("ambulanceMap/deleteAmbulanceMap")
+  @POST
+  @Consumes(MediaType.TEXT_PLAIN)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response deleteAmbulanceMap(Integer AmbulanceToBeAdded) {
+    return Response.ok(AmbulanceMapManager.deleteAmbulanceMap(AmbulanceToBeAdded)).build();
+  }
+  
+
+  /*
+   * @Path("locations/{id}")
+   * 
+   * @GET
+   * 
+   * @Produces(MediaType.APPLICATION_JSON) public Response
+   * getLocation(@PathParam("id") int id) { return
+   * Response.ok(LocationManager.getLocation(id)).build(); }
+   */
 
 }
