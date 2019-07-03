@@ -1,0 +1,154 @@
+{
+	"Requests": [
+		"Login",
+		{
+			"emailOrPAN": "emial-pan-nationalID",
+			"password": "minimum-8-characters"
+		},
+
+		"Logout",
+		{
+			"userID": "emial-pan-nationalID ([FOR NOW])"
+		},
+
+		"Logout (WHAT SHOULD BE DONE)",
+		{
+			"token": "loooooong-string"
+		},
+
+		"SignUp",
+		{
+			"firstName": "",
+			"lastName": "",
+			"birthDate": "",
+			"email": "",
+			"password": "",
+			"gender": "",
+			"contactNumber": "",
+			"country": "",
+			"city": "",
+			"state": "",
+			"street": "",
+			"postalCode": "",
+			"pan": "",
+			"nationalID": "",
+			"photo": ""
+		}
+	],
+
+	"Responses": [
+		"Login Success",
+		{
+			"responseHexCode": "00",
+			"responseMsg": "User logged in successfully",
+			"token": "loooooong-string",
+			"jobID": "0"
+		},
+
+		"Login Incorrect Password",
+		{
+			"responseHexCode": "02",
+			"responseMsg": "Incorrect password"
+		},
+
+		"Login Already Logged in",
+		{
+			"responseHexCode": "03",
+			"responseMsg": "User is logged in somewhere"
+		},
+
+		"Login Note Verified",
+		{
+			"responseHexCode": "04",
+			"responseMsg": "This user is not verified"
+		},
+
+		"Login User Not Verified",
+		{
+			"responseHexCode": "FE",
+			"responseMsg": "User status undefined"
+		},
+
+		"Login Didn't find user",
+		{
+			"responseHexCode": "FF",
+			"responseMsg": "No user found with given Email or PAN or National ID"
+		},
+		
+		"Login Database Catch Block",
+		{
+			"responseHexCode": "FC",
+			"responseMsg": "CATCH BLOCK: + ERROR_MESSAGE()"
+		},
+
+		"Login Email or Password passed as NULL",
+		{
+			"responseHexCode": "FD",
+			"responseMsg": "FAILED: Email or Password is NULL"
+		},
+
+		"-----------------------------------------------------------------------------------------------------------------------------",
+
+		"Logout Success",
+		{
+			"responseHexCode": "00",
+			"responseMsg": "Logged out successfully"
+		},
+
+		"Logout Already Logged Out",
+		{
+			"responseHexCode": "01",
+			"responseMsg": "Wrong user status; User is already logged out"
+		},
+
+		"Logout Awaiting Verification",
+		{
+			"responseHexCode": "02",
+			"responseMsg": "Wrong user status; User is awaiting verification"
+		},
+
+		"Logout Unknown User Status",
+		{
+			"responseHexCode": "FE",
+			"responseMsg": "Unknown user status"
+		},
+
+		"Logout User not found",
+		{
+			"responseHexCode": "FF",
+			"responseMsg": "No user found with given email or pan or national id"
+		},
+
+		"Logout UserID passed as null",
+		{
+			"responseHexCode": "FD",
+			"responseMsg": "FAILED: User ID is NULL"
+		},
+
+		"-----------------------------------------------------------------------------------------------------------------------------",
+
+		"SignUp Success",
+		{
+			"responseHexCode": "00",
+			"responseMsg": "Signed Up. Check Email for Verification"
+		},
+
+		"SignUp Already SignedUp",
+		{
+			"responseHexCode": "FF",
+			"responseMsg": "User already registered. Try signing in"
+		},
+
+		"SignUp Database Catch Block",
+		{
+			"responseHexCode": "FC",
+			"responseMsg": "CATCH BLOCK: + ERROR_MESSAGE()"
+		},
+
+		"SignUp Email or Password passed as NULL",
+		{
+			"responseHexCode": "FD",
+			"responseMsg": "FAILED: Email or Password is NULL"
+		}
+	]
+}
