@@ -67,6 +67,21 @@ public class Services {
 
     return Response.ok(IncidentTypeManager.getIncidentType()).build();
   }
+  @Path("incidnets/incidentPriority")
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getIncidentPriority() {
+  
+      return Response.ok(IncidentPriorityManager.getIncidentPriority()).build();
+  }
+
+  @Path("incidents/alarmLevel")
+  @POST
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response getAlarmLevel() {
+  
+      return Response.ok(AlarmLevelManager.getAlarmLevel()).build();
+  }
 
   @Path("addLocation")
   @POST
