@@ -344,7 +344,7 @@ public class Services {
   
   @Path("ambulanceMap/deleteAmbulanceMap")
   @POST
-  @Consumes(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.TEXT_PLAIN)
   @Produces(MediaType.APPLICATION_JSON)
   public Response deleteAmbulanceMap(Integer AmbulanceToBeAdded) {
     return Response.ok(AmbulanceMapManager.deleteAmbulanceMap(AmbulanceToBeAdded)).build();
