@@ -5,6 +5,9 @@ public class AmbulanceMapModel {
 	private Integer paramedicID;
 	private Integer driverID;
 	private Integer yellopadID;
+	private String statusMap;
+	
+	
 	public Integer getYellopadID() {
 		return yellopadID;
 	}
@@ -28,6 +31,12 @@ public class AmbulanceMapModel {
 	}
 	public void setVin(Integer vin) {
 		this.vin = vin;
+	}
+	public String getStatusMap() {
+		return statusMap;
+	}
+	public void setStatusMap(String statusMap) {
+		this.statusMap = statusMap;
 	}
 	
 
