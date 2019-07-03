@@ -1,9 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
-Built-By: KAN
-=======
 Built-By: amrkh
->>>>>>> master
 Build-Jdk: 1.8.0_211
 Created-By: Maven Integration for Eclipse
 
