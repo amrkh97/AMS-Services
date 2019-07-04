@@ -28,6 +28,7 @@ public class IncidentTypeDAL {
 			        	incidentType = new IncidentType();
 			        	incidentType.setTypeID(rs.getInt("IncidentTypeID"));
 			        	incidentType.setTypeName(rs.getString("TypeName"));
+			        	incidentType.setTypeNote(rs.getString("TypeNote"));
 			        	incidentTypeArray.add(incidentType);
 			        }
 		         }catch (SQLException e) {
