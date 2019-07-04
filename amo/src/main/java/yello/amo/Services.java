@@ -547,6 +547,52 @@ public class Services {
 	public Response deleteAmbulanceMap(Integer AmbulanceToBeAdded) {
 		return Response.ok(AmbulanceMapManager.deleteAmbulanceMap(AmbulanceToBeAdded)).build();
 	}
+	
+	
+	@Path("employee/getllParamedics")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllParamedics() {
+		return Response.ok(EmployeeManager.getAllParamedics()).build();
+	}
+	
+	@Path("employee/getActiveParamedics")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getActiveParamedics() {
+		return Response.ok(EmployeeManager.getActiveParamedics()).build();
+	}
+	
+	@Path("employee/getInActiveParamedics")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getInActiveParamedics() {
+		return Response.ok(EmployeeManager.getInActiveParamedics()).build();
+	}
+	
+	
+	@Path("employee/getAllDrivers")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllDrivers() {
+		return Response.ok(EmployeeManager.getAllDrivers()).build();
+	}
+	
+	@Path("employee/getActiveDrivers")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getActiveDrivers() {
+		return Response.ok(EmployeeManager.getActiveDrivers()).build();
+	}
+	
+	@Path("employee/getInActiveDrivers")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getInActiveDrivers() {
+		return Response.ok(EmployeeManager.getInActiveDrivers()).build();
+	}
+	
+	
 
 	/*
 	 * @Path("locations/{id}")
