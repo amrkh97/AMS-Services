@@ -91,93 +91,28 @@ public class Services {
 
 		return Response.ok(AlarmLevelManager.getAlarmLevel()).build();
 	}
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////// GET
+	//////////////////////////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////
 
-	@Path("addLocation")
+	////////////////////////////////// ALL
+
+	@Path("GetMedicines")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addLocation(Location location) {
-		// ServerResponse serverResponse = LocationManager.addLocation(location);
-		// if(Integer.parseInt(serverResponse.getResponseHexCode(), 16) == 0x00)
-		// {
-		// // At This Point i know that the Insertion In DB is ok
-		// JSONObject fbLocationObj = new JSONObject();
-		//
-		// fbLocationObj.put(FBLocationEnum.Address.getJsonKey(),
-		// location.getFreeFormatAddress());
-		// fbLocationObj.put(FBLocationEnum.Longitude.getJsonKey(),
-		// location.getLongitude());
-		// fbLocationObj.put(FBLocationEnum.Latitude.getJsonKey(),
-		// location.getLatitude());
-		//
-		// HttpConnectionHelper httpConnectionHelper = new HttpConnectionHelper();
-		// try
-		// {
-		// httpConnectionHelper.sendPost(FBLocationEnum.FBLocationsURL.getJsonKey(),
-		// fbLocationObj);
-		// }
-		// catch (Exception e)
-		// {
-		// System.err.println("Error Sending Location Post Request: " + e);
-		// e.printStackTrace();
-		// }
-		// }
-		// At This Point i know that the Insertion In DB is ok
-		// JSONObject fbLocationObj = new JSONObject();
-
-  }
-    
-    
-    
-      
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////// Medicines ///////////////////////////////////////////////////////
-   /////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    
-    
-
-		// fbLocationObj.put(FBLocationEnum.Address.getJsonKey(),
-		// location.getFreeFormatAddress());
-		// fbLocationObj.put(FBLocationEnum.Longitude.getJsonKey(),
-		// location.getLongitude());
-		// fbLocationObj.put(FBLocationEnum.Latitude.getJsonKey(),
-		// location.getLatitude());
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////// GET ///////////////////////////////////////////////////////
-    
-   
-    ////////////////////////////////// ALL
-   
-    @Path("GetMedicines")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllMedicines () 
-    {
+	public Response getAllMedicines() {
 		return Response.ok(MedicineManager.getAllMedicines()).build();
-    }
+	}
 
-    ////////////////////////////////// BarCode
-   
-    @Path("GetMedicines/BarCode")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getMedicineByBC (Medicine MED) 
-    {
+	////////////////////////////////// BarCode
+
+	@Path("GetMedicines/BarCode")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMedicineByBC(Medicine MED) {
 		return Response.ok(MedicineManager.getMedicineByBC(MED.getBarCode())).build();
-    }
-		// HttpConnectionHelper httpConnectionHelper = new HttpConnectionHelper();
-		// try {
-		// System.out.println("sdsd");
-		// httpConnectionHelper.sendPost(FBLocationEnum.FBLocationsURL.getJsonKey(),
-		// fbLocationObj);
-		// } catch (Exception e) {
-		// System.err.println("Error Sending Location Post Request: " + e);
-		// e.printStackTrace();
-		// }
-		return Response.ok().build();
 	}
 
 	@Path("ambulance/addAmbulanceVehicle")
@@ -185,7 +120,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addAmbulanceVehicle(AmbulanceVehicleModel CAR) {
-
+		return Response.ok(AmbulanceVehicleManger.insertCar(CAR)).build();
+	}
 	////////////////////////////////// Name 
 	
 	@Path("GetMedicines/Name")
@@ -241,43 +177,46 @@ public class Services {
     {
 		return Response.ok(MedicineManager.getMedicineByCompanyStatus(COMP.getCompanyStatus())).build();
     }   
-		return Response.ok(AmbulanceVehicleManger.insertCar(CAR)).build();
+
+
+	////////////////////////////////// Contact Person
+
+	@Path("GetMedicines/ContactPerson")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMedicineByContactPerson(CompanyModel COMP) {
+		if (COMP.getCompanyContactPerson() == null) {
+			return Response.ok("Bad Request No ContactPerson").build();
+		}
+
+		return Response.ok(MedicineManager.getMedicineByContactPerson(COMP.getCompanyContactPerson())).build();
 	}
 
-////////////////////////////////// Contact Person
-    
-    @Path("GetMedicines/ContactPerson")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getMedicineByContactPerson(CompanyModel COMP) 
-    {
-    	if (COMP.getCompanyContactPerson()==null)
-        {return Response.ok("Bad Request No ContactPerson").build();}
-    	
-		return Response.ok(MedicineManager.getMedicineByContactPerson(COMP.getCompanyContactPerson())).build();
-    }   
-    
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////////// GET
 	//////////////////////////////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////// INSERT /////////////////////////////////////////////////////////
-    @Path("InsertMedicines")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response insert_Medicine (Medicine MED) 
-    {
-    	System.out.println(MED);
-    	if (MED.getBarCode()==null){		return Response.ok("Bad Request No BarCode").build(); }
-       ServerResponse X=MedicineManager.insertMedicine(MED);
-    	if(X==null){		return Response.ok("400 the Medicine already there ").build(); }
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////// INSERT
+	//////////////////////////////////////////////////////////////////////////////////////////////////// /////////////////////////////////////////////////////////
+	@Path("InsertMedicines")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response insert_Medicine(Medicine MED) {
+		System.out.println(MED);
+		if (MED.getBarCode() == null) {
+			return Response.ok("Bad Request No BarCode").build();
+		}
+		ServerResponse X = MedicineManager.insertMedicine(MED);
+		if (X == null) {
+			return Response.ok("400 the Medicine already there ").build();
+		}
 
 		return Response.ok(X).build();
-    }   
-    
+	}
+
 	///////////////////////////////////////////// BY VIN
 	@Path("ambulance/getAmbulanceVehicles/ID")
 	@POST
@@ -287,6 +226,8 @@ public class Services {
 		if (CAR.getVin() == 0) {
 			return Response.ok("Bad Request No VIN").build();
 		}
+		return Response.ok(AmbulanceVehicleManger.getCarById(CAR.getVin())).build();
+	}
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////// UPDATE /////////////////////////////////////////////////////////    
@@ -301,63 +242,53 @@ public class Services {
     	if(X==null){		return Response.ok("404 the medicine not found").build(); }
 		return Response.ok(X).build();
     }   
-		return Response.ok(AmbulanceVehicleManger.getCarById(CAR.getVin())).build();
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////// DELETE
+	//////////////////////////////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////
+
+	@Path("deleteMedicines")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response Detele_Medicine(Medicine MED) {
+		System.out.println(MED.getBarCode());
+		ServerResponse X = MedicineManager.DeleteMedicine(MED.getBarCode());
+		return Response.ok(X).build();
 	}
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////// DELETE ///////////////////////////////////////////////////////
-    
-    @Path("deleteMedicines")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response Detele_Medicine (Medicine MED) 
-    {  
-    	System.out.println(MED.getBarCode());
-    	ServerResponse X =MedicineManager.DeleteMedicine(MED.getBarCode());
-		return Response.ok(X).build();
-    }   
-    
-    
-    
-    //////////////////////////////////////////////////////////////////////////////////////////////////////  
-    //////////////////////////////// CompanyMedicineMap //////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////////  
-      
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
+	//////////////////////////////// CompanyMedicineMap
+	////////////////////////////////////////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      
-      ////////////////////////////////////////////////////////////////////////////////////////////////////
-      ///////////////////////////////////// INSERT /////////////////////////////////////////////////////////
-   
-    
-    @Path("InsertCompanyMedicineMap")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response InsertCompanyMedicineMap (CompanyMedicineMap Map) 
-    {
-     	ServerResponse X =CompanyMedicineMapManager.insertRelation(Map);
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////// INSERT
+	//////////////////////////////////////////////////////////////////////////////////////////////////// /////////////////////////////////////////////////////////
 
+	@Path("InsertCompanyMedicineMap")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response InsertCompanyMedicineMap(CompanyMedicineMap Map) {
+		ServerResponse X = CompanyMedicineMapManager.insertRelation(Map);
 
 		return Response.ok(X).build();
-    }
+	}
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////// DELETE ///////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////// DELETE
+	//////////////////////////////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////
 
-    @Path("deleteCompanyMedicineMap")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteCompanyMedicineMap (CompanyMedicineMap Map) 
-    {
-     	ServerResponse X =CompanyMedicineMapManager.DeleteRelation(Map);
-
+	@Path("deleteCompanyMedicineMap")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteCompanyMedicineMap(CompanyMedicineMap Map) {
+		ServerResponse X = CompanyMedicineMapManager.DeleteRelation(Map);
 
 		return Response.ok(X).build();
-    }
-    
-    
+	}
 
 	/*
 	 * @Path("locations/{id}")
@@ -369,240 +300,6 @@ public class Services {
 	 * Response.ok(LocationManager.getLocation(id)).build(); }
 	 */
 
-    @Path("yelloPad/searchYelloPad")
-    @POST
-    @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response searchYelloPad(String ID) {
-    	
-    	return Response.ok().entity(YelloPadManager.searchYelloPad(ID)).build();
-    }
-    
-    @Path("yelloPad/getYelloPadStatus")
-    @POST
-    @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getYelloPadStatus(String ID) {
-    	
-    	return Response.ok().entity(YelloPadManager.getYelloPadStatus(ID)).build();
-    }
-    
-    @Path("yelloPad/getYelloPadNetworkCardNo")
-    @POST
-    @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getYelloPadNetworkCardNo(String ID) {
-    	
-    	return Response.ok().entity(YelloPadManager.getYelloPadNetworkCardNo(ID)).build();
-    }
-    
-    
-    
-    
-    @Path("patient/addLocation")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addPatientLocation(PatientLoc location) 
-    {
-    
-    	return Response.ok(PatientLocationManager.addPatientLocation(location.getNationalID(),
-    			location.getAddress(), location.getLatitude(), location.getLongitude())).build();
-    }
-    
-    
-    
-    @Path("patient/getAllLocations")
-    @POST
-    @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllPatientLocations(String PatientNationalID) 
-    {
-    
-    	return Response.ok(PatientLocationManager.getAllPatientLocations(PatientNationalID)).build();
-    }
-    
-    
-    @Path("pharmaCompany/getAllCompanies")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllCompanies() 
-    {
-    
-    	return Response.ok(CompanyManager.getAllCompanies()).build();
-    }
-    
-    @Path("pharmaCompany/getCompanyByID")
-    @POST
-    @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getCompanyByID(Integer companyID) 
-    {
-    	return Response.ok(CompanyManager.getCompanyByID(companyID)).build();
-    }
-    
-    @Path("pharmaCompany/getCompanyByStatus")
-    @POST
-    @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getCompanyByStatus(Integer companyStatus) 
-    {
-    	return Response.ok(CompanyManager.getCompanyByStatus(companyStatus)).build();
-    }
-    
-    @Path("pharmaCompany/getCompanyByName")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getCompanyByName(String companyName) 
-    {
-    	return Response.ok(CompanyManager.getCompanyByName(companyName)).build();
-    }
-    
-    @Path("pharmaCompany/addCompany")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addCompany(CompanyModel companyToBeAdded) 
-    {
-    	return Response.ok(CompanyManager.addCompany(companyToBeAdded)).build();
-    }
-    
-    
-    @Path("pharmaCompany/updateCompany")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response updateCompany(CompanyModel companyToBeAdded) 
-    {
-    	return Response.ok(CompanyManager.updateCompany(companyToBeAdded)).build();
-    }
-    
-    @Path("pharmaCompany/deleteCompany")
-    @POST
-    @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteCompany(Integer companyToBeAdded) 
-    {
-    	return Response.ok(CompanyManager.deleteCompany(companyToBeAdded)).build();
-    }
-    
-    @Path("job/addJob")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addJob(Job Joba) 
-    {
-    	return Response.ok(JobManager.addJob(Joba)).build();
-    }
-    
-    @Path("job/updateJob")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response updateJob(Job Joba) 
-    {
-    	return Response.ok(JobManager.updateJob(Joba)).build();
-    }
-    @Path("job/getAllJobs")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllJobs() 
-    {
-    
-    	return Response.ok(JobManager.getAllJobs()).build();
-    }
-    @Path("job/getJobByTitle")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.TEXT_PLAIN)
-    public Response getJobByTitle(String jobTitle) 
-    {
-    
-    	return Response.ok(JobManager.getJobByTitle(jobTitle)).build();
-    }
-    @Path("job/getJobByStatus")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.TEXT_PLAIN)
-    public Response getJobByStatus(String jobStatus) 
-    {
-    
-    	return Response.ok(JobManager.getJobByStatus(jobStatus)).build();
-    }
-    @Path("job/deleteJob")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.TEXT_PLAIN)
-    public Response deleteJob(String JobID) 
-    {
-    	return Response.ok(JobManager.deleteJob(JobID)).build();
-    }
-    
-    
-    
-    
-    
-    @Path("medicalRecord/addMedicalRecord")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addMedicalRecord(MedicalRecord MedicalRecorda) 
-    {
-    	return Response.ok(MedicalRecordManager.addMedicalRecord(MedicalRecorda)).build();
-    }
-    @Path("medicalRecord/getAllMedicalRecords")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllMedicalRecords() 
-    {
-    
-    	return Response.ok(MedicalRecordManager.getAllMedicalRecords()).build();
-    }
-    @Path("medicalRecord/getMedicalRecordByID")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response getMedicalRecordByID(MedicalRecord MedicalRecorda ) 
-    {
-    
-    	return Response.ok(MedicalRecordManager.getMedicalRecordByID(MedicalRecorda.getMedicalRecordID())).build();
-    }
-    @Path("medicalRecord/getMedicalRecordByStatus")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response getMedicalRecordByStatus(MedicalRecord MedicalRecorda ) 
-    {
-    
-    	return Response.ok(MedicalRecordManager.getMedicalRecordByStatus(MedicalRecorda.getmRStatus() )).build();
-    }
-    @Path("medicalRecord/updateMedicalRecord")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateMedicalRecord(MedicalRecord MedicalRecorda) 
-    {
-    	return Response.ok(MedicalRecordManager.updateMedicalRecord(MedicalRecorda)).build();
-    }
-    @Path("medicalRecord/deleteMedicalRecord")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response deleteMedicalReport(MedicalRecord MedicalRecorda) 
-    {
-    	return Response.ok(MedicalRecordManager.deleteMedicalRecord(MedicalRecorda.getMedicalRecordID() )).build();
-    }
-    
-    
-    @Path("medicalRecord/getMedicalRecordByPatientID")
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response getMedicalRecordByPatientID(MedicalRecord MedicalRecorda ) 
-    {
-    
-    	return Response.ok(MedicalRecordManager.getMedicalRecordByPatientID(MedicalRecorda.getPatientID())).build();
-    }
 	///////////////////////////////////////////// BY BRAND
 	@Path("ambulance/getAmbulanceVehicles/Brand")
 	@POST
@@ -986,52 +683,48 @@ public class Services {
 	public Response deleteAmbulanceMap(Integer AmbulanceToBeAdded) {
 		return Response.ok(AmbulanceMapManager.deleteAmbulanceMap(AmbulanceToBeAdded)).build();
 	}
-	
-	
+
 	@Path("employee/getllParamedics")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllParamedics() {
 		return Response.ok(EmployeeManager.getAllParamedics()).build();
 	}
-	
+
 	@Path("employee/getActiveParamedics")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getActiveParamedics() {
 		return Response.ok(EmployeeManager.getActiveParamedics()).build();
 	}
-	
+
 	@Path("employee/getInActiveParamedics")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getInActiveParamedics() {
 		return Response.ok(EmployeeManager.getInActiveParamedics()).build();
 	}
-	
-	
+
 	@Path("employee/getAllDrivers")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllDrivers() {
 		return Response.ok(EmployeeManager.getAllDrivers()).build();
 	}
-	
+
 	@Path("employee/getActiveDrivers")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getActiveDrivers() {
 		return Response.ok(EmployeeManager.getActiveDrivers()).build();
 	}
-	
+
 	@Path("employee/getInActiveDrivers")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getInActiveDrivers() {
 		return Response.ok(EmployeeManager.getInActiveDrivers()).build();
 	}
-	
-	
 
 	/*
 	 * @Path("locations/{id}")
@@ -1044,4 +737,3 @@ public class Services {
 	 */
 
 }
-
