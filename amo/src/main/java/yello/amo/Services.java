@@ -549,19 +549,50 @@ public class Services {
 	}
 	
 	
-	@Path("employee/getParamedics")
+	@Path("employee/getllParamedics")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getParamedics() {
-		return Response.ok(EmployeeManager.getParamedics()).build();
+	public Response getAllParamedics() {
+		return Response.ok(EmployeeManager.getAllParamedics()).build();
 	}
 	
-	@Path("employee/getDrivers")
+	@Path("employee/getActiveParamedics")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getDrivers() {
-		return Response.ok(EmployeeManager.getDrivers()).build();
+	public Response getActiveParamedics() {
+		return Response.ok(EmployeeManager.getActiveParamedics()).build();
 	}
+	
+	@Path("employee/getInActiveParamedics")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getInActiveParamedics() {
+		return Response.ok(EmployeeManager.getInActiveParamedics()).build();
+	}
+	
+	
+	@Path("employee/getAllDrivers")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllDrivers() {
+		return Response.ok(EmployeeManager.getAllDrivers()).build();
+	}
+	
+	@Path("employee/getActiveDrivers")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getActiveDrivers() {
+		return Response.ok(EmployeeManager.getActiveDrivers()).build();
+	}
+	
+	@Path("employee/getInActiveDrivers")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getInActiveDrivers() {
+		return Response.ok(EmployeeManager.getInActiveDrivers()).build();
+	}
+	
+	
 
 	/*
 	 * @Path("locations/{id}")
