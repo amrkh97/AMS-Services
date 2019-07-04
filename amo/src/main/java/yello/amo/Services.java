@@ -19,12 +19,10 @@ import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
 import Models.Job.Job;
 import Models.Locations.Location;
-<<<<<<< HEAD
+
 import Models.Medicine.CompanyMedicineMap;
 import Models.Medicine.Medicine;
 import Models.MedicalRecord.MedicalRecord;
-=======
->>>>>>> master
 import Models.MedicalRecord.MedicalRecord;
 import Models.PatientLocation.PatientLoc;
 import Models.Users.*;
@@ -139,173 +137,14 @@ public class Services {
     //   e.printStackTrace();
     // }
     return Response.ok().build();
+
+
+
   }
-
-  @Path("ambulance/addAmbulanceVehicle")
-  @POST
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response addAmbulanceVehicle(AmbulanceVehicleModel CAR) {
-
-    return Response.ok(AmbulanceVehicleManger.insertCar(CAR)).build();
-  }
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////// GET ///////////////////////////////////////////////////
-
-///////////////////////////////////////////// BY VIN
-  @Path("ambulance/getAmbulanceVehicles/ID")
-  @POST
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response GetAmbulanceVehicleID(AmbulanceVehicleModel CAR) {
-    if (CAR.getVin() == 0) {
-      return Response.ok("Bad Request No VIN").build();
-    }
-
-  
-    return Response.ok(AmbulanceVehicleManger.getCarById(CAR.getVin())).build();
-  }
-///////////////////////////////////////////// BY BRAND
-  @Path("ambulance/getAmbulanceVehicles/Brand")
-  @POST
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response GetAmbulanceVehicleBrand(AmbulanceVehicleModel CAR) {
-    System.out.println(CAR.getBrand());
-    if (CAR.getBrand() == null) {
-      return Response.ok("Bad Request No VIN").build();
-    }
     
     
     
-  //////////////////////////////////////////////////////////////////////////////////////////////////////  
-  //////////////////////////////// AmbulanceVehicle ////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////////////  
-    
-
-    
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////// INSERT /////////////////////////////////////////////////////////
-   
-    @Path("addAmbulanceVehicle")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response addAmbulanceVehicle(AmbulanceVehicleModel CAR) 
-    {
-    	if (CAR.getVin()==0){		return Response.ok("Bad Request No VIN").build(); }
-  	
-    	  ServerResponse X =AmbulanceVehicleManger.insertCar(CAR);
-      	if(X==null){		return Response.ok("404 the Ambulance Vehicle already there ").build(); }
-
-		return Response.ok(X).build() ;
-    }
-    
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////// GET ///////////////////////////////////////////////////////
-    
-   
-    ////////////////////////////////// ALL
-    
-		@Path("GetAmbulanceVehicles")
-		@POST
-		@Consumes(MediaType.APPLICATION_JSON)
-		@Produces(MediaType.APPLICATION_JSON)
-		public Response GetAmbulanceVehicle () 
-		{
-		return Response.ok(AmbulanceVehicleManger.getAllCars()).build();
-		}
-
-
-    ///////////////////////////////// ID
-     
-    @Path("GetAmbulanceVehicles/ID")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response GetAmbulanceVehicleID (AmbulanceVehicleModel CAR) 
-    {
-    	if (CAR.getVin()==0){		return Response.ok("Bad Request No VIN").build(); }
-    
-
-    	return Response.ok(AmbulanceVehicleManger.getCarById(CAR.getVin())).build();
-    }
-    
-    
-
-    ///////////////////////////////// Brand
-       
-    @Path("GetAmbulanceVehicles/Brand")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response GetAmbulanceVehicleBrand(AmbulanceVehicleModel CAR) 
-    { 
-    
-    	if (CAR.getBrand()==null)
-       {return Response.ok("Bad Request No Brand").build();}
-    	
-	     ArrayList<AmbulanceVehicleModel> X =	AmbulanceVehicleManger.getCarsByBrand(CAR.getBrand());
-	   if (X == null)
-	    {return Response.ok(" unknown error with database  ").build();}
-		return Response.ok(X).build();
-    }
-    
-
-    ///////////////////////////////// Status    
-    
-    @Path("GetAmbulanceVehicles/Status")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response GetAmbulanceVehicleSts(AmbulanceVehicleModel CAR) 
-    { 
-    	if (CAR.getVehicleStatus()==null)
-        {return Response.ok("Bad Request No VehicleStatus").build();}
-	     ArrayList<AmbulanceVehicleModel> X =	AmbulanceVehicleManger.getCarsBySts(CAR.getVehicleStatus());
-	   if (X == null)
-	    {return Response.ok(" unknown error with database  ").build();}
-		return Response.ok(X).build();
-  }
-<<<<<<< HEAD
-    
-    
-   /////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////// Update /////////////////////////////////////////////
-    
-    @Path("UpdateAmbulanceVehicles")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response UpdateAmbulanceVehicle (AmbulanceVehicleModel Car) 
-    {
-     	ServerResponse X =AmbulanceVehicleManger.UpdateCar(Car);
-    	if(X==null){		return Response.ok("404 the Ambulance Vehicle not found").build(); }
-
-		return Response.ok(X).build();
-    }
-    
-    
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-     ////////////////////////////////////////// Delete  /////////////////////////////////////////////
       
-    
-    @Path("deleteAmbulanceVehicles")
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteAmbulanceVehicle (AmbulanceVehicleModel Car) 
-    {
-     	ServerResponse X =AmbulanceVehicleManger.DeleteCars(Car.getVin());
-
-
-		return Response.ok(X).build();
-    }
-    
-    
-    
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////// Medicines ///////////////////////////////////////////////////////
    /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -505,49 +344,7 @@ public class Services {
 	 * getLocation(@PathParam("id") int id) { return
 	 * Response.ok(LocationManager.getLocation(id)).build(); }
 	 */
-=======
-  
 
-  /////////////////////////////	DeActivated
-  @Path("ambulance/getDeactivatedAmbulanceVehicles")
-  @POST
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response GetAmbulanceVehicle() { 
-	    ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getDeActivatedCars();
-	    
-	    return Response.ok(X).build();
-  }
-
-  /////////////////////////////	Activated  
-   @Path("ambulance/getActivatedAmbulanceVehicles")
-  @POST
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response GetAmbulanceVehicleSts() {
-    
-	   ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getActivatedCars();
-		 
-    return Response.ok(X).build();
-
-  }
-  
-  /////////////////////////////	Deleted 
-
-  @Path("ambulance/getDeletedAmbulanceVehicles")
-  @POST
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response GetDeletedAmbulanceVehicle() {
-    
-    ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getDeletedCars();
-    
-    return Response.ok(X).build();
-  }
- 
-  //////////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////// update ////////////////////////////////////////////
-  
     @Path("yelloPad/searchYelloPad")
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
@@ -792,47 +589,6 @@ public class Services {
 	 * getLocation(@PathParam("id") int id) { return
 	 * Response.ok(LocationManager.getLocation(id)).build(); }
 	 */
-
-
-  ///////////////////////////////////////////status/////////////////////////////////////////////////
-  ////////////////////////////FREE
-  @Path("ambulance/status/free")
-  @POST
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response setCarFree(AmbulanceVehicleModel Car) {
-    return Response.ok(AmbulanceVehicleManger.SetCarFree(Car.getVin())).build();
-  }
-	 
-  ////////////////////////////////////BUSY
-  @Path("ambulance/status/busy")
-  @POST
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response setCarBusy(AmbulanceVehicleModel Car) {
-	    return Response.ok(AmbulanceVehicleManger.SetCarBusy(Car.getVin())).build();
-  }
-
-	////////////////////////////////////MAINTAINANCE
-  @Path("ambulance/status/maintainance")
-  @POST
-  @Consumes(MediaType.APPLICATION_JSON)
-  @Produces(MediaType.APPLICATION_JSON)
-  public Response setCarMaintainance(AmbulanceVehicleModel Car) {
-	    return Response.ok(AmbulanceVehicleManger.SetCarMaintain(Car.getVin())).build();
-  }
-	  
-  
-//////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////DELETE ////////////////////////////////////////////
-	
-	@Path("ambulance/delete")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response DeleteCar(AmbulanceVehicleModel Car) {
-	return Response.ok(AmbulanceVehicleManger.DeleteCars(Car.getVin()) ).build();
-	}
 
   ///////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////
