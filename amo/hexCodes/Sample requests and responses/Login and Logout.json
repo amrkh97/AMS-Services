@@ -69,6 +69,18 @@
 			"responseMsg": "User status undefined"
 		},
 
+		"Login Password length less than 8",
+		{
+			"responseHexCode": "FB",
+			"responseMsg": "Password length is less than 8"
+		},
+
+		"Login Wrong Email or PAN or National ID format",
+		{
+			"responseHexCode": "FA",
+			"responseMsg": "Wrong Email or PAN or National ID format"
+		},
+
 		"Login Didn't find user",
 		{
 			"responseHexCode": "FF",
