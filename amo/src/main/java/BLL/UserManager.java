@@ -9,20 +9,17 @@ import Models.Users.SignUp;
 public class UserManager {
 	public static LoginResponse login(String emailOrPAN, String Password) {
 		LoginResponse res = new LoginResponse();
-		if (Password.length() + 1 > 8) {
-			if (isEmail(emailOrPAN) || isPAN(emailOrPAN) || isNationalID(emailOrPAN)) {
-				return UserDAL.login(emailOrPAN, Password);
-			}
-			res.setResponseMsg("Wrong Email or PAN or National ID format");
-			return res;
+		if (isEmail(emailOrPAN) || isPAN(emailOrPAN) || isNationalID(emailOrPAN)) {
+			return UserDAL.login(emailOrPAN, Password);
 		} else {
-			res.setResponseMsg("Password length less than 8");
+			res.setResponseMsg("Wrong Email or PAN or National ID format");
+			res.setResponseHexCode("FA");
 			return res;
 		}
 	}
 
 	public static SignUpResponse signup(SignUp user) {
-		
+
 		return UserDAL.signup(user);
 	}
 
