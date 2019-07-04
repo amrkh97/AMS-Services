@@ -547,6 +547,21 @@ public class Services {
 	public Response deleteAmbulanceMap(Integer AmbulanceToBeAdded) {
 		return Response.ok(AmbulanceMapManager.deleteAmbulanceMap(AmbulanceToBeAdded)).build();
 	}
+	
+	
+	@Path("employee/getParamedics")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getParamedics() {
+		return Response.ok(EmployeeManager.getParamedics()).build();
+	}
+	
+	@Path("employee/getDrivers")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getDrivers() {
+		return Response.ok(EmployeeManager.getDrivers()).build();
+	}
 
 	/*
 	 * @Path("locations/{id}")
