@@ -413,7 +413,7 @@ public class Services {
 
 	@Path("patient/getAllLocations")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllPatientLocations(DataModel PatientNationalID) {
 
@@ -655,26 +655,26 @@ public class Services {
 
 	@Path("ambulanceMap/getByCarID")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAmbulanceMapbyVIN(Integer ID) {
-		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByCarID(ID)).build();
+	public Response getAmbulanceMapbyVIN(DataModel ID) {
+		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByCarID(ID.getSentID())).build();
 	}
 
 	@Path("ambulanceMap/getByDriverID")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAmbulanceCarMapByDriverID(Integer ID) {
-		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByDriverID(ID)).build();
+	public Response getAmbulanceCarMapByDriverID(DataModel ID) {
+		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByDriverID(ID.getSentID())).build();
 	}
 
 	@Path("ambulanceMap/getByParamedicID")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAmbulanceCarMapByParamedicID(Integer ID) {
-		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByParamedicID(ID)).build();
+	public Response getAmbulanceCarMapByParamedicID(DataModel ID) {
+		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByParamedicID(ID.getSentID())).build();
 	}
 
 	@Path("ambulanceMap/getByYelloPadID")
