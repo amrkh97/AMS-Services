@@ -73,7 +73,7 @@ public class Services {
 		return Response.ok(IncidentTypeManager.getIncidentType()).build();
 	}
 
-	@Path("incidnets/incidentPriority")
+	@Path("incidents/incidentPriority")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getIncidentPriority() {
