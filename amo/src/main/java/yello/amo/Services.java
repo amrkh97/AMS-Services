@@ -13,11 +13,8 @@ import Models.ServerResponse;
 import Models.AmbulanceMap.AmbulanceMapModel;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
-import Models.ServerResponse;
-import Models.Firebase.FBLocation.FBLocationEnum;
-import Models.Firebase.FBLocation.HttpConnectionHelper;
+import Models.Data.DataModel;
 import Models.Job.Job;
-import Models.Locations.Location;
 import Models.Medicine.CompanyMedicineMap;
 import Models.Medicine.Medicine;
 import Models.MedicalRecord.MedicalRecord;
@@ -379,29 +376,29 @@ public class Services {
 	
 	@Path("yelloPad/searchYelloPad")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response searchYelloPad(String ID) {
+	public Response searchYelloPad(DataModel ID) {
 
-		return Response.ok().entity(YelloPadManager.searchYelloPad(ID)).build();
+		return Response.ok().entity(YelloPadManager.searchYelloPad(ID.getStringID())).build();
 	}
 
 	@Path("yelloPad/getYelloPadStatus")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getYelloPadStatus(String ID) {
+	public Response getYelloPadStatus(DataModel ID) {
 
-		return Response.ok().entity(YelloPadManager.getYelloPadStatus(ID)).build();
+		return Response.ok().entity(YelloPadManager.getYelloPadStatus(ID.getStringID())).build();
 	}
 
 	@Path("yelloPad/getYelloPadNetworkCardNo")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getYelloPadNetworkCardNo(String ID) {
+	public Response getYelloPadNetworkCardNo(DataModel ID) {
 
-		return Response.ok().entity(YelloPadManager.getYelloPadNetworkCardNo(ID)).build();
+		return Response.ok().entity(YelloPadManager.getYelloPadNetworkCardNo(ID.getStringID())).build();
 	}
 
 	@Path("patient/addLocation")
@@ -418,9 +415,9 @@ public class Services {
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllPatientLocations(String PatientNationalID) {
+	public Response getAllPatientLocations(DataModel PatientNationalID) {
 
-		return Response.ok(PatientLocationManager.getAllPatientLocations(PatientNationalID)).build();
+		return Response.ok(PatientLocationManager.getAllPatientLocations(PatientNationalID.getStringID())).build();
 	}
 
 	@Path("pharmaCompany/getAllCompanies")
@@ -433,26 +430,26 @@ public class Services {
 
 	@Path("pharmaCompany/getCompanyByID")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCompanyByID(Integer companyID) {
-		return Response.ok(CompanyManager.getCompanyByID(companyID)).build();
+	public Response getCompanyByID(DataModel companyID) {
+		return Response.ok(CompanyManager.getCompanyByID(companyID.getSentID())).build();
 	}
 
 	@Path("pharmaCompany/getCompanyByStatus")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCompanyByStatus(Integer companyStatus) {
-		return Response.ok(CompanyManager.getCompanyByStatus(companyStatus)).build();
+	public Response getCompanyByStatus(DataModel companyStatus) {
+		return Response.ok(CompanyManager.getCompanyByStatus(companyStatus.getSentStatus())).build();
 	}
 
 	@Path("pharmaCompany/getCompanyByName")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCompanyByName(String companyName) {
-		return Response.ok(CompanyManager.getCompanyByName(companyName)).build();
+	public Response getCompanyByName(DataModel companyName) {
+		return Response.ok(CompanyManager.getCompanyByName(companyName.getSentStatus())).build();
 	}
 
 	@Path("pharmaCompany/addCompany")
@@ -475,8 +472,8 @@ public class Services {
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteCompany(Integer companyToBeAdded) {
-		return Response.ok(CompanyManager.deleteCompany(companyToBeAdded)).build();
+	public Response deleteCompany(DataModel companyToBeAdded) {
+		return Response.ok(CompanyManager.deleteCompany(companyToBeAdded.getSentID())).build();
 	}
 
 	@Path("job/addJob")
@@ -698,50 +695,50 @@ public class Services {
 
 	@Path("employee/getllParamedics")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllParamedics(Integer superSSN) {
-		return Response.ok(EmployeeManager.getAllParamedics(superSSN)).build();
+	public Response getAllParamedics(DataModel superSSN) {
+		return Response.ok(EmployeeManager.getAllParamedics(superSSN.getSentID())).build();
 	}
 
 	@Path("employee/getActiveParamedics")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getActiveParamedics(Integer superSSN) {
-		return Response.ok(EmployeeManager.getActiveParamedics(superSSN)).build();
+	public Response getActiveParamedics(DataModel superSSN) {
+		return Response.ok(EmployeeManager.getActiveParamedics(superSSN.getSentID())).build();
 	}
 
 	@Path("employee/getInActiveParamedics")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getInActiveParamedics(Integer superSSN) {
-		return Response.ok(EmployeeManager.getInActiveParamedics(superSSN)).build();
+	public Response getInActiveParamedics(DataModel superSSN) {
+		return Response.ok(EmployeeManager.getInActiveParamedics(superSSN.getSentID())).build();
 	}
 
 	@Path("employee/getAllDrivers")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllDrivers(Integer superSSN) {
-		return Response.ok(EmployeeManager.getAllDrivers(superSSN)).build();
+	public Response getAllDrivers(DataModel superSSN) {
+		return Response.ok(EmployeeManager.getAllDrivers(superSSN.getSentID())).build();
 	}
 
 	@Path("employee/getActiveDrivers")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getActiveDrivers(Integer superSSN) {
-		return Response.ok(EmployeeManager.getActiveDrivers(superSSN)).build();
+	public Response getActiveDrivers(DataModel superSSN) {
+		return Response.ok(EmployeeManager.getActiveDrivers(superSSN.getSentID())).build();
 	}
 
 	@Path("employee/getInActiveDrivers")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getInActiveDrivers(Integer superSSN) {
-		return Response.ok(EmployeeManager.getInActiveDrivers(superSSN)).build();
+	public Response getInActiveDrivers(DataModel superSSN) {
+		return Response.ok(EmployeeManager.getInActiveDrivers(superSSN.getSentID())).build();
 	}
 
 	/*

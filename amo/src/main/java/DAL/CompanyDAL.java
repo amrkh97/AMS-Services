@@ -137,7 +137,7 @@ public static CompanyModel getCompanyByID(Integer companyID) {
 	return currentCompany;
 }
 
-public static CompanyModel getCompanyByStatus(Integer companyStatus) {
+public static CompanyModel getCompanyByStatus(String companyStatus) {
 	
 	String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_SelectBySts] ?";
 	ResultSet RS;
@@ -146,7 +146,7 @@ public static CompanyModel getCompanyByStatus(Integer companyStatus) {
 	CompanyModel currentCompany= new CompanyModel();
 	try {
 		CallableStatement cstmt = conn.prepareCall(SPsql);	
-		cstmt.setInt(1, companyStatus);
+		cstmt.setString(1, companyStatus);
 		RS=cstmt.executeQuery();
 		
 		RS.next();
