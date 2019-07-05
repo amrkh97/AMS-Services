@@ -698,44 +698,50 @@ public class Services {
 
 	@Path("employee/getllParamedics")
 	@POST
+	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllParamedics() {
-		return Response.ok(EmployeeManager.getAllParamedics()).build();
+	public Response getAllParamedics(Integer superSSN) {
+		return Response.ok(EmployeeManager.getAllParamedics(superSSN)).build();
 	}
 
 	@Path("employee/getActiveParamedics")
 	@POST
+	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getActiveParamedics() {
-		return Response.ok(EmployeeManager.getActiveParamedics()).build();
+	public Response getActiveParamedics(Integer superSSN) {
+		return Response.ok(EmployeeManager.getActiveParamedics(superSSN)).build();
 	}
 
 	@Path("employee/getInActiveParamedics")
 	@POST
+	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getInActiveParamedics() {
-		return Response.ok(EmployeeManager.getInActiveParamedics()).build();
+	public Response getInActiveParamedics(Integer superSSN) {
+		return Response.ok(EmployeeManager.getInActiveParamedics(superSSN)).build();
 	}
 
 	@Path("employee/getAllDrivers")
 	@POST
+	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllDrivers() {
-		return Response.ok(EmployeeManager.getAllDrivers()).build();
+	public Response getAllDrivers(Integer superSSN) {
+		return Response.ok(EmployeeManager.getAllDrivers(superSSN)).build();
 	}
 
 	@Path("employee/getActiveDrivers")
 	@POST
+	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getActiveDrivers() {
-		return Response.ok(EmployeeManager.getActiveDrivers()).build();
+	public Response getActiveDrivers(Integer superSSN) {
+		return Response.ok(EmployeeManager.getActiveDrivers(superSSN)).build();
 	}
 
 	@Path("employee/getInActiveDrivers")
 	@POST
+	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getInActiveDrivers() {
-		return Response.ok(EmployeeManager.getInActiveDrivers()).build();
+	public Response getInActiveDrivers(Integer superSSN) {
+		return Response.ok(EmployeeManager.getInActiveDrivers(superSSN)).build();
 	}
 
 	/*
