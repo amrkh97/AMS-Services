@@ -4,7 +4,10 @@ import Models.ServerResponse;
 
 public class LoginResponse extends ServerResponse {
 	private String token;
+	private Integer employeeID;
 	private Integer jobID;
+	private String jobDescription;
+	private String userPhoto;
 	/**
 	 * @return the responseMsg
 	 */
@@ -39,5 +42,29 @@ public class LoginResponse extends ServerResponse {
 
 	public void setJobID(Integer jobID) {
 		this.jobID = jobID;
+	}
+
+	public String getJobDescription() {
+		return jobDescription;
+	}
+
+	public void setJobDescription(String jobDescription) {
+		this.jobDescription = jobDescription;
+	}
+
+	public String getUserPhoto() {
+		return userPhoto;
+	}
+
+	public void setUserPhoto(String userPhoto) {
+		this.userPhoto = userPhoto;
+	}
+
+	public Integer getEmployeeID() {
+		return employeeID;
+	}
+
+	public void setEmployeeID(Integer employeeID) {
+		this.employeeID = employeeID;
 	}
 }

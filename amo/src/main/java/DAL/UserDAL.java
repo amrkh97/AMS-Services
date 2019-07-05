@@ -28,16 +28,19 @@ public class UserDAL {
 			cstmt.registerOutParameter(3, Types.NVARCHAR);	// Hex
 			cstmt.registerOutParameter(4, Types.NVARCHAR);	// Response
 			cstmt.registerOutParameter(5, Types.INTEGER);	// JobID
-			cstmt.registerOutParameter(6, Types.INTEGER);	// EmployeeID
+			cstmt.registerOutParameter(6, Types.NVARCHAR);	// JobDescription
+			cstmt.registerOutParameter(7, Types.INTEGER);	// EmployeeID
+			cstmt.registerOutParameter(7, Types.NVARCHAR);	// UserPhoto
 
 			cstmt.executeUpdate();
 			_LoginResponse.setResponseHexCode(cstmt.getString(3));
 			_LoginResponse.setResponseMsg(cstmt.getString(4));
-
 			if (cstmt.getString(3).equals("00")) {
 				_LoginResponse.setJobID(cstmt.getInt(5));
+				_LoginResponse.setJobDescription(cstmt.getString(6));
+				_LoginResponse.setEmployeeID(cstmt.getInt(7));
+				_LoginResponse.setUserPhoto(cstmt.getString(8));
 				// Tokenize
-				// Integer EmployeeID = cstmt.getInt(6)
 				// Dummy token
 				_LoginResponse.setToken(emailOrPAN + "," + Password);
 			}
