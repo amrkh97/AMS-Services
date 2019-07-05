@@ -25,20 +25,19 @@ public class UserDAL {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setString(1, emailOrPAN);
 			cstmt.setString(2, Password);
-			cstmt.registerOutParameter(3, Types.NVARCHAR);
-			cstmt.registerOutParameter(4, Types.NVARCHAR);
-			cstmt.registerOutParameter(5, Types.NVARCHAR);
-			cstmt.registerOutParameter(6, Types.NVARCHAR);
+			cstmt.registerOutParameter(3, Types.NVARCHAR);	// Hex
+			cstmt.registerOutParameter(4, Types.NVARCHAR);	// Response
+			cstmt.registerOutParameter(5, Types.INTEGER);	// JobID
+			cstmt.registerOutParameter(6, Types.INTEGER);	// EmployeeID
 
 			cstmt.executeUpdate();
 			_LoginResponse.setResponseHexCode(cstmt.getString(3));
 			_LoginResponse.setResponseMsg(cstmt.getString(4));
 
-			if (cstmt.getString(1).equals("00")) {
-				_LoginResponse.setJobID(cstmt.getString(3));
+			if (cstmt.getString(3).equals("00")) {
+				_LoginResponse.setJobID(cstmt.getInt(5));
 				// Tokenize
-				// String EmployeeID = RS.getString(4)
-				// _LoginResponse.setResponseMsg(RS.getString(2));
+				// Integer EmployeeID = cstmt.getInt(6)
 				// Dummy token
 				_LoginResponse.setToken(emailOrPAN + "," + Password);
 			}

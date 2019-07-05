@@ -4,7 +4,7 @@ import Models.ServerResponse;
 
 public class LoginResponse extends ServerResponse {
 	private String token;
-	private String jobID;
+	private Integer jobID;
 	/**
 	 * @return the responseMsg
 	 */
@@ -33,11 +33,11 @@ public class LoginResponse extends ServerResponse {
 		this.token = token;
 	}
 
-	public String getJobID() {
+	public Integer getJobID() {
 		return jobID;
 	}
 
-	public void setJobID(String jobID) {
+	public void setJobID(Integer jobID) {
 		this.jobID = jobID;
 	}
 }

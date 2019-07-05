@@ -20,7 +20,6 @@ public class AmbulanceVehicleModel {
     private String chasiahNumber ;
     private String model ;
     private String driverPhoneNumber ;
-    private String AssignedYPID;
     
     private String AmbulanceVehiclePicture ;
     private String  vehicleStatus ;
@@ -158,14 +157,6 @@ public class AmbulanceVehicleModel {
 
 	public void setProductionYear(String productionYear) {
 		this.productionYear = productionYear;
-	}
-
-	public String getAssignedYPID() {
-		return AssignedYPID;
-	}
-
-	public void setAssignedYPID(String assignedYPID) {
-		AssignedYPID = assignedYPID;
 	}
 
 	public String getAmbulanceVehiclePicture() {
