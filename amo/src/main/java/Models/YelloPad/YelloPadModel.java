@@ -1,6 +1,7 @@
 package Models.YelloPad;
 
 public class YelloPadModel {
+	private Integer yelloPadID;
 	private String yelloPadUniqueID;
 	private String yelloPadStatus;
 	private String yelloPadStatusCode;
@@ -88,6 +89,14 @@ public class YelloPadModel {
 	 */
 	public void setPicture(String Picture) {
 		yelloPadPicture = Picture;
+	}
+
+	public Integer getYelloPadID() {
+		return yelloPadID;
+	}
+
+	public void setYelloPadID(Integer yelloPadID) {
+		this.yelloPadID = yelloPadID;
 	}
 
 }
