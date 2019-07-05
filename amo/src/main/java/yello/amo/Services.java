@@ -14,15 +14,12 @@ import Models.AmbulanceMap.AmbulanceMapModel;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.ServerResponse;
-import Models.Company.CompanyModel;
 import Models.Firebase.FBLocation.FBLocationEnum;
 import Models.Firebase.FBLocation.HttpConnectionHelper;
 import Models.Job.Job;
 import Models.Locations.Location;
-
 import Models.Medicine.CompanyMedicineMap;
 import Models.Medicine.Medicine;
-import Models.MedicalRecord.MedicalRecord;
 import Models.MedicalRecord.MedicalRecord;
 import Models.PatientLocation.PatientLoc;
 import Models.Users.*;
@@ -33,7 +30,7 @@ import Models.Users.*;
 @Path("api")
 public class Services {
 
-	private static final AmbulanceVehicleModel Null = null;
+	//private static final AmbulanceVehicleModel Null = null;
 
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
@@ -354,10 +351,32 @@ public class Services {
 		return Response.ok(X).build();
 	}
 
-	//////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////// update
-	////////////////////////////////////////////////////////////////////////////////////////// ////////////////////////////////////////////
+	@Path("yelloPad/getAllYelloPads")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllYelloPads() {
 
+		return Response.ok().entity(YelloPadManager.getAllYelloPads()).build();
+	}
+	
+	@Path("yelloPad/getAllActiveYelloPads")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllActiveYelloPads() {
+
+		return Response.ok().entity(YelloPadManager.getAllActiveYelloPads()).build();
+	}
+	
+	
+	@Path("yelloPad/getAllInActiveYelloPads")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllInActiveYelloPads() {
+
+		return Response.ok().entity(YelloPadManager.getAllInActiveYelloPads()).build();
+	}
+	
+	
 	@Path("yelloPad/searchYelloPad")
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)
@@ -628,13 +647,6 @@ public class Services {
 
 	///////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////
-	@Path("yelloPad/getAllYelloPads")
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllYelloPads() {
-
-		return Response.ok().entity(YelloPadManager.getYelloPads()).build();
-	}
 
 	@Path("ambulanceMap/addAmbulanceMap")
 	@POST
