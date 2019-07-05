@@ -11,14 +11,14 @@ import Models.IncidentType.*;
 
 public class IncidentTypeDAL {
 
-	 public static ArrayList<IncidentType>  getIncidentType()
+	 public static IncidentTypeJson  getIncidentType()
 	 {
 		 
 		 String incidentSP = "EXEC usp_IncidentType_GetAll";
 		 Connection conn = DBManager.getDBConn();
 		ArrayList<IncidentType> incidentTypeArray = new ArrayList<IncidentType>()  ;
 		 	
-	
+		IncidentTypeJson typeJson = new IncidentTypeJson();
 		IncidentType incidentType;
 			try {
 					CallableStatement cstmt  = conn.prepareCall(incidentSP);
@@ -44,6 +44,7 @@ public class IncidentTypeDAL {
 					e.printStackTrace();
 				}
 			}
-			return incidentTypeArray;
+			typeJson.setIncidentTypeJson(incidentTypeArray);
+			return typeJson;
 		}
 }

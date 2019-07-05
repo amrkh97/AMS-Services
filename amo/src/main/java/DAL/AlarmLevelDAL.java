@@ -8,16 +8,17 @@ import java.util.ArrayList;
 
 import DB.DBManager;
 import Models.AlarmLevel.*;
+import Models.IncidentType.IncidentTypeJson;
 
 public class AlarmLevelDAL {
 	
-	public static ArrayList<AlarmLevel>  getAlarmLevels()
+	public static AlarmLevelJson  getAlarmLevels()
 	 {
 		 
 		 String incidentSP = "EXEC usp_AlarmLevel_GetAll";
 		 Connection conn = DBManager.getDBConn();
 		ArrayList<AlarmLevel> alarmLevelArray = new ArrayList<AlarmLevel>()  ;
-		 	
+		AlarmLevelJson alarmJson = new AlarmLevelJson();
 		AlarmLevel alarmLevel;
 			try {
 					CallableStatement cstmt  = conn.prepareCall(incidentSP);
@@ -42,7 +43,8 @@ public class AlarmLevelDAL {
 					e.printStackTrace();
 				}
 			}
-			return alarmLevelArray;
+			alarmJson.setAlarmJson(alarmLevelArray);
+			return alarmJson;
 		}
 
 }

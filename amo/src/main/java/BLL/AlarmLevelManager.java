@@ -6,7 +6,7 @@ import DAL.AlarmLevelDAL;
 import Models.AlarmLevel.*;
 
 public class AlarmLevelManager {
-	public static ArrayList<AlarmLevel> getAlarmLevel() {
+	public static AlarmLevelJson getAlarmLevel() {
 		return AlarmLevelDAL.getAlarmLevels();
 	}
 
