@@ -743,6 +743,15 @@ public class Services {
 	public Response getInActiveDrivers(Integer superSSN) {
 		return Response.ok(EmployeeManager.getInActiveDrivers(superSSN)).header("Access-Control-Allow-Origin", "*").build();
 	}
+	
+	@Path("operator/insertLocation")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response insertLocation(Location location) {
+
+		return Response.ok(LocationManager.addLocation(location)).header("Access-Control-Allow-Origin", "*").build();
+	}
 
 	/*
 	 * @Path("locations/{id}")
