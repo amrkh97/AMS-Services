@@ -11,13 +11,13 @@ import Models.Priority.*;
 
 public class IncidentPriorityDAL {
 	
-	public static ArrayList<IncidentPriority>  getIncidentPriority()
+	public static IncidentPriorityJson  getIncidentPriority()
 	 {
 		 
 		 String incidentSP = "EXEC usp_IncidentPriority_GetAll";
 		 Connection conn = DBManager.getDBConn();
 		ArrayList<IncidentPriority> incidentPriorityArray = new ArrayList<IncidentPriority>()  ;
-		 	
+		IncidentPriorityJson priorityJson = new IncidentPriorityJson(); 	
 		IncidentPriority incidentPriority;
 			try {
 					CallableStatement cstmt  = conn.prepareCall(incidentSP);
@@ -42,6 +42,7 @@ public class IncidentPriorityDAL {
 					e.printStackTrace();
 				}
 			}
-			return incidentPriorityArray;
+			priorityJson.setPriorityJson(incidentPriorityArray);
+			return priorityJson;
 		}
 }

@@ -7,8 +7,16 @@ import Models.YelloPad.YelloPadModel;
 
 
 public class YelloPadManager {
-	public static ArrayList<YelloPadModel> getYelloPads(){
-		return YelloPadDAL.getYelloPads();
+	public static ArrayList<YelloPadModel> getAllYelloPads(){
+		return YelloPadDAL.getAllYelloPads();
+	}
+	
+	public static ArrayList<YelloPadModel> getAllActiveYelloPads(){
+		return YelloPadDAL.getAllActiveYelloPads();
+	}
+	
+	public static ArrayList<YelloPadModel> getAllInActiveYelloPads(){
+		return YelloPadDAL.getAllInActiveYelloPads();
 	}
 	
 	public static YelloPadModel searchYelloPad(String ID) {

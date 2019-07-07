@@ -11,15 +11,16 @@ import Models.Employee.EmployeeModel;
 
 public class EmployeeDAL {
 	
-	public static ArrayList<EmployeeModel> getAllParamedics() {
+	public static ArrayList<EmployeeModel> getAllParamedics(Integer superSSN) {
 
-		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AllParamedics]";
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AllParamedics] ?";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);		
+			cstmt.setInt(1, superSSN);
 			RS=cstmt.executeQuery();
 			
 			
@@ -57,15 +58,16 @@ public class EmployeeDAL {
 		return allParamedics;
 	}
 	
-	public static ArrayList<EmployeeModel> getActiveParamedics() {
+	public static ArrayList<EmployeeModel> getActiveParamedics(Integer superSSN) {
 
-		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_Paramedics]";
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_Paramedics] ?";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);		
+			cstmt.setInt(1, superSSN);
 			RS=cstmt.executeQuery();
 			
 			
@@ -103,15 +105,16 @@ public class EmployeeDAL {
 		return allParamedics;
 	}
 	
-	public static ArrayList<EmployeeModel> getInActiveParamedics() {
+	public static ArrayList<EmployeeModel> getInActiveParamedics(Integer superSSN) {
 
-		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_InActiveParamedics]";
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_InActiveParamedics] ?";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);		
+			cstmt.setInt(1, superSSN);
 			RS=cstmt.executeQuery();
 			
 			
@@ -151,15 +154,16 @@ public class EmployeeDAL {
 	
 	//------------------------------------------------------------//
 	
-	public static ArrayList<EmployeeModel> getAllDrivers() {
+	public static ArrayList<EmployeeModel> getAllDrivers(Integer superSSN) {
 
-		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AllDrivers]";
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AllDrivers] ?";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);		
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setInt(1, superSSN);
 			RS=cstmt.executeQuery();
 			
 			
@@ -197,15 +201,16 @@ public class EmployeeDAL {
 		return allParamedics;
 	}
 	
-	public static ArrayList<EmployeeModel> getActiveDrivers() {
+	public static ArrayList<EmployeeModel> getActiveDrivers(Integer superSSN) {
 
-		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_Drivers]";
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_Drivers] ?";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);		
+			CallableStatement cstmt = conn.prepareCall(SPsql);	
+			cstmt.setInt(1, superSSN);
 			RS=cstmt.executeQuery();
 			
 			
@@ -243,15 +248,16 @@ public class EmployeeDAL {
 		return allParamedics;
 	}
 	
-	public static ArrayList<EmployeeModel> getInActiveDrivers() {
+	public static ArrayList<EmployeeModel> getInActiveDrivers(Integer superSSN) {
 
-		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_InActiveDrivers]";
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_InActiveDrivers] ?";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);		
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setInt(1, superSSN);
 			RS=cstmt.executeQuery();
 			
 			
