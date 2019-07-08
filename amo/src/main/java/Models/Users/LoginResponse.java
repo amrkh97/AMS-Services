@@ -6,7 +6,7 @@ public class LoginResponse extends ServerResponse {
 	private String token;
 	private Integer employeeID;
 	private Integer jobID;
-	private String jobDescription;
+	private String title;
 	private String userPhoto;
 	/**
 	 * @return the responseMsg
@@ -44,14 +44,6 @@ public class LoginResponse extends ServerResponse {
 		this.jobID = jobID;
 	}
 
-	public String getJobDescription() {
-		return jobDescription;
-	}
-
-	public void setJobDescription(String jobDescription) {
-		this.jobDescription = jobDescription;
-	}
-
 	public String getUserPhoto() {
 		return userPhoto;
 	}
@@ -66,5 +58,13 @@ public class LoginResponse extends ServerResponse {
 
 	public void setEmployeeID(Integer employeeID) {
 		this.employeeID = employeeID;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }
