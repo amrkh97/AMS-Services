@@ -14,8 +14,6 @@ import Models.AmbulanceMap.AmbulanceMapModel;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.ServerResponse;
-import Models.Firebase.FBLocation.FBLocationEnum;
-import Models.Firebase.FBLocation.HttpConnectionHelper;
 import Models.Job.Job;
 import Models.Locations.Location;
 import Models.Medicine.CompanyMedicineMap;
