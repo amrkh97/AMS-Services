@@ -23,6 +23,7 @@ import BLL.LocationManager;
 import BLL.MedicalRecordManager;
 import BLL.MedicineManager;
 import BLL.PatientLocationManager;
+import BLL.PatientManger;
 import BLL.UserManager;
 import BLL.YelloPadManager;
 import Models.ServerResponse;
@@ -35,6 +36,8 @@ import Models.Locations.Location;
 import Models.MedicalRecord.MedicalRecord;
 import Models.Medicine.CompanyMedicineMap;
 import Models.Medicine.Medicine;
+import Models.Patient.PatientModel;
+import Models.MedicalRecord.MedicalRecord;
 import Models.PatientLocation.PatientLoc;
 import Models.Users.LoginCredentialsRequest;
 import Models.Users.LogoutResponse;
@@ -444,6 +447,70 @@ public class Services {
 
 		return Response.ok(PatientLocationManager.getAllPatientLocations(PatientNationalID.getStringID())).header("Access-Control-Allow-Origin", "*").build();
 	}
+	
+	@Path("patient/getAll")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response getAllPatient() {
+		ArrayList<PatientModel> X =PatientManger.getAllPatient();
+    	if(X==null){		
+    		return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build(); }
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		 
+	}
+
+	@Path("patient/addNewPatient")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response addNewPatient(PatientModel patientModel) {
+		ServerResponse X =PatientManger.addNewPatient(patientModel);
+    	if(X==null){		
+    		return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build(); }
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		 
+	}
+
+
+	@Path("patient/updatePatientData")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response editPatient (PatientModel patientModel) {
+		ServerResponse X =PatientManger.updatePatientData(patientModel);
+    	if(X==null){		
+    		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); }
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+
+	}
+	 
+
+	@Path("patient/get/NID")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response getPatientByNID (PatientModel patientModel) {
+		ArrayList<PatientModel>  X =PatientManger.getPatientByNId(patientModel.getPatientNationalID());
+    	if(X==null){		
+    		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); }
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+
+	}
+
+	@Path("patient/deletePatient")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response deletePatient (PatientModel patientModel) {
+		ServerResponse X =PatientManger.deletePatient(patientModel.getPatientID());
+    	if(X==null){
+    		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); 
+    		}
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+
+	}
+
 
 	@Path("pharmaCompany/getAllCompanies")
 	@POST
