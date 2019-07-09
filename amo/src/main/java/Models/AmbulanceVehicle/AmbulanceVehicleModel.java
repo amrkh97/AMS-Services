@@ -1,33 +1,29 @@
 package Models.AmbulanceVehicle;
 
-import java.sql.Date;
-import javax.ws.rs.Path;
-
 public class AmbulanceVehicleModel {
-	
-	private int vin; 
+
+	private int vin;
 	private String implication;
-	private String make ;
+	private String make;
 	private String type;
 	private String productionYear;
-	private String regYear ;
-	private String 	licencePlate ;
-	private String ownerName ;
-	private String licenceStateOrProvince ;
-    private String  serviceStartDate ;
-    private String engineNumber ;
-    private String brand ;
-    private String chasiahNumber ;
-    private String model ;
-    private String driverPhoneNumber ;
-    
-    private String AmbulanceVehiclePicture ;
-    private String  vehicleStatus ;
+	private String regYear;
+	private String licencePlate;
+	private String ownerName;
+	private String licenceStateOrProvince;
+	private String serviceStartDate;
+	private String engineNumber;
+	private String brand;
+	private String chasiahNumber;
+	private String model;
+	private String driverPhoneNumber;
 
+	private String AmbulanceVehiclePicture;
+	private String vehicleStatus;
 
-    public AmbulanceVehicleModel(){
-    	setVehicleStatus("1");
-    }
+	public AmbulanceVehicleModel() {
+		setVehicleStatus("1");
+	}
 
 	public int getVin() {
 		return vin;
@@ -61,7 +57,6 @@ public class AmbulanceVehicleModel {
 		this.type = type;
 	}
 
-	
 	public String getLicencePlate() {
 		return licencePlate;
 	}
@@ -86,7 +81,6 @@ public class AmbulanceVehicleModel {
 		this.licenceStateOrProvince = licenceStateOrProvince;
 	}
 
-	
 	public String getEngineNumber() {
 		return engineNumber;
 	}
@@ -161,7 +155,7 @@ public class AmbulanceVehicleModel {
 
 	public String getAmbulanceVehiclePicture() {
 		// TODO Auto-generated method stub
-		return AmbulanceVehiclePicture ;
+		return AmbulanceVehiclePicture;
 	}
 
 	public void setAmbulanceVehiclePicture(String ambulanceVehiclePicture) {

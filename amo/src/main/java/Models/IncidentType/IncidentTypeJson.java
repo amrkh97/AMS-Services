@@ -1,6 +1,5 @@
 package Models.IncidentType;
 
-import Models.IncidentType.*;
 import java.util.ArrayList;
 
 public class IncidentTypeJson {

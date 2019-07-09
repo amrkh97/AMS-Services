@@ -11,8 +11,8 @@ import java.util.ArrayList;
 // import org.json.JSONObject;
 
 import DB.DBManager;
-import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.ServerResponse;
+import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 
 public class AmbulanceVehicleDAL {
 
