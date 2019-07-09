@@ -8,9 +8,11 @@ public class LoginResponse extends ServerResponse {
 	private Integer jobID;
 	private String title;
 	private String userPhoto;
+
 	/**
 	 * @return the responseMsg
 	 */
+	@Override
 	public String getResponseMsg() {
 		return responseMsg;
 	}
@@ -18,6 +20,7 @@ public class LoginResponse extends ServerResponse {
 	/**
 	 * @param responseMsg the responseMsg to set
 	 */
+	@Override
 	public void setResponseMsg(String responseMsg) {
 		this.responseMsg = responseMsg;
 	}
