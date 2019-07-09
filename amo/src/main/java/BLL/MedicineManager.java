@@ -126,17 +126,4 @@ public class MedicineManager {
 		 return MedicineDAL.DeleteMedicine(BarCode);
 	 }
 	  
-
-	public static ServerResponse DeleteMedicine(String BarCode) {
-		ArrayList<Medicine> Array = new ArrayList<Medicine>();
-		Array = MedicineDAL.getMedicineByBC(BarCode);
-		if (Array.size() == 0) {
-			ServerResponse S = new ServerResponse();
-			S.setResponseHexCode("FF");
-			S.setResponseMsg("Not found medicine in database");
-			return S;
-		}
-		return MedicineDAL.DeleteMedicine(BarCode);
-	}
-
 }
