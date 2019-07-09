@@ -7,7 +7,7 @@ import Models.IncidentType.*;
 
 public class IncidentTypeManager {
 	
-	public static ArrayList<IncidentType> getIncidentType() {
+	public static IncidentTypeJson getIncidentType() {
 		return IncidentTypeDAL.getIncidentType();
 	}
 

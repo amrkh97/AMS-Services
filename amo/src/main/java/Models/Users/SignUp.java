@@ -3,7 +3,7 @@ package Models.Users;
 public class SignUp {
 	private String firstName;
 	private String lastName;
-	private String birthDate;
+	private String dateOfBirth;
 	private String email;
 	private String password;
 	private String gender;
@@ -15,6 +15,7 @@ public class SignUp {
 	private String postalCode;
 	private String pan;
 	private String nationalID;
+	private Integer jobID;
 	private String photo;
 	
 	public String getFirstName() {
@@ -29,13 +30,6 @@ public class SignUp {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-	
-	public String getBirthDate() {
-		return birthDate;
-	}
-	public void setBirthDate(String birthDate) {
-		this.birthDate = birthDate;
 	}
 	
 	public String getEmail() {
@@ -120,5 +114,17 @@ public class SignUp {
 	}
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+	public Integer getJobID() {
+		return jobID;
+	}
+	public void setJobID(Integer jobID) {
+		this.jobID = jobID;
+	}
+	public String getDateOfBirth() {
+		return dateOfBirth;
+	}
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 }
