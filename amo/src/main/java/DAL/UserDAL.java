@@ -2,16 +2,14 @@ package DAL;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
 import DB.DBManager;
 import Models.Users.LoginResponse;
-import Models.Users.SignUpResponse;
 import Models.Users.LogoutResponse;
-
 import Models.Users.SignUp;
+import Models.Users.SignUpResponse;
 
 public class UserDAL {
 

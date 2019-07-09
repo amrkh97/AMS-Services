@@ -7,7 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DB.DBManager;
-import Models.Priority.*;
+import Models.Priority.IncidentPriority;
+import Models.Priority.IncidentPriorityJson;
 
 public class IncidentPriorityDAL {
 	

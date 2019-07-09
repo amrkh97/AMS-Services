@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import DB.DBManager;
 import Models.ServerResponse;
-import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Medicine.CompanyMedicineMap;
 
 public class CompanyMedicineMapDAL {

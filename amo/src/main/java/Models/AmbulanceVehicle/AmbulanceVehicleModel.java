@@ -1,8 +1,5 @@
 package Models.AmbulanceVehicle;
 
-import java.sql.Date;
-import javax.ws.rs.Path;
-
 public class AmbulanceVehicleModel {
 	
 	private int vin; 

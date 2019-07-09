@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 import DB.DBManager;
 import Models.ServerResponse;
-import Models.AmbulanceVehicle.AmbulanceVehicleModel;
-import Models.Medicine.CompanyMedicineMap;
 import Models.Medicine.Medicine;
 
 
@@ -67,24 +65,21 @@ public class MedicineDAL {
 			return Array;
 		}
 
-	//Get all Car by ID
-		 public static  ArrayList<Medicine> getMedicineByBC(String BarCode)
+	 public static Medicine getMedicineByBC(String BarCode)
 		 {
 			 
 			
 
 			 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByBCode ?";
 			 Connection conn = DBManager.getDBConn();
-			 ArrayList<Medicine>  Array=  new 	ArrayList<Medicine>()  ;
-			 	
-				
+			 Medicine _Medicine  =new Medicine();
 				try {
 						CallableStatement cstmt  = conn.prepareCall(SPsql);
 					     cstmt.setString(1,BarCode);
 					      
 				        ResultSet rs = cstmt.executeQuery();
-				        while(rs.next()) {
-						     Medicine _Medicine  =new Medicine();
+				       
+						     
 
 				        	_Medicine.setBarCode(rs.getString("BarCode"));
 				        
@@ -96,8 +91,8 @@ public class MedicineDAL {
 				        	_Medicine.setActiveComponent(rs.getString("ActiveComponent"));
 				        	_Medicine.setMedicineStatus(rs.getString("MedicineStatus"));
 				        	_Medicine.setMedicineName(rs.getString("MedicineName"));
-                             Array.add(_Medicine); 
-				        }
+                          
+				        
 				        
 				   			        
 				       
@@ -118,10 +113,9 @@ public class MedicineDAL {
 				}
 					
 				
-				return  Array;
+				return  _Medicine;
 			}
 
-	 //New Car insertion
 	 public static ServerResponse insertMedicine(Medicine _Medicine)
 	 {
 		
@@ -171,8 +165,7 @@ public class MedicineDAL {
 		
 		 
 	 }
-	 
-	//Update  a Car insertion
+
 	 public static ServerResponse UpdateMedicine (Medicine _Medicine)
 	 {
 		 
@@ -221,7 +214,7 @@ public class MedicineDAL {
 					
 		
 	 }
-	 //delete car
+
 	 public static ServerResponse DeleteMedicine(String BarCode)
 	 {
 		 
@@ -260,6 +253,7 @@ public class MedicineDAL {
 			return _ServerResponse;
 						 
 	 }
+	 
 	 public static  ArrayList<Medicine>  getMedicineByActiveComponent(String ActiveComponent)
 	 {
 	       
@@ -311,6 +305,7 @@ public class MedicineDAL {
 			
 			return Array;
 		}
+	
 	 public static ArrayList<Medicine>    getMedicineByCompanyName(String CompanyName)
 	 {
 
@@ -361,6 +356,7 @@ public class MedicineDAL {
 			
 			return Array;
 		}
+	
 	 public static ArrayList<Medicine>    getMedicineByCompanyStatus(String CompanyStatus)
 	 {
 
@@ -462,22 +458,19 @@ public class MedicineDAL {
 			
 			return Array;
 		}
-	 public static ArrayList<Medicine>    getMedicineByName(String Name)
+	
+	 public static Medicine getMedicineByName(String Name)
 	 {
 
 		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByName ?";
 		 Connection conn = DBManager.getDBConn();
-		ArrayList<Medicine>  Array=  new 	ArrayList<Medicine>()  ;
-
 	
 		     Medicine _Medicine  =new Medicine();
 			try {
 					CallableStatement cstmt  = conn.prepareCall(SPsql);
 				     cstmt.setString( 1 , Name);
 					ResultSet rs = cstmt.executeQuery();
-			     
-			        while(rs.next()) {
-			        	_Medicine  =new Medicine();
+
 			        	_Medicine.setBarCode(rs.getString("BarCode"));
 			        	_Medicine.setPrice(rs.getString("Price"));
 			        	_Medicine.setCountInStock(rs.getString("CountInStock"));
@@ -487,8 +480,7 @@ public class MedicineDAL {
 			        	_Medicine.setActiveComponent(rs.getString("ActiveComponent"));
 			        	_Medicine.setMedicineStatus(rs.getString("MedicineStatus"));
 			        	_Medicine.setMedicineName(rs.getString("MedicineName"));
-			        	Array.add(_Medicine);
-			        }
+
 			      
 			        
 			   			        
@@ -510,8 +502,9 @@ public class MedicineDAL {
 			}
 				
 			
-			return Array;
+			return _Medicine;
 		}
+
 	 public static ArrayList<Medicine>    getMedicineByStatus(String Status)
 	 {
 
@@ -562,6 +555,7 @@ public class MedicineDAL {
 			
 			return Array;
 		}
+	
 	 public static ServerResponse UpdateMedicineStatus(String Barcode ,String newStatus)
 	 {
 		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_UpdateStatus ?,?,?,?";	

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import DB.DBManager;
 import Models.ServerResponse;
-
 import Models.Job.Job;
 
 public class JobDAL {

@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import DB.DBManager;
 import Models.ServerResponse;
 import Models.MedicalRecord.MedicalRecord;
-import Models.MedicalRecord.MedicalRecord;
-import Models.MedicalRecord.MedicalRecord;
 
 public class MedicalRecordDAL {
 	

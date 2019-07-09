@@ -3,10 +3,8 @@ package BLL;
 import java.util.ArrayList;
 
 import DAL.CompanyMedicineMapDAL;
-import DAL.MedicineDAL;
 import Models.ServerResponse;
 import Models.Medicine.CompanyMedicineMap;
-import Models.Medicine.Medicine;
 
 public class CompanyMedicineMapManager {
 	

@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import DB.DBManager;
-import Models.ServerResponse;
 import Models.Locations.Location;
 import Models.Locations.LocationResponse;
 

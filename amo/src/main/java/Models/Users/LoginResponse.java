@@ -11,6 +11,7 @@ public class LoginResponse extends ServerResponse {
 	/**
 	 * @return the responseMsg
 	 */
+	@Override
 	public String getResponseMsg() {
 		return responseMsg;
 	}
@@ -18,6 +19,7 @@ public class LoginResponse extends ServerResponse {
 	/**
 	 * @param responseMsg the responseMsg to set
 	 */
+	@Override
 	public void setResponseMsg(String responseMsg) {
 		this.responseMsg = responseMsg;
 	}

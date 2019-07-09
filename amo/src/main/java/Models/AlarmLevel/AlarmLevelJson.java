@@ -1,8 +1,6 @@
 package Models.AlarmLevel;
 
-import java.util.ArrayList;
-
-import Models.AlarmLevel.AlarmLevel;;
+import java.util.ArrayList;;
 
 public class AlarmLevelJson {
 	

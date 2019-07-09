@@ -7,6 +7,7 @@ public class LogoutResponse extends ServerResponse {
 	/**
 	 * @return the responseMsg
 	 */
+	@Override
 	public String getResponseMsg() {
 		return responseMsg;
 	}
@@ -14,6 +15,7 @@ public class LogoutResponse extends ServerResponse {
 	/**
 	 * @param responseMsg the responseMsg to set
 	 */
+	@Override
 	public void setResponseMsg(String responseMsg) {
 		this.responseMsg = responseMsg;
 	}

@@ -1,7 +1,7 @@
 package yello.amo;
 
 import java.util.ArrayList;
-import BLL.*;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -9,19 +9,36 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import BLL.AlarmLevelManager;
+import BLL.AmbulanceMapManager;
+import BLL.AmbulanceVehicleManger;
+import BLL.CompanyManager;
+import BLL.CompanyMedicineMapManager;
+import BLL.EmployeeManager;
+import BLL.IncidentPriorityManager;
+import BLL.IncidentTypeManager;
+import BLL.JobManager;
+import BLL.LocationManager;
+import BLL.MedicalRecordManager;
+import BLL.MedicineManager;
+import BLL.PatientLocationManager;
+import BLL.UserManager;
+import BLL.YelloPadManager;
 import Models.ServerResponse;
 import Models.AmbulanceMap.AmbulanceMapModel;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.Data.DataModel;
-import Models.ServerResponse;
 import Models.Job.Job;
 import Models.Locations.Location;
+import Models.MedicalRecord.MedicalRecord;
 import Models.Medicine.CompanyMedicineMap;
 import Models.Medicine.Medicine;
-import Models.MedicalRecord.MedicalRecord;
 import Models.PatientLocation.PatientLoc;
-import Models.Users.*;
+import Models.Users.LoginCredentialsRequest;
+import Models.Users.LogoutResponse;
+import Models.Users.SignUp;
 
 /**
  * Root resource (exposed at "api" path)

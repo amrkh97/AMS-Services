@@ -8,7 +8,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 
 import DB.DBManager;
-import Models.Company.*;
+import Models.Company.CompanyModel;
 
 public class CompanyDAL {
 

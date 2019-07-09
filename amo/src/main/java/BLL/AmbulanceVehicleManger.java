@@ -2,10 +2,8 @@ package BLL;
 import java.util.ArrayList;
 
 import DAL.AmbulanceVehicleDAL;
-
-import Models.AmbulanceVehicle.AmbulanceVehicleModel;
-
 import Models.ServerResponse;
+import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 public class AmbulanceVehicleManger {
 
 	

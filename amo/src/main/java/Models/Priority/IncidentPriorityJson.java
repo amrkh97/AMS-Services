@@ -1,6 +1,5 @@
 package Models.Priority;
 
-import Models.Priority.*;
 import java.util.ArrayList;
 
 public class IncidentPriorityJson {

@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DB.DBManager;
-import Models.AlarmLevel.*;
-import Models.IncidentType.IncidentTypeJson;
+import Models.AlarmLevel.AlarmLevel;
+import Models.AlarmLevel.AlarmLevelJson;
 
 public class AlarmLevelDAL {
 	

@@ -4,12 +4,10 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
+import java.util.ArrayList;
 
 import DB.DBManager;
-
-import java.util.ArrayList;
-import Models.YelloPad.*;
+import Models.YelloPad.YelloPadModel;
 
 public class YelloPadDAL {
 	

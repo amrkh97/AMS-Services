@@ -33,7 +33,4 @@ public class DBManager {
 		}
 		return conn;
 	}
-	public static void main (String [] args) {
-		Connection con = getDBConn();
-	}
 }

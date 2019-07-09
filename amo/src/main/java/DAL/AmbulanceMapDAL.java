@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import DB.DBManager;
-import Models.AmbulanceMap.*;
+import Models.AmbulanceMap.AmbulanceMapModel;
 
 public class AmbulanceMapDAL {
 

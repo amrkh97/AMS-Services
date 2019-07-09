@@ -7,7 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DB.DBManager;
-import Models.IncidentType.*;
+import Models.IncidentType.IncidentType;
+import Models.IncidentType.IncidentTypeJson;
 
 public class IncidentTypeDAL {
 

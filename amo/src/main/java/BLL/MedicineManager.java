@@ -2,7 +2,6 @@ package BLL;
 
 import java.util.ArrayList;
 
-import DAL.AmbulanceVehicleDAL;
 import DAL.MedicineDAL;
 import Models.ServerResponse;
 import Models.Medicine.Medicine;
@@ -24,7 +23,7 @@ public class MedicineManager {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////GET  Medicines by BARCODE //////////////////////////////////////
 
-	 public static  ArrayList<Medicine> getMedicineByBC(String BarCode)
+	 public static  Medicine getMedicineByBC(String BarCode)
 	 {	
 			return MedicineDAL.getMedicineByBC(BarCode);	 
 	 }
@@ -33,7 +32,7 @@ public class MedicineManager {
 ///////////////////////////// GET  Medicines by Name //////////////////////////////////////
 	
 	
-	public static ArrayList<Medicine>    getMedicineByName(String Name)
+	public static Medicine getMedicineByName(String Name)
 	{
 	return MedicineDAL.getMedicineByName(Name);
 	}
@@ -89,13 +88,13 @@ public class MedicineManager {
 
 	 public static ServerResponse insertMedicine(Medicine MED)
 	 {	 
-		 ArrayList<Medicine> Array =new ArrayList<Medicine>();
+		 Medicine Array =new Medicine();
 		 Array = MedicineDAL.getMedicineByBC(MED.getBarCode());
-		if (Array.size()!=0)			
+		if (Array != null)			
 		{ 
-			if (Array.get(0).getMedicineStatus().equals("FF"))
+			if (Array.getMedicineStatus().equals("FF"))
 			{ 
-				return MedicineDAL.UpdateMedicineStatus(Array.get(0).getBarCode(), "00");
+				return MedicineDAL.UpdateMedicineStatus(Array.getBarCode(), "00");
 			}
 			ServerResponse S =new ServerResponse(); 
 			S.setResponseHexCode("01");
@@ -111,9 +110,9 @@ public class MedicineManager {
 	 public static ServerResponse UpdateMedicine (Medicine MED)
 	 {
 		 // check if the medicine with this bar code exists 
-		 ArrayList<Medicine> Array =new ArrayList<Medicine>();
+		 Medicine Array =new Medicine();
 		 Array = MedicineDAL.getMedicineByBC(MED.getBarCode());
-		if (Array.size()==0)
+		if (Array == null)
 		{
 			 ServerResponse S =new ServerResponse(); 
 				S.setResponseHexCode("FF");
@@ -130,9 +129,9 @@ public class MedicineManager {
 	 
 	 public static ServerResponse DeleteMedicine(String BarCode)
 	 {
-		 ArrayList<Medicine> Array =new ArrayList<Medicine>();
+		 Medicine Array =new Medicine();
 		 Array = MedicineDAL.getMedicineByBC(BarCode);
-		if (Array.size()==0)
+		if (Array == null)
 		{
 			 ServerResponse S =new ServerResponse(); 
 				S.setResponseHexCode("FF");
