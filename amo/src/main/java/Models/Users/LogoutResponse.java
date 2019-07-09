@@ -4,6 +4,7 @@ import Models.ServerResponse;
 
 public class LogoutResponse extends ServerResponse {
 	private String userID;
+
 	/**
 	 * @return the responseMsg
 	 */

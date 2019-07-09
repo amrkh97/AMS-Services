@@ -1,9 +1,7 @@
 package BLL;
 
-import java.util.ArrayList;
-
-import Models.Priority.*;
 import DAL.IncidentPriorityDAL;
+import Models.Priority.IncidentPriorityJson;
 
 public class IncidentPriorityManager {
 	public static IncidentPriorityJson getIncidentPriority() {

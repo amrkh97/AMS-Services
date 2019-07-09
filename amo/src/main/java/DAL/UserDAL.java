@@ -2,16 +2,14 @@ package DAL;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
 import DB.DBManager;
 import Models.Users.LoginResponse;
-import Models.Users.SignUpResponse;
 import Models.Users.LogoutResponse;
-
 import Models.Users.SignUp;
+import Models.Users.SignUpResponse;
 
 public class UserDAL {
 
@@ -25,12 +23,12 @@ public class UserDAL {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setString(1, emailOrPAN);
 			cstmt.setString(2, Password);
-			cstmt.registerOutParameter(3, Types.NVARCHAR);	// Hex
-			cstmt.registerOutParameter(4, Types.NVARCHAR);	// Response
-			cstmt.registerOutParameter(5, Types.INTEGER);	// JobID
-			cstmt.registerOutParameter(6, Types.NVARCHAR);	// JobTitle
-			cstmt.registerOutParameter(7, Types.INTEGER);	// EmployeeID
-			cstmt.registerOutParameter(8, Types.NVARCHAR);	// UserPhoto
+			cstmt.registerOutParameter(3, Types.NVARCHAR); // Hex
+			cstmt.registerOutParameter(4, Types.NVARCHAR); // Response
+			cstmt.registerOutParameter(5, Types.INTEGER); // JobID
+			cstmt.registerOutParameter(6, Types.NVARCHAR); // JobTitle
+			cstmt.registerOutParameter(7, Types.INTEGER); // EmployeeID
+			cstmt.registerOutParameter(8, Types.NVARCHAR); // UserPhoto
 
 			cstmt.executeUpdate();
 			_LoginResponse.setResponseHexCode(cstmt.getString(3));

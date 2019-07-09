@@ -8,6 +8,7 @@ public class LoginResponse extends ServerResponse {
 	private Integer jobID;
 	private String title;
 	private String userPhoto;
+
 	/**
 	 * @return the responseMsg
 	 */
