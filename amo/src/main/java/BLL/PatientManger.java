@@ -2,7 +2,7 @@ package BLL;
 
 import java.util.ArrayList;
 
-
+import DAL.MedicalRecordDAL;
 import DAL.PatientDAL;
 import Models.ServerResponse;
 import Models.Patient.PatientModel;
@@ -28,31 +28,26 @@ public class PatientManger {
 	/////////////////////////////////////////////////////////////////////////////////
 
 	public static ServerResponse addNewPatient(PatientModel patientModel) {
-	
-		
-		ArrayList<PatientModel> Array =new ArrayList<PatientModel>();
-		 Array = PatientDAL.getPatientByNId(patientModel.getPatientNationalID());
-			 
-		if (Array.size()!= 0)
-		{
-			if (Array.get(0).getPatientStatus().equals("FF"))
-			{ 
+
+		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
+		Array = PatientDAL.getPatientByNId(patientModel.getPatientNationalID());
+
+		if (Array.size() != 0) {
+			if (Array.get(0).getPatientStatus().equals("FF")) {
 				Array.get(0).setPatientStatus("00");
-				return  PatientDAL.updatePatientData(Array.get(0));
+				return PatientDAL.updatePatientData(Array.get(0));
+			} else {
+				ServerResponse S = new ServerResponse();
+				S.setResponseHexCode("01");
+				S.setResponseMsg("You already have this Patient with the same National ID in database");
+				return S;
 			}
-			else
-			{
-			ServerResponse S =new ServerResponse(); 
-			S.setResponseHexCode("01");
-			S.setResponseMsg("You already have this Patient with the same National ID in database");
-			return S;
-			}	
-		}	
+		}
 		return PatientDAL.addNewPatient(patientModel);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////UPDATE//////////////////////////////////////////
+	//////////////////////////////////////// UPDATE//////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////
 	public static ServerResponse updatePatientData(PatientModel patientModel) {
 
@@ -62,9 +57,27 @@ public class PatientManger {
 //////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////DELETE//////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-public static ServerResponse deletePatient(int PatientlID) {
+	public static ServerResponse deletePatient(int PatientID) {
 
-		return PatientDAL.deletePatient(PatientlID);
+		ServerResponse X = PatientDAL.deletePatientLoc(PatientID);
+		if (X.getResponseHexCode().equals("00"))
+		{
+			ServerResponse	Y= MedicalRecordDAL.deleteMedicalRecordByPatient(PatientID);
+			if (Y.getResponseHexCode().contentEquals("00"))
+			{
+				return PatientDAL.deletePatient(PatientID);
+			} 
+	else 
+			{
+				return Y;
+			}
+		
+		}
+
+		else {
+			return X;
+		}
+
 	}
 
 }
