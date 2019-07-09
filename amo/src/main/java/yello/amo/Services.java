@@ -424,6 +424,17 @@ public class Services {
 		return Response.ok(PatientLocationManager.getAllPatientLocations(PatientNationalID)).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
+	@Path("patient/getAll")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response getAllPatient() {
+		ArrayList<PatientModel> X =PatientManger.getAllPatient();
+    	if(X==null){		
+    		return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build(); }
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		 
+	}
 
 	@Path("patient/addNewPatient")
 	@POST
@@ -451,13 +462,24 @@ public class Services {
 	}
 	 
 
+	@Path("patient/get/NID")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response getPatientByNID (PatientModel patientModel) {
+		ArrayList<PatientModel>  X =PatientManger.getPatientByNId(patientModel.getPatientNationalID());
+    	if(X==null){		
+    		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); }
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+
+	}
 
 	@Path("patient/deletePatient")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-	public Response deletePatient (int PatientlID) {
-		ServerResponse X =PatientManger.deletePatient(PatientlID);
+	public Response deletePatient (PatientModel patientModel) {
+		ServerResponse X =PatientManger.deletePatient(patientModel.getPatientID());
     	if(X==null){
     		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); 
     		}
