@@ -21,7 +21,7 @@ public class AmbulanceVehicleManger {
 	public static ArrayList<AmbulanceVehicleModel> getActivatedCars() {
 
 		ArrayList<AmbulanceVehicleModel> X = getCarsByStatus("00");
-		ArrayList<AmbulanceVehicleModel> X1 = getCarsByStatus("02");
+		ArrayList<AmbulanceVehicleModel> X1 = getCarsByStatus("01");
 
 		X.addAll(X1);
 		return X;
@@ -32,7 +32,7 @@ public class AmbulanceVehicleManger {
 //////////////////////////////////////GET DeActivated CARs /////////////////////////////////////////////
 
 	public static ArrayList<AmbulanceVehicleModel> getDeActivatedCars() {
-		return AmbulanceVehicleDAL.getCarsBySts("01");
+		return AmbulanceVehicleDAL.getCarsBySts("02");
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -115,12 +115,12 @@ public class AmbulanceVehicleManger {
 
 	public static ServerResponse SetCarBusy(int Vin) {
 
-		return UpdateCarStatus(Vin, "02");
+		return UpdateCarStatus(Vin, "01");
 
 	}
 
 	public static ServerResponse SetCarMaintain(int Vin) {
-		return UpdateCarStatus(Vin, "01");
+		return UpdateCarStatus(Vin, "02");
 
 	}
 
@@ -139,13 +139,13 @@ public class AmbulanceVehicleManger {
 			return S;
 		}
 
-		if (Array.get(0).getVehicleStatus().equals("02")) {
+		if (Array.get(0).getVehicleStatus().equals("01")) {
 			S.setResponseHexCode("FF");
 			S.setResponseMsg("this AmbulanceVehicl can not be deleted it is BUSY");
 			return S;
 
 		}
-		if (Array.get(0).getVehicleStatus().equals("01")) {
+		if (Array.get(0).getVehicleStatus().equals("02")) {
 			S.setResponseHexCode("FF");
 			S.setResponseMsg("this AmbulanceVehicl can not be deleted it is in Maintainance");
 			return S;
