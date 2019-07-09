@@ -7,19 +7,15 @@ import Models.ServerResponse;
 import Models.Medicine.Medicine;
 
 public class MedicineManager {
-	
-	
-	
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////GET ALL Medicines ///////////////////////////////////////////
 
-	
-	 public static ArrayList<Medicine> getAllMedicines()
-	 {
-		 
+	public static ArrayList<Medicine> getAllMedicines() {
+
 		return MedicineDAL.getAllMedicines();
-	 }
-		
+	}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////GET  Medicines by BARCODE //////////////////////////////////////
 
@@ -37,51 +33,40 @@ public class MedicineManager {
 	return MedicineDAL.getMedicineByName(Name);
 	}
 
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// GET  Medicines by Status //////////////////////////////////////
 
-	
-	public static ArrayList<Medicine>    getMedicineByStatus(String Status)
-	{
-	return MedicineDAL.getMedicineByStatus(Status);
+	public static ArrayList<Medicine> getMedicineByStatus(String Status) {
+		return MedicineDAL.getMedicineByStatus(Status);
 	}
-		 
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// GET  Medicines by Active Component //////////////////////////////////////
 
-		 
-	 public static  ArrayList<Medicine>  getMedicineByActiveComponent(String ActiveComponent)
-	 {
-		 return MedicineDAL.getMedicineByActiveComponent(ActiveComponent);
-	 }	 
+	public static ArrayList<Medicine> getMedicineByActiveComponent(String ActiveComponent) {
+		return MedicineDAL.getMedicineByActiveComponent(ActiveComponent);
+	}
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// GET  Medicines by Company Name //////////////////////////////////////
 
-	 
-	 public static ArrayList<Medicine>    getMedicineByCompanyName(String CompanyName)
-	 {
-		 return MedicineDAL.getMedicineByCompanyName(CompanyName);
-	 }
+	public static ArrayList<Medicine> getMedicineByCompanyName(String CompanyName) {
+		return MedicineDAL.getMedicineByCompanyName(CompanyName);
+	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// GET  Medicines by Company status //////////////////////////////////////
-	 
-	 public static ArrayList<Medicine>    getMedicineByCompanyStatus(String CompanyStatus)
-	 {
-		 return MedicineDAL.getMedicineByCompanyStatus(CompanyStatus);
-	 }
-	 
+
+	public static ArrayList<Medicine> getMedicineByCompanyStatus(String CompanyStatus) {
+		return MedicineDAL.getMedicineByCompanyStatus(CompanyStatus);
+	}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// GET  Medicines by Contact Person //////////////////////////////////////
-	 
-	 public static ArrayList<Medicine>    getMedicineByContactPerson(String ContactPerson)
-	 {
-		 return MedicineDAL.getMedicineByContactPerson(ContactPerson);
-	 }
-	 
-	
+
+	public static ArrayList<Medicine> getMedicineByContactPerson(String ContactPerson) {
+		return MedicineDAL.getMedicineByContactPerson(ContactPerson);
+	}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////INSERT ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,14 +81,14 @@ public class MedicineManager {
 			{ 
 				return MedicineDAL.UpdateMedicineStatus(Array.getBarCode(), "00");
 			}
-			ServerResponse S =new ServerResponse(); 
+			ServerResponse S = new ServerResponse();
 			S.setResponseHexCode("01");
 			S.setResponseMsg("You already have this medicine in database");
 			return S;
 		}
 		return MedicineDAL.insertMedicine(MED);
-	 }	 
-	 
+	}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////UPDATE ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -120,9 +105,9 @@ public class MedicineManager {
 				return S;	
 				
 		}
-		return MedicineDAL.UpdateMedicine(MED);	 
-	 }
-	 	 
+		return MedicineDAL.UpdateMedicine(MED);
+	}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////DELETE ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////	 
@@ -141,5 +126,17 @@ public class MedicineManager {
 		 return MedicineDAL.DeleteMedicine(BarCode);
 	 }
 	  
+
+	public static ServerResponse DeleteMedicine(String BarCode) {
+		ArrayList<Medicine> Array = new ArrayList<Medicine>();
+		Array = MedicineDAL.getMedicineByBC(BarCode);
+		if (Array.size() == 0) {
+			ServerResponse S = new ServerResponse();
+			S.setResponseHexCode("FF");
+			S.setResponseMsg("Not found medicine in database");
+			return S;
+		}
+		return MedicineDAL.DeleteMedicine(BarCode);
+	}
 
 }

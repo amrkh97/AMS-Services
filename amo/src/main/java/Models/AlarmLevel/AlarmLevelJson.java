@@ -3,7 +3,7 @@ package Models.AlarmLevel;
 import java.util.ArrayList;;
 
 public class AlarmLevelJson {
-	
+
 	private ArrayList<AlarmLevel> alarmJson;
 
 	public ArrayList<AlarmLevel> getAlarmJson() {

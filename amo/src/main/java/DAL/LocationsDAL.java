@@ -9,8 +9,7 @@ import DB.DBManager;
 import Models.Locations.Location;
 import Models.Locations.LocationResponse;
 
-public class LocationsDAL 
-{
+public class LocationsDAL {
 	public static LocationResponse addLocation(Location loc) {
 
 		String SPsql = "EXEC usp_InsertNewLocation ?,?,?,?,?,?,?,?,?,?,?,?";
@@ -35,14 +34,14 @@ public class LocationsDAL
 			locResponse.setResponseMessage(cstmt.getString(11));
 			locResponse.setReturnHex(cstmt.getString(10));
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		} finally {
 			try {
 				conn.close();
 				System.out.println("Connention Closed");
 			} catch (SQLException e) {
-				
+
 				e.printStackTrace();
 			}
 		}

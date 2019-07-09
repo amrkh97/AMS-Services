@@ -18,25 +18,21 @@ public class JobDAL {
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<Job> allJobs = new ArrayList<>();
-		
+
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);		
-			RS=cstmt.executeQuery();
-			
-			
-			while(RS.next()) {
-				
-				Job currentJob= new Job();
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			RS = cstmt.executeQuery();
+
+			while (RS.next()) {
+
+				Job currentJob = new Job();
 				currentJob.setJobStatus(RS.getNString("JobStatus"));
 				currentJob.setJobDescription(RS.getNString("JobDescription"));
 				currentJob.setNote(RS.getNString("Note"));
 				currentJob.setTitle(RS.getNString("Title"));
-				currentJob.setJobID(RS.getNString("JobID")); ;
-				
-				
-				
-			
-				
+				currentJob.setJobID(RS.getNString("JobID"));
+				;
+
 				allJobs.add(currentJob);
 			}
 
@@ -52,41 +48,35 @@ public class JobDAL {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
-		return allJobs;
 
+		return allJobs;
 
 	}
 
 	public static ArrayList<Job> getJobByTitle(String jobTitle) {
 		String SPsql = "EXEC usp_Job_SelectByTitle ?";
-		
+
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<Job> allJobs = new ArrayList<>();
-		
+
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);		
-			cstmt.setString(1,jobTitle );
-			RS=cstmt.executeQuery();
-			
-			
-			while(RS.next()) {
-				Job currentJob= new Job();	
-		
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setString(1, jobTitle);
+			RS = cstmt.executeQuery();
+
+			while (RS.next()) {
+				Job currentJob = new Job();
+
 				currentJob.setJobStatus(RS.getNString("JobStatus"));
 				currentJob.setJobDescription(RS.getNString("JobDescription"));
 				currentJob.setNote(RS.getNString("Note"));
 				currentJob.setTitle(RS.getNString("Title"));
-				currentJob.setJobID(RS.getNString("JobID")); ;
-				
-				
-				
-			allJobs.add(currentJob);
-				
-			
+				currentJob.setJobID(RS.getNString("JobID"));
+				;
+
+				allJobs.add(currentJob);
+
 			}
 
 		} catch (SQLException e) {
@@ -101,40 +91,35 @@ public class JobDAL {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
+
 		return allJobs;
 
 	}
 
 	public static ArrayList<Job> getJobByStatus(String jobStatus) {
 		String SPsql = "EXEC usp_Job_SelectByJobStatus ?";
-		
+
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<Job> allJobs = new ArrayList<>();
-		
+
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);		
-			cstmt.setString(1,jobStatus);
-			RS=cstmt.executeQuery();
-			
-			
-			while(RS.next()) {
-				Job currentJob= new Job();	
-		
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setString(1, jobStatus);
+			RS = cstmt.executeQuery();
+
+			while (RS.next()) {
+				Job currentJob = new Job();
+
 				currentJob.setJobStatus(RS.getNString("JobStatus"));
 				currentJob.setJobDescription(RS.getNString("JobDescription"));
 				currentJob.setNote(RS.getNString("Note"));
 				currentJob.setTitle(RS.getNString("Title"));
-				currentJob.setJobID(RS.getNString("JobID")); ;
-				
-				
-				
-			allJobs.add(currentJob);
-				
-			
+				currentJob.setJobID(RS.getNString("JobID"));
+				;
+
+				allJobs.add(currentJob);
+
 			}
 
 		} catch (SQLException e) {
@@ -149,11 +134,9 @@ public class JobDAL {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
+
 		return allJobs;
-	
+
 	}
 
 	public static ServerResponse addJob(Job Joba) {
@@ -163,11 +146,11 @@ public class JobDAL {
 		ServerResponse _ServerResponse = new ServerResponse();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
-			cstmt.setString(1,Joba.getJobID() );
-			cstmt.setString(2,Joba.getTitle());
-			cstmt.setString(3,Joba.getNote());
-			cstmt.setString(4,Joba.getJobDescription());
-			cstmt.setString(5,Joba.getJobStatus());
+			cstmt.setString(1, Joba.getJobID());
+			cstmt.setString(2, Joba.getTitle());
+			cstmt.setString(3, Joba.getNote());
+			cstmt.setString(4, Joba.getJobDescription());
+			cstmt.setString(5, Joba.getJobStatus());
 			cstmt.registerOutParameter(6, Types.NVARCHAR);
 			cstmt.registerOutParameter(7, Types.NVARCHAR);
 			cstmt.execute();
@@ -198,47 +181,41 @@ public class JobDAL {
 
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
-			cstmt.setString(1,Joba.getJobID() );
-			cstmt.setString(2,Joba.getTitle());
-			cstmt.setString(3,Joba.getNote());
-			cstmt.setString(4,Joba.getJobDescription());
-			cstmt.setString(5,"02");
+			cstmt.setString(1, Joba.getJobID());
+			cstmt.setString(2, Joba.getTitle());
+			cstmt.setString(3, Joba.getNote());
+			cstmt.setString(4, Joba.getJobDescription());
+			cstmt.setString(5, "02");
 			cstmt.registerOutParameter(6, Types.NVARCHAR);
 			cstmt.registerOutParameter(7, Types.NVARCHAR);
 			cstmt.execute();
 			_ServerResponse.setResponseHexCode(cstmt.getString(6));
 			_ServerResponse.setResponseMsg(cstmt.getString(7));
 
-
-			
-
-
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		} finally {
 			try {
 				conn.close();
 				System.out.println("Connection Closed");
 			} catch (SQLException e) {
-				
+
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
+
 		return _ServerResponse;
 	}
 
 	public static ServerResponse deleteJob(String jobID) {
-		
+
 		String SPsql = "EXEC usp_Job_Delete ?,?,?";
 		Connection conn = DBManager.getDBConn();
 		ServerResponse _ServerResponse = new ServerResponse();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
-			cstmt.setString(1,jobID);
+			cstmt.setString(1, jobID);
 			cstmt.registerOutParameter(2, Types.NVARCHAR);
 			cstmt.registerOutParameter(3, Types.NVARCHAR);
 			cstmt.execute();

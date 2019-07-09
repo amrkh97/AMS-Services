@@ -10,18 +10,18 @@ import org.junit.Test;
 
 public class ServicesTest extends JerseyTest {
 
-    @Override
-    protected Application configure() {
-        return new ResourceConfig(Services.class);
-    }
+	@Override
+	protected Application configure() {
+		return new ResourceConfig(Services.class);
+	}
 
-    /**
-     * Test to see that the message "Got it!" is sent in the response.
-     */
-    @Test
-    public void testGetIt() {
-        final String responseMsg = target().path("api").request().get(String.class);
+	/**
+	 * Test to see that the message "Got it!" is sent in the response.
+	 */
+	@Test
+	public void testGetIt() {
+		final String responseMsg = target().path("api").request().get(String.class);
 
-        assertEquals("Server is Running ..!", responseMsg);
-    }
+		assertEquals("Server is Running ..!", responseMsg);
+	}
 }

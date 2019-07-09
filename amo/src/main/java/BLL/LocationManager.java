@@ -9,9 +9,8 @@ public class LocationManager {
 		return LocationsDAL.addLocation(loc);
 	}
 
-
 	public static Location getLocation(int id) {
-		
+
 		return null;
 	}
 }
