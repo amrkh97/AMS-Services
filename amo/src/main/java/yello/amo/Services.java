@@ -16,6 +16,7 @@ import Models.Company.CompanyModel;
 import Models.Data.DataModel;
 import Models.ServerResponse;
 import Models.Job.Job;
+import Models.Locations.Location;
 import Models.Medicine.CompanyMedicineMap;
 import Models.Medicine.Medicine;
 import Models.MedicalRecord.MedicalRecord;
@@ -381,7 +382,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response searchYelloPad(DataModel ID) {
 
-		return Response.ok().entity(YelloPadManager.searchYelloPad(ID)).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok().entity(YelloPadManager.searchYelloPad(ID.getStringID())).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("yelloPad/getYelloPadStatus")
@@ -390,7 +391,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getYelloPadStatus(DataModel ID) {
 
-		return Response.ok().entity(YelloPadManager.getYelloPadStatus(ID)).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok().entity(YelloPadManager.getYelloPadStatus(ID.getStringID())).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("yelloPad/getYelloPadNetworkCardNo")
@@ -399,7 +400,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getYelloPadNetworkCardNo(DataModel ID) {
 
-		return Response.ok().entity(YelloPadManager.getYelloPadNetworkCardNo(ID)).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok().entity(YelloPadManager.getYelloPadNetworkCardNo(ID.getStringID())).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("patient/addLocation")
@@ -418,7 +419,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllPatientLocations(DataModel PatientNationalID) {
 
-		return Response.ok(PatientLocationManager.getAllPatientLocations(PatientNationalID)).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok(PatientLocationManager.getAllPatientLocations(PatientNationalID.getStringID())).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("pharmaCompany/getAllCompanies")
@@ -441,8 +442,8 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCompanyByStatus(Integer companyStatus) {
-		return Response.ok(CompanyManager.getCompanyByStatus(companyStatus)).header("Access-Control-Allow-Origin", "*").build();
+	public Response getCompanyByStatus(DataModel companyStatus) {
+		return Response.ok(CompanyManager.getCompanyByStatus(companyStatus.getSentStatus())).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("pharmaCompany/getCompanyByName")
