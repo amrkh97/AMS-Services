@@ -111,7 +111,6 @@ public class Services {
 
 	@Path("GetMedicines")
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllMedicines() {
 		return Response.ok(MedicineManager.getAllMedicines()).header("Access-Control-Allow-Origin", "*").build();
