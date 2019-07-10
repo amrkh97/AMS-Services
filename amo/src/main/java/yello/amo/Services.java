@@ -453,9 +453,9 @@ public class Services {
 	@Path("job/getJobByTitle")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.TEXT_PLAIN)
-	public Response getJobByTitle(String jobTitle) {
-		ArrayList<Job> Xs = JobManager.getJobByTitle(jobTitle);
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getJobByTitle(DataModel jobTitle) {
+		ArrayList<Job> Xs = JobManager.getJobByTitle(jobTitle.getSentStatus());
 		DataArrayModel<Job> X = new DataArrayModel<Job>();
 		X.set_ArrayList(Xs);
 		
@@ -480,9 +480,9 @@ public class Services {
 	@Path("job/deleteJob")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.TEXT_PLAIN)
-	public Response deleteJob(String JobID) {
-		return Response.ok(JobManager.deleteJob(JobID)).header("Access-Control-Allow-Origin", "*").build();
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response deleteJob(DataModel JobID) {
+		return Response.ok(JobManager.deleteJob(JobID.getStringID())).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
 	//--------------------------------------------End Of Job Services-----------------------------------------------//
