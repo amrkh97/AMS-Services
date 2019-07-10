@@ -802,15 +802,4 @@ public class Services {
 		return Response.ok(LocationManager.addLocation(location)).header("Access-Control-Allow-Origin", "*").build();
 	}
 
-	/*
-	 * @Path("locations/{id}")
-	 * 
-	 * @GET
-	 * 
-	 * @Produces(MediaType.APPLICATION_JSON) public Response
-	 * getLocation(@PathParam("id") int id) { return
-	 * Response.ok(LocationManager.getLocation(id)).header(
-	 * "Access-Control-Allow-Origin", "*").build(); }
-	 */
-
 }
