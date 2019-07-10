@@ -43,6 +43,7 @@ import Models.PatientLocation.PatientLoc;
 import Models.Users.LoginCredentialsRequest;
 import Models.Users.LogoutResponse;
 import Models.Users.SignUp;
+import Models.YelloPad.YelloPadModel;
 
 /**
  * Root resource (exposed at "api" path)
@@ -930,8 +931,10 @@ public class Services {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllYelloPads() {
-
-		return Response.ok().entity(YelloPadManager.getAllYelloPads()).header("Access-Control-Allow-Origin", "*")
+		ArrayList<YelloPadModel> X = YelloPadManager.getAllYelloPads();
+		DataArrayModel<YelloPadModel>OBJ = new 	DataArrayModel<YelloPadModel>()  ;
+		OBJ.set_ArrayList(X);
+		return Response.ok(OBJ).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
@@ -940,7 +943,10 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllActiveYelloPads() {
 
-		return Response.ok().entity(YelloPadManager.getAllActiveYelloPads()).header("Access-Control-Allow-Origin", "*")
+		ArrayList<YelloPadModel> X = YelloPadManager.getAllActiveYelloPads();
+		DataArrayModel<YelloPadModel>OBJ = new 	DataArrayModel<YelloPadModel>()  ;
+		OBJ.set_ArrayList(X);
+		return Response.ok(OBJ).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
@@ -949,7 +955,11 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllInActiveYelloPads() {
 
-		return Response.ok().entity(YelloPadManager.getAllInActiveYelloPads())
+		ArrayList<YelloPadModel> X = YelloPadManager.getAllInActiveYelloPads();
+		DataArrayModel<YelloPadModel>OBJ = new 	DataArrayModel<YelloPadModel>()  ;
+		OBJ.set_ArrayList(X);
+
+		return Response.ok(OBJ)
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
