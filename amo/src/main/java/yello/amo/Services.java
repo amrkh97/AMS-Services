@@ -668,8 +668,12 @@ public class Services {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllMedicalRecords() {
+		
+		ArrayList<MedicalRecord> Xs = MedicalRecordManager.getAllMedicalRecords();
+		DataArrayModel<MedicalRecord> X = new DataArrayModel<MedicalRecord>();
+		X.set_ArrayList(Xs);
 
-		return Response.ok(MedicalRecordManager.getAllMedicalRecords()).header("Access-Control-Allow-Origin", "*")
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
@@ -679,7 +683,11 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getMedicalRecordByID(MedicalRecord MedicalRecorda) {
 
-		return Response.ok(MedicalRecordManager.getMedicalRecordByID(MedicalRecorda.getMedicalRecordID()))
+		ArrayList<MedicalRecord> Xs = MedicalRecordManager.getMedicalRecordByID(MedicalRecorda.getMedicalRecordID());
+		DataArrayModel<MedicalRecord> X = new DataArrayModel<MedicalRecord>();
+		X.set_ArrayList(Xs);
+
+		return Response.ok(X)
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
@@ -689,7 +697,11 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getMedicalRecordByStatus(MedicalRecord MedicalRecorda) {
 
-		return Response.ok(MedicalRecordManager.getMedicalRecordByStatus(MedicalRecorda.getmRStatus()))
+		ArrayList<MedicalRecord> Xs = MedicalRecordManager.getMedicalRecordByStatus(MedicalRecorda.getmRStatus());
+		DataArrayModel<MedicalRecord> X = new DataArrayModel<MedicalRecord>();
+		X.set_ArrayList(Xs);
+
+		return Response.ok(X)
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
@@ -717,7 +729,11 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getMedicalRecordByPatientID(MedicalRecord MedicalRecorda) {
 
-		return Response.ok(MedicalRecordManager.getMedicalRecordByPatientID(MedicalRecorda.getPatientID()))
+		ArrayList<MedicalRecord> Xs = MedicalRecordManager.getMedicalRecordByPatientID(MedicalRecorda.getPatientID());
+		DataArrayModel<MedicalRecord> X = new DataArrayModel<MedicalRecord>();
+		X.set_ArrayList(Xs);
+
+		return Response.ok(X)
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 	
