@@ -2,6 +2,7 @@ package BLL;
 
 import DAL.AmbulanceMapDAL;
 import Models.AmbulanceMap.AmbulanceMapModel;
+import Models.Data.DataModel;
 
 public class AmbulanceMapManager {
 
@@ -21,11 +22,11 @@ public class AmbulanceMapManager {
 		return AmbulanceMapDAL.getAmbulanceCarMapByYelloPadID(ID);
 	}
 
-	public static String addAmbulanceMap(AmbulanceMapModel currentAmbulanceMap) {
+	public static DataModel addAmbulanceMap(AmbulanceMapModel currentAmbulanceMap) {
 		return AmbulanceMapDAL.addAmbulanceMap(currentAmbulanceMap);
 	}
 
-	public static Integer deleteAmbulanceMap(Integer currentAmbulanceMap) {
+	public static DataModel deleteAmbulanceMap(Integer currentAmbulanceMap) {
 		return AmbulanceMapDAL.deleteAmbulanceMap(currentAmbulanceMap);
 	}
 

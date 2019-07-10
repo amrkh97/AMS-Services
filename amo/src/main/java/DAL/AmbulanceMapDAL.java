@@ -8,6 +8,7 @@ import java.sql.Types;
 
 import DB.DBManager;
 import Models.AmbulanceMap.AmbulanceMapModel;
+import Models.Data.DataModel;
 
 public class AmbulanceMapDAL {
 
@@ -151,8 +152,8 @@ public class AmbulanceMapDAL {
 
 	// ------------------------------------------------------------------------//
 
-	public static String addAmbulanceMap(AmbulanceMapModel currentAmbulanceMap) {
-
+	public static DataModel addAmbulanceMap(AmbulanceMapModel currentAmbulanceMap) {
+		DataModel _dataModel = new DataModel();
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_AmbulanceMap_Insert] ?,?,?,?,?";
 		Connection conn = DBManager.getDBConn();
 		String addStatus = "FF";
@@ -175,14 +176,14 @@ public class AmbulanceMapDAL {
 				e.printStackTrace();
 			}
 		}
-
-		return addStatus;
+		_dataModel.setSentStatus(addStatus);
+		return _dataModel;
 	}
 
 	// -------------------------------------------------------------------//
 
-	public static Integer deleteAmbulanceMap(Integer currentAmbulanceMap) {
-
+	public static DataModel deleteAmbulanceMap(Integer currentAmbulanceMap) {
+		DataModel _dataModel = new DataModel();
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_deleteAmbulanceMap] ?";
 		Connection conn = DBManager.getDBConn();
 		try {
@@ -201,8 +202,8 @@ public class AmbulanceMapDAL {
 				e.printStackTrace();
 			}
 		}
-
-		return currentAmbulanceMap;
+		_dataModel.setSentID(currentAmbulanceMap);
+		return _dataModel;
 	}
 
 }
