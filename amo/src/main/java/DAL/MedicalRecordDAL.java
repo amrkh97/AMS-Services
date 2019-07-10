@@ -417,5 +417,35 @@ public class MedicalRecordDAL {
 		return _ServerResponse;
 
 	}
+	public static ServerResponse deleteMedicalRecordByPatient(Integer patientID) {
+		String SPsql = "EXEC usp_MedicalRecord_DeleteByPatient ?,?,?";
+		Connection conn = DBManager.getDBConn();
+		ServerResponse _ServerResponse = new ServerResponse();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setInt(1, patientID);
+			cstmt.registerOutParameter(2, Types.NVARCHAR);
+			cstmt.registerOutParameter(3, Types.NVARCHAR);
+			cstmt.execute();
+			_ServerResponse.setResponseHexCode(cstmt.getString(2));
+			_ServerResponse.setResponseMsg(cstmt.getString(3));
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return _ServerResponse;
+
+	}
+
 
 }
