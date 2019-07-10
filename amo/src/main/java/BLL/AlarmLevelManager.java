@@ -1,9 +1,7 @@
 package BLL;
 
-import java.util.ArrayList;
-
 import DAL.AlarmLevelDAL;
-import Models.AlarmLevel.*;
+import Models.AlarmLevel.AlarmLevelJson;
 
 public class AlarmLevelManager {
 	public static AlarmLevelJson getAlarmLevel() {
