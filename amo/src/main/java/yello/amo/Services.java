@@ -32,6 +32,7 @@ import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.Data.DataArrayModel;
 import Models.Data.DataModel;
+import Models.Employee.EmployeeModel;
 import Models.Job.Job;
 import Models.Locations.Location;
 import Models.MedicalRecord.MedicalRecord;
@@ -259,6 +260,7 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addAmbulanceMap(AmbulanceMapModel AmbulanceToBeAdded) {
+		
 		return Response.ok(AmbulanceMapManager.addAmbulanceMap(AmbulanceToBeAdded))
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
@@ -317,7 +319,10 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllParamedics(DataModel superSSN) {
-		return Response.ok(EmployeeManager.getAllParamedics(superSSN.getSentID())).header("Access-Control-Allow-Origin", "*")
+		ArrayList<EmployeeModel> Xs = EmployeeManager.getAllParamedics(superSSN.getSentID());
+		DataArrayModel<EmployeeModel> X = new DataArrayModel<EmployeeModel>();
+		X.set_ArrayList(Xs);
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
@@ -326,7 +331,11 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getActiveParamedics(DataModel superSSN) {
-		return Response.ok(EmployeeManager.getActiveParamedics(superSSN.getSentID())).header("Access-Control-Allow-Origin", "*")
+
+		ArrayList<EmployeeModel> Xs = EmployeeManager.getActiveParamedics(superSSN.getSentID());
+		DataArrayModel<EmployeeModel> X = new DataArrayModel<EmployeeModel>();
+		X.set_ArrayList(Xs);
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
@@ -335,7 +344,11 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getInActiveParamedics(DataModel superSSN) {
-		return Response.ok(EmployeeManager.getInActiveParamedics(superSSN.getSentID())).header("Access-Control-Allow-Origin", "*")
+
+		ArrayList<EmployeeModel> Xs = EmployeeManager.getInActiveParamedics(superSSN.getSentID());
+		DataArrayModel<EmployeeModel> X = new DataArrayModel<EmployeeModel>();
+		X.set_ArrayList(Xs);
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
@@ -344,7 +357,11 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllDrivers(DataModel superSSN) {
-		return Response.ok(EmployeeManager.getAllDrivers(superSSN.getSentID())).header("Access-Control-Allow-Origin", "*").build();
+		ArrayList<EmployeeModel> Xs = EmployeeManager.getAllDrivers(superSSN.getSentID());
+		DataArrayModel<EmployeeModel> X = new DataArrayModel<EmployeeModel>();
+		X.set_ArrayList(Xs);
+		
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("employee/getActiveDrivers")
@@ -352,7 +369,11 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getActiveDrivers(DataModel superSSN) {
-		return Response.ok(EmployeeManager.getActiveDrivers(superSSN.getSentID())).header("Access-Control-Allow-Origin", "*")
+
+		ArrayList<EmployeeModel> Xs = EmployeeManager.getActiveDrivers(superSSN.getSentID());
+		DataArrayModel<EmployeeModel> X = new DataArrayModel<EmployeeModel>();
+		X.set_ArrayList(Xs);
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
@@ -361,7 +382,11 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getInActiveDrivers(DataModel superSSN) {
-		return Response.ok(EmployeeManager.getInActiveDrivers(superSSN.getSentID())).header("Access-Control-Allow-Origin", "*")
+
+		ArrayList<EmployeeModel> Xs = EmployeeManager.getInActiveDrivers(superSSN.getSentID());
+		DataArrayModel<EmployeeModel> X = new DataArrayModel<EmployeeModel>();
+		X.set_ArrayList(Xs);
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 	
