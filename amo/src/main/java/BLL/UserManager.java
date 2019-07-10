@@ -2,9 +2,9 @@ package BLL;
 
 import DAL.UserDAL;
 import Models.Users.LoginResponse;
-import Models.Users.SignUpResponse;
 import Models.Users.LogoutResponse;
 import Models.Users.SignUp;
+import Models.Users.SignUpResponse;
 
 public class UserManager {
 	public static LoginResponse login(String emailOrPAN, String Password) {

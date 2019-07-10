@@ -1,13 +1,11 @@
 package BLL;
 
-import java.util.ArrayList;
-
 import DAL.IncidentTypeDAL;
-import Models.IncidentType.*;
+import Models.IncidentType.IncidentTypeJson;
 
 public class IncidentTypeManager {
-	
-	public static ArrayList<IncidentType> getIncidentType() {
+
+	public static IncidentTypeJson getIncidentType() {
 		return IncidentTypeDAL.getIncidentType();
 	}
 

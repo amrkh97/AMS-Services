@@ -7,36 +7,34 @@ import Models.Employee.EmployeeModel;
 
 public class EmployeeManager {
 
-	public static ArrayList<EmployeeModel> getAllParamedics() {
-		
-		return EmployeeDAL.getAllParamedics();
+	public static ArrayList<EmployeeModel> getAllParamedics(Integer superSSN) {
+
+		return EmployeeDAL.getAllParamedics(superSSN);
 	}
-	
-	public static ArrayList<EmployeeModel> getActiveParamedics() {
-	
-		return EmployeeDAL.getActiveParamedics();
+
+	public static ArrayList<EmployeeModel> getActiveParamedics(Integer superSSN) {
+
+		return EmployeeDAL.getActiveParamedics(superSSN);
 	}
-	
-	
-	public static ArrayList<EmployeeModel> getInActiveParamedics() {
-		
-		return EmployeeDAL.getInActiveParamedics();
+
+	public static ArrayList<EmployeeModel> getInActiveParamedics(Integer superSSN) {
+
+		return EmployeeDAL.getInActiveParamedics(superSSN);
 	}
-	
-	public static ArrayList<EmployeeModel> getAllDrivers() {
-		
-		return EmployeeDAL.getAllDrivers();
+
+	public static ArrayList<EmployeeModel> getAllDrivers(Integer superSSN) {
+
+		return EmployeeDAL.getAllDrivers(superSSN);
 	}
-	
-	public static ArrayList<EmployeeModel> getActiveDrivers() {
-	
-		return EmployeeDAL.getActiveDrivers();
+
+	public static ArrayList<EmployeeModel> getActiveDrivers(Integer superSSN) {
+
+		return EmployeeDAL.getActiveDrivers(superSSN);
 	}
-	
-	
-	public static ArrayList<EmployeeModel> getInActiveDrivers() {
-		
-		return EmployeeDAL.getInActiveDrivers();
+
+	public static ArrayList<EmployeeModel> getInActiveDrivers(Integer superSSN) {
+
+		return EmployeeDAL.getInActiveDrivers(superSSN);
 	}
-	
+
 }

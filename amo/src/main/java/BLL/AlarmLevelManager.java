@@ -1,12 +1,10 @@
 package BLL;
 
-import java.util.ArrayList;
-
 import DAL.AlarmLevelDAL;
-import Models.AlarmLevel.*;
+import Models.AlarmLevel.AlarmLevelJson;
 
 public class AlarmLevelManager {
-	public static ArrayList<AlarmLevel> getAlarmLevel() {
+	public static AlarmLevelJson getAlarmLevel() {
 		return AlarmLevelDAL.getAlarmLevels();
 	}
 
