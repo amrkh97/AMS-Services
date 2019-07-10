@@ -443,8 +443,11 @@ public class Services {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllJobs() {
-
-		return Response.ok(JobManager.getAllJobs()).header("Access-Control-Allow-Origin", "*").build();
+		ArrayList<Job> Xs = JobManager.getAllJobs();
+		DataArrayModel<Job> X = new DataArrayModel<Job>();
+		X.set_ArrayList(Xs);
+		
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("job/getJobByTitle")
@@ -452,8 +455,12 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.TEXT_PLAIN)
 	public Response getJobByTitle(String jobTitle) {
-
-		return Response.ok(JobManager.getJobByTitle(jobTitle)).header("Access-Control-Allow-Origin", "*").build();
+		ArrayList<Job> Xs = JobManager.getJobByTitle(jobTitle);
+		DataArrayModel<Job> X = new DataArrayModel<Job>();
+		X.set_ArrayList(Xs);
+		
+		
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("job/getJobByStatus")
@@ -462,7 +469,12 @@ public class Services {
 	@Consumes(MediaType.TEXT_PLAIN)
 	public Response getJobByStatus(String jobStatus) {
 
-		return Response.ok(JobManager.getJobByStatus(jobStatus)).header("Access-Control-Allow-Origin", "*").build();
+		ArrayList<Job> Xs = JobManager.getJobByStatus(jobStatus);
+		DataArrayModel<Job> X = new DataArrayModel<Job>();
+		X.set_ArrayList(Xs);
+		
+		
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("job/deleteJob")
