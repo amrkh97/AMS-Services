@@ -38,7 +38,6 @@ import Models.MedicalRecord.MedicalRecord;
 import Models.Medicine.CompanyMedicineMap;
 import Models.Medicine.Medicine;
 import Models.Patient.PatientModel;
-import Models.MedicalRecord.MedicalRecord;
 import Models.PatientLocation.PatientLoc;
 import Models.Users.LoginCredentialsRequest;
 import Models.Users.LogoutResponse;
@@ -56,6 +55,8 @@ public class Services {
 		return "Server is Running ..!";
 	}
 
+	//----------------------------------------Start Of LogIn/LogOut/SignUp--------------------------------------------//
+	
 	@Path("login")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -83,7 +84,285 @@ public class Services {
 
 		return Response.ok(UserManager.signup(req)).header("Access-Control-Allow-Origin", "*").build();
 	}
+	
+	//----------------------------------------End Of LogIn/LogOut/SignUp--------------------------------------------//
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//----------------------------------------Start Of Ambulance Services ------------------------------------------//
 
+	@Path("ambulance/getAmbulanceVehicles/ID")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response GetAmbulanceVehicleID(AmbulanceVehicleModel CAR) {
+		if (CAR.getVin() == 0) {
+			return Response.ok("Bad Request No VIN").header("Access-Control-Allow-Origin", "*").build();
+		}
+		return Response.ok(AmbulanceVehicleManger.getCarById(CAR.getVin())).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("ambulance/getAmbulanceVehicles/Brand")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response GetAmbulanceVehicleBrand(AmbulanceVehicleModel CAR) {
+		System.out.println(CAR.getBrand());
+		if (CAR.getBrand() == null) {
+			return Response.ok("Bad Request No VIN").header("Access-Control-Allow-Origin", "*").build();
+		}
+		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getCarsByBrand(CAR.getBrand());
+		if (X == null) {
+			return Response.ok(" unknown error with database  ").header("Access-Control-Allow-Origin", "*").build();
+		}
+		return Response.ok().header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("ambulance/getDeactivatedAmbulanceVehicles")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response GetAmbulanceVehicle() {
+		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getDeActivatedCars();
+
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("ambulance/getActivatedAmbulanceVehicles")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response GetAmbulanceVehicleSts() {
+
+		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getActivatedCars();
+
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+
+	}
+
+	@Path("ambulance/getDeletedAmbulanceVehicles")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response GetDeletedAmbulanceVehicle() {
+
+		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getDeletedCars();
+
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("ambulance/getFreeAmbulanceVehicles")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response GetFreeAmbulanceVehicle() {
+
+		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getFreeCars();
+
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@Path("ambulance/getFreeAmbulanceVehicles")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response GetBusyAmbulanceVehicle() {
+	
+	ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getBusyCars();
+	
+	return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("ambulance/getAssignedAmbulanceVehicles")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response GetAssignedAmbulanceVehicle() {
+
+		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getAssignedCars();
+
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("ambulance/addAmbulanceVehicle")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addAmbulanceVehicle(AmbulanceVehicleModel CAR) {
+		return Response.ok(AmbulanceVehicleManger.insertCar(CAR)).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("ambulance/updateAmbulanceVehicles")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response UpdateAmbulanceVehicle(AmbulanceVehicleModel Car) {
+		return Response.ok(AmbulanceVehicleManger.UpdateCar(Car)).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("ambulance/status/free")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response setCarFree(AmbulanceVehicleModel Car) {
+		return Response.ok(AmbulanceVehicleManger.SetCarFree(Car.getVin())).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("ambulance/status/busy")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response setCarBusy(AmbulanceVehicleModel Car) {
+		return Response.ok(AmbulanceVehicleManger.SetCarBusy(Car.getVin())).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("ambulance/status/maintainance")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response setCarMaintainance(AmbulanceVehicleModel Car) {
+		return Response.ok(AmbulanceVehicleManger.SetCarMaintain(Car.getVin()))
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("ambulance/status/assigned")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response setCarAssigned(AmbulanceVehicleModel Car) {
+		return Response.ok(AmbulanceVehicleManger.SetCarAssigned(Car.getVin())).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("ambulance/delete")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response DeleteCar(AmbulanceVehicleModel Car) {
+		return Response.ok(AmbulanceVehicleManger.DeleteCars(Car.getVin())).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+	
+	//----------------------------------------End Of Ambulance Services --------------------------------------------//
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//----------------------------------------Start of Ambulance Map -----------------------------------------------//
+	
+	@Path("ambulanceMap/addAmbulanceMap")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addAmbulanceMap(AmbulanceMapModel AmbulanceToBeAdded) {
+		return Response.ok(AmbulanceMapManager.addAmbulanceMap(AmbulanceToBeAdded))
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("ambulanceMap/getByCarID")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAmbulanceMapbyVIN(Integer ID) {
+		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByCarID(ID)).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("ambulanceMap/getByDriverID")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAmbulanceCarMapByDriverID(Integer ID) {
+		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByDriverID(ID))
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("ambulanceMap/getByParamedicID")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAmbulanceCarMapByParamedicID(Integer ID) {
+		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByParamedicID(ID))
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("ambulanceMap/getByYelloPadID")
+	@POST
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAmbulanceCarMapByYelloPadID(Integer ID) {
+		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByYelloPadID(ID))
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("ambulanceMap/deleteAmbulanceMap")
+	@POST
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteAmbulanceMap(Integer AmbulanceToBeAdded) {
+		return Response.ok(AmbulanceMapManager.deleteAmbulanceMap(AmbulanceToBeAdded))
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	//-----------------------------------------End Of Ambulance Map ------------------------------------------------//
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//-----------------------------------------Start of Employee Services-------------------------------------------//
+	
+	@Path("employee/getAllParamedics")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllParamedics(DataModel superSSN) {
+		return Response.ok(EmployeeManager.getAllParamedics(superSSN.getSentID())).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("employee/getActiveParamedics")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getActiveParamedics(DataModel superSSN) {
+		return Response.ok(EmployeeManager.getActiveParamedics(superSSN.getSentID())).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("employee/getInActiveParamedics")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getInActiveParamedics(DataModel superSSN) {
+		return Response.ok(EmployeeManager.getInActiveParamedics(superSSN.getSentID())).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("employee/getAllDrivers")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllDrivers(DataModel superSSN) {
+		return Response.ok(EmployeeManager.getAllDrivers(superSSN.getSentID())).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("employee/getActiveDrivers")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getActiveDrivers(DataModel superSSN) {
+		return Response.ok(EmployeeManager.getActiveDrivers(superSSN.getSentID())).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("employee/getInActiveDrivers")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getInActiveDrivers(DataModel superSSN) {
+		return Response.ok(EmployeeManager.getInActiveDrivers(superSSN.getSentID())).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+	
+	//-----------------------------------------End Of Employee Services---------------------------------------------//
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//-----------------------------------------Start Of Incident Services-------------------------------------------//
+	
 	@Path("incidents/incidentType")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -108,398 +387,11 @@ public class Services {
 
 		return Response.ok(AlarmLevelManager.getAlarmLevel()).header("Access-Control-Allow-Origin", "*").build();
 	}
-	////////////////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////// GET
-	//////////////////////////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////
-
-	////////////////////////////////// ALL
-
-	@Path("GetMedicines")
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllMedicines() {
-		return Response.ok(MedicineManager.getAllMedicines()).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	////////////////////////////////// BarCode
-
-	@Path("GetMedicines/BarCode")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getMedicineByBC(Medicine MED) {
-		return Response.ok(MedicineManager.getMedicineByBC(MED.getBarCode())).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
- ////////////////////////////////// Name
-
-	@Path("GetMedicines/Name")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getMedicineByName(Medicine MED) {
-		return Response.ok(MedicineManager.getMedicineByName(MED.getMedicineName()))
-				.header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	////////////////////////////////// Status
-
-	@Path("GetMedicines/Status")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getMedicineByStatus(Medicine MED) {
-		return Response.ok(MedicineManager.getMedicineByStatus(MED.getMedicineStatus()))
-				.header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	////////////////////////////////////// Active Component
-
-	@Path("GetMedicines/ActiveComponent")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getMedicineByActiveComponent(Medicine MED) {
-		return Response.ok(MedicineManager.getMedicineByActiveComponent(MED.getActiveComponent()))
-				.header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	////////////////////////////////// Company Name
-
-	@Path("GetMedicines/CompanyName")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getMedicineByComName(CompanyModel COMP) {
-		return Response.ok(MedicineManager.getMedicineByCompanyName(COMP.getCompanyName()))
-				.header("Access-Control-Allow-Origin", "*").build();
-	}
-
-////////////////////////////////// Company Status 
-
-	@Path("GetMedicines/CompanyStatus")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getMedicineByCompanyStatus(CompanyModel COMP) {
-		return Response.ok(MedicineManager.getMedicineByCompanyStatus(COMP.getCompanyStatus()))
-				.header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	////////////////////////////////// Contact Person
-
-	@Path("GetMedicines/ContactPerson")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getMedicineByContactPerson(CompanyModel COMP) {
-		if (COMP.getCompanyContactPerson() == null) {
-			return Response.ok("Bad Request No ContactPerson").header("Access-Control-Allow-Origin", "*").build();
-		}
-
-		return Response.ok(MedicineManager.getMedicineByContactPerson(COMP.getCompanyContactPerson()))
-				.header("Access-Control-Allow-Origin", "*").build();
-	}
-
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////// INSERT
-	//////////////////////////////////////////////////////////////////////////////////////////////////// /////////////////////////////////////////////////////////
-	@Path("InsertMedicines")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response insert_Medicine(Medicine MED) {
-		System.out.println(MED);
-		if (MED.getBarCode() == null) {
-			return Response.ok("Bad Request No BarCode").header("Access-Control-Allow-Origin", "*").build();
-		}
-		ServerResponse X = MedicineManager.insertMedicine(MED);
-		if (X == null) {
-			return Response.ok("400 the Medicine already there ").header("Access-Control-Allow-Origin", "*").build();
-		}
-
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////// UPDATE
-	//////////////////////////////////////////////////////////////////////////////////////////////////// /////////////////////////////////////////////////////////
-
-	@Path("UpdatetMedicines")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response Update_Medicine(Medicine MED) {
-		ServerResponse X = MedicineManager.UpdateMedicine(MED);
-		if (X == null) {
-			return Response.ok("404 the medicine not found").header("Access-Control-Allow-Origin", "*").build();
-		}
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////// DELETE
-	//////////////////////////////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////
-
-	@Path("deleteMedicines")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response Detele_Medicine(Medicine MED) {
-		System.out.println(MED.getBarCode());
-		ServerResponse X = MedicineManager.DeleteMedicine(MED.getBarCode());
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	//////////////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////// CompanyMedicineMap
-	////////////////////////////////////////////////////////////////////////////////////////////////////// 
 	
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////// INSERT
-	//////////////////////////////////////////////////////////////////////////////////////////////////// 
-
-	@Path("InsertCompanyMedicineMap")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response InsertCompanyMedicineMap(CompanyMedicineMap Map) {
-		ServerResponse X = CompanyMedicineMapManager.insertRelation(Map);
-
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////// DELETE
-	//////////////////////////////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////////
-
-	@Path("deleteCompanyMedicineMap")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteCompanyMedicineMap(CompanyMedicineMap Map) {
-		ServerResponse X = CompanyMedicineMapManager.DeleteRelation(Map);
-
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	/*
-	 * @Path("locations/{id}")
-	 * 
-	 * @GET
-	 * 
-	 * @Produces(MediaType.APPLICATION_JSON) public Response
-	 * getLocation(@PathParam("id") int id) { return
-	 * Response.ok(LocationManager.getLocation(id)).header(
-	 * "Access-Control-Allow-Origin", "*").build(); }
-	 */
-
-	@Path("yelloPad/getAllYelloPads")
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllYelloPads() {
-
-		return Response.ok().entity(YelloPadManager.getAllYelloPads()).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
-	@Path("yelloPad/getAllActiveYelloPads")
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllActiveYelloPads() {
-
-		return Response.ok().entity(YelloPadManager.getAllActiveYelloPads()).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
-	@Path("yelloPad/getAllInActiveYelloPads")
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllInActiveYelloPads() {
-
-		return Response.ok().entity(YelloPadManager.getAllInActiveYelloPads())
-				.header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	@Path("yelloPad/searchYelloPad")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response searchYelloPad(DataModel ID) {
-
-		return Response.ok().entity(YelloPadManager.searchYelloPad(ID.getStringID())).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	@Path("yelloPad/getYelloPadStatus")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getYelloPadStatus(DataModel ID) {
-
-		return Response.ok().entity(YelloPadManager.getYelloPadStatus(ID.getStringID())).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	@Path("yelloPad/getYelloPadNetworkCardNo")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getYelloPadNetworkCardNo(DataModel ID) {
-
-		return Response.ok().entity(YelloPadManager.getYelloPadNetworkCardNo(ID.getStringID())).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	@Path("patient/addLocation")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response addPatientLocation(PatientLoc location) {
-
-		return Response
-				.ok(PatientLocationManager.addPatientLocation(location.getNationalID(), location.getAddress(),
-						location.getLatitude(), location.getLongitude()))
-				.header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	@Path("patient/getAllLocations")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllPatientLocations(DataModel PatientNationalID) {
-
-		return Response.ok(PatientLocationManager.getAllPatientLocations(PatientNationalID.getStringID())).header("Access-Control-Allow-Origin", "*").build();
-	}
+	//-------------------------------------------End Of Incident Services-------------------------------------------//
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//------------------------------------------Start Of Job Services-----------------------------------------------//
 	
-	@Path("patient/getAll")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-	public Response getAllPatient() {
-		ArrayList<PatientModel> X =PatientManger.getAllPatient();
-		DataArrayModel<PatientModel>OBJ = new 	DataArrayModel<PatientModel>()  ;
-		OBJ.set_ArrayList(X);
-    	if(X==null){		
-    		return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build(); }
-		return Response.ok(OBJ).header("Access-Control-Allow-Origin", "*").build();
-		 
-	}
-
-	@Path("patient/addNewPatient")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-	public Response addNewPatient(PatientModel patientModel) {
-		ServerResponse X =PatientManger.addNewPatient(patientModel);
-    	if(X==null){		
-    		return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build(); }
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
-		 
-	}
-
-
-	@Path("patient/updatePatientData")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-	public Response editPatient (PatientModel patientModel) {
-		ServerResponse X =PatientManger.updatePatientData(patientModel);
-    	if(X==null){		
-    		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); }
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
-
-	}
-	 
-
-	@Path("patient/get/NID")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-	public Response getPatientByNID (PatientModel patientModel) {
-		ArrayList<PatientModel>  X =PatientManger.getPatientByNId(patientModel.getPatientNationalID());
-		DataArrayModel<PatientModel>OBJ = new 	DataArrayModel<PatientModel>()  ;
-		OBJ.set_ArrayList(X);
-    
-		if(X==null){		
-    		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); }
-		return Response.ok(OBJ).header("Access-Control-Allow-Origin", "*").build();
-
-	}
-
-	@Path("patient/deletePatient")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-	public Response deletePatient (PatientModel patientModel) {
-		ServerResponse X =PatientManger.deletePatient(patientModel.getPatientID());
-    	if(X==null){
-    		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); 
-    		}
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
-
-	}
-
-
-	@Path("pharmaCompany/getAllCompanies")
-	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllCompanies() {
-
-		return Response.ok(CompanyManager.getAllCompanies()).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	@Path("pharmaCompany/getCompanyByID")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCompanyByID(Integer companyID) {
-		return Response.ok(CompanyManager.getCompanyByID(companyID)).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	@Path("pharmaCompany/getCompanyByStatus")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCompanyByStatus(DataModel companyStatus) {
-		return Response.ok(CompanyManager.getCompanyByStatus(companyStatus.getSentStatus())).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	@Path("pharmaCompany/getCompanyByName")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCompanyByName(String companyName) {
-		return Response.ok(CompanyManager.getCompanyByName(companyName)).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
-	@Path("pharmaCompany/addCompany")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response addCompany(CompanyModel companyToBeAdded) {
-		return Response.ok(CompanyManager.addCompany(companyToBeAdded)).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
-	@Path("pharmaCompany/updateCompany")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateCompany(CompanyModel companyToBeAdded) {
-		return Response.ok(CompanyManager.updateCompany(companyToBeAdded)).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
-	@Path("pharmaCompany/deleteCompany")
-	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteCompany(Integer companyToBeAdded) {
-		return Response.ok(CompanyManager.deleteCompany(companyToBeAdded)).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
 	@Path("job/addJob")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -549,7 +441,152 @@ public class Services {
 	public Response deleteJob(String JobID) {
 		return Response.ok(JobManager.deleteJob(JobID)).header("Access-Control-Allow-Origin", "*").build();
 	}
+	
+	//--------------------------------------------End Of Job Services-----------------------------------------------//
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//-------------------------------------------Start of Medicine Services-----------------------------------------//
+	
+	@Path("medicine/getMedicines")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllMedicines() {
+		return Response.ok(MedicineManager.getAllMedicines()).header("Access-Control-Allow-Origin", "*").build();
+	}
 
+	@Path("medicine/getMedicines/barCode")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMedicineByBC(Medicine MED) {
+		return Response.ok(MedicineManager.getMedicineByBC(MED.getBarCode())).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("medicine/getMedicines/name")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMedicineByName(Medicine MED) {
+		return Response.ok(MedicineManager.getMedicineByName(MED.getMedicineName()))
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("medicine/getMedicines/status")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMedicineByStatus(Medicine MED) {
+		return Response.ok(MedicineManager.getMedicineByStatus(MED.getMedicineStatus()))
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("medicine/getMedicines/activeComponent")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMedicineByActiveComponent(Medicine MED) {
+		return Response.ok(MedicineManager.getMedicineByActiveComponent(MED.getActiveComponent()))
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("medicine/getMedicines/companyName")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMedicineByComName(CompanyModel COMP) {
+		return Response.ok(MedicineManager.getMedicineByCompanyName(COMP.getCompanyName()))
+				.header("Access-Control-Allow-Origin", "*").build();
+	} 
+
+	@Path("medicine/getMedicines/companyStatus")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMedicineByCompanyStatus(CompanyModel COMP) {
+		return Response.ok(MedicineManager.getMedicineByCompanyStatus(COMP.getCompanyStatus()))
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("medicine/getMedicines/contactPerson")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMedicineByContactPerson(CompanyModel COMP) {
+		if (COMP.getCompanyContactPerson() == null) {
+			return Response.ok("Bad Request No ContactPerson").header("Access-Control-Allow-Origin", "*").build();
+		}
+
+		return Response.ok(MedicineManager.getMedicineByContactPerson(COMP.getCompanyContactPerson()))
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("medicine/insertMedicines")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response insert_Medicine(Medicine MED) {
+		System.out.println(MED);
+		if (MED.getBarCode() == null) {
+			return Response.ok("Bad Request No BarCode").header("Access-Control-Allow-Origin", "*").build();
+		}
+		ServerResponse X = MedicineManager.insertMedicine(MED);
+		if (X == null) {
+			return Response.ok("400 the Medicine already there ").header("Access-Control-Allow-Origin", "*").build();
+		}
+
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("medicine/updatetMedicines")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response Update_Medicine(Medicine MED) {
+		ServerResponse X = MedicineManager.UpdateMedicine(MED);
+		if (X == null) {
+			return Response.ok("404 the medicine not found").header("Access-Control-Allow-Origin", "*").build();
+		}
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("medicine/deleteMedicines")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response Detele_Medicine(Medicine MED) {
+		System.out.println(MED.getBarCode());
+		ServerResponse X = MedicineManager.DeleteMedicine(MED.getBarCode());
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	//-------------------------------------------End Of Medicine Services-------------------------------------------//
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//-------------------------------------------Start Of Medicine Map----------------------------------------------//
+	
+	@Path("medicineMap/insert")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response InsertCompanyMedicineMap(CompanyMedicineMap Map) {
+		ServerResponse X = CompanyMedicineMapManager.insertRelation(Map);
+
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("medicineMap/delete")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteCompanyMedicineMap(CompanyMedicineMap Map) {
+		ServerResponse X = CompanyMedicineMapManager.DeleteRelation(Map);
+
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	//-------------------------------------------End Of Medicine Map------------------------------------------------//
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//-------------------------------------------Start Of Medical Record--------------------------------------------//
+	
 	@Path("medicalRecord/addMedicalRecord")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -615,328 +652,232 @@ public class Services {
 		return Response.ok(MedicalRecordManager.getMedicalRecordByPatientID(MedicalRecorda.getPatientID()))
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
-	/*
-	 * @Path("locations/{id}")
-	 * 
-	 * @GET
-	 * 
-	 * @Produces(MediaType.APPLICATION_JSON) public Response
-	 * getLocation(@PathParam("id") int id) { return
-	 * Response.ok(LocationManager.getLocation(id)).header(
-	 * "Access-Control-Allow-Origin", "*").build(); }
-	 */
-///////////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////
-
-	@Path("ambulanceMap/addAmbulanceMap")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response addAmbulanceMap(AmbulanceMapModel AmbulanceToBeAdded) {
-		return Response.ok(AmbulanceMapManager.addAmbulanceMap(AmbulanceToBeAdded))
-				.header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	@Path("ambulanceMap/getByCarID")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAmbulanceMapbyVIN(Integer ID) {
-		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByCarID(ID)).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
-	@Path("ambulanceMap/getByDriverID")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAmbulanceCarMapByDriverID(Integer ID) {
-		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByDriverID(ID))
-				.header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	@Path("ambulanceMap/getByParamedicID")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAmbulanceCarMapByParamedicID(Integer ID) {
-		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByParamedicID(ID))
-				.header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	@Path("ambulanceMap/getByYelloPadID")
-	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAmbulanceCarMapByYelloPadID(Integer ID) {
-		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByYelloPadID(ID))
-				.header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	@Path("ambulanceMap/deleteAmbulanceMap")
-	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteAmbulanceMap(Integer AmbulanceToBeAdded) {
-		return Response.ok(AmbulanceMapManager.deleteAmbulanceMap(AmbulanceToBeAdded))
-				.header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	@Path("employee/getllParamedics")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllParamedics(Integer superSSN) {
-		return Response.ok(EmployeeManager.getAllParamedics(superSSN)).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
-	@Path("employee/getActiveParamedics")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getActiveParamedics(Integer superSSN) {
-		return Response.ok(EmployeeManager.getActiveParamedics(superSSN)).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
-	@Path("employee/getInActiveParamedics")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getInActiveParamedics(Integer superSSN) {
-		return Response.ok(EmployeeManager.getInActiveParamedics(superSSN)).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
-	@Path("employee/getAllDrivers")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllDrivers(Integer superSSN) {
-		return Response.ok(EmployeeManager.getAllDrivers(superSSN)).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	@Path("employee/getActiveDrivers")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getActiveDrivers(Integer superSSN) {
-		return Response.ok(EmployeeManager.getActiveDrivers(superSSN)).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
-	@Path("employee/getInActiveDrivers")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getInActiveDrivers(Integer superSSN) {
-		return Response.ok(EmployeeManager.getInActiveDrivers(superSSN)).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
+	
+	//-------------------------------------------End Of Medical Record----------------------------------------------//
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//------------------------------------------Start Of Operator Services------------------------------------------//
+	
 	@Path("operator/insertLocation")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response insertLocation(Location location) {
 
-		return Response.ok(LocationManager.addLocation(location)).header("Access-Control-Allow-Origin", "*").build();
+			return Response.ok(LocationManager.addLocation(location)).header("Access-Control-Allow-Origin", "*").build();
 	}
-	//////////////////////AMBULANCE Vehicle
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////////// GET
-	//////////////////////////////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////////////
-
-	///////////////////////////////////////////// BY VIN
-	@Path("ambulance/getAmbulanceVehicles/ID")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response GetAmbulanceVehicleID(AmbulanceVehicleModel CAR) {
-		if (CAR.getVin() == 0) {
-			return Response.ok("Bad Request No VIN").header("Access-Control-Allow-Origin", "*").build();
-		}
-		return Response.ok(AmbulanceVehicleManger.getCarById(CAR.getVin())).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
-	///////////////////////////////////////////// BY BRAND
-	@Path("ambulance/getAmbulanceVehicles/Brand")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response GetAmbulanceVehicleBrand(AmbulanceVehicleModel CAR) {
-		System.out.println(CAR.getBrand());
-		if (CAR.getBrand() == null) {
-			return Response.ok("Bad Request No VIN").header("Access-Control-Allow-Origin", "*").build();
-		}
-		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getCarsByBrand(CAR.getBrand());
-		if (X == null) {
-			return Response.ok(" unknown error with database  ").header("Access-Control-Allow-Origin", "*").build();
-		}
-		return Response.ok().header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	///////////////////////////// DeActivated
-	@Path("ambulance/getDeactivatedAmbulanceVehicles")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response GetAmbulanceVehicle() {
-		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getDeActivatedCars();
-
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	///////////////////////////// Activated
-	@Path("ambulance/getActivatedAmbulanceVehicles")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response GetAmbulanceVehicleSts() {
-
-		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getActivatedCars();
-
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
-
-	}
-
-	///////////////////////////// Deleted
-
-	@Path("ambulance/getDeletedAmbulanceVehicles")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response GetDeletedAmbulanceVehicle() {
-
-		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getDeletedCars();
-
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	////////////////////// get free CArs
-	
-	@Path("ambulance/getFreeAmbulanceVehicles")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response GetFreeAmbulanceVehicle() {
-
-		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getFreeCars();
-
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
-	}
-	//////////////////////get Busy Cars
 		
-	@Path("ambulance/getFreeAmbulanceVehicles")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response GetBusyAmbulanceVehicle() {
+	//-------------------------------------------End Of Operator Services ------------------------------------------//
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	//------------------------------------------Start Of Patient Services-------------------------------------------//
 	
-	ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getBusyCars();
-	
-	return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-
-	////////////////////// get assigned cars
-	@Path("ambulance/getAssignedAmbulanceVehicles")
+	@Path("patient/addLocation")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response GetAssignedAmbulanceVehicle() {
+	public Response addPatientLocation(PatientLoc location) {
 
-		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getAssignedCars();
-
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////// INSERT
-	//////////////////////////////////////////////////////////////////////////////////////////////////// /////////////////////////////////////////////////////////
-
-	@Path("ambulance/addAmbulanceVehicle")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response addAmbulanceVehicle(AmbulanceVehicleModel CAR) {
-		return Response.ok(AmbulanceVehicleManger.insertCar(CAR)).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	@Path("ambulance/updateAmbulanceVehicles")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response UpdateAmbulanceVehicle(AmbulanceVehicleModel Car) {
-		return Response.ok(AmbulanceVehicleManger.UpdateCar(Car)).header("Access-Control-Allow-Origin", "*").build();
-	}
-
-	/////////////////////////////////////////// status/////////////////////////////////////////////////
-	//////////////////////////// FREE
-	@Path("ambulance/status/free")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response setCarFree(AmbulanceVehicleModel Car) {
-		return Response.ok(AmbulanceVehicleManger.SetCarFree(Car.getVin())).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
-	//////////////////////////////////// BUSY
-	@Path("ambulance/status/busy")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response setCarBusy(AmbulanceVehicleModel Car) {
-		return Response.ok(AmbulanceVehicleManger.SetCarBusy(Car.getVin())).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-
-	//////////////////////////////////// MAINTAINANCE
-	@Path("ambulance/status/maintainance")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response setCarMaintainance(AmbulanceVehicleModel Car) {
-		return Response.ok(AmbulanceVehicleManger.SetCarMaintain(Car.getVin()))
+		return Response
+				.ok(PatientLocationManager.addPatientLocation(location.getNationalID(), location.getAddress(),
+						location.getLatitude(), location.getLongitude()))
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
-	//////////////////////////// Assigned
-	@Path("ambulance/status/assigned")
+
+	@Path("patient/getAllLocations")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response setCarAssigned(AmbulanceVehicleModel Car) {
-		return Response.ok(AmbulanceVehicleManger.SetCarAssigned(Car.getVin())).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}
-	//////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////// DELETE
-	////////////////////////////////////////////////////////////////////////////////////////// ////////////////////////////////////////////
+	public Response getAllPatientLocations(DataModel PatientNationalID) {
 
-	@Path("ambulance/delete")
+		return Response.ok(PatientLocationManager.getAllPatientLocations(PatientNationalID.getStringID())).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@Path("patient/getAll")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response getAllPatient() {
+		ArrayList<PatientModel> X =PatientManger.getAllPatient();
+		DataArrayModel<PatientModel>OBJ = new 	DataArrayModel<PatientModel>()  ;
+		OBJ.set_ArrayList(X);
+    	if(X==null){		
+    		return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build(); }
+		return Response.ok(OBJ).header("Access-Control-Allow-Origin", "*").build();
+		 
+	}
+
+	@Path("patient/addNewPatient")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response addNewPatient(PatientModel patientModel) {
+		ServerResponse X =PatientManger.addNewPatient(patientModel);
+    	if(X==null){		
+    		return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build(); }
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		 
+	}
+
+	@Path("patient/updatePatientData")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response editPatient (PatientModel patientModel) {
+		ServerResponse X =PatientManger.updatePatientData(patientModel);
+    	if(X==null){		
+    		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); }
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+
+	}
+	 
+	@Path("patient/get/NID")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response getPatientByNID (PatientModel patientModel) {
+		ArrayList<PatientModel>  X =PatientManger.getPatientByNId(patientModel.getPatientNationalID());
+		DataArrayModel<PatientModel>OBJ = new 	DataArrayModel<PatientModel>()  ;
+		OBJ.set_ArrayList(X);
+    
+		if(X==null){		
+    		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); }
+		return Response.ok(OBJ).header("Access-Control-Allow-Origin", "*").build();
+
+	}
+
+	@Path("patient/deletePatient")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response deletePatient (PatientModel patientModel) {
+		ServerResponse X =PatientManger.deletePatient(patientModel.getPatientID());
+    	if(X==null){
+    		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); 
+    		}
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+
+	}
+
+	//--------------------------------------------End Of Patient Services------------------------------------------//
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//--------------------------------------------Start Of PharmaCompany-------------------------------------------//
+	
+	@Path("pharmaCompany/getAllCompanies")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllCompanies() {
+
+		return Response.ok(CompanyManager.getAllCompanies()).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("pharmaCompany/getCompanyByID")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response DeleteCar(AmbulanceVehicleModel Car) {
-		return Response.ok(AmbulanceVehicleManger.DeleteCars(Car.getVin())).header("Access-Control-Allow-Origin", "*")
+	public Response getCompanyByID(Integer companyID) {
+		return Response.ok(CompanyManager.getCompanyByID(companyID)).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("pharmaCompany/getCompanyByStatus")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCompanyByStatus(DataModel companyStatus) {
+		return Response.ok(CompanyManager.getCompanyByStatus(companyStatus.getSentStatus())).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("pharmaCompany/getCompanyByName")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getCompanyByName(String companyName) {
+		return Response.ok(CompanyManager.getCompanyByName(companyName)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
-	
-	
-	/*
-	 * @Path("locations/{id}")
-	 * 
-	 * @GET
-	 * 
-	 * @Produces(MediaType.APPLICATION_JSON) public Response
-	 * getLocation(@PathParam("id") int id) { return
-	 * Response.ok(LocationManager.getLocation(id)).header(
-	 * "Access-Control-Allow-Origin", "*").build(); }
-	 */
+	@Path("pharmaCompany/addCompany")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addCompany(CompanyModel companyToBeAdded) {
+		return Response.ok(CompanyManager.addCompany(companyToBeAdded)).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
 
+	@Path("pharmaCompany/updateCompany")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateCompany(CompanyModel companyToBeAdded) {
+		return Response.ok(CompanyManager.updateCompany(companyToBeAdded)).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("pharmaCompany/deleteCompany")
+	@POST
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteCompany(Integer companyToBeAdded) {
+		return Response.ok(CompanyManager.deleteCompany(companyToBeAdded)).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+		
+	//---------------------------------------------End Of PharmaCompany--------------------------------------------//
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//---------------------------------------------Start Of YelloPad Services--------------------------------------//
+	
+	@Path("yelloPad/getAllYelloPads")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllYelloPads() {
+
+		return Response.ok().entity(YelloPadManager.getAllYelloPads()).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("yelloPad/getAllActiveYelloPads")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllActiveYelloPads() {
+
+		return Response.ok().entity(YelloPadManager.getAllActiveYelloPads()).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("yelloPad/getAllInActiveYelloPads")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllInActiveYelloPads() {
+
+		return Response.ok().entity(YelloPadManager.getAllInActiveYelloPads())
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("yelloPad/searchYelloPad")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response searchYelloPad(DataModel ID) {
+
+		return Response.ok().entity(YelloPadManager.searchYelloPad(ID.getStringID())).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("yelloPad/getYelloPadStatus")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getYelloPadStatus(DataModel ID) {
+
+		return Response.ok().entity(YelloPadManager.getYelloPadStatus(ID.getStringID())).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("yelloPad/getYelloPadNetworkCardNo")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getYelloPadNetworkCardNo(DataModel ID) {
+
+		return Response.ok().entity(YelloPadManager.getYelloPadNetworkCardNo(ID.getStringID())).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	//---------------------------------------------End Of YelloPad Services-----------------------------------------//
 }
