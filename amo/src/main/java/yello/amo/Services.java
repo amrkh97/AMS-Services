@@ -122,8 +122,9 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetAmbulanceVehicle() {
-		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getDeActivatedCars();
-
+		ArrayList<AmbulanceVehicleModel> Xs = AmbulanceVehicleManger.getDeActivatedCars();
+		DataArrayModel<AmbulanceVehicleModel> X = new DataArrayModel<AmbulanceVehicleModel>();
+		X.set_ArrayList(Xs);
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 	}
 
@@ -133,8 +134,9 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetAmbulanceVehicleSts() {
 
-		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getActivatedCars();
-
+		ArrayList<AmbulanceVehicleModel> Xs = AmbulanceVehicleManger.getActivatedCars();
+		DataArrayModel<AmbulanceVehicleModel> X = new DataArrayModel<AmbulanceVehicleModel>();
+		X.set_ArrayList(Xs);
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 
 	}
@@ -145,8 +147,9 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetDeletedAmbulanceVehicle() {
 
-		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getDeletedCars();
-
+		ArrayList<AmbulanceVehicleModel> Xs = AmbulanceVehicleManger.getDeletedCars();
+		DataArrayModel<AmbulanceVehicleModel> X = new DataArrayModel<AmbulanceVehicleModel>();
+		X.set_ArrayList(Xs);
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 	}
 
@@ -156,8 +159,9 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetFreeAmbulanceVehicle() {
 
-		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getFreeCars();
-
+		ArrayList<AmbulanceVehicleModel> Xs = AmbulanceVehicleManger.getFreeCars();
+		DataArrayModel<AmbulanceVehicleModel> X = new DataArrayModel<AmbulanceVehicleModel>();
+		X.set_ArrayList(Xs);
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
@@ -167,8 +171,9 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetBusyAmbulanceVehicle() {
 	
-	ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getBusyCars();
-	
+	ArrayList<AmbulanceVehicleModel> Xs = AmbulanceVehicleManger.getBusyCars();
+	DataArrayModel<AmbulanceVehicleModel> X = new DataArrayModel<AmbulanceVehicleModel>();
+	X.set_ArrayList(Xs);
 	return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 	}
 
@@ -178,8 +183,9 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetAssignedAmbulanceVehicle() {
 
-		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getAssignedCars();
-
+		ArrayList<AmbulanceVehicleModel> Xs = AmbulanceVehicleManger.getAssignedCars();
+		DataArrayModel<AmbulanceVehicleModel> X = new DataArrayModel<AmbulanceVehicleModel>();
+		X.set_ArrayList(Xs);
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 	}
 

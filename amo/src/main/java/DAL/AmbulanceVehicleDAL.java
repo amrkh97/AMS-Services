@@ -75,12 +75,11 @@ public class AmbulanceVehicleDAL {
 	/////////////////////////////////////////////////// GEt car byID///////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	public static ArrayList<AmbulanceVehicleModel> getCarByID(int VIN) {
+	public static AmbulanceVehicleModel getCarByID(int VIN) {
 
 		String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_SelectByVIN ?,?,?";
 		Connection conn = DBManager.getDBConn();
 		AmbulanceVehicleModel _AmbulanceVehicle = new AmbulanceVehicleModel();
-		ArrayList<AmbulanceVehicleModel> Array = new ArrayList<AmbulanceVehicleModel>();
 		ServerResponse _ServerResponse = new ServerResponse();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -97,7 +96,6 @@ public class AmbulanceVehicleDAL {
 
 			ResultSet resultSet = cstmt.executeQuery();
 
-			while (resultSet.next()) {
 				_AmbulanceVehicle = new AmbulanceVehicleModel();
 				_AmbulanceVehicle.setVin(resultSet.getInt("Vin"));
 				_AmbulanceVehicle.setImplication(resultSet.getString("Implication"));
@@ -117,8 +115,6 @@ public class AmbulanceVehicleDAL {
 				_AmbulanceVehicle.setVehicleStatus(resultSet.getString("VehicleStatus"));
 				_AmbulanceVehicle.setAmbulanceVehiclePicture(resultSet.getString("AmbulanceVehiclePicture"));
 
-				Array.add(_AmbulanceVehicle);
-			}
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -132,7 +128,7 @@ public class AmbulanceVehicleDAL {
 			}
 		}
 
-		return Array;
+		return _AmbulanceVehicle;
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -57,7 +57,7 @@ public class AmbulanceVehicleManger {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////// GET CAR BY VIN //////////////////////////////////////////
 
-	public static ArrayList<AmbulanceVehicleModel> getCarById(int VIN) {
+	public static AmbulanceVehicleModel getCarById(int VIN) {
 		return AmbulanceVehicleDAL.getCarByID(VIN);
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -77,13 +77,13 @@ public class AmbulanceVehicleManger {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public static ServerResponse insertCar(AmbulanceVehicleModel Car) {
-		ArrayList<AmbulanceVehicleModel> Array = new ArrayList<AmbulanceVehicleModel>();
+		AmbulanceVehicleModel Array = new AmbulanceVehicleModel();
 		Array = AmbulanceVehicleDAL.getCarByID(Car.getVin());
 
-		if (Array.size() != 0) {
-			if (Array.get(0).getVehicleStatus().equals("FF")) {
-				System.out.println(Array.get(0).getVehicleStatus());
-				return AmbulanceVehicleDAL.UpdateCarStatus(Array.get(0).getVin(), "00");
+		if (Array != null) {
+			if (Array.getVehicleStatus().equals("FF")) {
+				System.out.println(Array.getVehicleStatus());
+				return AmbulanceVehicleDAL.UpdateCarStatus(Array.getVin(), "00");
 			} else {
 				ServerResponse S = new ServerResponse();
 				S.setResponseHexCode("01");
@@ -99,9 +99,9 @@ public class AmbulanceVehicleManger {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public static ServerResponse UpdateCar(AmbulanceVehicleModel Car) {
-		ArrayList<AmbulanceVehicleModel> Array = new ArrayList<AmbulanceVehicleModel>();
+		AmbulanceVehicleModel Array = new AmbulanceVehicleModel();
 		Array = AmbulanceVehicleDAL.getCarByID(Car.getVin());
-		if (Array.size() == 0) {
+		if (Array == null) {
 			ServerResponse S = new ServerResponse();
 			S.setResponseHexCode("FF");
 			S.setResponseMsg("NOT FOUND AmbulanceVehicl in database");
@@ -116,9 +116,9 @@ public class AmbulanceVehicleManger {
 //////////////////////////////////////GET CAR BY Status //////////////////////////////////////////
 
 	public static ServerResponse UpdateCarStatus(int Vin, String newStatus) {
-		ArrayList<AmbulanceVehicleModel> Array = new ArrayList<AmbulanceVehicleModel>();
+		AmbulanceVehicleModel Array = new AmbulanceVehicleModel();
 		Array = AmbulanceVehicleDAL.getCarByID(Vin);
-		if (Array.size() == 0) {
+		if (Array == null) {
 			ServerResponse S = new ServerResponse();
 			S.setResponseHexCode("FF");
 			S.setResponseMsg("NOT FOUND AmbulanceVehicl in database");
@@ -152,23 +152,23 @@ public class AmbulanceVehicleManger {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public static ServerResponse DeleteCars(int vin) {
-		ArrayList<AmbulanceVehicleModel> Array = new ArrayList<AmbulanceVehicleModel>();
+		AmbulanceVehicleModel Array = new AmbulanceVehicleModel();
 		Array = AmbulanceVehicleDAL.getCarByID(vin);
 		ServerResponse S = new ServerResponse();
 
-		if (Array.size() == 0) {
+		if (Array == null) {
 			S.setResponseHexCode("FF");
 			S.setResponseMsg("NOT FOUND AmbulanceVehicl in database");
 			return S;
 		}
 
-		if (Array.get(0).getVehicleStatus().equals("01")) {
+		if (Array.getVehicleStatus().equals("01")) {
 			S.setResponseHexCode("FF");
 			S.setResponseMsg("this AmbulanceVehicl can not be deleted it is BUSY");
 			return S;
 
 		}
-		if (Array.get(0).getVehicleStatus().equals("02")) {
+		if (Array.getVehicleStatus().equals("02")) {
 			S.setResponseHexCode("FF");
 			S.setResponseMsg("this AmbulanceVehicl can not be deleted it is in Maintainance");
 			return S;
