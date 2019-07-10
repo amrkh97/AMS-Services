@@ -853,8 +853,10 @@ public class Services {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllCompanies() {
-
-		return Response.ok(CompanyManager.getAllCompanies()).header("Access-Control-Allow-Origin", "*").build();
+		ArrayList<CompanyModel> X = CompanyManager.getAllCompanies();
+		DataArrayModel<CompanyModel>OBJ = new 	DataArrayModel<CompanyModel>()  ;
+		OBJ.set_ArrayList(X);
+		return Response.ok(OBJ).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("pharmaCompany/getCompanyByID")
@@ -870,7 +872,10 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getCompanyByStatus(DataModel companyStatus) {
-		return Response.ok(CompanyManager.getCompanyByStatus(companyStatus.getSentStatus())).header("Access-Control-Allow-Origin", "*").build();
+		ArrayList<CompanyModel> X = CompanyManager.getCompanyByStatus(companyStatus.getSentStatus());
+		DataArrayModel<CompanyModel>OBJ = new 	DataArrayModel<CompanyModel>()  ;
+		OBJ.set_ArrayList(X);
+		return Response.ok(OBJ).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("pharmaCompany/getCompanyByName")
@@ -887,7 +892,9 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCompany(CompanyModel companyToBeAdded) {
-		return Response.ok(CompanyManager.addCompany(companyToBeAdded)).header("Access-Control-Allow-Origin", "*")
+		DataModel _dataModel = new DataModel();
+		_dataModel.setSentStatus(CompanyManager.addCompany(companyToBeAdded));
+		return Response.ok(_dataModel).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
@@ -896,7 +903,10 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateCompany(CompanyModel companyToBeAdded) {
-		return Response.ok(CompanyManager.updateCompany(companyToBeAdded)).header("Access-Control-Allow-Origin", "*")
+		DataModel _dataModel = new DataModel();
+		_dataModel.setSentStatus(CompanyManager.updateCompany(companyToBeAdded));
+		
+		return Response.ok(_dataModel).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
@@ -905,7 +915,10 @@ public class Services {
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteCompany(Integer companyToBeAdded) {
-		return Response.ok(CompanyManager.deleteCompany(companyToBeAdded)).header("Access-Control-Allow-Origin", "*")
+		DataModel _dataModel = new DataModel();
+		_dataModel.setSentStatus(CompanyManager.deleteCompany(companyToBeAdded));
+		
+		return Response.ok(_dataModel).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 		

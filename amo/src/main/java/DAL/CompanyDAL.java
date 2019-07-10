@@ -128,21 +128,21 @@ public class CompanyDAL {
 		return currentCompany;
 	}
 
-public static CompanyModel getCompanyByStatus(String companyStatus) {
+public static ArrayList<CompanyModel> getCompanyByStatus(String companyStatus) {
 	
 	String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_SelectBySts] ?";
 	ResultSet RS;
 	Connection conn = DBManager.getDBConn();
 	
-	CompanyModel currentCompany= new CompanyModel();
+	ArrayList<CompanyModel> AllcurrentCompany= new ArrayList<CompanyModel>();
 	try {
 		CallableStatement cstmt = conn.prepareCall(SPsql);	
 		cstmt.setString(1, companyStatus);
 		RS=cstmt.executeQuery();
 		
-		RS.next();
+		while(RS.next()) {
 			
-			currentCompany= new CompanyModel();
+			CompanyModel currentCompany= new CompanyModel();
 			
 			currentCompany.setCompanyID(RS.getInt("CompanyID"));
 			currentCompany.setCompanyAddress(RS.getString("CompanyAddress"));
@@ -150,7 +150,9 @@ public static CompanyModel getCompanyByStatus(String companyStatus) {
 			currentCompany.setCompanyName(RS.getString("CompanyName"));
 			currentCompany.setCompanyStatus(RS.getString("CompanyStatus"));
 			currentCompany.setCompanyPhoneNumber(RS.getString("CompanyPhone"));
-
+			AllcurrentCompany.add(currentCompany);
+		}
+		
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -164,7 +166,7 @@ public static CompanyModel getCompanyByStatus(String companyStatus) {
 			}
 		}
 
-		return currentCompany;
+		return AllcurrentCompany;
 	}
 
 	public static String addCompany(CompanyModel companyToBeAdded) {
