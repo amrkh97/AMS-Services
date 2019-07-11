@@ -95,7 +95,7 @@ public class AmbulanceVehicleDAL {
 			}
 
 			ResultSet resultSet = cstmt.executeQuery();
-
+				resultSet.next();
 				_AmbulanceVehicle = new AmbulanceVehicleModel();
 				_AmbulanceVehicle.setVin(resultSet.getInt("Vin"));
 				_AmbulanceVehicle.setImplication(resultSet.getString("Implication"));
