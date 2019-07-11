@@ -1,20 +1,19 @@
 package BLL;
 
-import java.util.ArrayList;
-
 import DAL.YelloPadDAL;
+import Models.Data.DataArrayModel;
 import Models.YelloPad.YelloPadModel;
 
 public class YelloPadManager {
-	public static ArrayList<YelloPadModel> getAllYelloPads() {
+	public static DataArrayModel<YelloPadModel> getAllYelloPads() {
 		return YelloPadDAL.getAllYelloPads();
 	}
 
-	public static ArrayList<YelloPadModel> getAllActiveYelloPads() {
+	public static DataArrayModel<YelloPadModel> getAllActiveYelloPads() {
 		return YelloPadDAL.getAllActiveYelloPads();
 	}
 
-	public static ArrayList<YelloPadModel> getAllInActiveYelloPads() {
+	public static DataArrayModel<YelloPadModel> getAllInActiveYelloPads() {
 		return YelloPadDAL.getAllInActiveYelloPads();
 	}
 

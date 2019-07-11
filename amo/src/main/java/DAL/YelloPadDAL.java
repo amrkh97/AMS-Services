@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DB.DBManager;
+import Models.Data.DataArrayModel;
 import Models.YelloPad.YelloPadModel;
 
 public class YelloPadDAL {
@@ -18,13 +19,14 @@ public class YelloPadDAL {
 	 * 
 	 * @return ArrayList<YelloPadModel>: Return an ArrayList of YelloPads
 	 */
-	public static ArrayList<YelloPadModel> getAllYelloPads() {
+	public static DataArrayModel<YelloPadModel> getAllYelloPads() {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_SelectAll]";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<YelloPadModel> allYelloPads = new ArrayList<YelloPadModel>();
-
+		DataArrayModel<YelloPadModel>OBJ = new 	DataArrayModel<YelloPadModel>()  ;
+	
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
@@ -53,19 +55,20 @@ public class YelloPadDAL {
 				e.printStackTrace();
 			}
 		}
-
-		return allYelloPads;
+		OBJ.set_ArrayList(allYelloPads);
+		return OBJ;
 	}
 
 	// -----------------------------------------------------------//
 
-	public static ArrayList<YelloPadModel> getAllActiveYelloPads() {
+	public static DataArrayModel<YelloPadModel> getAllActiveYelloPads() {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_selectActive]";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<YelloPadModel> allYelloPads = new ArrayList<YelloPadModel>();
-
+		DataArrayModel<YelloPadModel>OBJ = new 	DataArrayModel<YelloPadModel>()  ;
+	
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
@@ -95,18 +98,20 @@ public class YelloPadDAL {
 			}
 		}
 
-		return allYelloPads;
+		OBJ.set_ArrayList(allYelloPads);
+		return OBJ;
 	}
 
 	// -----------------------------------------------------------//
 
-	public static ArrayList<YelloPadModel> getAllInActiveYelloPads() {
+	public static DataArrayModel<YelloPadModel> getAllInActiveYelloPads() {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_selectInActive]";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<YelloPadModel> allYelloPads = new ArrayList<YelloPadModel>();
-
+		DataArrayModel<YelloPadModel>OBJ = new 	DataArrayModel<YelloPadModel>();
+	
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
@@ -136,7 +141,8 @@ public class YelloPadDAL {
 			}
 		}
 
-		return allYelloPads;
+		OBJ.set_ArrayList(allYelloPads);
+		return OBJ;
 	}
 
 	// -----------------------------------------------------------//

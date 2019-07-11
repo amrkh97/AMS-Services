@@ -931,10 +931,8 @@ public class Services {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllYelloPads() {
-		ArrayList<YelloPadModel> X = YelloPadManager.getAllYelloPads();
-		DataArrayModel<YelloPadModel>OBJ = new 	DataArrayModel<YelloPadModel>()  ;
-		OBJ.set_ArrayList(X);
-		return Response.ok(OBJ).header("Access-Control-Allow-Origin", "*")
+
+		return Response.ok(YelloPadManager.getAllYelloPads()).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
@@ -943,10 +941,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllActiveYelloPads() {
 
-		ArrayList<YelloPadModel> X = YelloPadManager.getAllActiveYelloPads();
-		DataArrayModel<YelloPadModel>OBJ = new 	DataArrayModel<YelloPadModel>()  ;
-		OBJ.set_ArrayList(X);
-		return Response.ok(OBJ).header("Access-Control-Allow-Origin", "*")
+		return Response.ok(YelloPadManager.getAllActiveYelloPads()).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
@@ -955,11 +950,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllInActiveYelloPads() {
 
-		ArrayList<YelloPadModel> X = YelloPadManager.getAllInActiveYelloPads();
-		DataArrayModel<YelloPadModel>OBJ = new 	DataArrayModel<YelloPadModel>()  ;
-		OBJ.set_ArrayList(X);
-
-		return Response.ok(OBJ)
+		return Response.ok(YelloPadManager.getAllInActiveYelloPads())
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
