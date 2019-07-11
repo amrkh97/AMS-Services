@@ -24,6 +24,8 @@ import BLL.PatientLocationManager;
 import BLL.PatientManger;
 import BLL.UserManager;
 import BLL.YelloPadManager;
+import BLL.ReportManager;
+import BLL.ReceiptsManager;
 import Models.ServerResponse;
 import Models.ServerResponse_ID;
 import Models.AmbulanceMap.AmbulanceMapModel;
@@ -39,9 +41,11 @@ import Models.Medicine.Medicine;
 import Models.Patient.PatientArray;
 import Models.Patient.PatientModel;
 import Models.PatientLocation.PatientLoc;
+import Models.Receipts.Receipt;
 import Models.Users.LoginCredentialsRequest;
 import Models.Users.LogoutResponse;
 import Models.Users.SignUp;
+import Models.Reports.Report;
 
 /**
  * Root resource (exposed at "api" path)
@@ -872,4 +876,158 @@ public class Services {
 	}
 
 	//---------------------------------------------End Of YelloPad Services-----------------------------------------//
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//---------------------------------------------Start Of Reports Services--------------------------------------//
+	@Path("report/getreport/status")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetReportByStatus(Report report) 
+    {
+    	return Response.ok(ReportManager.selectByReportStatus(report.getReportStatus())).build();
+    	
+    }
+    @Path("report/getreport/issueTime")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetReportByIssueTime(Report report) 
+    {
+    	return Response.ok(ReportManager.selectByReportIssueTime(report.getReportIssueTime())).build();
+    	
+    }
+    @Path("report/getreport/patientId")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetReportByPatientId(Report report) 
+    {
+    	return Response.ok(ReportManager.selectByPatientId(report.getPatientId())).build();
+    	
+    }
+    @Path("report/getreport/reportTitleAndStatus")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetReportByReportTitleAndStatus(Report report) 
+    { 
+    	return Response.ok(ReportManager.selectByReportTitleAndStatus(report.getReportTitle(),report.getReportStatus())).build();
+    	
+    }    
+    @Path("report/addReport")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response reportInsert(Report report) 
+    {  
+        return Response.ok(ReportManager.insertReport(report)).build();
+    	
+    }
+    @Path("report/removeReport")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response removeReport(Report report) 
+    {  
+        return Response.ok(ReportManager.deleteReport(report.getReportId())).build();
+    	
+    }
+    @Path("report/getreport/title")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetReportByTitle(Report report) 
+    {  
+        return Response.ok(ReportManager.selectByReportTitle(report.getReportTitle())).build();
+    	
+    }
+  
+    //---------------------------------------------End Of Reports Services-----------------------------------------//
+  	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  	//---------------------------------------------Start Of Receipts Services--------------------------------------//
+    @Path("receipt/addReceipt")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response receiptInsert(Receipt receiptIN) 
+    {  
+        return Response.ok(ReceiptsManager.insertReceipt(receiptIN)).build();
+    	
+    }
+    @Path("receipt/removeReceipt")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response receiptRemove(Receipt receiptIN) 
+    {  
+        return Response.ok(ReceiptsManager.deleteReceipt(receiptIN.getReceiptID())).build();
+    	
+    }
+    @Path("receipt/getReceipt/respSQN")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRecByRespSQN(Receipt receiptIN) 
+    {  
+        return Response.ok(ReceiptsManager.getRecByRespSQN(receiptIN.getRespSQN())).build();
+    	
+    }
+    @Path("receipt/getReceipt/casheirSSN")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRecByCasheirSSN(Receipt receiptIN) 
+    {  
+    	System.out.println("Service");
+        return Response.ok(ReceiptsManager.getRecByCasheirSSN(receiptIN.getCasheirSSN())).build();
+    	
+    }
+    @Path("receipt/getReceipt/FTPFileLocation")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRecByFTPFileLocation(Receipt receiptIN) 
+    {  
+        return Response.ok(ReceiptsManager.getRecByFTPFileLocation(receiptIN.getFTPFileLocation())).build();
+    	
+    }
+    @Path("receipt/getReceipt/receiptStatus")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRecByReceiptStatus(Receipt receiptIN) 
+    {  
+        return Response.ok(ReceiptsManager.getRecByReceiptStatus(receiptIN.getReceiptStatus())).build();
+    	
+    }
+    @Path("receipt/getReceipt/cost")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRecByCost(Receipt receiptIN) 
+    {  
+        return Response.ok(ReceiptsManager.getRecByCost(receiptIN.getCost())).build();
+    	
+    }
+    @Path("receipt/getReceipt/paymentMethod")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRecByPaymentMethod(Receipt receiptIN) 
+    {  
+        return Response.ok(ReceiptsManager.getRecByPaymentMethod(receiptIN.getPaymentMethod())).build();
+    	
+    }
+    @Path("receipt/getReceipt/creationTime")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetRecByCreationTime(Report receiptIN) 
+    {
+    	System.out.println("Service");
+    	return Response.ok(ReceiptsManager.selectByReceiptCreationTime(receiptIN.getReportIssueTime())).build();
+    	
+    }
+
+	
 }
