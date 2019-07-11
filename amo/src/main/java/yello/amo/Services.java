@@ -30,6 +30,7 @@ import Models.ServerResponse;
 import Models.AmbulanceMap.AmbulanceMapModel;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
+import Models.Data.DataArrayModel;
 import Models.Data.DataModel;
 import Models.Job.Job;
 import Models.Locations.Location;
@@ -376,9 +377,11 @@ public class Services {
     @Produces(MediaType.APPLICATION_JSON)
 	public Response getAllPatient() {
 		ArrayList<PatientModel> X =PatientManger.getAllPatient();
+		DataArrayModel<PatientModel>OBJ = new 	DataArrayModel<PatientModel>()  ;
+		OBJ.set_ArrayList(X);
     	if(X==null){		
     		return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build(); }
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok(OBJ).header("Access-Control-Allow-Origin", "*").build();
 		 
 	}
 
@@ -414,9 +417,12 @@ public class Services {
     @Produces(MediaType.APPLICATION_JSON)
 	public Response getPatientByNID (PatientModel patientModel) {
 		ArrayList<PatientModel>  X =PatientManger.getPatientByNId(patientModel.getPatientNationalID());
-    	if(X==null){		
+		DataArrayModel<PatientModel>OBJ = new 	DataArrayModel<PatientModel>()  ;
+		OBJ.set_ArrayList(X);
+    
+		if(X==null){		
     		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); }
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok(OBJ).header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
