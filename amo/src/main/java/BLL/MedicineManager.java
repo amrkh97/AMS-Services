@@ -2,12 +2,12 @@ package BLL;
 
 import DAL.MedicineDAL;
 import Models.ServerResponse;
-import Models.Data.DataArrayModel;
 import Models.Medicine.Medicine;
+import Models.Medicine.MedicineArray;
 
 public class MedicineManager {
 
-	public static DataArrayModel<Medicine> getAllMedicines() {
+	public static MedicineArray getAllMedicines() {
 
 		return MedicineDAL.getAllMedicines();
 	}
@@ -22,28 +22,28 @@ public class MedicineManager {
 	return MedicineDAL.getMedicineByName(Name);
 	}
 
-	public static DataArrayModel<Medicine> getMedicineByStatus(String Status) {
+	public static MedicineArray getMedicineByStatus(String Status) {
 		return MedicineDAL.getMedicineByStatus(Status);
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////// GET  Medicines by Active Component //////////////////////////////////////
 
-	public static DataArrayModel<Medicine> getMedicineByActiveComponent(String ActiveComponent) {
+	public static MedicineArray getMedicineByActiveComponent(String ActiveComponent) {
 		return MedicineDAL.getMedicineByActiveComponent(ActiveComponent);
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////// GET  Medicines by Company Name //////////////////////////////////////
 
-	public static DataArrayModel<Medicine> getMedicineByCompanyName(String CompanyName) {
+	public static MedicineArray getMedicineByCompanyName(String CompanyName) {
 		return MedicineDAL.getMedicineByCompanyName(CompanyName);
 	}
 
-	public static DataArrayModel<Medicine> getMedicineByCompanyStatus(String CompanyStatus) {
+	public static MedicineArray getMedicineByCompanyStatus(String CompanyStatus) {
 		return MedicineDAL.getMedicineByCompanyStatus(CompanyStatus);
 	}
 
-	public static DataArrayModel<Medicine> getMedicineByContactPerson(String ContactPerson) {
+	public static MedicineArray getMedicineByContactPerson(String ContactPerson) {
 		return MedicineDAL.getMedicineByContactPerson(ContactPerson);
 	}
 

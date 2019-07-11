@@ -2,36 +2,37 @@ package BLL;
 
 import DAL.AmbulanceVehicleDAL;
 import Models.ServerResponse;
+import Models.AmbulanceVehicle.AmbulanceArray;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
-import Models.Data.DataArrayModel;
+
 public class AmbulanceVehicleManger {
 
-	public static DataArrayModel<AmbulanceVehicleModel> getDeletedCars() {
+	public static AmbulanceArray getDeletedCars() {
 		return AmbulanceVehicleDAL.getCarsBySts("FF");
 	}
 
-	public static DataArrayModel<AmbulanceVehicleModel> getActivatedCars() {
-		//ArrayList<AmbulanceVehicleModel> X = getCarsByStatus("00");
-		//ArrayList<AmbulanceVehicleModel> X1 = getCarsByStatus("01");
-		//X.addAll(X1);
+	public static AmbulanceArray getActivatedCars() {
+		// ArrayList<AmbulanceVehicleModel> X = getCarsByStatus("00");
+		// ArrayList<AmbulanceVehicleModel> X1 = getCarsByStatus("01");
+		// X.addAll(X1);
 		return getCarsByStatus("00");
 	}
-		
-	public static DataArrayModel<AmbulanceVehicleModel> getDeActivatedCars() {
-		DataArrayModel<AmbulanceVehicleModel> X = getCarsByStatus("02");
+
+	public static AmbulanceArray getDeActivatedCars() {
+		AmbulanceArray X = getCarsByStatus("02");
 
 		return X;
 	}
 
-	public static DataArrayModel<AmbulanceVehicleModel> getAssignedCars(){
+	public static AmbulanceArray getAssignedCars() {
 		return AmbulanceVehicleDAL.getCarsBySts("05");
 	}
 
-	public static DataArrayModel<AmbulanceVehicleModel> getFreeCars() {
+	public static AmbulanceArray getFreeCars() {
 		return AmbulanceVehicleDAL.getCarsBySts("00");
 	}
 
-	public static DataArrayModel<AmbulanceVehicleModel> getBusyCars() {
+	public static AmbulanceArray getBusyCars() {
 		return AmbulanceVehicleDAL.getCarsBySts("01");
 	}
 
@@ -39,11 +40,11 @@ public class AmbulanceVehicleManger {
 		return AmbulanceVehicleDAL.getCarByID(i);
 	}
 
-	public static DataArrayModel<AmbulanceVehicleModel> getCarsByBrand(String string) {
+	public static AmbulanceArray getCarsByBrand(String string) {
 		return AmbulanceVehicleDAL.getCarsByBrand(string);
 	}
 
-	public static DataArrayModel<AmbulanceVehicleModel> getCarsByStatus(String string) {
+	public static AmbulanceArray getCarsByStatus(String string) {
 		return AmbulanceVehicleDAL.getCarsBySts(string);
 	}
 
@@ -104,6 +105,7 @@ public class AmbulanceVehicleManger {
 		return UpdateCarStatus(Vin, "02");
 
 	}
+
 	public static ServerResponse SetCarAssigned(int Vin) {
 		return UpdateCarStatus(Vin, "05");
 

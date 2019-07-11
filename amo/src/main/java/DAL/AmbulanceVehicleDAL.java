@@ -6,23 +6,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-
-// import org.json.JSONArray;
-// import org.json.JSONObject;
-
 import DB.DBManager;
 import Models.ServerResponse;
+import Models.AmbulanceVehicle.AmbulanceArray;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
-import Models.Data.DataArrayModel;
 
 public class AmbulanceVehicleDAL {
 
-	public static DataArrayModel<AmbulanceVehicleModel> getAllCars() {
+	public static AmbulanceArray getAllCars() {
 
 		String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_SelectAll";
 		Connection conn = DBManager.getDBConn();
 		ArrayList<AmbulanceVehicleModel> Array = new ArrayList<AmbulanceVehicleModel>();
-		DataArrayModel<AmbulanceVehicleModel> OBJ = new DataArrayModel<AmbulanceVehicleModel>();
+		AmbulanceArray OBJ = new AmbulanceArray();
 		AmbulanceVehicleModel _AmbulanceVehicle = new AmbulanceVehicleModel();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -64,7 +60,7 @@ public class AmbulanceVehicleDAL {
 			}
 		}
 
-		OBJ.set_ArrayList(Array);
+		OBJ.setAmbulanceArray(Array);
 		return OBJ;
 	}
 
@@ -125,12 +121,12 @@ public class AmbulanceVehicleDAL {
 		return _AmbulanceVehicle;
 	}
 
-	public static DataArrayModel<AmbulanceVehicleModel> getCarsByBrand(String Brand) {
+	public static AmbulanceArray getCarsByBrand(String Brand) {
 
 		String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_SelectByBrand ?,?,?";
 		Connection conn = DBManager.getDBConn();
 		ArrayList<AmbulanceVehicleModel> Array = new ArrayList<AmbulanceVehicleModel>();
-		DataArrayModel<AmbulanceVehicleModel> OBJ = new DataArrayModel<AmbulanceVehicleModel>();
+		AmbulanceArray OBJ = new AmbulanceArray();
 		AmbulanceVehicleModel _AmbulanceVehicle = new AmbulanceVehicleModel();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -174,16 +170,16 @@ public class AmbulanceVehicleDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.set_ArrayList(Array);
+		OBJ.setAmbulanceArray(Array);
 		return OBJ;
 	}
 
-	public static DataArrayModel<AmbulanceVehicleModel> getCarsBySts(String Sts) {
+	public static AmbulanceArray getCarsBySts(String Sts) {
 
 		String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_SelectBySts ?,?,?";
 		Connection conn = DBManager.getDBConn();
 		ArrayList<AmbulanceVehicleModel> Array = new ArrayList<AmbulanceVehicleModel>();
-		DataArrayModel<AmbulanceVehicleModel> OBJ = new DataArrayModel<AmbulanceVehicleModel>();
+		AmbulanceArray OBJ = new AmbulanceArray();
 		AmbulanceVehicleModel _AmbulanceVehicle = new AmbulanceVehicleModel();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -227,7 +223,7 @@ public class AmbulanceVehicleDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.set_ArrayList(Array);
+		OBJ.setAmbulanceArray(Array);
 		return OBJ;
 	}
 	

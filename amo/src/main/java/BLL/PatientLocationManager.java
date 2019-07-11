@@ -1,9 +1,8 @@
 package BLL;
 
 import DAL.PatientLocationDAL;
-import Models.Data.DataArrayModel;
 import Models.Data.DataModel;
-import Models.Locations.Location;
+import Models.Locations.LocationArray;
 
 public class PatientLocationManager {
 
@@ -12,7 +11,7 @@ public class PatientLocationManager {
 		return PatientLocationDAL.addPatientLocation(nationalID, addressPatient, latitude, longitude);
 	}
 
-	public static DataArrayModel<Location> getAllPatientLocations(DataModel nationalID) {
+	public static LocationArray getAllPatientLocations(DataModel nationalID) {
 		return PatientLocationDAL.getAllPatientLocations((nationalID.getSentID()));
 	}
 }

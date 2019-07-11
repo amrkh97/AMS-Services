@@ -26,15 +26,16 @@ import BLL.UserManager;
 import BLL.YelloPadManager;
 import Models.ServerResponse;
 import Models.AmbulanceMap.AmbulanceMapModel;
+import Models.AmbulanceVehicle.AmbulanceArray;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
-import Models.Data.DataArrayModel;
 import Models.Data.DataModel;
 import Models.Job.Job;
 import Models.Locations.Location;
 import Models.MedicalRecord.MedicalRecord;
 import Models.Medicine.CompanyMedicineMap;
 import Models.Medicine.Medicine;
+import Models.Patient.PatientArray;
 import Models.Patient.PatientModel;
 import Models.PatientLocation.PatientLoc;
 import Models.Users.LoginCredentialsRequest;
@@ -108,7 +109,7 @@ public class Services {
 		if (CAR.getBrand() == null) {
 			return Response.ok("Bad Request No VIN").header("Access-Control-Allow-Origin", "*").build();
 		}
-		DataArrayModel<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getCarsByBrand(CAR.getBrand());
+		AmbulanceArray X = AmbulanceVehicleManger.getCarsByBrand(CAR.getBrand());
 		if (X.equals(null)) {
 			return Response.ok(" unknown error with database  ").header("Access-Control-Allow-Origin", "*").build();
 		}
@@ -688,7 +689,7 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	public Response getAllPatient() {
-		DataArrayModel<PatientModel> X =PatientManger.getAllPatient();
+		PatientArray X =PatientManger.getAllPatient();
     	if(X.equals(null)){		
     		return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build(); }
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
@@ -724,7 +725,7 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	public Response getPatientByNID (PatientModel patientModel) {
-		DataArrayModel<PatientModel>  X =PatientManger.getPatientByNId(patientModel.getPatientNationalID());
+		PatientArray  X =PatientManger.getPatientByNId(patientModel.getPatientNationalID());
 			if(X.equals(null)){		
     		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); }
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
