@@ -63,7 +63,7 @@ public class PatientManger {
 	public static ServerResponse deletePatient(PatientModel patient ) {
 		int PatientID =patient.getPatientID();
 		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
-		Array = PatientDAL.getPatientByNId( patient.getPatientNationalID()).getPatientArray();
+		Array = PatientDAL.getPatientByNId(patient.getPatientNationalID()).getPatientArray();
 
 		if (Array.size() == 0) {
 			ServerResponse S = new ServerResponse();
