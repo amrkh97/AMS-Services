@@ -37,6 +37,7 @@ public class PatientManger {
 				ServerResponse_ID S = new ServerResponse_ID();
 				S.setResponseHexCode("01");
 				S.setResponseMsg("You already have this Patient with the same National ID in database");
+				S.setId(Array.get(0).getPatientID());
 				return S;
 			}
 		}
