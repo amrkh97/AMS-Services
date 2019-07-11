@@ -1,19 +1,19 @@
 package BLL;
 
 import DAL.YelloPadDAL;
-import Models.Data.DataArrayModel;
+import Models.YelloPad.YelloPadArray;
 import Models.YelloPad.YelloPadModel;
 
 public class YelloPadManager {
-	public static DataArrayModel<YelloPadModel> getAllYelloPads() {
+	public static YelloPadArray getAllYelloPads() {
 		return YelloPadDAL.getAllYelloPads();
 	}
 
-	public static DataArrayModel<YelloPadModel> getAllActiveYelloPads() {
+	public static YelloPadArray getAllActiveYelloPads() {
 		return YelloPadDAL.getAllActiveYelloPads();
 	}
 
-	public static DataArrayModel<YelloPadModel> getAllInActiveYelloPads() {
+	public static YelloPadArray getAllInActiveYelloPads() {
 		return YelloPadDAL.getAllInActiveYelloPads();
 	}
 

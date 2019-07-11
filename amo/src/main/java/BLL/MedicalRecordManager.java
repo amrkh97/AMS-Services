@@ -3,20 +3,20 @@ package BLL;
 import DAL.MedicalRecordDAL;
 import Models.ServerResponse;
 import Models.ServerResponseIntOutput;
-import Models.Data.DataArrayModel;
 import Models.MedicalRecord.MedicalRecord;
+import Models.MedicalRecord.MedicalRecordArray;
 
 public class MedicalRecordManager {
 
-	public static DataArrayModel<MedicalRecord> getAllMedicalRecords() {
+	public static MedicalRecordArray getAllMedicalRecords() {
 		return MedicalRecordDAL.getAllMedicalRecords();
 	}
 
-	public static DataArrayModel<MedicalRecord> getMedicalRecordByID(Integer MedicalRecordID) {
+	public static MedicalRecordArray getMedicalRecordByID(Integer MedicalRecordID) {
 		return MedicalRecordDAL.getMedicalRecordByID(MedicalRecordID);
 	}
 
-	public static DataArrayModel<MedicalRecord> getMedicalRecordByStatus(String MedicalRecordStatus) {
+	public static MedicalRecordArray getMedicalRecordByStatus(String MedicalRecordStatus) {
 		return MedicalRecordDAL.getMedicalRecordByStatus(MedicalRecordStatus);
 
 	}
@@ -34,7 +34,7 @@ public class MedicalRecordManager {
 		return MedicalRecordDAL.deleteMedicalRecord(MedicalRecordID);
 	}
 
-	public static DataArrayModel<MedicalRecord> getMedicalRecordByPatientID(Integer PatientID) {
+	public static MedicalRecordArray getMedicalRecordByPatientID(Integer PatientID) {
 		return MedicalRecordDAL.getMedicalRecordByPatientID(PatientID);
 	}
 }

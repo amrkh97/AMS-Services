@@ -8,19 +8,19 @@ import java.sql.Types;
 import java.util.ArrayList;
 
 import DB.DBManager;
+import Models.Company.CompanyArray;
 import Models.Company.CompanyModel;
-import Models.Data.DataArrayModel;
 import Models.Data.DataModel;
 
 public class CompanyDAL {
 
-	public static DataArrayModel<CompanyModel> getAllCompanies() {
+	public static CompanyArray getAllCompanies() {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_SelectAll]";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<CompanyModel> allCompanies = new ArrayList<>();
-		DataArrayModel<CompanyModel> OBJ = new DataArrayModel<CompanyModel>();
+		CompanyArray OBJ = new CompanyArray();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
@@ -50,7 +50,7 @@ public class CompanyDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.set_ArrayList(allCompanies);
+		OBJ.setCompanyArray(allCompanies);
 		return OBJ;
 	}
 
@@ -130,31 +130,31 @@ public class CompanyDAL {
 		return currentCompany;
 	}
 
-	public static DataArrayModel<CompanyModel> getCompanyByStatus(DataModel companyStatus) {
-	
-	String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_SelectBySts] ?";
-	ResultSet RS;
-	Connection conn = DBManager.getDBConn();
-	DataArrayModel<CompanyModel> OBJ = new DataArrayModel<CompanyModel>();
-	ArrayList<CompanyModel> AllcurrentCompany= new ArrayList<CompanyModel>();
-	try {
-		CallableStatement cstmt = conn.prepareCall(SPsql);	
-		cstmt.setString(1, companyStatus.getSentStatus());
-		RS=cstmt.executeQuery();
-		
-		while(RS.next()) {
-			
-			CompanyModel currentCompany= new CompanyModel();
-			
-			currentCompany.setCompanyID(RS.getInt("CompanyID"));
-			currentCompany.setCompanyAddress(RS.getString("CompanyAddress"));
-			currentCompany.setCompanyContactPerson(RS.getString("ContactPerson"));
-			currentCompany.setCompanyName(RS.getString("CompanyName"));
-			currentCompany.setCompanyStatus(RS.getString("CompanyStatus"));
-			currentCompany.setCompanyPhoneNumber(RS.getString("CompanyPhone"));
-			AllcurrentCompany.add(currentCompany);
-		}
-		
+	public static CompanyArray getCompanyByStatus(DataModel companyStatus) {
+
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_SelectBySts] ?";
+		ResultSet RS;
+		Connection conn = DBManager.getDBConn();
+		CompanyArray OBJ = new CompanyArray();
+		ArrayList<CompanyModel> AllcurrentCompany = new ArrayList<CompanyModel>();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setString(1, companyStatus.getSentStatus());
+			RS = cstmt.executeQuery();
+
+			while (RS.next()) {
+
+				CompanyModel currentCompany = new CompanyModel();
+
+				currentCompany.setCompanyID(RS.getInt("CompanyID"));
+				currentCompany.setCompanyAddress(RS.getString("CompanyAddress"));
+				currentCompany.setCompanyContactPerson(RS.getString("ContactPerson"));
+				currentCompany.setCompanyName(RS.getString("CompanyName"));
+				currentCompany.setCompanyStatus(RS.getString("CompanyStatus"));
+				currentCompany.setCompanyPhoneNumber(RS.getString("CompanyPhone"));
+				AllcurrentCompany.add(currentCompany);
+			}
+
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -167,7 +167,7 @@ public class CompanyDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.set_ArrayList(AllcurrentCompany);
+		OBJ.setCompanyArray(AllcurrentCompany);
 		return OBJ;
 	}
 

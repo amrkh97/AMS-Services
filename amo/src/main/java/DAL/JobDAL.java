@@ -9,17 +9,17 @@ import java.util.ArrayList;
 
 import DB.DBManager;
 import Models.ServerResponse;
-import Models.Data.DataArrayModel;
 import Models.Job.Job;
+import Models.Job.JobArray;
 
 public class JobDAL {
 
-	public static DataArrayModel<Job> getAllJobs() {
+	public static JobArray getAllJobs() {
 		String SPsql = "EXEC usp_Jobs_SelectAll";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<Job> allJobs = new ArrayList<>();
-		DataArrayModel<Job> OBJ = new DataArrayModel<Job>();
+		JobArray OBJ = new JobArray();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
@@ -49,18 +49,18 @@ public class JobDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.set_ArrayList(allJobs);
+		OBJ.setJobArray(allJobs);
 		return OBJ;
 
 	}
 
-	public static DataArrayModel<Job> getJobByTitle(String jobTitle) {
+	public static JobArray getJobByTitle(String jobTitle) {
 		String SPsql = "EXEC usp_Job_SelectByTitle ?";
 
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<Job> allJobs = new ArrayList<>();
-		DataArrayModel<Job> OBJ = new DataArrayModel<Job>();
+		JobArray OBJ = new JobArray();
 		
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -93,18 +93,18 @@ public class JobDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.set_ArrayList(allJobs);
+		OBJ.setJobArray(allJobs);
 		return OBJ;
 
 	}
 
-	public static DataArrayModel<Job> getJobByStatus(String jobStatus) {
+	public static JobArray getJobByStatus(String jobStatus) {
 		String SPsql = "EXEC usp_Job_SelectByJobStatus ?";
 
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<Job> allJobs = new ArrayList<>();
-		DataArrayModel<Job> OBJ = new DataArrayModel<Job>();
+		JobArray OBJ = new JobArray();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setString(1, jobStatus);
@@ -136,7 +136,7 @@ public class JobDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.set_ArrayList(allJobs);
+		OBJ.setJobArray(allJobs);
 		return OBJ;
 
 	}

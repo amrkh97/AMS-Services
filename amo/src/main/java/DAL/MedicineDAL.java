@@ -9,20 +9,20 @@ import java.util.ArrayList;
 
 import DB.DBManager;
 import Models.ServerResponse;
-import Models.Data.DataArrayModel;
 import Models.Medicine.Medicine;
+import Models.Medicine.MedicineArray;
 
 
 public class MedicineDAL {
 
-	 public static DataArrayModel<Medicine> getAllMedicines()
+	 public static MedicineArray getAllMedicines()
 	 {
 		 
 
 		 String SPsql = "USE KAN_AMO; EXEC usp_Medicines_SelectAll";
 		 Connection conn = DBManager.getDBConn();
 		ArrayList<Medicine>  Array=  new 	ArrayList<Medicine>()  ;
-		DataArrayModel<Medicine> OBJ = new DataArrayModel<Medicine>(); 	
+		MedicineArray OBJ = new MedicineArray(); 	
 	
 		     Medicine _Medicine  =new Medicine();
 			try {
@@ -62,7 +62,7 @@ public class MedicineDAL {
 				}
 			}
 				
-			OBJ.set_ArrayList(Array);
+			OBJ.setMedicineArray(Array);
 			return OBJ;
 		}
 
@@ -255,14 +255,14 @@ public class MedicineDAL {
 						 
 	 }
 	 
-	 public static  DataArrayModel<Medicine>  getMedicineByActiveComponent(String ActiveComponent)
+	 public static  MedicineArray  getMedicineByActiveComponent(String ActiveComponent)
 	 {
 	       
 
 		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByActiveComponent ?";
 		 Connection conn = DBManager.getDBConn();
 		ArrayList<Medicine>  Array=  new 	ArrayList<Medicine>()  ;
-		DataArrayModel<Medicine> OBJ = new DataArrayModel<Medicine>();
+		MedicineArray OBJ = new MedicineArray();
 	
 		     Medicine _Medicine  =new Medicine();
 			try {
@@ -303,17 +303,17 @@ public class MedicineDAL {
 				}
 			}
 				
-			OBJ.set_ArrayList(Array);
+			OBJ.setMedicineArray(Array);
 			return OBJ;
 		}
 	
-	 public static DataArrayModel<Medicine>    getMedicineByCompanyName(String CompanyName)
+	 public static MedicineArray    getMedicineByCompanyName(String CompanyName)
 	 {
 
 		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByCompanyName ?";
 		 Connection conn = DBManager.getDBConn();
 		ArrayList<Medicine>  Array=  new 	ArrayList<Medicine>()  ;
-		DataArrayModel<Medicine> OBJ = new DataArrayModel<Medicine>();
+		MedicineArray OBJ = new MedicineArray();
 	
 		     Medicine _Medicine  =new Medicine();
 			try {
@@ -354,17 +354,17 @@ public class MedicineDAL {
 				}
 			}
 				
-			OBJ.set_ArrayList(Array);
+			OBJ.setMedicineArray(Array);
 			return OBJ;
 		}
 	
-	 public static DataArrayModel<Medicine> getMedicineByCompanyStatus(String CompanyStatus)
+	 public static MedicineArray getMedicineByCompanyStatus(String CompanyStatus)
 	 {
 
 		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByCompanyStatus ?";
 		 Connection conn = DBManager.getDBConn();
 		ArrayList<Medicine>  Array=  new 	ArrayList<Medicine>()  ;
-		DataArrayModel<Medicine> OBJ = new DataArrayModel<Medicine>();
+		MedicineArray OBJ = new MedicineArray();
 	
 		     Medicine _Medicine  =new Medicine();
 			try {
@@ -405,17 +405,17 @@ public class MedicineDAL {
 				}
 			}
 				
-			OBJ.set_ArrayList(Array);
+			OBJ.setMedicineArray(Array);
 			return OBJ;
 		}
 	 
-	 public static DataArrayModel<Medicine>    getMedicineByContactPerson(String ContactPerson)
+	 public static MedicineArray    getMedicineByContactPerson(String ContactPerson)
 	 {
 
 		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByContactPerson ?";
 		 Connection conn = DBManager.getDBConn();
 		ArrayList<Medicine>  Array=  new 	ArrayList<Medicine>()  ;
-		DataArrayModel<Medicine> OBJ = new DataArrayModel<Medicine>();
+		MedicineArray OBJ = new MedicineArray();
 	
 		     Medicine _Medicine  =new Medicine();
 			try {
@@ -456,7 +456,7 @@ public class MedicineDAL {
 				}
 			}
 				
-			OBJ.set_ArrayList(Array);
+			OBJ.setMedicineArray(Array);
 			return OBJ;
 		}
 	
@@ -506,13 +506,13 @@ public class MedicineDAL {
 			return _Medicine;
 		}
 
-	 public static DataArrayModel<Medicine>    getMedicineByStatus(String Status)
+	 public static MedicineArray    getMedicineByStatus(String Status)
 	 {
 
 		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectBySts ?";
 		 Connection conn = DBManager.getDBConn();
 		ArrayList<Medicine>  Array=  new 	ArrayList<Medicine>()  ;
-		DataArrayModel<Medicine> OBJ =new DataArrayModel<Medicine>();
+		MedicineArray OBJ =new MedicineArray();
 	
 		     Medicine _Medicine  =new Medicine();
 			try {
@@ -553,7 +553,7 @@ public class MedicineDAL {
 				}
 			}
 				
-			OBJ.set_ArrayList(Array);
+			OBJ.setMedicineArray(Array);
 			return OBJ;
 		}
 	

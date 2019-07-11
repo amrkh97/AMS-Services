@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import DB.DBManager;
 import Models.ServerResponse;
 import Models.ServerResponseIntOutput;
-import Models.Data.DataArrayModel;
 import Models.MedicalRecord.MedicalRecord;
+import Models.MedicalRecord.MedicalRecordArray;
 
 public class MedicalRecordDAL {
 
@@ -75,13 +75,13 @@ public class MedicalRecordDAL {
 
 	}
 
-	public static DataArrayModel<MedicalRecord> getAllMedicalRecords() {
+	public static MedicalRecordArray getAllMedicalRecords() {
 
 		String SPsql = "EXEC usp_MedicalRecord_SelectAll";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<MedicalRecord> allMedicalRecords = new ArrayList<>();
-		DataArrayModel<MedicalRecord> OBJ = new DataArrayModel<MedicalRecord>();
+		MedicalRecordArray OBJ = new MedicalRecordArray();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
@@ -134,18 +134,18 @@ public class MedicalRecordDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.set_ArrayList(allMedicalRecords);
+		OBJ.setMedicalRecordArray(allMedicalRecords);
 		return OBJ;
 
 	}
 
-	public static DataArrayModel<MedicalRecord> getMedicalRecordByPatientID(Integer PatientID) {
+	public static MedicalRecordArray getMedicalRecordByPatientID(Integer PatientID) {
 		String SPsql = "EXEC usp_MedicalRecord_SelectByPatient ?";
 
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<MedicalRecord> allMedicalRecords = new ArrayList<>();
-		DataArrayModel<MedicalRecord> OBJ = new DataArrayModel<MedicalRecord>();
+		MedicalRecordArray OBJ = new MedicalRecordArray();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setInt(1, PatientID);
@@ -199,18 +199,18 @@ public class MedicalRecordDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.set_ArrayList(allMedicalRecords);
+		OBJ.setMedicalRecordArray(allMedicalRecords);
 		return OBJ;
 
 	}
 
-	public static DataArrayModel<MedicalRecord> getMedicalRecordByID(Integer MedicalRecordID) {
+	public static MedicalRecordArray getMedicalRecordByID(Integer MedicalRecordID) {
 		String SPsql = "EXEC usp_MedicalRecord_SelectByID ?";
 
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<MedicalRecord> allMedicalRecords = new ArrayList<>();
-		DataArrayModel<MedicalRecord> OBJ = new DataArrayModel<MedicalRecord>();
+		MedicalRecordArray OBJ = new MedicalRecordArray();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setInt(1, MedicalRecordID);
@@ -264,18 +264,18 @@ public class MedicalRecordDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.set_ArrayList(allMedicalRecords);
+		OBJ.setMedicalRecordArray(allMedicalRecords);
 		return OBJ;
 
 	}
 
-	public static DataArrayModel<MedicalRecord> getMedicalRecordByStatus(String medicalRecordStatus) {
+	public static MedicalRecordArray getMedicalRecordByStatus(String medicalRecordStatus) {
 		String SPsql = "EXEC usp_MedicalRecord_SelectByStatus ?";
 
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<MedicalRecord> allMedicalRecords = new ArrayList<>();
-		DataArrayModel<MedicalRecord> OBJ =new DataArrayModel<MedicalRecord>();
+		MedicalRecordArray OBJ =new MedicalRecordArray();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setNString(1, medicalRecordStatus);
@@ -329,7 +329,7 @@ public class MedicalRecordDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.set_ArrayList(allMedicalRecords);
+		OBJ.setMedicalRecordArray(allMedicalRecords);
 		return OBJ;
 
 	}

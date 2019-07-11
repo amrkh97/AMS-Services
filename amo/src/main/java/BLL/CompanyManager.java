@@ -1,13 +1,13 @@
 package BLL;
 
 import DAL.CompanyDAL;
+import Models.Company.CompanyArray;
 import Models.Company.CompanyModel;
-import Models.Data.DataArrayModel;
 import Models.Data.DataModel;
 
 public class CompanyManager {
 
-	public static DataArrayModel<CompanyModel> getAllCompanies() {
+	public static CompanyArray getAllCompanies() {
 		return CompanyDAL.getAllCompanies();
 	}
 
@@ -19,7 +19,7 @@ public class CompanyManager {
 		return CompanyDAL.getCompanyByID(companyID);
 	}
 	
-	public static DataArrayModel<CompanyModel> getCompanyByStatus(DataModel companyStatus) {
+	public static CompanyArray getCompanyByStatus(DataModel companyStatus) {
 		return CompanyDAL.getCompanyByStatus(companyStatus);
 	}
 

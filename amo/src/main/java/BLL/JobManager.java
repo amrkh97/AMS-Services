@@ -2,20 +2,20 @@ package BLL;
 
 import DAL.JobDAL;
 import Models.ServerResponse;
-import Models.Data.DataArrayModel;
 import Models.Job.Job;
+import Models.Job.JobArray;
 
 public class JobManager {
 
-	public static DataArrayModel<Job> getAllJobs() {
+	public static JobArray getAllJobs() {
 		return JobDAL.getAllJobs();
 	}
 
-	public static DataArrayModel<Job> getJobByTitle(String JobTitle) {
+	public static JobArray getJobByTitle(String JobTitle) {
 		return JobDAL.getJobByTitle(JobTitle);
 	}
 
-	public static DataArrayModel<Job> getJobByStatus(String JobStatus) {
+	public static JobArray getJobByStatus(String JobStatus) {
 		return JobDAL.getJobByStatus(JobStatus);
 	}
 

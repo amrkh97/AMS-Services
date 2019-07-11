@@ -9,22 +9,18 @@ import java.util.ArrayList;
 
 import DB.DBManager;
 import Models.ServerResponse;
-import Models.Data.DataArrayModel;
+import Models.Patient.PatientArray;
 import Models.Patient.PatientModel;
 
 public class PatientDAL {
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////GET/////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////
 
-	////////ALL	
-	public static DataArrayModel<PatientModel> getAllPatients() {
+	public static PatientArray getAllPatients() {
 
 		String SPsql = "USE KAN_AMO; EXEC usp_Patient_getAll";
 		Connection conn = DBManager.getDBConn();
 		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
 
-		DataArrayModel<PatientModel> OBJ = new DataArrayModel<PatientModel>();
+		PatientArray OBJ = new PatientArray();
 		PatientModel patient = new PatientModel();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -61,18 +57,18 @@ public class PatientDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.set_ArrayList(Array);
+		OBJ.setPatientArray(Array);
 		return OBJ;
 	}
 	
 	//////by NATIONAL ID
-	public static DataArrayModel<PatientModel> getPatientByNId(String NID) {
+	public static PatientArray getPatientByNId(String NID) {
 
 		String SPsql = "USE KAN_AMO; EXEC usp_Patient_getByNID ?";
 		Connection conn = DBManager.getDBConn();
 		
 		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
-		DataArrayModel<PatientModel> OBJ = new DataArrayModel<PatientModel>();
+		PatientArray OBJ = new PatientArray();
 		PatientModel patient = new PatientModel();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -111,7 +107,7 @@ public class PatientDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.set_ArrayList(Array);
+		OBJ.setPatientArray(Array);
 		return OBJ;
 	}
 

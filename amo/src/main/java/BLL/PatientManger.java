@@ -5,23 +5,23 @@ import java.util.ArrayList;
 import DAL.MedicalRecordDAL;
 import DAL.PatientDAL;
 import Models.ServerResponse;
-import Models.Data.DataArrayModel;
+import Models.Patient.PatientArray;
 import Models.Patient.PatientModel;
 
 public class PatientManger {
-	public static DataArrayModel<PatientModel> getAllPatient() {
+	public static PatientArray getAllPatient() {
 
 		return PatientDAL.getAllPatients();
 	}
 
-	public static DataArrayModel<PatientModel> getPatientByNId(String NID) {
+	public static PatientArray getPatientByNId(String NID) {
 		return PatientDAL.getPatientByNId(NID);
 	}
 
 	public static ServerResponse addNewPatient(PatientModel patientModel) {
 
 		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
-		Array = PatientDAL.getPatientByNId(patientModel.getPatientNationalID()).get_ArrayList();
+		Array = PatientDAL.getPatientByNId(patientModel.getPatientNationalID()).getPatientArray();
 
 		if (Array.size() != 0) {
 			if (Array.get(0).getPatientStatus().equals("FF")) {
