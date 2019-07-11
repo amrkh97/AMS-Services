@@ -54,7 +54,7 @@ public class PatientManger {
 		if (Array.size() == 0) {
 			ServerResponse S = new ServerResponse();
 			S.setResponseHexCode("FF");
-			S.setResponseMsg("NOT FOUND Patient in database");
+			S.setResponseMsg("Patient NOT FOUND in database");
 			return S;
 		}
 		return PatientDAL.updatePatientData(patientModel);
@@ -63,12 +63,12 @@ public class PatientManger {
 	public static ServerResponse deletePatient(PatientModel patient ) {
 		int PatientID =patient.getPatientID();
 		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
-		Array = PatientDAL.getPatientByNId( patient.getPatientNationalID()).getPatientArray();
+		Array = PatientDAL.getPatientByNId(patient.getPatientNationalID()).getPatientArray();
 
 		if (Array.size() == 0) {
 			ServerResponse S = new ServerResponse();
 			S.setResponseHexCode("FF");
-			S.setResponseMsg("NOT FOUND Patient in database");
+			S.setResponseMsg("Patient NOT FOUND in database");
 			return S;
 		} else {
 			ServerResponse X = PatientDAL.deletePatientLoc(PatientID);
