@@ -444,11 +444,8 @@ public class Services {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllMedicines() {
-		ArrayList<Medicine> Xs = MedicineManager.getAllMedicines();
-		DataArrayModel<Medicine> X = new DataArrayModel<Medicine>();
-		X.set_ArrayList(Xs);
 		
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok(MedicineManager.getAllMedicines()).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("medicine/getMedicines/barCode")
@@ -474,10 +471,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getMedicineByStatus(Medicine MED) {
-		ArrayList<Medicine> Xs = MedicineManager.getMedicineByStatus(MED.getMedicineStatus());
-		DataArrayModel<Medicine> X = new DataArrayModel<Medicine>();
-		X.set_ArrayList(Xs);
-		return Response.ok(X)
+	
+		return Response.ok(MedicineManager.getMedicineByStatus(MED.getMedicineStatus()))
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
@@ -487,10 +482,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getMedicineByActiveComponent(Medicine MED) {
 
-		ArrayList<Medicine> Xs = MedicineManager.getMedicineByActiveComponent(MED.getActiveComponent());
-		DataArrayModel<Medicine> X = new DataArrayModel<Medicine>();
-		X.set_ArrayList(Xs);
-		return Response.ok(X)
+		return Response.ok(MedicineManager.getMedicineByActiveComponent(MED.getActiveComponent()))
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
@@ -499,12 +491,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getMedicineByComName(CompanyModel COMP) {
-
-		ArrayList<Medicine> Xs =MedicineManager.getMedicineByCompanyName(COMP.getCompanyName());
-		DataArrayModel<Medicine> X = new DataArrayModel<Medicine>();
-		X.set_ArrayList(Xs);
-
-		return Response.ok(X)
+		
+		return Response.ok(MedicineManager.getMedicineByCompanyName(COMP.getCompanyName()))
 				.header("Access-Control-Allow-Origin", "*").build();
 	} 
 
@@ -514,11 +502,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getMedicineByCompanyStatus(CompanyModel COMP) {
 
-		ArrayList<Medicine> Xs = MedicineManager.getMedicineByCompanyStatus(COMP.getCompanyStatus());
-		DataArrayModel<Medicine> X = new DataArrayModel<Medicine>();
-		X.set_ArrayList(Xs);
-
-		return Response.ok(X)
+		return Response.ok(MedicineManager.getMedicineByCompanyStatus(COMP.getCompanyStatus()))
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
@@ -531,11 +515,7 @@ public class Services {
 			return Response.ok("Bad Request No ContactPerson").header("Access-Control-Allow-Origin", "*").build();
 		}
 
-
-		ArrayList<Medicine> Xs = MedicineManager.getMedicineByContactPerson(COMP.getCompanyContactPerson());
-		DataArrayModel<Medicine> X = new DataArrayModel<Medicine>();
-		X.set_ArrayList(Xs);
-		return Response.ok(X)
+		return Response.ok(MedicineManager.getMedicineByContactPerson(COMP.getCompanyContactPerson()))
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
