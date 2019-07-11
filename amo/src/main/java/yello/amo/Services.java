@@ -117,7 +117,6 @@ public class Services {
 
 	@Path("ambulance/getDeactivatedAmbulanceVehicles")
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetAmbulanceVehicle() {
 		return Response.ok(AmbulanceVehicleManger.getDeActivatedCars()).header("Access-Control-Allow-Origin", "*").build();
@@ -125,7 +124,6 @@ public class Services {
 
 	@Path("ambulance/getActivatedAmbulanceVehicles")
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetAmbulanceVehicleSts() {
 
@@ -135,7 +133,6 @@ public class Services {
 
 	@Path("ambulance/getDeletedAmbulanceVehicles")
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetDeletedAmbulanceVehicle() {
 
@@ -144,16 +141,15 @@ public class Services {
 
 	@Path("ambulance/getFreeAmbulanceVehicles")
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
+	
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetFreeAmbulanceVehicle() {
 
 		return Response.ok(AmbulanceVehicleManger.getFreeCars()).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
-	@Path("ambulance/getFreeAmbulanceVehicles")
+	@Path("ambulance/getBusyAmbulanceVehicles")
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetBusyAmbulanceVehicle() {
 	
@@ -162,7 +158,6 @@ public class Services {
 
 	@Path("ambulance/getAssignedAmbulanceVehicles")
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetAssignedAmbulanceVehicle() {
 
