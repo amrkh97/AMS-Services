@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import DB.DBManager;
 import Models.ServerResponse;
+import Models.ServerResponse_ID;
 import Models.Patient.PatientArray;
 import Models.Patient.PatientModel;
 
@@ -116,11 +117,11 @@ public class PatientDAL {
 //////////////////////////////// INSERT////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
 
-	public static ServerResponse addNewPatient(PatientModel patientModel) {
-		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_add_New_Patient] ?,?,?,?,?,?,?,?,?,?,?,?,?,?";
+	public static ServerResponse_ID addNewPatient(PatientModel patientModel) {
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_add_New_Patient] ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
 
 		Connection conn = DBManager.getDBConn();
-		ServerResponse _ServerResponse = new ServerResponse();
+		ServerResponse_ID _ServerResponse = new ServerResponse_ID();
 		try {
 
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -141,13 +142,14 @@ public class PatientDAL {
 
 			cstmt.registerOutParameter(13, Types.NVARCHAR);
 			cstmt.registerOutParameter(14, Types.NVARCHAR);
+			cstmt.registerOutParameter(15, Types.NVARCHAR);
 			cstmt.execute();
+			_ServerResponse.setId(cstmt.getInt(13));
 
-			_ServerResponse.setResponseHexCode(cstmt.getString(13));
+			_ServerResponse.setResponseHexCode(cstmt.getString(14));
 
-			_ServerResponse.setResponseMsg(cstmt.getString(14));
-
-		
+			_ServerResponse.setResponseMsg(cstmt.getString(15));
+			
 
 		} catch (SQLException e) {
 			System.out.println("i hav error");
