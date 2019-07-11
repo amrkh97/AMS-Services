@@ -12,28 +12,28 @@ public class MedicineManager {
 		return MedicineDAL.getAllMedicines();
 	}
 
-	 public static  Medicine getMedicineByBC(String BarCode)
-	 {	
-			return MedicineDAL.getMedicineByBC(BarCode);	 
-	 }
-	
-	public static Medicine getMedicineByName(String Name)
-	{
-	return MedicineDAL.getMedicineByName(Name);
+	public static Medicine getMedicineByBC(String BarCode) {
+		return MedicineDAL.getMedicineByBC(BarCode, null);
+	}
+
+	public static Medicine getMedicineByName(String Name) {
+		return MedicineDAL.getMedicineByName(Name);
 	}
 
 	public static MedicineArray getMedicineByStatus(String Status) {
 		return MedicineDAL.getMedicineByStatus(Status);
 	}
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////// GET  Medicines by Active Component //////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////// GET Medicines by Active Component
+	////////////////////////////////////////////////////////////////////////////////////////////////// //////////////////////////////////////
 
 	public static MedicineArray getMedicineByActiveComponent(String ActiveComponent) {
 		return MedicineDAL.getMedicineByActiveComponent(ActiveComponent);
 	}
-//////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////// GET  Medicines by Company Name //////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////// GET Medicines by Company Name
+	////////////////////////////////////////////////////////////////////////////////////////////////// //////////////////////////////////////
 
 	public static MedicineArray getMedicineByCompanyName(String CompanyName) {
 		return MedicineDAL.getMedicineByCompanyName(CompanyName);
@@ -47,14 +47,12 @@ public class MedicineManager {
 		return MedicineDAL.getMedicineByContactPerson(ContactPerson);
 	}
 
-	 public static ServerResponse insertMedicine(Medicine MED)
-	 {	 
-		 Medicine Array =new Medicine();
-		 Array = MedicineDAL.getMedicineByBC(MED.getBarCode());
-		if (Array != null)			
-		{ 
-			if (Array.getMedicineStatus().equals("FF"))
-			{ 
+	public static ServerResponse insertMedicine(Medicine MED) {
+		Medicine Array = new Medicine();
+		// TODO 2morrow
+		Array = MedicineDAL.getMedicineByBC(MED.getBarCode(), null);
+		if (Array != null) {
+			if (Array.getMedicineStatus().equals("FF")) {
 				return MedicineDAL.UpdateMedicineStatus(Array.getBarCode(), "00");
 			}
 			ServerResponse S = new ServerResponse();
@@ -65,34 +63,14 @@ public class MedicineManager {
 		return MedicineDAL.insertMedicine(MED);
 	}
 
-	 public static ServerResponse UpdateMedicine (Medicine MED)
-	 {
-		 // check if the medicine with this bar code exists 
-		 Medicine Array =new Medicine();
-		 Array = MedicineDAL.getMedicineByBC(MED.getBarCode());
-		if (Array.equals(null))
-		{
-			 ServerResponse S =new ServerResponse(); 
-				S.setResponseHexCode("FF");
-				S.setResponseMsg("Not found medicine in database");
-				return S;	
-				
-		}
+	public static ServerResponse UpdateMedicine(Medicine MED) {
+		
 		return MedicineDAL.UpdateMedicine(MED);
 	}
- 
-	 public static ServerResponse DeleteMedicine(String BarCode)
-	 {
-		 Medicine Array =new Medicine();
-		 Array = MedicineDAL.getMedicineByBC(BarCode);
-		if (Array.equals(null))
-		{
-			 ServerResponse S =new ServerResponse(); 
-				S.setResponseHexCode("FF");
-				S.setResponseMsg("Not found medicine in database");
-				return S;
-			}
-		 return MedicineDAL.DeleteMedicine(BarCode);
-	 }
-	  
+
+	public static ServerResponse DeleteMedicine(String BarCode) {
+		
+		return MedicineDAL.DeleteMedicine(BarCode);
+	}
+
 }

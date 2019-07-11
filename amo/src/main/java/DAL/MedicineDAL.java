@@ -12,589 +12,546 @@ import Models.ServerResponse;
 import Models.Medicine.Medicine;
 import Models.Medicine.MedicineArray;
 
-
 public class MedicineDAL {
 
-	 public static MedicineArray getAllMedicines()
-	 {
-		 
+	public static MedicineArray getAllMedicines() {
 
-		 String SPsql = "USE KAN_AMO; EXEC usp_Medicines_SelectAll";
-		 Connection conn = DBManager.getDBConn();
-		ArrayList<Medicine>  Array=  new 	ArrayList<Medicine>()  ;
-		MedicineArray OBJ = new MedicineArray(); 	
-	
-		     Medicine _Medicine  =new Medicine();
-			try {
-					CallableStatement cstmt  = conn.prepareCall(SPsql);
-			        ResultSet rs = cstmt.executeQuery();
-			     
-			        while(rs.next()) {
-			        	_Medicine  =new Medicine();
-			        	_Medicine.setBarCode(rs.getString("BarCode"));
-			        	_Medicine.setPrice(rs.getString("Price"));
-			        	_Medicine.setCountInStock(rs.getString("CountInStock"));
-			        	_Medicine.setImplications(rs.getString("Implications"));
-			        	_Medicine.setMedicineUsage(rs.getString("MedicineUsage"));
-			        	_Medicine.setSideEffects(rs.getString("SideEffects"));
-			        	_Medicine.setActiveComponent(rs.getString("ActiveComponent"));
-			        	_Medicine.setMedicineStatus(rs.getString("MedicineStatus"));
-			        	_Medicine.setMedicineName(rs.getString("MedicineName"));
-			        	Array.add(_Medicine);
-			        }
-			      
-			        
-			   			        
-			       
-			        
-			        
-		         }catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}finally {
-				try {
-					conn.close();
-					System.out.println("Connention Closed");
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					
-					e.printStackTrace();
-				}
+		String SPsql = "USE KAN_AMO; EXEC usp_Medicines_SelectAll";
+		Connection conn = DBManager.getDBConn();
+		ArrayList<Medicine> medicineList = new ArrayList<Medicine>();
+		MedicineArray medicineArray = new MedicineArray();
+
+		Medicine medicine = new Medicine();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			ResultSet rs = cstmt.executeQuery();
+
+			while (rs.next()) {
+				medicine = new Medicine();
+				medicine.setBarCode(rs.getString("BarCode"));
+				medicine.setPrice(rs.getString("Price"));
+				medicine.setCountInStock(rs.getInt("CountInStock"));
+				medicine.setImplications(rs.getString("Implications"));
+				medicine.setMedicineUsage(rs.getString("MedicineUsage"));
+				medicine.setSideEffects(rs.getString("SideEffects"));
+				medicine.setActiveComponent(rs.getString("ActiveComponent"));
+				medicine.setMedicineStatus(rs.getString("MedicineStatus"));
+				medicine.setMedicineName(rs.getString("MedicineName"));
+				medicineList.add(medicine);
 			}
-				
-			OBJ.setMedicineArray(Array);
-			return OBJ;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+
+				e.printStackTrace();
+			}
 		}
 
-	 public static Medicine getMedicineByBC(String BarCode)
-		 {
-			 
-			
+		medicineArray.setMedicineArray(medicineList);
+		return medicineArray;
+	}
 
-			 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByBCode ?";
-			 Connection conn = DBManager.getDBConn();
-			 Medicine _Medicine  =new Medicine();
-				try {
-						CallableStatement cstmt  = conn.prepareCall(SPsql);
-					     cstmt.setString(1,BarCode);
-					      
-				        ResultSet rs = cstmt.executeQuery();
-				       
-						     
+	public static Medicine getMedicineByBC(String BarCode, Connection conn) {
 
-				        	_Medicine.setBarCode(rs.getString("BarCode"));
-				        
-				        	_Medicine.setPrice(rs.getString("Price"));
-				        	_Medicine.setCountInStock(rs.getString("CountInStock"));
-				        	_Medicine.setImplications(rs.getString("Implications"));
-				        	_Medicine.setMedicineUsage(rs.getString("MedicineUsage"));
-				        	_Medicine.setSideEffects(rs.getString("SideEffects"));
-				        	_Medicine.setActiveComponent(rs.getString("ActiveComponent"));
-				        	_Medicine.setMedicineStatus(rs.getString("MedicineStatus"));
-				        	_Medicine.setMedicineName(rs.getString("MedicineName"));
-                          
-				        
-				        
-				   			        
-				       
-				        
-				        
-			         }catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}finally {
-					try {
-						conn.close();
-						System.out.println("Connention Closed");
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						
-						e.printStackTrace();
-					}
-				}
-					
-				
-				return  _Medicine;
-			}
-
-	 public static ServerResponse insertMedicine(Medicine _Medicine)
-	 {
+		String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByBCode ?";
 		
-			String SPsql = "EXEC usp_Medicine_Insert ?,?,?,?,?,?,?,?,?,?";
-				Connection conn = DBManager.getDBConn();
-				ServerResponse _ServerResponse = new ServerResponse();
-			
-				try {
-				
-						CallableStatement cstmt  = conn.prepareCall(SPsql);	
-			
-					    cstmt.setString(1, _Medicine.getBarCode());
-				        cstmt.setString(2, _Medicine.getMedicineName());
-				        cstmt.setString(3, _Medicine.getCountInStock());
-				        cstmt.setNString(4,_Medicine.getPrice() );
-				        cstmt.setString(5, _Medicine.getImplications());
-				        cstmt.setString(6, _Medicine.getMedicineUsage());
-				        cstmt.setString(7, _Medicine.getSideEffects());
-				        cstmt.setString(8, _Medicine.getActiveComponent());
-			
-				        
-			         cstmt.registerOutParameter(9, Types.NVARCHAR);
-					cstmt.registerOutParameter(10, Types.NVARCHAR);
-						  cstmt.execute();
+		//Check To Diffrentiate Between internal Calls and External Calls To This API Happened
+		if(conn == null)
+		{
+			conn = DBManager.getDBConn();
+		}
+		Medicine medicine = new Medicine();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setString(1, BarCode);
 
-				      _ServerResponse.setResponseHexCode(cstmt.getString("responseCode"));
-				      
-				       _ServerResponse.setResponseMsg(cstmt.getString("responseMessage"));
-							
-					   System.out.println(cstmt.getString(10));   
-				       
-			         }catch (SQLException e) {
-			        	 System.out.println("i hav error");
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}finally {
-					try {
-						conn.close();
-						System.out.println("Connention Closed");
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+			ResultSet resultSet = cstmt.executeQuery();
+
+			// If There Is At least 1 Entry
+			if (resultSet.next()) {
+				medicine.setBarCode(resultSet.getString("BarCode"));
+				medicine.setPrice(resultSet.getString("Price"));
+				medicine.setCountInStock(resultSet.getInt("CountInStock"));
+				medicine.setImplications(resultSet.getString("Implications"));
+				medicine.setMedicineUsage(resultSet.getString("MedicineUsage"));
+				medicine.setSideEffects(resultSet.getString("SideEffects"));
+				medicine.setActiveComponent(resultSet.getString("ActiveComponent"));
+				medicine.setMedicineStatus(resultSet.getString("MedicineStatus"));
+				medicine.setMedicineName(resultSet.getString("MedicineName"));
+			} else {
+				// At This Point I Know That There Is No Entries at the database
+				// TODO return an Error Indicating there was no data returned
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(conn == null)
+				{
+					conn.close();
+					System.out.println("Connention Closed");
 				}
-				return _ServerResponse;
-					
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+
+				e.printStackTrace();
+			}
+		}
+
+		return medicine;
+	}
+
+	public static ServerResponse insertMedicine(Medicine medicine) {
+
+		String SPsql = "EXEC usp_Medicine_Insert ?,?,?,?,?,?,?,?,?,?";
+		Connection conn = DBManager.getDBConn();
+		ServerResponse serverResponse = new ServerResponse();
+
+		try {
+
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+
+			cstmt.setString(1, medicine.getBarCode());
+			cstmt.setString(2, medicine.getMedicineName());
+			cstmt.setInt(3, medicine.getCountInStock());
+			cstmt.setNString(4, medicine.getPrice());
+			cstmt.setString(5, medicine.getImplications());
+			cstmt.setString(6, medicine.getMedicineUsage());
+			cstmt.setString(7, medicine.getSideEffects());
+			cstmt.setString(8, medicine.getActiveComponent());
+
+			cstmt.registerOutParameter(9, Types.NVARCHAR);
+			cstmt.registerOutParameter(10, Types.NVARCHAR);
+			cstmt.execute();
+
+			serverResponse.setResponseHexCode(cstmt.getString("responseCode"));
+			serverResponse.setResponseMsg(cstmt.getString("responseMessage"));
+
+			System.out.println("Insertion Result: " + cstmt.getString(10));
+
+		} catch (SQLException e) {
+			System.out.println("i hav error");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return serverResponse;
+
+	}
+
+	public static ServerResponse UpdateMedicine(Medicine medicine) {
+
+		String SPsql = "EXEC usp_Medicine_Update ?,?,?,?,?,?,?,?,?,?";
+		Connection conn = DBManager.getDBConn();
+		ServerResponse serverResponse = new ServerResponse();
+
+		// check if the medicine with this bar code exists
+		Medicine medicineSearchedByBC = getMedicineByBC(medicine.getBarCode(), conn);
 		
-		 
-	 }
-
-	 public static ServerResponse UpdateMedicine (Medicine _Medicine)
-	 {
-		 
-
-			String SPsql = "EXEC usp_Medicine_Update ?,?,?,?,?,?,?,?,?,?";
-				Connection conn = DBManager.getDBConn();
-				ServerResponse _ServerResponse = new ServerResponse();
-			
-				try {
-				
-						CallableStatement cstmt  = conn.prepareCall(SPsql);	
-			
-					    cstmt.setString(1, _Medicine.getBarCode());
-				        cstmt.setString(2, _Medicine.getMedicineName());
-				        cstmt.setString(3, _Medicine.getCountInStock());
-				        cstmt.setNString(4,_Medicine.getPrice() );
-				        cstmt.setString(5, _Medicine.getImplications());
-				        cstmt.setString(6, _Medicine.getMedicineUsage());
-				        cstmt.setString(7, _Medicine.getSideEffects());
-				        cstmt.setString(8, _Medicine.getActiveComponent());
-			
-				        
-			           cstmt.registerOutParameter(9, Types.NVARCHAR);
-					   cstmt.registerOutParameter(10, Types.NVARCHAR);
-					   cstmt.execute();
-
-				      _ServerResponse.setResponseHexCode(cstmt.getString("responseCode"));
-				      
-				       _ServerResponse.setResponseMsg(cstmt.getString("responseMessage"));
-							
-					      
-			         }catch (SQLException e) {
-			        	 System.out.println("i hav error");
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}finally {
-					try {
-						conn.close();
-						System.out.println("Connention Closed");
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				return _ServerResponse;
-					
+		if (medicineSearchedByBC.equals(null)) {
+			serverResponse = new ServerResponse();
+			serverResponse.setResponseHexCode("FF");
+			serverResponse.setResponseMsg("Medicine was Not found in database");
+			return serverResponse;
+		}
 		
-	 }
+		// At this point the if condition tells me that the search was not null
+		try {
 
-	 public static ServerResponse DeleteMedicine(String BarCode)
-	 {
-		 
-		System.out.println(BarCode);
+			CallableStatement cstmt = conn.prepareCall(SPsql);
 
-			
-		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_Delete ?,?,?";	
-			Connection conn = DBManager.getDBConn();
-			ServerResponse _ServerResponse = new ServerResponse();
+			cstmt.setString(1, medicine.getBarCode());
+			cstmt.setString(2, medicine.getMedicineName());
+			cstmt.setInt(3, medicine.getCountInStock());
+			cstmt.setNString(4, medicine.getPrice());
+			cstmt.setString(5, medicine.getImplications());
+			cstmt.setString(6, medicine.getMedicineUsage());
+			cstmt.setString(7, medicine.getSideEffects());
+			cstmt.setString(8, medicine.getActiveComponent());
 
+			cstmt.registerOutParameter(9, Types.NVARCHAR);
+			cstmt.registerOutParameter(10, Types.NVARCHAR);
+			cstmt.execute();
+
+			serverResponse.setResponseHexCode(cstmt.getString("responseCode"));
+			serverResponse.setResponseMsg(cstmt.getString("responseMessage"));
+
+		} catch (SQLException e) {
+			System.out.println("i have an error");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
 			try {
-
-
-					CallableStatement cstmt  = conn.prepareCall(SPsql);
-					 
-				  cstmt.setString(1, BarCode);
-			      cstmt.registerOutParameter(2, Types.NVARCHAR);
-				  cstmt.registerOutParameter(3, Types.NVARCHAR);
-			      cstmt.execute();
-			       _ServerResponse.setResponseHexCode(cstmt.getString(2));
-			       _ServerResponse.setResponseMsg(cstmt.getString(3));
-						
-				      
-		         }catch (SQLException e) {
-		        		// TODO Auto-generated catch block
-				e.printStackTrace();
-			}finally {
-				try {
-					conn.close();
-					System.out.println("Connention Closed");
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			return _ServerResponse;
-						 
-	 }
-	 
-	 public static  MedicineArray  getMedicineByActiveComponent(String ActiveComponent)
-	 {
-	       
-
-		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByActiveComponent ?";
-		 Connection conn = DBManager.getDBConn();
-		ArrayList<Medicine>  Array=  new 	ArrayList<Medicine>()  ;
-		MedicineArray OBJ = new MedicineArray();
-	
-		     Medicine _Medicine  =new Medicine();
-			try {
-					CallableStatement cstmt  = conn.prepareCall(SPsql);
-				     cstmt.setString( 1 , ActiveComponent);
-					ResultSet rs = cstmt.executeQuery();
-			     
-			        while(rs.next()) {
-			        	_Medicine  =new Medicine();
-			        	_Medicine.setBarCode(rs.getString("BarCode"));
-			        	_Medicine.setPrice(rs.getString("Price"));
-			        	_Medicine.setCountInStock(rs.getString("CountInStock"));
-			        	_Medicine.setImplications(rs.getString("Implications"));
-			        	_Medicine.setMedicineUsage(rs.getString("MedicineUsage"));
-			        	_Medicine.setSideEffects(rs.getString("SideEffects"));
-			        	_Medicine.setActiveComponent(rs.getString("ActiveComponent"));
-			        	_Medicine.setMedicineStatus(rs.getString("MedicineStatus"));
-			        	_Medicine.setMedicineName(rs.getString("MedicineName"));
-			        	Array.add(_Medicine);
-			        }
-			      
-			        
-			   			        
-			       
-			        
-			        
-		         }catch (SQLException e) {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}finally {
-				try {
-					conn.close();
-					System.out.println("Connention Closed");
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					
-					e.printStackTrace();
-				}
 			}
-				
-			OBJ.setMedicineArray(Array);
-			return OBJ;
 		}
-	
-	 public static MedicineArray    getMedicineByCompanyName(String CompanyName)
-	 {
+		return serverResponse;
 
-		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByCompanyName ?";
-		 Connection conn = DBManager.getDBConn();
-		ArrayList<Medicine>  Array=  new 	ArrayList<Medicine>()  ;
-		MedicineArray OBJ = new MedicineArray();
-	
-		     Medicine _Medicine  =new Medicine();
-			try {
-					CallableStatement cstmt  = conn.prepareCall(SPsql);
-				     cstmt.setString( 1 , CompanyName);
-					ResultSet rs = cstmt.executeQuery();
-			     
-			        while(rs.next()) {
-			        	_Medicine  =new Medicine();
-			        	_Medicine.setBarCode(rs.getString("BarCode"));
-			        	_Medicine.setPrice(rs.getString("Price"));
-			        	_Medicine.setCountInStock(rs.getString("CountInStock"));
-			        	_Medicine.setImplications(rs.getString("Implications"));
-			        	_Medicine.setMedicineUsage(rs.getString("MedicineUsage"));
-			        	_Medicine.setSideEffects(rs.getString("SideEffects"));
-			        	_Medicine.setActiveComponent(rs.getString("ActiveComponent"));
-			        	_Medicine.setMedicineStatus(rs.getString("MedicineStatus"));
-			        	_Medicine.setMedicineName(rs.getString("MedicineName"));
-			        	Array.add(_Medicine);
-			        }
-			      
-			        
-			   			        
-			       
-			        
-			        
-		         }catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}finally {
-				try {
-					conn.close();
-					System.out.println("Connention Closed");
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					
-					e.printStackTrace();
-				}
-			}
-				
-			OBJ.setMedicineArray(Array);
-			return OBJ;
+	}
+
+	public static ServerResponse DeleteMedicine(String barCode) {
+
+		System.out.println(barCode);
+
+		String SPsql = "USE KAN_AMO; EXEC usp_Medicine_Delete ?,?,?";
+		Connection conn = DBManager.getDBConn();
+		ServerResponse serverResponse = new ServerResponse();
+
+		// check if the medicine with this bar code exists
+		Medicine medicineSearchedByBC = getMedicineByBC(barCode, conn);
+		if (medicineSearchedByBC.equals(null)) {
+			serverResponse = new ServerResponse();
+			serverResponse.setResponseHexCode("FF");
+			serverResponse.setResponseMsg("Not found medicine in database");
+			return serverResponse;
 		}
-	
-	 public static MedicineArray getMedicineByCompanyStatus(String CompanyStatus)
-	 {
+		
+		try {
 
-		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByCompanyStatus ?";
-		 Connection conn = DBManager.getDBConn();
-		ArrayList<Medicine>  Array=  new 	ArrayList<Medicine>()  ;
-		MedicineArray OBJ = new MedicineArray();
-	
-		     Medicine _Medicine  =new Medicine();
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+
+			cstmt.setString(1, barCode);
+			cstmt.registerOutParameter(2, Types.NVARCHAR);
+			cstmt.registerOutParameter(3, Types.NVARCHAR);
+			cstmt.execute();
+			serverResponse.setResponseHexCode(cstmt.getString(2));
+			serverResponse.setResponseMsg(cstmt.getString(3));
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
 			try {
-					CallableStatement cstmt  = conn.prepareCall(SPsql);
-				     cstmt.setString( 1 , CompanyStatus);
-					ResultSet rs = cstmt.executeQuery();
-			     
-			        while(rs.next()) {
-			        	_Medicine  =new Medicine();
-			        	_Medicine.setBarCode(rs.getString("BarCode"));
-			        	_Medicine.setPrice(rs.getString("Price"));
-			        	_Medicine.setCountInStock(rs.getString("CountInStock"));
-			        	_Medicine.setImplications(rs.getString("Implications"));
-			        	_Medicine.setMedicineUsage(rs.getString("MedicineUsage"));
-			        	_Medicine.setSideEffects(rs.getString("SideEffects"));
-			        	_Medicine.setActiveComponent(rs.getString("ActiveComponent"));
-			        	_Medicine.setMedicineStatus(rs.getString("MedicineStatus"));
-			        	_Medicine.setMedicineName(rs.getString("MedicineName"));
-			        	Array.add(_Medicine);
-			        }
-			      
-			        
-			   			        
-			       
-			        
-			        
-		         }catch (SQLException e) {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}finally {
-				try {
-					conn.close();
-					System.out.println("Connention Closed");
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					
-					e.printStackTrace();
-				}
 			}
-				
-			OBJ.setMedicineArray(Array);
-			return OBJ;
 		}
-	 
-	 public static MedicineArray    getMedicineByContactPerson(String ContactPerson)
-	 {
+		return serverResponse;
 
-		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByContactPerson ?";
-		 Connection conn = DBManager.getDBConn();
-		ArrayList<Medicine>  Array=  new 	ArrayList<Medicine>()  ;
-		MedicineArray OBJ = new MedicineArray();
-	
-		     Medicine _Medicine  =new Medicine();
-			try {
-					CallableStatement cstmt  = conn.prepareCall(SPsql);
-				     cstmt.setString( 1 , ContactPerson);
-					ResultSet rs = cstmt.executeQuery();
-			     
-			        while(rs.next()) {
-			        	_Medicine  =new Medicine();
-			        	_Medicine.setBarCode(rs.getString("BarCode"));
-			        	_Medicine.setPrice(rs.getString("Price"));
-			        	_Medicine.setCountInStock(rs.getString("CountInStock"));
-			        	_Medicine.setImplications(rs.getString("Implications"));
-			        	_Medicine.setMedicineUsage(rs.getString("MedicineUsage"));
-			        	_Medicine.setSideEffects(rs.getString("SideEffects"));
-			        	_Medicine.setActiveComponent(rs.getString("ActiveComponent"));
-			        	_Medicine.setMedicineStatus(rs.getString("MedicineStatus"));
-			        	_Medicine.setMedicineName(rs.getString("MedicineName"));
-			        	Array.add(_Medicine);
-			        }
-			      
-			        
-			   			        
-			       
-			        
-			        
-		         }catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}finally {
-				try {
-					conn.close();
-					System.out.println("Connention Closed");
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					
-					e.printStackTrace();
-				}
+	}
+
+	public static MedicineArray getMedicineByActiveComponent(String activeComponent) {
+
+		String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByActiveComponent ?";
+		Connection conn = DBManager.getDBConn();
+		ArrayList<Medicine> medicineList = new ArrayList<Medicine>();
+		MedicineArray medicineArray = new MedicineArray();
+
+		Medicine medicine = new Medicine();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setString(1, activeComponent);
+			ResultSet rs = cstmt.executeQuery();
+
+			while (rs.next()) {
+				medicine = new Medicine();
+				medicine.setBarCode(rs.getString("BarCode"));
+				medicine.setPrice(rs.getString("Price"));
+				medicine.setCountInStock(rs.getInt("CountInStock"));
+				medicine.setImplications(rs.getString("Implications"));
+				medicine.setMedicineUsage(rs.getString("MedicineUsage"));
+				medicine.setSideEffects(rs.getString("SideEffects"));
+				medicine.setActiveComponent(rs.getString("ActiveComponent"));
+				medicine.setMedicineStatus(rs.getString("MedicineStatus"));
+				medicine.setMedicineName(rs.getString("MedicineName"));
+				medicineList.add(medicine);
 			}
-				
-			OBJ.setMedicineArray(Array);
-			return OBJ;
-		}
-	
-	 public static Medicine getMedicineByName(String Name)
-	 {
 
-		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByName ?";
-		 Connection conn = DBManager.getDBConn();
-	
-		     Medicine _Medicine  =new Medicine();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
 			try {
-					CallableStatement cstmt  = conn.prepareCall(SPsql);
-				     cstmt.setString( 1 , Name);
-					ResultSet rs = cstmt.executeQuery();
-
-			        	_Medicine.setBarCode(rs.getString("BarCode"));
-			        	_Medicine.setPrice(rs.getString("Price"));
-			        	_Medicine.setCountInStock(rs.getString("CountInStock"));
-			        	_Medicine.setImplications(rs.getString("Implications"));
-			        	_Medicine.setMedicineUsage(rs.getString("MedicineUsage"));
-			        	_Medicine.setSideEffects(rs.getString("SideEffects"));
-			        	_Medicine.setActiveComponent(rs.getString("ActiveComponent"));
-			        	_Medicine.setMedicineStatus(rs.getString("MedicineStatus"));
-			        	_Medicine.setMedicineName(rs.getString("MedicineName"));
-
-			      
-			        
-			   			        
-			       
-			        
-			        
-		         }catch (SQLException e) {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
+
 				e.printStackTrace();
-			}finally {
-				try {
-					conn.close();
-					System.out.println("Connention Closed");
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					
-					e.printStackTrace();
-				}
 			}
-				
-			
-			return _Medicine;
 		}
 
-	 public static MedicineArray    getMedicineByStatus(String Status)
-	 {
+		medicineArray.setMedicineArray(medicineList);
+		return medicineArray;
+	}
 
-		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectBySts ?";
-		 Connection conn = DBManager.getDBConn();
-		ArrayList<Medicine>  Array=  new 	ArrayList<Medicine>()  ;
-		MedicineArray OBJ =new MedicineArray();
-	
-		     Medicine _Medicine  =new Medicine();
-			try {
-					CallableStatement cstmt  = conn.prepareCall(SPsql);
-				     cstmt.setString( 1 , Status);
-					ResultSet rs = cstmt.executeQuery();
-			     
-			        while(rs.next()) {
-			        	_Medicine  =new Medicine();
-			        	_Medicine.setBarCode(rs.getString("BarCode"));
-			        	_Medicine.setPrice(rs.getString("Price"));
-			        	_Medicine.setCountInStock(rs.getString("CountInStock"));
-			        	_Medicine.setImplications(rs.getString("Implications"));
-			        	_Medicine.setMedicineUsage(rs.getString("MedicineUsage"));
-			        	_Medicine.setSideEffects(rs.getString("SideEffects"));
-			        	_Medicine.setActiveComponent(rs.getString("ActiveComponent"));
-			        	_Medicine.setMedicineStatus(rs.getString("MedicineStatus"));
-			        	_Medicine.setMedicineName(rs.getString("MedicineName"));
-			        	Array.add(_Medicine);
-			        }
-			      
-			        
-			   			        
-			       
-			        
-			        
-		         }catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}finally {
-				try {
-					conn.close();
-					System.out.println("Connention Closed");
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					
-					e.printStackTrace();
-				}
+	public static MedicineArray getMedicineByCompanyName(String companyName) {
+
+		String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByCompanyName ?";
+		Connection conn = DBManager.getDBConn();
+		ArrayList<Medicine> medicineList = new ArrayList<Medicine>();
+		MedicineArray medicineArray = new MedicineArray();
+
+		Medicine medicine = new Medicine();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setString(1, companyName);
+			ResultSet rs = cstmt.executeQuery();
+
+			while (rs.next()) {
+				medicine = new Medicine();
+				medicine.setBarCode(rs.getString("BarCode"));
+				medicine.setPrice(rs.getString("Price"));
+				medicine.setCountInStock(rs.getInt("CountInStock"));
+				medicine.setImplications(rs.getString("Implications"));
+				medicine.setMedicineUsage(rs.getString("MedicineUsage"));
+				medicine.setSideEffects(rs.getString("SideEffects"));
+				medicine.setActiveComponent(rs.getString("ActiveComponent"));
+				medicine.setMedicineStatus(rs.getString("MedicineStatus"));
+				medicine.setMedicineName(rs.getString("MedicineName"));
+				medicineList.add(medicine);
 			}
-				
-			OBJ.setMedicineArray(Array);
-			return OBJ;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+
+				e.printStackTrace();
+			}
 		}
-	
-	 public static ServerResponse UpdateMedicineStatus(String Barcode ,String newStatus)
-	 {
-		 String SPsql = "USE KAN_AMO; EXEC usp_Medicine_UpdateStatus ?,?,?,?";	
-			Connection conn = DBManager.getDBConn();
-			ServerResponse _ServerResponse = new ServerResponse();
 
+		medicineArray.setMedicineArray(medicineList);
+		return medicineArray;
+	}
+
+	public static MedicineArray getMedicineByCompanyStatus(String companyStatus) {
+
+		String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByCompanyStatus ?";
+		Connection conn = DBManager.getDBConn();
+		ArrayList<Medicine> medicineList = new ArrayList<Medicine>();
+		MedicineArray medicineArray = new MedicineArray();
+
+		Medicine medicine = new Medicine();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setString(1, companyStatus);
+			ResultSet rs = cstmt.executeQuery();
+
+			while (rs.next()) {
+				medicine = new Medicine();
+				medicine.setBarCode(rs.getString("BarCode"));
+				medicine.setPrice(rs.getString("Price"));
+				medicine.setCountInStock(rs.getInt("CountInStock"));
+				medicine.setImplications(rs.getString("Implications"));
+				medicine.setMedicineUsage(rs.getString("MedicineUsage"));
+				medicine.setSideEffects(rs.getString("SideEffects"));
+				medicine.setActiveComponent(rs.getString("ActiveComponent"));
+				medicine.setMedicineStatus(rs.getString("MedicineStatus"));
+				medicine.setMedicineName(rs.getString("MedicineName"));
+				medicineList.add(medicine);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
 			try {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 
+				e.printStackTrace();
+			}
+		}
 
-					CallableStatement cstmt  = conn.prepareCall(SPsql);
-					  cstmt.setString(2, Barcode);  
-					  cstmt.setString(1, newStatus);
-					cstmt.registerOutParameter(3, Types.NVARCHAR);
-					cstmt.registerOutParameter(4, Types.NVARCHAR);
-					  
-					cstmt.execute();
-					  
-			       _ServerResponse.setResponseHexCode(cstmt.getString(3));
-			       _ServerResponse.setResponseMsg(cstmt.getString(4));
-						
-				      
-		         }catch (SQLException e) {
-		        	 System.out.println("i hav error");
+		medicineArray.setMedicineArray(medicineList);
+		return medicineArray;
+	}
+
+	public static MedicineArray getMedicineByContactPerson(String contactPerson) {
+
+		String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByContactPerson ?";
+		Connection conn = DBManager.getDBConn();
+		ArrayList<Medicine> medicineList = new ArrayList<Medicine>();
+		MedicineArray medicineArray = new MedicineArray();
+
+		Medicine medicine = new Medicine();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setString(1, contactPerson);
+			ResultSet rs = cstmt.executeQuery();
+
+			while (rs.next()) {
+				medicine = new Medicine();
+				medicine.setBarCode(rs.getString("BarCode"));
+				medicine.setPrice(rs.getString("Price"));
+				medicine.setCountInStock(rs.getInt("CountInStock"));
+				medicine.setImplications(rs.getString("Implications"));
+				medicine.setMedicineUsage(rs.getString("MedicineUsage"));
+				medicine.setSideEffects(rs.getString("SideEffects"));
+				medicine.setActiveComponent(rs.getString("ActiveComponent"));
+				medicine.setMedicineStatus(rs.getString("MedicineStatus"));
+				medicine.setMedicineName(rs.getString("MedicineName"));
+				medicineList.add(medicine);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+
+				e.printStackTrace();
+			}
+		}
+
+		medicineArray.setMedicineArray(medicineList);
+		return medicineArray;
+	}
+
+	public static Medicine getMedicineByName(String name) {
+
+		String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByName ?";
+		Connection conn = DBManager.getDBConn();
+
+		Medicine medicine = new Medicine();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setString(1, name);
+			ResultSet resultSet = cstmt.executeQuery();
+
+			if (resultSet.next()) {
+				medicine.setBarCode(resultSet.getString("BarCode"));
+				medicine.setPrice(resultSet.getString("Price"));
+				medicine.setCountInStock(resultSet.getInt("CountInStock"));
+				medicine.setImplications(resultSet.getString("Implications"));
+				medicine.setMedicineUsage(resultSet.getString("MedicineUsage"));
+				medicine.setSideEffects(resultSet.getString("SideEffects"));
+				medicine.setActiveComponent(resultSet.getString("ActiveComponent"));
+				medicine.setMedicineStatus(resultSet.getString("MedicineStatus"));
+				medicine.setMedicineName(resultSet.getString("MedicineName"));
+			} else {
+				// TODO Handle What To Return if No Single Row Was Found
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+
+				e.printStackTrace();
+			}
+		}
+
+		return medicine;
+	}
+
+	public static MedicineArray getMedicineByStatus(String status) {
+
+		String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectBySts ?";
+		Connection conn = DBManager.getDBConn();
+		ArrayList<Medicine> medicineList = new ArrayList<Medicine>();
+		MedicineArray medicineArray = new MedicineArray();
+
+		Medicine medicine = new Medicine();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setString(1, status);
+			ResultSet resultSet = cstmt.executeQuery();
+
+			while (resultSet.next()) {
+				medicine = new Medicine();
+				medicine.setBarCode(resultSet.getString("BarCode"));
+				medicine.setPrice(resultSet.getString("Price"));
+				medicine.setCountInStock(resultSet.getInt("CountInStock"));
+				medicine.setImplications(resultSet.getString("Implications"));
+				medicine.setMedicineUsage(resultSet.getString("MedicineUsage"));
+				medicine.setSideEffects(resultSet.getString("SideEffects"));
+				medicine.setActiveComponent(resultSet.getString("ActiveComponent"));
+				medicine.setMedicineStatus(resultSet.getString("MedicineStatus"));
+				medicine.setMedicineName(resultSet.getString("MedicineName"));
+				medicineList.add(medicine);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+
+				e.printStackTrace();
+			}
+		}
+
+		medicineArray.setMedicineArray(medicineList);
+		return medicineArray;
+	}
+
+	public static ServerResponse UpdateMedicineStatus(String barcode, String newStatus) {
+		String SPsql = "USE KAN_AMO; EXEC usp_Medicine_UpdateStatus ?,?,?,?";
+		Connection conn = DBManager.getDBConn();
+		ServerResponse serverResponse = new ServerResponse();
+
+		try {
+
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setString(2, barcode);
+			cstmt.setString(1, newStatus);
+			cstmt.registerOutParameter(3, Types.NVARCHAR);
+			cstmt.registerOutParameter(4, Types.NVARCHAR);
+
+			cstmt.execute();
+
+			serverResponse.setResponseHexCode(cstmt.getString(3));
+			serverResponse.setResponseMsg(cstmt.getString(4));
+
+		} catch (SQLException e) {
+			System.out.println("i hav error");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}finally {
-				try {
-					conn.close();
-					System.out.println("Connention Closed");
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}
-			return _ServerResponse;
-	 }
-
-	 
-	
+		}
+		return serverResponse;
+	}
 
 }
