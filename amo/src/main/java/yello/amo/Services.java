@@ -742,7 +742,7 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	public Response deletePatient (PatientModel patientModel) {
-		ServerResponse X =PatientManger.deletePatient(patientModel.getPatientID());
+		ServerResponse X =PatientManger.deletePatient(patientModel);
     	if(X.equals(null)){
     		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); 
     		}
