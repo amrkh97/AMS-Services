@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import DB.DBManager;
 import Models.ServerResponse;
+import Models.Data.DataArrayModel;
 import Models.Patient.PatientModel;
 
 public class PatientDAL {
@@ -17,12 +18,13 @@ public class PatientDAL {
 //////////////////////////////////////////////////////////////////////////////////
 
 	////////ALL	
-	public static ArrayList<PatientModel> getAllPatients() {
+	public static DataArrayModel<PatientModel> getAllPatients() {
 
 		String SPsql = "USE KAN_AMO; EXEC usp_Patient_getAll";
 		Connection conn = DBManager.getDBConn();
 		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
 
+		DataArrayModel<PatientModel> OBJ = new DataArrayModel<PatientModel>();
 		PatientModel patient = new PatientModel();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -59,18 +61,18 @@ public class PatientDAL {
 				e.printStackTrace();
 			}
 		}
-
-		return Array;
+		OBJ.set_ArrayList(Array);
+		return OBJ;
 	}
 	
 	//////by NATIONAL ID
-	public static ArrayList<PatientModel> getPatientByNId(String NID) {
+	public static DataArrayModel<PatientModel> getPatientByNId(String NID) {
 
 		String SPsql = "USE KAN_AMO; EXEC usp_Patient_getByNID ?";
 		Connection conn = DBManager.getDBConn();
 		
 		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
-
+		DataArrayModel<PatientModel> OBJ = new DataArrayModel<PatientModel>();
 		PatientModel patient = new PatientModel();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -109,8 +111,8 @@ public class PatientDAL {
 				e.printStackTrace();
 			}
 		}
-
-		return Array;
+		OBJ.set_ArrayList(Array);
+		return OBJ;
 	}
 
 	

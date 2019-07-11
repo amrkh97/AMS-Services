@@ -695,12 +695,10 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	public Response getAllPatient() {
-		ArrayList<PatientModel> X =PatientManger.getAllPatient();
-		DataArrayModel<PatientModel>OBJ = new 	DataArrayModel<PatientModel>()  ;
-		OBJ.set_ArrayList(X);
-    	if(X==null){		
+		DataArrayModel<PatientModel> X =PatientManger.getAllPatient();
+    	if(X.equals(null)){		
     		return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build(); }
-		return Response.ok(OBJ).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 		 
 	}
 
@@ -710,7 +708,7 @@ public class Services {
     @Produces(MediaType.APPLICATION_JSON)
 	public Response addNewPatient(PatientModel patientModel) {
 		ServerResponse X =PatientManger.addNewPatient(patientModel);
-    	if(X==null){		
+    	if(X.equals(null)){		
     		return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build(); }
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 		 
@@ -722,7 +720,7 @@ public class Services {
     @Produces(MediaType.APPLICATION_JSON)
 	public Response editPatient (PatientModel patientModel) {
 		ServerResponse X =PatientManger.updatePatientData(patientModel);
-    	if(X==null){		
+    	if(X.equals(null)){		
     		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); }
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 
@@ -733,13 +731,10 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	public Response getPatientByNID (PatientModel patientModel) {
-		ArrayList<PatientModel>  X =PatientManger.getPatientByNId(patientModel.getPatientNationalID());
-		DataArrayModel<PatientModel>OBJ = new 	DataArrayModel<PatientModel>()  ;
-		OBJ.set_ArrayList(X);
-    
-		if(X==null){		
+		DataArrayModel<PatientModel>  X =PatientManger.getPatientByNId(patientModel.getPatientNationalID());
+			if(X.equals(null)){		
     		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); }
-		return Response.ok(OBJ).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -749,7 +744,7 @@ public class Services {
     @Produces(MediaType.APPLICATION_JSON)
 	public Response deletePatient (PatientModel patientModel) {
 		ServerResponse X =PatientManger.deletePatient(patientModel.getPatientID());
-    	if(X==null){
+    	if(X.equals(null)){
     		return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build(); 
     		}
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
