@@ -27,7 +27,7 @@ public class AmbulanceMapManager {
 	}
 
 	public static DataModel deleteAmbulanceMap(DataModel currentAmbulanceMap) {
-		return AmbulanceMapDAL.deleteAmbulanceMap(currentAmbulanceMap);
+		return AmbulanceMapDAL.deleteAmbulanceMap(currentAmbulanceMap.getSentID());
 	}
 
 }
