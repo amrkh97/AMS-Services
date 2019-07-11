@@ -1,37 +1,37 @@
 package BLL;
 
-import java.util.ArrayList;
-
 import DAL.CompanyDAL;
 import Models.Company.CompanyModel;
+import Models.Data.DataArrayModel;
+import Models.Data.DataModel;
 
 public class CompanyManager {
 
-	public static ArrayList<CompanyModel> getAllCompanies() {
+	public static DataArrayModel<CompanyModel> getAllCompanies() {
 		return CompanyDAL.getAllCompanies();
 	}
 
-	public static CompanyModel getCompanyByName(String companyName) {
+	public static CompanyModel getCompanyByName(DataModel companyName) {
 		return CompanyDAL.getCompanyByName(companyName);
 	}
 
-	public static CompanyModel getCompanyByID(Integer companyID) {
+	public static CompanyModel getCompanyByID(DataModel companyID) {
 		return CompanyDAL.getCompanyByID(companyID);
 	}
 	
-	public static CompanyModel getCompanyByStatus(String companyStatus) {
+	public static DataArrayModel<CompanyModel> getCompanyByStatus(DataModel companyStatus) {
 		return CompanyDAL.getCompanyByStatus(companyStatus);
 	}
 
-	public static String addCompany(CompanyModel companyToBeAdded) {
+	public static DataModel addCompany(CompanyModel companyToBeAdded) {
 		return CompanyDAL.addCompany(companyToBeAdded);
 	}
 
-	public static String updateCompany(CompanyModel companyToBeAdded) {
+	public static DataModel updateCompany(CompanyModel companyToBeAdded) {
 		return CompanyDAL.updateCompany(companyToBeAdded);
 	}
 
-	public static String deleteCompany(Integer companyToBeDeleted) {
+	public static DataModel deleteCompany(DataModel companyToBeDeleted) {
 		return CompanyDAL.deleteCompany(companyToBeDeleted);
 	}
 }

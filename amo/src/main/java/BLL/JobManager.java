@@ -1,22 +1,21 @@
 package BLL;
 
-import java.util.ArrayList;
-
 import DAL.JobDAL;
 import Models.ServerResponse;
+import Models.Data.DataArrayModel;
 import Models.Job.Job;
 
 public class JobManager {
 
-	public static ArrayList<Job> getAllJobs() {
+	public static DataArrayModel<Job> getAllJobs() {
 		return JobDAL.getAllJobs();
 	}
 
-	public static ArrayList<Job> getJobByTitle(String JobTitle) {
+	public static DataArrayModel<Job> getJobByTitle(String JobTitle) {
 		return JobDAL.getJobByTitle(JobTitle);
 	}
 
-	public static ArrayList<Job> getJobByStatus(String JobStatus) {
+	public static DataArrayModel<Job> getJobByStatus(String JobStatus) {
 		return JobDAL.getJobByStatus(JobStatus);
 	}
 

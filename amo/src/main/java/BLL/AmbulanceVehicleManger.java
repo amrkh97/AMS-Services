@@ -1,89 +1,60 @@
 package BLL;
 
-import java.util.ArrayList;
-
 import DAL.AmbulanceVehicleDAL;
 import Models.ServerResponse;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
+import Models.Data.DataArrayModel;
 public class AmbulanceVehicleManger {
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////////////////// GET Deleted CARs
-	////////////////////////////////////////////////////////////////////////////////////////////////// /////////////////////////////////////////////
-
-	public static ArrayList<AmbulanceVehicleModel> getDeletedCars() {
+	public static DataArrayModel<AmbulanceVehicleModel> getDeletedCars() {
 		return AmbulanceVehicleDAL.getCarsBySts("FF");
 	}
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////GET Activated CARs /////////////////////////////////////////////
-
-	public static ArrayList<AmbulanceVehicleModel> getActivatedCars() {
-		ArrayList<AmbulanceVehicleModel> X = getCarsByStatus("00");
-		ArrayList<AmbulanceVehicleModel> X1 = getCarsByStatus("01");
-		X.addAll(X1);
-		return X;
+	public static DataArrayModel<AmbulanceVehicleModel> getActivatedCars() {
+		//ArrayList<AmbulanceVehicleModel> X = getCarsByStatus("00");
+		//ArrayList<AmbulanceVehicleModel> X1 = getCarsByStatus("01");
+		//X.addAll(X1);
+		return getCarsByStatus("00");
 	}
-	
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////GET DeActivated CARs /////////////////////////////////////////////
-	
-	public static ArrayList<AmbulanceVehicleModel> getDeActivatedCars() {
-		ArrayList<AmbulanceVehicleModel> X = getCarsByStatus("02");
+		
+	public static DataArrayModel<AmbulanceVehicleModel> getDeActivatedCars() {
+		DataArrayModel<AmbulanceVehicleModel> X = getCarsByStatus("02");
 
 		return X;
 	}
 
-	
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////GET Assigned  Cars/////////////////////////////////////
-
-	public static ArrayList<AmbulanceVehicleModel> getAssignedCars(){
+	public static DataArrayModel<AmbulanceVehicleModel> getAssignedCars(){
 		return AmbulanceVehicleDAL.getCarsBySts("05");
 	}
 
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////GET Free  Cars/////////////////////////////////////
-
-	public static ArrayList<AmbulanceVehicleModel> getFreeCars() {
+	public static DataArrayModel<AmbulanceVehicleModel> getFreeCars() {
 		return AmbulanceVehicleDAL.getCarsBySts("00");
 	}
-	//////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////////////////////GET busy  Cars/S////////////////////////////////////
 
-	public static ArrayList<AmbulanceVehicleModel> getBusyCars() {
+	public static DataArrayModel<AmbulanceVehicleModel> getBusyCars() {
 		return AmbulanceVehicleDAL.getCarsBySts("01");
 	}
-//////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////// GET CAR BY VIN //////////////////////////////////////////
 
-	public static ArrayList<AmbulanceVehicleModel> getCarById(int VIN) {
-		return AmbulanceVehicleDAL.getCarByID(VIN);
+	public static AmbulanceVehicleModel getCarById(int i) {
+		return AmbulanceVehicleDAL.getCarByID(i);
 	}
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////GET CAR BY Brand //////////////////////////////////////////
 
-	public static ArrayList<AmbulanceVehicleModel> getCarsByBrand(String Brand) {
-		return AmbulanceVehicleDAL.getCarsByBrand(Brand);
+	public static DataArrayModel<AmbulanceVehicleModel> getCarsByBrand(String string) {
+		return AmbulanceVehicleDAL.getCarsByBrand(string);
 	}
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////GET CAR BY Status //////////////////////////////////////////
 
-	public static ArrayList<AmbulanceVehicleModel> getCarsByStatus(String Sts) {
-		return AmbulanceVehicleDAL.getCarsBySts(Sts);
+	public static DataArrayModel<AmbulanceVehicleModel> getCarsByStatus(String string) {
+		return AmbulanceVehicleDAL.getCarsBySts(string);
 	}
-//////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////// INSERT ///////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////
 
 	public static ServerResponse insertCar(AmbulanceVehicleModel Car) {
-		ArrayList<AmbulanceVehicleModel> Array = new ArrayList<AmbulanceVehicleModel>();
+		AmbulanceVehicleModel Array = new AmbulanceVehicleModel();
 		Array = AmbulanceVehicleDAL.getCarByID(Car.getVin());
 
-		if (Array.size() != 0) {
-			if (Array.get(0).getVehicleStatus().equals("FF")) {
-				System.out.println(Array.get(0).getVehicleStatus());
-				return AmbulanceVehicleDAL.UpdateCarStatus(Array.get(0).getVin(), "00");
+		if (Array != null) {
+			if (Array.getVehicleStatus().equals("FF")) {
+				System.out.println(Array.getVehicleStatus());
+				return AmbulanceVehicleDAL.UpdateCarStatus(Array.getVin(), "00");
 			} else {
 				ServerResponse S = new ServerResponse();
 				S.setResponseHexCode("01");
@@ -94,14 +65,10 @@ public class AmbulanceVehicleManger {
 		return AmbulanceVehicleDAL.insertCar(Car);
 	}
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////// UPDATE ///////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
 	public static ServerResponse UpdateCar(AmbulanceVehicleModel Car) {
-		ArrayList<AmbulanceVehicleModel> Array = new ArrayList<AmbulanceVehicleModel>();
+		AmbulanceVehicleModel Array = new AmbulanceVehicleModel();
 		Array = AmbulanceVehicleDAL.getCarByID(Car.getVin());
-		if (Array.size() == 0) {
+		if (Array == null) {
 			ServerResponse S = new ServerResponse();
 			S.setResponseHexCode("FF");
 			S.setResponseMsg("NOT FOUND AmbulanceVehicl in database");
@@ -110,15 +77,10 @@ public class AmbulanceVehicleManger {
 		return AmbulanceVehicleDAL.UpdateCar(Car);
 	}
 
-///////////////////////////////// Status
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////GET CAR BY Status //////////////////////////////////////////
-
 	public static ServerResponse UpdateCarStatus(int Vin, String newStatus) {
-		ArrayList<AmbulanceVehicleModel> Array = new ArrayList<AmbulanceVehicleModel>();
+		AmbulanceVehicleModel Array = new AmbulanceVehicleModel();
 		Array = AmbulanceVehicleDAL.getCarByID(Vin);
-		if (Array.size() == 0) {
+		if (Array == null) {
 			ServerResponse S = new ServerResponse();
 			S.setResponseHexCode("FF");
 			S.setResponseMsg("NOT FOUND AmbulanceVehicl in database");
@@ -147,28 +109,24 @@ public class AmbulanceVehicleManger {
 
 	}
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////// DELETE ///////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
 	public static ServerResponse DeleteCars(int vin) {
-		ArrayList<AmbulanceVehicleModel> Array = new ArrayList<AmbulanceVehicleModel>();
+		AmbulanceVehicleModel Array = new AmbulanceVehicleModel();
 		Array = AmbulanceVehicleDAL.getCarByID(vin);
 		ServerResponse S = new ServerResponse();
 
-		if (Array.size() == 0) {
+		if (Array == null) {
 			S.setResponseHexCode("FF");
 			S.setResponseMsg("NOT FOUND AmbulanceVehicl in database");
 			return S;
 		}
 
-		if (Array.get(0).getVehicleStatus().equals("01")) {
+		if (Array.getVehicleStatus().equals("01")) {
 			S.setResponseHexCode("FF");
 			S.setResponseMsg("this AmbulanceVehicl can not be deleted it is BUSY");
 			return S;
 
 		}
-		if (Array.get(0).getVehicleStatus().equals("02")) {
+		if (Array.getVehicleStatus().equals("02")) {
 			S.setResponseHexCode("FF");
 			S.setResponseMsg("this AmbulanceVehicl can not be deleted it is in Maintainance");
 			return S;
