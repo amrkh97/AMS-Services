@@ -269,7 +269,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAmbulanceMapbyVIN(Integer ID) {
+	public Response getAmbulanceMapbyVIN(DataModel ID) {
 		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByCarID(ID)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
@@ -278,7 +278,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAmbulanceCarMapByDriverID(Integer ID) {
+	public Response getAmbulanceCarMapByDriverID(DataModel ID) {
 		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByDriverID(ID))
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
@@ -287,7 +287,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAmbulanceCarMapByParamedicID(Integer ID) {
+	public Response getAmbulanceCarMapByParamedicID(DataModel ID) {
 		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByParamedicID(ID))
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
@@ -296,7 +296,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAmbulanceCarMapByYelloPadID(Integer ID) {
+	public Response getAmbulanceCarMapByYelloPadID(DataModel ID) {
 		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByYelloPadID(ID))
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
@@ -305,7 +305,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteAmbulanceMap(Integer AmbulanceToBeAdded) {
+	public Response deleteAmbulanceMap(DataModel AmbulanceToBeAdded) {
 		return Response.ok(AmbulanceMapManager.deleteAmbulanceMap(AmbulanceToBeAdded))
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
