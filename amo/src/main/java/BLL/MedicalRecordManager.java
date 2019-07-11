@@ -1,23 +1,22 @@
 package BLL;
 
-import java.util.ArrayList;
-
 import DAL.MedicalRecordDAL;
 import Models.ServerResponse;
 import Models.ServerResponseIntOutput;
+import Models.Data.DataArrayModel;
 import Models.MedicalRecord.MedicalRecord;
 
 public class MedicalRecordManager {
 
-	public static ArrayList<MedicalRecord> getAllMedicalRecords() {
+	public static DataArrayModel<MedicalRecord> getAllMedicalRecords() {
 		return MedicalRecordDAL.getAllMedicalRecords();
 	}
 
-	public static ArrayList<MedicalRecord> getMedicalRecordByID(Integer MedicalRecordID) {
+	public static DataArrayModel<MedicalRecord> getMedicalRecordByID(Integer MedicalRecordID) {
 		return MedicalRecordDAL.getMedicalRecordByID(MedicalRecordID);
 	}
 
-	public static ArrayList<MedicalRecord> getMedicalRecordByStatus(String MedicalRecordStatus) {
+	public static DataArrayModel<MedicalRecord> getMedicalRecordByStatus(String MedicalRecordStatus) {
 		return MedicalRecordDAL.getMedicalRecordByStatus(MedicalRecordStatus);
 
 	}
@@ -35,7 +34,7 @@ public class MedicalRecordManager {
 		return MedicalRecordDAL.deleteMedicalRecord(MedicalRecordID);
 	}
 
-	public static ArrayList<MedicalRecord> getMedicalRecordByPatientID(Integer PatientID) {
+	public static DataArrayModel<MedicalRecord> getMedicalRecordByPatientID(Integer PatientID) {
 		return MedicalRecordDAL.getMedicalRecordByPatientID(PatientID);
 	}
 }
