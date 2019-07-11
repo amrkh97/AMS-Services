@@ -4,6 +4,7 @@ public class DataModel {
 	
 	private Integer sentID;
 	private String stringID;
+	private Long longID;
 	private String sentStatus;
 	
 	
@@ -24,6 +25,12 @@ public class DataModel {
 	}
 	public void setStringID(String stringID) {
 		this.stringID = stringID;
+	}
+	public Long getLongID() {
+		return longID;
+	}
+	public void setLongID(Long longID) {
+		this.longID = longID;
 	}
 	
 

@@ -9,15 +9,16 @@ import java.util.ArrayList;
 
 import DB.DBManager;
 import Models.ServerResponse;
+import Models.ServerResponseIntOutput;
 import Models.MedicalRecord.MedicalRecord;
 
 public class MedicalRecordDAL {
 
-	public static ServerResponse addMedicalRecord(MedicalRecord MedicalRecorda) {
+	public static ServerResponseIntOutput addMedicalRecord(MedicalRecord MedicalRecorda) {
 
-		String SPsql = "EXEC usp_MedicalRecord_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
+		String SPsql = "EXEC usp_MedicalRecord_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
 		Connection conn = DBManager.getDBConn();
-		ServerResponse _ServerResponse = new ServerResponse();
+		ServerResponseIntOutput _ServerResponse = new ServerResponseIntOutput();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setInt(1, MedicalRecorda.getRespSQN());
@@ -50,7 +51,9 @@ public class MedicalRecordDAL {
 
 			cstmt.registerOutParameter(28, Types.NVARCHAR);
 			cstmt.registerOutParameter(29, Types.NVARCHAR);
+			cstmt.registerOutParameter(30, Types.INTEGER);
 			cstmt.execute();
+			_ServerResponse.setOutput(cstmt.getInt(30));
 			_ServerResponse.setResponseHexCode(cstmt.getString(28));
 			_ServerResponse.setResponseMsg(cstmt.getString(29));
 
