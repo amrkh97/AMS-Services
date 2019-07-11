@@ -9,16 +9,18 @@ import java.util.ArrayList;
 
 import DB.DBManager;
 import Models.Company.CompanyModel;
+import Models.Data.DataArrayModel;
+import Models.Data.DataModel;
 
 public class CompanyDAL {
 
-	public static ArrayList<CompanyModel> getAllCompanies() {
+	public static DataArrayModel<CompanyModel> getAllCompanies() {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_SelectAll]";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<CompanyModel> allCompanies = new ArrayList<>();
-
+		DataArrayModel<CompanyModel> OBJ = new DataArrayModel<CompanyModel>();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
@@ -48,11 +50,11 @@ public class CompanyDAL {
 				e.printStackTrace();
 			}
 		}
-
-		return allCompanies;
+		OBJ.set_ArrayList(allCompanies);
+		return OBJ;
 	}
 
-	public static CompanyModel getCompanyByName(String companyName) {
+	public static CompanyModel getCompanyByName(DataModel companyName) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_Select] ?";
 		ResultSet RS;
@@ -61,7 +63,7 @@ public class CompanyDAL {
 		CompanyModel currentCompany = new CompanyModel();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
-			cstmt.setString(1, companyName);
+			cstmt.setString(1, companyName.getSentStatus());
 			RS = cstmt.executeQuery();
 
 			RS.next();
@@ -90,7 +92,7 @@ public class CompanyDAL {
 		return currentCompany;
 	}
 
-	public static CompanyModel getCompanyByID(Integer companyID) {
+	public static CompanyModel getCompanyByID(DataModel companyID) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_SelectByID] ?";
 		ResultSet RS;
@@ -99,7 +101,7 @@ public class CompanyDAL {
 		CompanyModel currentCompany = new CompanyModel();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
-			cstmt.setInt(1, companyID);
+			cstmt.setInt(1, companyID.getSentID());
 			RS = cstmt.executeQuery();
 
 			RS.next();
@@ -128,16 +130,16 @@ public class CompanyDAL {
 		return currentCompany;
 	}
 
-public static ArrayList<CompanyModel> getCompanyByStatus(String companyStatus) {
+	public static DataArrayModel<CompanyModel> getCompanyByStatus(DataModel companyStatus) {
 	
 	String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_SelectBySts] ?";
 	ResultSet RS;
 	Connection conn = DBManager.getDBConn();
-	
+	DataArrayModel<CompanyModel> OBJ = new DataArrayModel<CompanyModel>();
 	ArrayList<CompanyModel> AllcurrentCompany= new ArrayList<CompanyModel>();
 	try {
 		CallableStatement cstmt = conn.prepareCall(SPsql);	
-		cstmt.setString(1, companyStatus);
+		cstmt.setString(1, companyStatus.getSentStatus());
 		RS=cstmt.executeQuery();
 		
 		while(RS.next()) {
@@ -165,16 +167,16 @@ public static ArrayList<CompanyModel> getCompanyByStatus(String companyStatus) {
 				e.printStackTrace();
 			}
 		}
-
-		return AllcurrentCompany;
+		OBJ.set_ArrayList(AllcurrentCompany);
+		return OBJ;
 	}
 
-	public static String addCompany(CompanyModel companyToBeAdded) {
+	public static DataModel addCompany(CompanyModel companyToBeAdded) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_Insert] ?,?,?,?,?";
 		String resultofQuery = "04";
 		Connection conn = DBManager.getDBConn();
-
+		DataModel OBJ = new DataModel();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 
@@ -199,15 +201,16 @@ public static ArrayList<CompanyModel> getCompanyByStatus(String companyStatus) {
 				e.printStackTrace();
 			}
 		}
-
-		return resultofQuery;
+		OBJ.setSentStatus(resultofQuery);
+		return OBJ;
 	}
 
-	public static String updateCompany(CompanyModel companyToBeAdded) {
+	public static DataModel updateCompany(CompanyModel companyToBeAdded) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_Update] ?,?,?,?,?,?";
 		String resultofQuery = "04";
 		Connection conn = DBManager.getDBConn();
+		DataModel OBJ = new DataModel();
 
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -233,20 +236,20 @@ public static ArrayList<CompanyModel> getCompanyByStatus(String companyStatus) {
 				e.printStackTrace();
 			}
 		}
-
-		return resultofQuery;
+		OBJ.setSentStatus(resultofQuery);
+		return OBJ;
 	}
 
-	public static String deleteCompany(Integer companyToBeDeleted) {
+	public static DataModel deleteCompany(DataModel companyToBeDeleted) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_Delete] ?,?";
 		String resultofQuery = "04";
 		Connection conn = DBManager.getDBConn();
-
+		DataModel OBJ = new DataModel();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 
-			cstmt.setInt(1, companyToBeDeleted);
+			cstmt.setInt(1, companyToBeDeleted.getSentID());
 			cstmt.registerOutParameter(2, Types.NVARCHAR);
 			cstmt.execute();
 
@@ -264,8 +267,8 @@ public static ArrayList<CompanyModel> getCompanyByStatus(String companyStatus) {
 				e.printStackTrace();
 			}
 		}
-
-		return resultofQuery;
+		OBJ.setSentStatus(resultofQuery);
+		return OBJ;
 	}
 
 }
