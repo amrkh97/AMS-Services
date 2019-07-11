@@ -32,7 +32,6 @@ import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.Data.DataArrayModel;
 import Models.Data.DataModel;
-import Models.Employee.EmployeeModel;
 import Models.Job.Job;
 import Models.Locations.Location;
 import Models.MedicalRecord.MedicalRecord;
@@ -111,8 +110,8 @@ public class Services {
 		if (CAR.getBrand() == null) {
 			return Response.ok("Bad Request No VIN").header("Access-Control-Allow-Origin", "*").build();
 		}
-		ArrayList<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getCarsByBrand(CAR.getBrand());
-		if (X == null) {
+		DataArrayModel<AmbulanceVehicleModel> X = AmbulanceVehicleManger.getCarsByBrand(CAR.getBrand());
+		if (X.equals(null)) {
 			return Response.ok(" unknown error with database  ").header("Access-Control-Allow-Origin", "*").build();
 		}
 		return Response.ok().header("Access-Control-Allow-Origin", "*").build();
@@ -123,10 +122,7 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetAmbulanceVehicle() {
-		ArrayList<AmbulanceVehicleModel> Xs = AmbulanceVehicleManger.getDeActivatedCars();
-		DataArrayModel<AmbulanceVehicleModel> X = new DataArrayModel<AmbulanceVehicleModel>();
-		X.set_ArrayList(Xs);
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok(AmbulanceVehicleManger.getDeActivatedCars()).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("ambulance/getActivatedAmbulanceVehicles")
@@ -135,10 +131,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetAmbulanceVehicleSts() {
 
-		ArrayList<AmbulanceVehicleModel> Xs = AmbulanceVehicleManger.getActivatedCars();
-		DataArrayModel<AmbulanceVehicleModel> X = new DataArrayModel<AmbulanceVehicleModel>();
-		X.set_ArrayList(Xs);
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok(AmbulanceVehicleManger.getActivatedCars()).header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -148,10 +141,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetDeletedAmbulanceVehicle() {
 
-		ArrayList<AmbulanceVehicleModel> Xs = AmbulanceVehicleManger.getDeletedCars();
-		DataArrayModel<AmbulanceVehicleModel> X = new DataArrayModel<AmbulanceVehicleModel>();
-		X.set_ArrayList(Xs);
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok(AmbulanceVehicleManger.getDeletedCars()).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("ambulance/getFreeAmbulanceVehicles")
@@ -160,10 +150,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetFreeAmbulanceVehicle() {
 
-		ArrayList<AmbulanceVehicleModel> Xs = AmbulanceVehicleManger.getFreeCars();
-		DataArrayModel<AmbulanceVehicleModel> X = new DataArrayModel<AmbulanceVehicleModel>();
-		X.set_ArrayList(Xs);
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok(AmbulanceVehicleManger.getFreeCars()).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
 	@Path("ambulance/getFreeAmbulanceVehicles")
@@ -172,10 +159,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetBusyAmbulanceVehicle() {
 	
-	ArrayList<AmbulanceVehicleModel> Xs = AmbulanceVehicleManger.getBusyCars();
-	DataArrayModel<AmbulanceVehicleModel> X = new DataArrayModel<AmbulanceVehicleModel>();
-	X.set_ArrayList(Xs);
-	return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+	return Response.ok(AmbulanceVehicleManger.getBusyCars()).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("ambulance/getAssignedAmbulanceVehicles")
@@ -184,10 +168,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetAssignedAmbulanceVehicle() {
 
-		ArrayList<AmbulanceVehicleModel> Xs = AmbulanceVehicleManger.getAssignedCars();
-		DataArrayModel<AmbulanceVehicleModel> X = new DataArrayModel<AmbulanceVehicleModel>();
-		X.set_ArrayList(Xs);
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok(AmbulanceVehicleManger.getAssignedCars()).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("ambulance/addAmbulanceVehicle")
