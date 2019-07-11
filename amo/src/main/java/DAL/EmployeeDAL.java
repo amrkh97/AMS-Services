@@ -7,20 +7,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DB.DBManager;
+import Models.Data.DataArrayModel;
+import Models.Data.DataModel;
 import Models.Employee.EmployeeModel;
 
 public class EmployeeDAL {
 
-	public static ArrayList<EmployeeModel> getAllParamedics(Integer superSSN) {
+	public static DataArrayModel<EmployeeModel> getAllParamedics(DataModel superSSN) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AllParamedics] ?";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
-
+		DataArrayModel<EmployeeModel> OBJ = new DataArrayModel<EmployeeModel>();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
-			cstmt.setInt(1, superSSN);
+			cstmt.setInt(1, superSSN.getSentID());
 			RS = cstmt.executeQuery();
 
 			while (RS.next()) {
@@ -52,20 +54,20 @@ public class EmployeeDAL {
 				e.printStackTrace();
 			}
 		}
-
-		return allParamedics;
+		OBJ.set_ArrayList(allParamedics);
+		return OBJ;
 	}
 
-	public static ArrayList<EmployeeModel> getActiveParamedics(Integer superSSN) {
+	public static DataArrayModel<EmployeeModel> getActiveParamedics(DataModel superSSN) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_Paramedics] ?";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
-
+		DataArrayModel<EmployeeModel> OBJ = new DataArrayModel<EmployeeModel>();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
-			cstmt.setInt(1, superSSN);
+			cstmt.setInt(1, superSSN.getSentID());
 			RS = cstmt.executeQuery();
 
 			while (RS.next()) {
@@ -97,20 +99,20 @@ public class EmployeeDAL {
 				e.printStackTrace();
 			}
 		}
-
-		return allParamedics;
+		OBJ.set_ArrayList(allParamedics);
+		return OBJ;
 	}
 
-	public static ArrayList<EmployeeModel> getInActiveParamedics(Integer superSSN) {
+	public static DataArrayModel<EmployeeModel> getInActiveParamedics(DataModel superSSN) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_InActiveParamedics] ?";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
-
+		DataArrayModel<EmployeeModel> OBJ = new DataArrayModel<EmployeeModel>();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
-			cstmt.setInt(1, superSSN);
+			cstmt.setInt(1, superSSN.getSentID());
 			RS = cstmt.executeQuery();
 
 			while (RS.next()) {
@@ -142,22 +144,22 @@ public class EmployeeDAL {
 				e.printStackTrace();
 			}
 		}
-
-		return allParamedics;
+		OBJ.set_ArrayList(allParamedics);
+		return OBJ;
 	}
 
 	// ------------------------------------------------------------//
 
-	public static ArrayList<EmployeeModel> getAllDrivers(Integer superSSN) {
+	public static DataArrayModel<EmployeeModel> getAllDrivers(DataModel superSSN) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AllDrivers] ?";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
-
+		DataArrayModel<EmployeeModel> OBJ = new DataArrayModel<EmployeeModel>();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
-			cstmt.setInt(1, superSSN);
+			cstmt.setInt(1, superSSN.getSentID());
 			RS = cstmt.executeQuery();
 
 			while (RS.next()) {
@@ -189,20 +191,20 @@ public class EmployeeDAL {
 				e.printStackTrace();
 			}
 		}
-
-		return allParamedics;
+		OBJ.set_ArrayList(allParamedics);
+		return OBJ;
 	}
 
-	public static ArrayList<EmployeeModel> getActiveDrivers(Integer superSSN) {
+	public static DataArrayModel<EmployeeModel> getActiveDrivers(DataModel superSSN) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_Drivers] ?";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
-
+		DataArrayModel<EmployeeModel> OBJ = new DataArrayModel<EmployeeModel>();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
-			cstmt.setInt(1, superSSN);
+			cstmt.setInt(1, superSSN.getSentID());
 			RS = cstmt.executeQuery();
 
 			while (RS.next()) {
@@ -234,20 +236,20 @@ public class EmployeeDAL {
 				e.printStackTrace();
 			}
 		}
-
-		return allParamedics;
+		OBJ.set_ArrayList(allParamedics);
+		return OBJ;
 	}
 
-	public static ArrayList<EmployeeModel> getInActiveDrivers(Integer superSSN) {
+	public static DataArrayModel<EmployeeModel> getInActiveDrivers(DataModel superSSN) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_InActiveDrivers] ?";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
-
+		DataArrayModel<EmployeeModel> OBJ = new DataArrayModel<EmployeeModel>();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
-			cstmt.setInt(1, superSSN);
+			cstmt.setInt(1, superSSN.getSentID());
 			RS = cstmt.executeQuery();
 
 			while (RS.next()) {
@@ -279,8 +281,8 @@ public class EmployeeDAL {
 				e.printStackTrace();
 			}
 		}
-
-		return allParamedics;
+		OBJ.set_ArrayList(allParamedics);
+		return OBJ;
 	}
 
 }

@@ -319,10 +319,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllParamedics(DataModel superSSN) {
-		ArrayList<EmployeeModel> Xs = EmployeeManager.getAllParamedics(superSSN.getSentID());
-		DataArrayModel<EmployeeModel> X = new DataArrayModel<EmployeeModel>();
-		X.set_ArrayList(Xs);
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*")
+		
+		return Response.ok(EmployeeManager.getAllParamedics(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
@@ -332,10 +330,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getActiveParamedics(DataModel superSSN) {
 
-		ArrayList<EmployeeModel> Xs = EmployeeManager.getActiveParamedics(superSSN.getSentID());
-		DataArrayModel<EmployeeModel> X = new DataArrayModel<EmployeeModel>();
-		X.set_ArrayList(Xs);
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*")
+		return Response.ok(EmployeeManager.getActiveParamedics(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
@@ -345,10 +340,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getInActiveParamedics(DataModel superSSN) {
 
-		ArrayList<EmployeeModel> Xs = EmployeeManager.getInActiveParamedics(superSSN.getSentID());
-		DataArrayModel<EmployeeModel> X = new DataArrayModel<EmployeeModel>();
-		X.set_ArrayList(Xs);
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*")
+		return Response.ok(EmployeeManager.getInActiveParamedics(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
@@ -357,11 +349,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllDrivers(DataModel superSSN) {
-		ArrayList<EmployeeModel> Xs = EmployeeManager.getAllDrivers(superSSN.getSentID());
-		DataArrayModel<EmployeeModel> X = new DataArrayModel<EmployeeModel>();
-		X.set_ArrayList(Xs);
 		
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok(EmployeeManager.getAllDrivers(superSSN)).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	@Path("employee/getActiveDrivers")
@@ -370,10 +359,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getActiveDrivers(DataModel superSSN) {
 
-		ArrayList<EmployeeModel> Xs = EmployeeManager.getActiveDrivers(superSSN.getSentID());
-		DataArrayModel<EmployeeModel> X = new DataArrayModel<EmployeeModel>();
-		X.set_ArrayList(Xs);
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*")
+		return Response.ok(EmployeeManager.getActiveDrivers(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 
@@ -383,10 +369,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getInActiveDrivers(DataModel superSSN) {
 
-		ArrayList<EmployeeModel> Xs = EmployeeManager.getInActiveDrivers(superSSN.getSentID());
-		DataArrayModel<EmployeeModel> X = new DataArrayModel<EmployeeModel>();
-		X.set_ArrayList(Xs);
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*")
+		return Response.ok(EmployeeManager.getInActiveDrivers(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 	
