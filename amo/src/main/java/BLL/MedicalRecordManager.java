@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import DAL.MedicalRecordDAL;
 import Models.ServerResponse;
+import Models.ServerResponseIntOutput;
 import Models.MedicalRecord.MedicalRecord;
 
 public class MedicalRecordManager {
@@ -21,7 +22,7 @@ public class MedicalRecordManager {
 
 	}
 
-	public static ServerResponse addMedicalRecord(MedicalRecord MedicalRecorda) {
+	public static ServerResponseIntOutput addMedicalRecord(MedicalRecord MedicalRecorda) {
 		return MedicalRecordDAL.addMedicalRecord(MedicalRecorda);
 	}
 
