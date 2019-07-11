@@ -8,15 +8,18 @@ import java.sql.Types;
 import java.util.ArrayList;
 
 import DB.DBManager;
+import Models.Data.DataArrayModel;
+import Models.Data.DataModel;
 import Models.Locations.Location;
 
 public class PatientLocationDAL {
 
-	public static String addPatientLocation(int nationalID, String addressPatient, String latitude, String longitude) {
+	public static DataModel addPatientLocation(int nationalID, String addressPatient, String latitude, String longitude) {
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_Patient_Locations] ?,?,?,?,?";
-		// ResultSet RS;
 		String Result = "";
 		Connection conn = DBManager.getDBConn();
+		DataModel OBJ =new DataModel();
+		
 		try {
 
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -45,15 +48,17 @@ public class PatientLocationDAL {
 		}
 
 		System.out.println("Result is:" + Result);
-		return Result;
+		OBJ.setSentStatus(Result);
+		return OBJ;
 	}
 
-	public static ArrayList<Location> getAllPatientLocations(int nationalID) {
+	public static DataArrayModel<Location> getAllPatientLocations(int nationalID) {
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_Patient_getAllLocations] ?";
 		ResultSet RS = null;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<Location> patientLocations = new ArrayList<>();
 		Location _location = new Location();
+		DataArrayModel<Location> OBJ = new DataArrayModel<Location>();
 		try {
 
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -80,6 +85,7 @@ public class PatientLocationDAL {
 				e.printStackTrace();
 			}
 		}
-		return patientLocations;
+		OBJ.set_ArrayList(patientLocations);
+		return OBJ;
 	}
 }

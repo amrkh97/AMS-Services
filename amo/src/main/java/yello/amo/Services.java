@@ -742,11 +742,10 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addPatientLocation(PatientLoc location) {
-		DataModel _dataModel = new DataModel();
-		_dataModel.setSentStatus(PatientLocationManager.addPatientLocation(location.getNationalID(), location.getAddress(),
-				location.getLatitude(), location.getLongitude()));
+		
 		return Response
-				.ok(_dataModel)
+				.ok(PatientLocationManager.addPatientLocation(location.getNationalID(), location.getAddress(),
+						location.getLatitude(), location.getLongitude()))
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
@@ -755,11 +754,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllPatientLocations(DataModel PatientNationalID) {
-		ArrayList<Location> Xs = PatientLocationManager.getAllPatientLocations(PatientNationalID.getStringID());
-		DataArrayModel<Location> X = new DataArrayModel<Location>();
-		X.set_ArrayList(Xs);
 
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok(PatientLocationManager.getAllPatientLocations(PatientNationalID)).header("Access-Control-Allow-Origin", "*").build();
 	}
 	
 	@Path("patient/getAll")
