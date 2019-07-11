@@ -9,16 +9,17 @@ import java.util.ArrayList;
 
 import DB.DBManager;
 import Models.ServerResponse;
+import Models.Data.DataArrayModel;
 import Models.Job.Job;
 
 public class JobDAL {
 
-	public static ArrayList<Job> getAllJobs() {
+	public static DataArrayModel<Job> getAllJobs() {
 		String SPsql = "EXEC usp_Jobs_SelectAll";
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<Job> allJobs = new ArrayList<>();
-
+		DataArrayModel<Job> OBJ = new DataArrayModel<Job>();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
@@ -48,18 +49,19 @@ public class JobDAL {
 				e.printStackTrace();
 			}
 		}
-
-		return allJobs;
+		OBJ.set_ArrayList(allJobs);
+		return OBJ;
 
 	}
 
-	public static ArrayList<Job> getJobByTitle(String jobTitle) {
+	public static DataArrayModel<Job> getJobByTitle(String jobTitle) {
 		String SPsql = "EXEC usp_Job_SelectByTitle ?";
 
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<Job> allJobs = new ArrayList<>();
-
+		DataArrayModel<Job> OBJ = new DataArrayModel<Job>();
+		
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setString(1, jobTitle);
@@ -91,18 +93,18 @@ public class JobDAL {
 				e.printStackTrace();
 			}
 		}
-
-		return allJobs;
+		OBJ.set_ArrayList(allJobs);
+		return OBJ;
 
 	}
 
-	public static ArrayList<Job> getJobByStatus(String jobStatus) {
+	public static DataArrayModel<Job> getJobByStatus(String jobStatus) {
 		String SPsql = "EXEC usp_Job_SelectByJobStatus ?";
 
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<Job> allJobs = new ArrayList<>();
-
+		DataArrayModel<Job> OBJ = new DataArrayModel<Job>();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setString(1, jobStatus);
@@ -134,8 +136,8 @@ public class JobDAL {
 				e.printStackTrace();
 			}
 		}
-
-		return allJobs;
+		OBJ.set_ArrayList(allJobs);
+		return OBJ;
 
 	}
 
