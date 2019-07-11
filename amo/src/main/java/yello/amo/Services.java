@@ -27,6 +27,7 @@ import BLL.YelloPadManager;
 import BLL.ReportManager;
 import BLL.ReceiptsManager;
 import Models.ServerResponse;
+import Models.ServerResponse_ID;
 import Models.AmbulanceMap.AmbulanceMapModel;
 import Models.AmbulanceVehicle.AmbulanceArray;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
@@ -705,7 +706,7 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	public Response addNewPatient(PatientModel patientModel) {
-		ServerResponse X =PatientManger.addNewPatient(patientModel);
+		ServerResponse_ID X =PatientManger.addNewPatient(patientModel);
     	if(X.equals(null)){		
     		return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build(); }
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();

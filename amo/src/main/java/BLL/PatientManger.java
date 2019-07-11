@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import DAL.MedicalRecordDAL;
 import DAL.PatientDAL;
 import Models.ServerResponse;
+import Models.ServerResponse_ID;
 import Models.Patient.PatientArray;
 import Models.Patient.PatientModel;
 
@@ -18,7 +19,7 @@ public class PatientManger {
 		return PatientDAL.getPatientByNId(NID);
 	}
 
-	public static ServerResponse addNewPatient(PatientModel patientModel) {
+	public static ServerResponse_ID addNewPatient(PatientModel patientModel) {
 
 		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
 		Array = PatientDAL.getPatientByNId(patientModel.getPatientNationalID()).getPatientArray();
@@ -26,9 +27,14 @@ public class PatientManger {
 		if (Array.size() != 0) {
 			if (Array.get(0).getPatientStatus().equals("FF")) {
 				Array.get(0).setPatientStatus("00");
-				return PatientDAL.updatePatientData(Array.get(0));
+				ServerResponse update= PatientDAL.updatePatientData(Array.get(0));
+				ServerResponse_ID S = new ServerResponse_ID();
+				S.setResponseHexCode(update.getResponseHexCode());
+				S.setResponseMsg(update.getResponseMsg());
+				S.setId(Array.get(0).getPatientID());
+				return S;
 			} else {
-				ServerResponse S = new ServerResponse();
+				ServerResponse_ID S = new ServerResponse_ID();
 				S.setResponseHexCode("01");
 				S.setResponseMsg("You already have this Patient with the same National ID in database");
 				return S;
