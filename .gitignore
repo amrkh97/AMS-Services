@@ -2,3 +2,15 @@
 amo/target/m2e-wtp/web-resources/META-INF/
 
 *.class
+
+amo/\.classpath
+
+amo/\.settings/org\.eclipse\.jdt\.core\.prefs
+
+amo/\.settings/org\.eclipse\.wst\.common\.component
+
+amo/bin/\.settings/
+
+amo/bin/
+
+*.component
