@@ -281,7 +281,7 @@ public class Services {
 
 	@Path("ambulanceMap/getByYelloPadID")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAmbulanceCarMapByYelloPadID(DataModel ID) {
 		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByYelloPadID(ID))
@@ -290,10 +290,19 @@ public class Services {
 
 	@Path("ambulanceMap/deleteAmbulanceMap")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteAmbulanceMap(DataModel AmbulanceToBeAdded) {
 		return Response.ok(AmbulanceMapManager.deleteAmbulanceMap(AmbulanceToBeAdded))
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@Path("ambulanceMap/getRelevantData")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getRelevantData(DataModel vin) {
+		return Response.ok(AmbulanceMapManager.getRelevantData(vin))
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
@@ -1068,5 +1077,11 @@ public class Services {
 		return Response.ok(ReceiptsManager.selectByReceiptCreationTime(receiptIN.getReportIssueTime())).build();
 
 	}
-
+//-----------------------------------------------------------------------------------------------------------------------//
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//-----------------------------------------------------------------------------------------------------------------------//
+	
+	
+	
+	
 }

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import DB.DBManager;
+import Models.AmbulanceMap.AllAmbulanceMapDataModel;
 import Models.AmbulanceMap.AmbulanceMapModel;
 import Models.Data.DataModel;
 
@@ -206,4 +207,40 @@ public class AmbulanceMapDAL {
 		return _dataModel;
 	}
 
+	public static AllAmbulanceMapDataModel getRelevantData(DataModel vin,Connection intermediateConnection) {
+		Connection conn = intermediateConnection;
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_AmbulanceMap_getRelevantData] ?,?,?,?,?,?,?,?,?,?";
+		AllAmbulanceMapDataModel obj = new AllAmbulanceMapDataModel();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+
+			cstmt.setInt(1, vin.getSentID());
+			cstmt.registerOutParameter(2, Types.NVARCHAR); //License Plate
+			cstmt.registerOutParameter(3, Types.NVARCHAR); //Make
+			cstmt.registerOutParameter(4, Types.NVARCHAR); //ParamedicFName
+			cstmt.registerOutParameter(5, Types.NVARCHAR); //ParamedicLName
+			cstmt.registerOutParameter(6, Types.INTEGER); //ParamedicID
+			cstmt.registerOutParameter(7, Types.NVARCHAR); //DriverFName
+			cstmt.registerOutParameter(8, Types.NVARCHAR); //DriverLName
+			cstmt.registerOutParameter(9, Types.INTEGER); //DriverID
+			cstmt.registerOutParameter(10, Types.NVARCHAR); //YelloPadUniqueID
+			
+			cstmt.executeUpdate();
+			
+			obj.setVin(vin.getSentID());
+			obj.setLicensePlate(cstmt.getString(2));
+			obj.setMake(cstmt.getString(3));
+			obj.setParamedicName(cstmt.getString(4)+" "+cstmt.getString(5));
+			obj.setParamedicID(cstmt.getInt(6));
+			obj.setDriverName(cstmt.getString(7)+" "+cstmt.getString(8));
+			obj.setDriverID(cstmt.getInt(9));
+			obj.setYelloPadUniqueID(cstmt.getString(10));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 }
