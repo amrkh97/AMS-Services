@@ -8,6 +8,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 
 import DB.DBManager;
+import Models.CustomClass;
 import Models.ServerResponse;
 import Models.ServerResponse_ID;
 import Models.Patient.PatientArray;
@@ -15,15 +16,13 @@ import Models.Patient.PatientModel;
 
 public class PatientDAL {
 
-	public static PatientArray getAllPatients() {
+	public static PatientArray getAllPatients(	Connection conn) throws Exception {
 
 		String SPsql = "USE KAN_AMO; EXEC usp_Patient_getAll";
-		Connection conn = DBManager.getDBConn();
 		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
 
 		PatientArray OBJ = new PatientArray();
 		PatientModel patient = new PatientModel();
-		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			ResultSet rs = cstmt.executeQuery();
 
@@ -46,32 +45,18 @@ public class PatientDAL {
 
 				Array.add(patient);
 			}
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connention Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
 		OBJ.setPatientArray(Array);
 		return OBJ;
 	}
 	
 	//////by NATIONAL ID
-	public static PatientArray getPatientByNId(String NID) {
+	public static PatientArray getPatientByNId(String NID,	Connection conn) throws Exception {
 
 		String SPsql = "USE KAN_AMO; EXEC usp_Patient_getByNID ?";
-		Connection conn = DBManager.getDBConn();
 		
 		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
 		PatientArray OBJ = new PatientArray();
 		PatientModel patient = new PatientModel();
-		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setString(1, NID);
 			
@@ -96,35 +81,58 @@ public class PatientDAL {
 
 				Array.add(patient);
 			}
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connention Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
+	
 		OBJ.setPatientArray(Array);
 		return OBJ;
 	}
 
+
+	//////by ID
+	public static PatientArray getPatientById(int ID,	Connection conn) throws Exception {
+
+		String SPsql = "USE KAN_AMO; EXEC usp_Patient_getByID ?";
+		
+		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
+		PatientArray OBJ = new PatientArray();
+		PatientModel patient = new PatientModel();
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setInt(1, ID);
+			
+			ResultSet rs = cstmt.executeQuery();
+			
+			while (rs.next()) {
+
+				patient = new PatientModel();
+				patient.setPatientID(rs.getInt("patientID"));
+				patient.setPatientFName(rs.getString("patientFName"));
+				patient.setPatientLName(rs.getString("patientLName"));
+				patient.setGender(rs.getString("gender"));
+				patient.setAge(rs.getString("age"));
+				patient.setPhone(rs.getString("phone"));
+				patient.setLastBenifitedTime(rs.getString("lastBenifitedTime"));
+				patient.setFirstBenifitedTime(rs.getString("firstBenifitedTime"));
+				patient.setNextOfKenName(rs.getString("nextOfKenName"));
+				patient.setNextOfKenPhone(rs.getString("nextOfKenPhone"));
+				patient.setNextOfKenAddress(rs.getString("nextOfKenAddress"));
+				patient.setPatientStatus(rs.getString("patientStatus"));
+				patient.setPatientNationalID(rs.getString("patientNationalID"));
+
+				Array.add(patient);
+			}
 	
+		OBJ.setPatientArray(Array);
+		return OBJ;
+	}
 //////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////// INSERT////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////
 
-	public static ServerResponse_ID addNewPatient(PatientModel patientModel) {
+	public static ServerResponse_ID addNewPatient(PatientModel patientModel,Connection conn) throws Exception {
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_add_New_Patient] ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
 
-		Connection conn = DBManager.getDBConn();
+	//	CustomClass<ServerResponse_ID, Boolean> test1 = new CustomClass<T, U>(first, true);
 		ServerResponse_ID _ServerResponse = new ServerResponse_ID();
-		try {
-
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+				CallableStatement cstmt = conn.prepareCall(SPsql);
 
 			cstmt.setString(1, patientModel.getPatientFName());
 			cstmt.setString(1, patientModel.getPatientFName());
@@ -150,20 +158,6 @@ public class PatientDAL {
 
 			_ServerResponse.setResponseMsg(cstmt.getString(15));
 			
-
-		} catch (SQLException e) {
-			System.out.println("i hav error");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connention Closed");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		return _ServerResponse;
 	}
 
@@ -171,13 +165,12 @@ public class PatientDAL {
 ////////////////////////////////////////UPDATE//////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-	public static ServerResponse updatePatientData(PatientModel patientModel) {
+	public static ServerResponse updatePatientData(PatientModel patientModel,Connection conn )throws Exception {
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_Update_Patient] ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
 
-		Connection conn = DBManager.getDBConn();
+		
 		ServerResponse _ServerResponse = new ServerResponse();
-		try {
-
+		
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 
 			cstmt.setInt(1, patientModel.getPatientID());
@@ -202,19 +195,7 @@ public class PatientDAL {
 
 			_ServerResponse.setResponseMsg(cstmt.getString(15));
 
-		} catch (SQLException e) {
-			System.out.println("i hav error");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connention Closed");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+
 		return _ServerResponse;
 	}
 
@@ -222,7 +203,7 @@ public class PatientDAL {
 ////////////////////////////////////////DELETE//////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
-	public static ServerResponse deletePatient(int PatientID) {
+	public static ServerResponse deletePatient(int PatientID) throws Exception {
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_Delete_Patient] ?,?,?";
 		System.out.println("PatientID :" + PatientID);
 		Connection conn = DBManager.getDBConn();
@@ -252,7 +233,7 @@ public class PatientDAL {
 		}
 		return _ServerResponse;
 	}
-	public static ServerResponse deletePatientLoc(int PatientID) {
+	public static ServerResponse deletePatientLoc(int PatientID) throws Exception  {
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_Delete_PatientLoc] ?,?,?";
 		System.out.println("PatientID :" + PatientID);
 		Connection conn = DBManager.getDBConn();

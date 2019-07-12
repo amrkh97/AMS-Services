@@ -421,7 +421,7 @@ public class MedicalRecordDAL {
 		return _ServerResponse;
 
 	}
-	public static ServerResponse deleteMedicalRecordByPatient(Integer patientID) {
+	public static ServerResponse deleteMedicalRecordByPatient(Integer patientID) throws Exception  {
 		String SPsql = "EXEC usp_MedicalRecord_DeleteByPatient ?,?,?";
 		Connection conn = DBManager.getDBConn();
 		ServerResponse _ServerResponse = new ServerResponse();
