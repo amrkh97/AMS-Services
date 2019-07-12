@@ -239,7 +239,7 @@ public class AmbulanceMapDAL {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return obj;
 	}
 	
 	
