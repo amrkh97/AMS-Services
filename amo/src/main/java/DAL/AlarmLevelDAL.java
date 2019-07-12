@@ -27,6 +27,7 @@ public class AlarmLevelDAL {
 				alarmLevel = new AlarmLevel();
 				alarmLevel.setAlarmLevelID(rs.getInt("AlarmLevelID"));
 				alarmLevel.setAlarmLevelName(rs.getString("AlarmLevelName"));
+				alarmLevel.setAlarmLevelNote(rs.getString("AlarmLevelNote"));
 				alarmLevelArray.add(alarmLevel);
 			}
 		} catch (SQLException e) {
