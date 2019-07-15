@@ -67,9 +67,21 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response login(LoginCredentialsRequest req) {
-
-		return Response.ok(UserManager.login(req.getEmailOrPAN(), req.getPassword()))
+		String hex = UserManager.login(req.getEmailOrPAN(), req.getPassword()).getResponseHexCode();
+		String message = UserManager.login(req.getEmailOrPAN(), req.getPassword()).getResponseMsg();
+		switch (hex) {
+		case "02": // Incorrect Password
+			return Response.status(400, message).header("Access-Control-Allow-Origin", "*").build();
+		case "FA": // Wrong Email or PAN or National ID
+			return Response.status(401, message).header("Access-Control-Allow-Origin", "*").build();
+		case "FB": // Password length is less than 8
+			return Response.status(402, message).header("Access-Control-Allow-Origin", "*").build();
+		case "FF": // Not found
+			return Response.status(403, message).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(UserManager.login(req.getEmailOrPAN(), req.getPassword()))
 				.header("Access-Control-Allow-Origin", "*").build();
+		}
 	}
 
 	@Path("logout")
