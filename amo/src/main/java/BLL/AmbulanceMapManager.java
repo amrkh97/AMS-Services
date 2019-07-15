@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import DAL.AmbulanceMapDAL;
 import DB.DBManager;
+import Models.ServerResponse;
 import Models.AmbulanceMap.AllAmbulanceMapDataModel;
 import Models.AmbulanceMap.AmbulanceMapModel;
 import Models.Data.DataModel;
@@ -27,11 +28,11 @@ public class AmbulanceMapManager {
 		return AmbulanceMapDAL.getAmbulanceCarMapByYelloPadID(ID.getSentID());
 	}
 
-	public static DataModel addAmbulanceMap(AmbulanceMapModel currentAmbulanceMap) {
+	public static ServerResponse addAmbulanceMap(AmbulanceMapModel currentAmbulanceMap) {
 		return AmbulanceMapDAL.addAmbulanceMap(currentAmbulanceMap);
 	}
 
-	public static DataModel deleteAmbulanceMap(DataModel currentAmbulanceMap) {
+	public static ServerResponse deleteAmbulanceMap(DataModel currentAmbulanceMap) {
 		return AmbulanceMapDAL.deleteAmbulanceMap(currentAmbulanceMap.getSentID());
 	}
 	

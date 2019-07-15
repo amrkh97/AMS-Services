@@ -14,7 +14,6 @@ import DB.DBManager;
 import Models.ServerResponse;
 import Models.Receipts.Receipt;
 import Models.Receipts.ReceiptList;
-import Models.Reports.ReportList;
 
 	public class ReceiptsDAL {
 		//-------------------1--------------------------------------------------

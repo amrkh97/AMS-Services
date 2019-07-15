@@ -1,10 +1,9 @@
 package BLL;
-import java.util.ArrayList;
 
 import DAL.ReceiptsDAL;
 import Models.ServerResponse;
 import Models.Receipts.*;
-import Models.Reports.Report;
+
 public class ReceiptsManager {
 	//1
 	public static ServerResponse insertReceipt(Receipt receiptIN)
