@@ -3,6 +3,7 @@ package BLL;
 import DAL.EmployeeDAL;
 import Models.Data.DataModel;
 import Models.Employee.EmployeeArray;
+import Models.Employee.EmployeeModel;
 
 public class EmployeeManager {
 
@@ -34,6 +35,11 @@ public class EmployeeManager {
 	public static EmployeeArray getInActiveDrivers(DataModel superSSN) {
 
 		return EmployeeDAL.getInActiveDrivers(superSSN);
+	}
+	
+	public static EmployeeModel getDatabyEmployeeID(DataModel EID) {
+		
+		return EmployeeDAL.getDatabyEmployeeID(EID);
 	}
 
 }

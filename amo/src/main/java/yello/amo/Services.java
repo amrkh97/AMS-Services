@@ -467,6 +467,15 @@ public class Services {
 				.build();
 	}
 
+	@Path("employee/getDatabyEmployeeID")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getDatabyEmployeeID(DataModel EID) {
+
+		return Response.ok(EmployeeManager.getDatabyEmployeeID(EID)).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
 	// -----------------------------------------End Of Employee
 	// Services---------------------------------------------//
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
