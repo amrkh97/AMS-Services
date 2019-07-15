@@ -1,13 +1,10 @@
 package BLL;
 
 import java.util.ArrayList;
-
-import DAL.AmbulanceVehicleDAL;
 import DAL.MedicalRecordDAL;
 import DAL.PatientDAL;
 import Models.ServerResponse;
 import Models.ServerResponse_ID;
-import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Patient.PatientArray;
 import Models.Patient.PatientModel;
 

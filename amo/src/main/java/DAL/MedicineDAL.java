@@ -94,7 +94,7 @@ public class MedicineDAL {
 			e.printStackTrace();
 		} finally {
 			try {
-				if(conn == null)
+				if(!conn.equals(null))
 				{
 					conn.close();
 					System.out.println("Connention Closed");

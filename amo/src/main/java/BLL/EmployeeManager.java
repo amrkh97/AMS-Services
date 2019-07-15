@@ -3,7 +3,6 @@ package BLL;
 import DAL.EmployeeDAL;
 import Models.Data.DataModel;
 import Models.Employee.EmployeeArray;
-import Models.Employee.EmployeeModel;
 
 public class EmployeeManager {
 
