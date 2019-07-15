@@ -264,10 +264,21 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addAmbulanceMap(AmbulanceMapModel AmbulanceToBeAdded) {
-
-		return Response.ok(AmbulanceMapManager.addAmbulanceMap(AmbulanceToBeAdded))
-				.header("Access-Control-Allow-Origin", "*").build();
-	}
+		ServerResponse response = new ServerResponse();
+		response = AmbulanceMapManager.addAmbulanceMap(AmbulanceToBeAdded);
+		switch (response.getResponseHexCode()) {
+		case "01":
+			return Response.status(401,response.getResponseMsg())
+					.header("Access-Control-Allow-Origin", "*").build();
+		case "02":
+			return Response.status(402,response.getResponseMsg())
+					.header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(AmbulanceMapManager.addAmbulanceMap(AmbulanceToBeAdded))
+					.header("Access-Control-Allow-Origin", "*").build();
+		
+		}
+		}
 
 	/**
 	 * Returns all data of an ambulance map based on the car's Vin.
@@ -335,8 +346,16 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteAmbulanceMap(DataModel AmbulanceToBeAdded) {
-		return Response.ok(AmbulanceMapManager.deleteAmbulanceMap(AmbulanceToBeAdded))
-				.header("Access-Control-Allow-Origin", "*").build();
+		ServerResponse response = new ServerResponse();
+		response = AmbulanceMapManager.deleteAmbulanceMap(AmbulanceToBeAdded);
+		switch (response.getResponseHexCode()) {
+		case "01": //Deletion Failed
+			return Response.status(401, response.getResponseMsg()+", You need to update/delete the status of this company").header("Access-Control-Allow-Origin", "*")
+					.build();
+		default:  //Deletion Successful
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*")
+					.build();
+		}
 	}
 	
 	/**
@@ -872,6 +891,10 @@ public class Services {
 	// --------------------------------------------Start Of
 	// PharmaCompany-------------------------------------------//
 
+	/**
+	 * Gets All Companies in DataBase
+	 * @return CompanyArray
+	 */
 	@Path("pharmaCompany/getAllCompanies")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -880,6 +903,11 @@ public class Services {
 		return Response.ok(CompanyManager.getAllCompanies()).header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	/**
+	 * Returns A specific Company based on its ID
+	 * @param DataModel companyID
+	 * @return CompanyModel
+	 */
 	@Path("pharmaCompany/getCompanyByID")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -888,6 +916,11 @@ public class Services {
 		return Response.ok(CompanyManager.getCompanyByID(companyID)).header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	/**
+	 * Returns Array of Companies having same Status Code
+	 * @param DataModel companyStatus
+	 * @return CompanyArray
+	 */
 	@Path("pharmaCompany/getCompanyByStatus")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -897,6 +930,11 @@ public class Services {
 				.build();
 	}
 
+	/**
+	 * Returns A company that matches the specific name.
+	 * @param DataModel companyName
+	 * @return CompanyModel
+	 */
 	@Path("pharmaCompany/getCompanyByName")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -906,34 +944,75 @@ public class Services {
 				.build();
 	}
 
+	/**
+	 * Adds a Pharma Company.
+	 * @param CompanyModel companyToBeAdded
+	 * @return ServerResponse
+	 */
 	@Path("pharmaCompany/addCompany")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addCompany(CompanyModel companyToBeAdded) {
-
-		return Response.ok(CompanyManager.addCompany(companyToBeAdded)).header("Access-Control-Allow-Origin", "*")
-				.build();
+		ServerResponse response = new ServerResponse();
+		response = CompanyManager.addCompany(companyToBeAdded);
+		switch (response.getResponseHexCode()) {
+		case "01": //Company found with same data.
+			return Response.status(401, response.getResponseMsg()+", You need to update/delete the status of this company").header("Access-Control-Allow-Origin", "*")
+					.build();
+		case "02": //Company name that was sent is null.
+			return Response.status(402, response.getResponseMsg()).header("Access-Control-Allow-Origin", "*")
+					.build();
+		default:  //Addition Successful
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*")
+					.build();
+		}
+		
 	}
 
+	/**
+	 * Update the company with this specific ID to the new data.
+	 * @param CompanyModel companyToBeAdded
+	 * @return ServerResponse
+	 */
 	@Path("pharmaCompany/updateCompany")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updateCompany(CompanyModel companyToBeAdded) {
-
-		return Response.ok(CompanyManager.updateCompany(companyToBeAdded)).header("Access-Control-Allow-Origin", "*")
-				.build();
+		ServerResponse response = new ServerResponse();
+		response = CompanyManager.updateCompany(companyToBeAdded);
+		switch (response.getResponseHexCode()) {
+		case "01": //Update failed
+			return Response.status(401, response.getResponseMsg()).header("Access-Control-Allow-Origin", "*")
+					.build();
+		default: //Update Successful
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*")
+					.build();
+		}
+		
 	}
-
+	
+	/**
+	 * Delete the company with this specific ID
+	 * @param DataModel companyToBeAdded
+	 * @return ServerResponse
+	 */
 	@Path("pharmaCompany/deleteCompany")
 	@POST
-	@Consumes(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteCompany(DataModel companyToBeAdded) {
-
-		return Response.ok(CompanyManager.deleteCompany(companyToBeAdded)).header("Access-Control-Allow-Origin", "*")
-				.build();
+		ServerResponse response = new ServerResponse();
+		response = CompanyManager.deleteCompany(companyToBeAdded);
+		switch (response.getResponseHexCode()) {
+		case "01": //Deletion failed
+			return Response.status(401, response.getResponseMsg()).header("Access-Control-Allow-Origin", "*")
+					.build();
+		default: //Deletion Successful
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*")
+					.build();
+		}
 	}
 
 	// ---------------------------------------------End Of
@@ -941,7 +1020,11 @@ public class Services {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// ---------------------------------------------Start Of YelloPad
 	// Services--------------------------------------//
-
+	
+	/**
+	 * Gets All YelloPads in DataBase. 
+	 * @return YelloPadArray
+	 */
 	@Path("yelloPad/getAllYelloPads")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -949,7 +1032,11 @@ public class Services {
 
 		return Response.ok(YelloPadManager.getAllYelloPads()).header("Access-Control-Allow-Origin", "*").build();
 	}
-
+	
+	/**
+	 * Gets All Active YelloPads in DataBase.
+	 * @return YelloPadArray
+	 */
 	@Path("yelloPad/getAllActiveYelloPads")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -958,6 +1045,10 @@ public class Services {
 		return Response.ok(YelloPadManager.getAllActiveYelloPads()).header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	/**
+	 * Gets All InActive YelloPads in DataBase.
+	 * @return YelloPadArray
+	 */
 	@Path("yelloPad/getAllInActiveYelloPads")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -967,6 +1058,11 @@ public class Services {
 				.build();
 	}
 
+	/**
+	 * Returns All relevant Data about a YelloPad given its UniqueID.
+	 * @param DataModel ID
+	 * @return YelloPadModel
+	 */
 	@Path("yelloPad/searchYelloPad")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -977,6 +1073,11 @@ public class Services {
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	/**
+	 * Returns Status of YelloPad given its UniqueID.
+	 * @param DataModel ID
+	 * @return YelloPadModel
+	 */
 	@Path("yelloPad/getYelloPadStatus")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -987,6 +1088,11 @@ public class Services {
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	/**
+	 * Returns Network Card Number of YelloPad given its UniqueID.
+	 * @param DataModel ID
+	 * @return YelloPadModel
+	 */
 	@Path("yelloPad/getYelloPadNetworkCardNo")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
