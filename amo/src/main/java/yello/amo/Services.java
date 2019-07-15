@@ -242,6 +242,11 @@ public class Services {
 	// ----------------------------------------Start of Ambulance Map
 	// -----------------------------------------------//
 
+	/**
+	 * Adds an AmbulanceMap with A paramedic, A driver and a YelloPad.
+	 * @param AmbulanceToBeAdded
+	 * @return ServerResponse
+	 */
 	@Path("ambulanceMap/addAmbulanceMap")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -252,6 +257,11 @@ public class Services {
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	/**
+	 * Returns all data of an ambulance map based on the car's Vin.
+	 * @param DataModel ID
+	 * @return AmbulanceMapModel
+	 */
 	@Path("ambulanceMap/getByCarID")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -260,7 +270,12 @@ public class Services {
 		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByCarID(ID)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
-
+	
+	/**
+	 * Returns all data of an ambulance map based on the Driver's ID.
+	 * @param DataModel ID
+	 * @return AmbulanceMapModel
+	 */
 	@Path("ambulanceMap/getByDriverID")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -270,6 +285,11 @@ public class Services {
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	/**
+	 * Returns all data of an ambulance map based on the Paramedic's ID.
+	 * @param DataModel ID
+	 * @return AmbulanceMapModel
+	 */	
 	@Path("ambulanceMap/getByParamedicID")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -279,6 +299,11 @@ public class Services {
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	/**
+	 * Returns all data of an ambulance map based on the YelloPad's ID.
+	 * @param DataModel ID
+	 * @return AmbulanceMapModel
+	 */
 	@Path("ambulanceMap/getByYelloPadID")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -288,6 +313,11 @@ public class Services {
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	/**
+	 * Deletes an AmbulanceMap by changing its status.
+	 * @param DataModel AmbulanceToBeAdded
+	 * @return ServerResponse
+	 */
 	@Path("ambulanceMap/deleteAmbulanceMap")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -297,6 +327,11 @@ public class Services {
 				.header("Access-Control-Allow-Origin", "*").build();
 	}
 	
+	/**
+	 * Returns the data contained in the 
+	 * @param DataModel vin
+	 * @return AllAmbulanceMapDataModel
+	 */
 	@Path("ambulanceMap/getRelevantData")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -312,6 +347,11 @@ public class Services {
 	// -----------------------------------------Start of Employee
 	// Services-------------------------------------------//
 
+	/**
+	 * Returns Array with all Paramedics
+	 * @param DataModel superSSN
+	 * @return EmployeeArray
+	 */
 	@Path("employee/getAllParamedics")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -321,7 +361,12 @@ public class Services {
 		return Response.ok(EmployeeManager.getAllParamedics(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
-
+	
+	/**
+	 * Returns Array with all Active Paramedics
+	 * @param DataModel superSSN
+	 * @return EmployeeArray
+	 */
 	@Path("employee/getActiveParamedics")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -332,6 +377,11 @@ public class Services {
 				.build();
 	}
 
+	/**
+	 * Returns Array with all INActive Paramedics
+	 * @param DataModel superSSN
+	 * @return EmployeeArray
+	 */
 	@Path("employee/getInActiveParamedics")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -342,6 +392,11 @@ public class Services {
 				.build();
 	}
 
+	/**
+	 * Returns Array with all Drivers
+	 * @param DataModel superSSN
+	 * @return EmployeeArray
+	 */
 	@Path("employee/getAllDrivers")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -351,6 +406,11 @@ public class Services {
 		return Response.ok(EmployeeManager.getAllDrivers(superSSN)).header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	/**
+	 * Returns Array with all Active Drivers
+	 * @param DataModel superSSN
+	 * @return EmployeeArray
+	 */
 	@Path("employee/getActiveDrivers")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -361,6 +421,11 @@ public class Services {
 				.build();
 	}
 
+	/**
+	 * Returns Array with all Inactive Drivers
+	 * @param DataModel superSSN
+	 * @return EmployeeArray
+	 */
 	@Path("employee/getInActiveDrivers")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
