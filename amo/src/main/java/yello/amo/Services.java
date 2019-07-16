@@ -901,6 +901,26 @@ public class Services {
 		return Response.ok(patientArray).header("Access-Control-Allow-Origin", "*").build();
 
 	}
+	
+	
+	@Path("patient/getDatabyID")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getDataByID(PatientModel patientModel) {
+		CustomClass<PatientArray, ServerResponse> X = PatientManger.getDataByID(patientModel.getPatientID());
+		ServerResponse serverResponse = X.getSecond();
+		PatientArray patientArray = X.getFirst();
+		if (X.equals(null)) {
+			return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build();
+		}
+		if (serverResponse != null) {
+			return Response.ok(serverResponse).header("Access-Control-Allow-Origin", "*").build();
+
+		}
+		return Response.ok(patientArray).header("Access-Control-Allow-Origin", "*").build();
+
+	}
 
 	@Path("patient/deletePatient")
 	@POST
