@@ -320,6 +320,8 @@ public class EmployeeDAL {
 				currentEmployee.setLogInGPS(RS.getString(17));
 				currentEmployee.setSuperSSN(RS.getInt(18));
 				currentEmployee.setJobID(RS.getInt(19));
+				currentEmployee.setLogOutStamp(RS.getString(20));
+				currentEmployee.setLogInStatus(RS.getString(21));
 
 		} catch (SQLException e) {
 
