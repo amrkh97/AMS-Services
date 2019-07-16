@@ -256,7 +256,7 @@ public class Services {
 
 	/**
 	 * Adds an AmbulanceMap with A paramedic, A driver and a YelloPad.
-	 * @param AmbulanceToBeAdded
+	 * @param AmbulanceToBeAdded: Ambulance Map Model that contains All the IDs. 
 	 * @return ServerResponse
 	 */
 	@Path("ambulanceMap/addAmbulanceMap")
@@ -282,7 +282,7 @@ public class Services {
 
 	/**
 	 * Returns all data of an ambulance map based on the car's Vin.
-	 * @param DataModel ID
+	 * @param ID: VIN of the Ambulance Vehicle 
 	 * @return AmbulanceMapModel
 	 */
 	@Path("ambulanceMap/getByCarID")
@@ -296,7 +296,7 @@ public class Services {
 	
 	/**
 	 * Returns all data of an ambulance map based on the Driver's ID.
-	 * @param DataModel ID
+	 * @param ID: Employee ID of the Driver.
 	 * @return AmbulanceMapModel
 	 */
 	@Path("ambulanceMap/getByDriverID")
@@ -310,7 +310,7 @@ public class Services {
 
 	/**
 	 * Returns all data of an ambulance map based on the Paramedic's ID.
-	 * @param DataModel ID
+	 * @param ID: Employee Id of the paramedic
 	 * @return AmbulanceMapModel
 	 */	
 	@Path("ambulanceMap/getByParamedicID")
@@ -324,7 +324,7 @@ public class Services {
 
 	/**
 	 * Returns all data of an ambulance map based on the YelloPad's ID.
-	 * @param DataModel ID
+	 * @param ID: ID of the YelloPad
 	 * @return AmbulanceMapModel
 	 */
 	@Path("ambulanceMap/getByYelloPadID")
@@ -338,7 +338,7 @@ public class Services {
 
 	/**
 	 * Deletes an AmbulanceMap by changing its status.
-	 * @param DataModel AmbulanceToBeAdded
+	 * @param AmbulanceToBeAdded: VIN of the Ambulance Vehicle.
 	 * @return ServerResponse
 	 */
 	@Path("ambulanceMap/deleteAmbulanceMap")
@@ -360,7 +360,7 @@ public class Services {
 	
 	/**
 	 * Returns the data contained in the 
-	 * @param DataModel vin
+	 * @param vin: VIN of the Ambulance Vehicle
 	 * @return AllAmbulanceMapDataModel
 	 */
 	@Path("ambulanceMap/getRelevantData")
@@ -380,7 +380,7 @@ public class Services {
 
 	/**
 	 * Returns Array with all Paramedics
-	 * @param DataModel superSSN
+	 * @param superSSN: ID of Supervisor.
 	 * @return EmployeeArray
 	 */
 	@Path("employee/getAllParamedics")
@@ -395,7 +395,7 @@ public class Services {
 	
 	/**
 	 * Returns Array with all Active Paramedics
-	 * @param DataModel superSSN
+	 * @param superSSN: ID of Supervisor.
 	 * @return EmployeeArray
 	 */
 	@Path("employee/getActiveParamedics")
@@ -410,7 +410,7 @@ public class Services {
 
 	/**
 	 * Returns Array with all INActive Paramedics
-	 * @param DataModel superSSN
+	 * @param superSSN: ID of Supervisor.
 	 * @return EmployeeArray
 	 */
 	@Path("employee/getInActiveParamedics")
@@ -425,7 +425,7 @@ public class Services {
 
 	/**
 	 * Returns Array with all Drivers
-	 * @param DataModel superSSN
+	 * @param superSSN: ID of Supervisor.
 	 * @return EmployeeArray
 	 */
 	@Path("employee/getAllDrivers")
@@ -439,7 +439,7 @@ public class Services {
 
 	/**
 	 * Returns Array with all Active Drivers
-	 * @param DataModel superSSN
+	 * @param superSSN: ID of Supervisor.
 	 * @return EmployeeArray
 	 */
 	@Path("employee/getActiveDrivers")
@@ -454,7 +454,7 @@ public class Services {
 
 	/**
 	 * Returns Array with all Inactive Drivers
-	 * @param DataModel superSSN
+	 * @param superSSN: ID of Supervisor.
 	 * @return EmployeeArray
 	 */
 	@Path("employee/getInActiveDrivers")
@@ -467,6 +467,11 @@ public class Services {
 				.build();
 	}
 
+	/**
+	 * Returns relevant Data of a specific Employee.
+	 * @param EID: ID of the Employee.
+	 * @return EmployeeArray
+	 */
 	@Path("employee/getDatabyEmployeeID")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -914,7 +919,7 @@ public class Services {
 
 	/**
 	 * Returns A specific Company based on its ID
-	 * @param DataModel companyID
+	 * @param companyID: ID of the Company.
 	 * @return CompanyModel
 	 */
 	@Path("pharmaCompany/getCompanyByID")
@@ -927,7 +932,7 @@ public class Services {
 
 	/**
 	 * Returns Array of Companies having same Status Code
-	 * @param DataModel companyStatus
+	 * @param companyStatus: Status of the Company
 	 * @return CompanyArray
 	 */
 	@Path("pharmaCompany/getCompanyByStatus")
@@ -941,7 +946,7 @@ public class Services {
 
 	/**
 	 * Returns A company that matches the specific name.
-	 * @param DataModel companyName
+	 * @param companyName: Name of the Company
 	 * @return CompanyModel
 	 */
 	@Path("pharmaCompany/getCompanyByName")
@@ -955,7 +960,7 @@ public class Services {
 
 	/**
 	 * Adds a Pharma Company.
-	 * @param CompanyModel companyToBeAdded
+	 * @param companyToBeAdded: Model Containing relevant data of the company for its addition.
 	 * @return ServerResponse
 	 */
 	@Path("pharmaCompany/addCompany")
@@ -981,7 +986,7 @@ public class Services {
 
 	/**
 	 * Update the company with this specific ID to the new data.
-	 * @param CompanyModel companyToBeAdded
+	 * @param companyToBeAdded: relevant data to be updated in a specific company.
 	 * @return ServerResponse
 	 */
 	@Path("pharmaCompany/updateCompany")
@@ -1004,7 +1009,7 @@ public class Services {
 	
 	/**
 	 * Delete the company with this specific ID
-	 * @param DataModel companyToBeAdded
+	 * @param companyToBeAdded: ID of the Company to be deleted.
 	 * @return ServerResponse
 	 */
 	@Path("pharmaCompany/deleteCompany")
@@ -1069,7 +1074,7 @@ public class Services {
 
 	/**
 	 * Returns All relevant Data about a YelloPad given its UniqueID.
-	 * @param DataModel ID
+	 * @param ID: ID of the YelloPad to search for
 	 * @return YelloPadModel
 	 */
 	@Path("yelloPad/searchYelloPad")
@@ -1084,7 +1089,7 @@ public class Services {
 
 	/**
 	 * Returns Status of YelloPad given its UniqueID.
-	 * @param DataModel ID
+	 * @param ID: Id of Specific Yellopad.
 	 * @return YelloPadModel
 	 */
 	@Path("yelloPad/getYelloPadStatus")
@@ -1099,7 +1104,7 @@ public class Services {
 
 	/**
 	 * Returns Network Card Number of YelloPad given its UniqueID.
-	 * @param DataModel ID
+	 * @param ID: Id of Specific YelloPad.
 	 * @return YelloPadModel
 	 */
 	@Path("yelloPad/getYelloPadNetworkCardNo")
