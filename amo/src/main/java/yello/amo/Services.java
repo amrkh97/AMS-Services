@@ -74,13 +74,13 @@ public class Services {
 		String message =loginResponse.getResponseMsg();
 		switch (hex) {
 		case "02": // Incorrect Password
-			return Response.status(400).header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(400).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FA": // Wrong Email or PAN or National ID
-			return Response.status(401).header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(401).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FB": // Password length is less than 8
-			return Response.status(402).header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(402).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FF": // Not found
-			return Response.status(403).header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(403).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(loginResponse)
 				.header("Access-Control-Allow-Origin", "*").build();
