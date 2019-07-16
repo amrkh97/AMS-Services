@@ -272,13 +272,13 @@ public class Services {
 		response = AmbulanceMapManager.addAmbulanceMap(AmbulanceToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01":
-			return Response.status(401,response.getResponseMsg())
+			return Response.status(401).entity(response)
 					.header("Access-Control-Allow-Origin", "*").build();
 		case "02":
-			return Response.status(402,response.getResponseMsg())
+			return Response.status(402).entity(response)
 					.header("Access-Control-Allow-Origin", "*").build();
 		default:
-			return Response.ok(AmbulanceMapManager.addAmbulanceMap(AmbulanceToBeAdded))
+			return Response.ok(response)
 					.header("Access-Control-Allow-Origin", "*").build();
 		
 		}
