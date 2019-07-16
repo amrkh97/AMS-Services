@@ -264,7 +264,7 @@ public class PatientDAL {
 	}
 
 	public static PatientArray getDataByID(Integer patientID, Connection conn) throws Exception {
-		String SPsql = "USE KAN_AMO; EXEC usp_Patient_getDataByID ?";
+		String SPsql = "USE KAN_AMO; EXEC usp_Patient_getByID ?";
 
 		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
 		PatientArray OBJ = new PatientArray();
