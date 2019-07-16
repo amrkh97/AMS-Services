@@ -43,6 +43,7 @@ import Models.Patient.PatientModel;
 import Models.PatientLocation.PatientLoc;
 import Models.Receipts.Receipt;
 import Models.Users.LoginCredentialsRequest;
+import Models.Users.LoginResponse;
 import Models.Users.LogoutResponse;
 import Models.Users.SignUp;
 import Models.Reports.Report;
@@ -66,20 +67,22 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response login(LoginCredentialsRequest req) {
-		String hex = UserManager.login(req.getEmailOrPAN(), req.getPassword()).getResponseHexCode();
-		String message = UserManager.login(req.getEmailOrPAN(), req.getPassword()).getResponseMsg();
+	public Response login(LoginCredentialsRequest req) 
+	{
+		LoginResponse loginResponse = UserManager.login(req.getEmailOrPAN(), req.getPassword());
+		String hex = loginResponse.getResponseHexCode();
+		String message =loginResponse.getResponseMsg();
 		switch (hex) {
 		case "02": // Incorrect Password
-			return Response.status(400, message).header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(400).header("Access-Control-Allow-Origin", "*").build();
 		case "FA": // Wrong Email or PAN or National ID
-			return Response.status(401, message).header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(401).header("Access-Control-Allow-Origin", "*").build();
 		case "FB": // Password length is less than 8
-			return Response.status(402, message).header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(402).header("Access-Control-Allow-Origin", "*").build();
 		case "FF": // Not found
-			return Response.status(403, message).header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(403).header("Access-Control-Allow-Origin", "*").build();
 		default:
-			return Response.ok(UserManager.login(req.getEmailOrPAN(), req.getPassword()))
+			return Response.ok(loginResponse)
 				.header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
