@@ -298,5 +298,47 @@ public class PatientManger {
 		}
 		
 	}
+
+	public static CustomClass<PatientArray, ServerResponse> getDataByID(Integer patientID) {
+		PatientArray patientArray = new PatientArray();
+		ServerResponse S = new ServerResponse();
+		CustomClass<PatientArray, ServerResponse> response = new CustomClass<PatientArray, ServerResponse>();
+		CustomClass<Connection, Boolean> connBool = DBManager.getDBConn1();
+		Connection conn = connBool.getFirst();
+		if (!connBool.getSecond()) {
+
+			S.setResponseHexCode("01");
+			S.setResponseMsg("Can Not open the database");
+			response.setFirst(null);
+			response.setSecond(S);
+
+			return response;
+		}
+
+		try {
+
+			patientArray = PatientDAL.getDataByID(patientID, conn);
+
+		} catch (Exception e) {
+			System.out.println("i hav error");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		response.setFirst(patientArray);
+		response.setSecond(null);
+
+		return response;
+
+	}
 }
 	
