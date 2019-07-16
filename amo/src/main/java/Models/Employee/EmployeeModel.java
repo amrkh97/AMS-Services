@@ -23,7 +23,8 @@ public class EmployeeModel {
 	private String logInGPS;
 	private Integer superSSN;
 	private Integer jobID;
-	
+	private String logOutStamp;
+	private String logInStatus;
 	
 	
 	public Integer getEid() {
@@ -176,6 +177,22 @@ public class EmployeeModel {
 
 	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	public String getLogOutStamp() {
+		return logOutStamp;
+	}
+
+	public void setLogOutStamp(String logOutStamp) {
+		this.logOutStamp = logOutStamp;
+	}
+
+	public String getLogInStatus() {
+		return logInStatus;
+	}
+
+	public void setLogInStatus(String logInStatus) {
+		this.logInStatus = logInStatus;
 	}
 
 }
