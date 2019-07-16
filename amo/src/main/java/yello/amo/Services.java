@@ -354,7 +354,7 @@ public class Services {
 		response = AmbulanceMapManager.deleteAmbulanceMap(AmbulanceToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01": //Deletion Failed
-			return Response.status(401, response.getResponseMsg()+", You need to update/delete the status of this company").header("Access-Control-Allow-Origin", "*")
+			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*")
 					.build();
 		default:  //Deletion Successful
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*")
@@ -988,10 +988,10 @@ public class Services {
 		response = CompanyManager.addCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01": //Company found with same data.
-			return Response.status(401, response.getResponseMsg()+", You need to update/delete the status of this company").header("Access-Control-Allow-Origin", "*")
+			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*")
 					.build();
 		case "02": //Company name that was sent is null.
-			return Response.status(402, response.getResponseMsg()).header("Access-Control-Allow-Origin", "*")
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*")
 					.build();
 		default:  //Addition Successful
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*")
@@ -1014,7 +1014,7 @@ public class Services {
 		response = CompanyManager.updateCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01": //Update failed
-			return Response.status(401, response.getResponseMsg()).header("Access-Control-Allow-Origin", "*")
+			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*")
 					.build();
 		default: //Update Successful
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*")
@@ -1037,7 +1037,7 @@ public class Services {
 		response = CompanyManager.deleteCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01": //Deletion failed
-			return Response.status(401, response.getResponseMsg()).header("Access-Control-Allow-Origin", "*")
+			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*")
 					.build();
 		default: //Deletion Successful
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*")
