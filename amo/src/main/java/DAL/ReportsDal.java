@@ -9,10 +9,8 @@ import java.sql.Types;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import DB.DBManager;
 import Models.ServerResponse;
-import Models.Receipts.Receipt;
 import Models.Reports.Report;
 import Models.Reports.ReportList;
 public class ReportsDal {

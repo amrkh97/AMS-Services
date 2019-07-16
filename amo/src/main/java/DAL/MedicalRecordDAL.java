@@ -54,7 +54,7 @@ public class MedicalRecordDAL {
 			cstmt.registerOutParameter(29, Types.NVARCHAR);
 			cstmt.registerOutParameter(30, Types.INTEGER);
 			cstmt.execute();
-			_ServerResponse.setOutput(cstmt.getInt(30));
+			_ServerResponse.setMedicalRecordID(cstmt.getInt(30));
 			_ServerResponse.setResponseHexCode(cstmt.getString(28));
 			_ServerResponse.setResponseMsg(cstmt.getString(29));
 

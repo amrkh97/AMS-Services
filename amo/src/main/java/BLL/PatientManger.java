@@ -3,15 +3,12 @@ package BLL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import DAL.AmbulanceVehicleDAL;
 import DAL.MedicalRecordDAL;
 import DAL.PatientDAL;
 import DB.DBManager;
 import Models.CustomClass;
 import Models.ServerResponse;
 import Models.ServerResponse_ID;
-import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Patient.PatientArray;
 import Models.Patient.PatientModel;
 

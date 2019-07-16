@@ -36,5 +36,10 @@ public class EmployeeManager {
 
 		return EmployeeDAL.getInActiveDrivers(superSSN);
 	}
+	
+	public static EmployeeModel getDatabyEmployeeID(DataModel EID) {
+		
+		return EmployeeDAL.getDatabyEmployeeID(EID);
+	}
 
 }
