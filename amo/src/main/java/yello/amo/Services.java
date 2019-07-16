@@ -26,6 +26,7 @@ import BLL.UserManager;
 import BLL.YelloPadManager;
 import BLL.ReportManager;
 import BLL.ReceiptsManager;
+import Models.CustomClass;
 import Models.ServerResponse;
 import Models.ServerResponse_ID;
 import Models.AmbulanceMap.AmbulanceMapModel;
@@ -842,11 +843,17 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllPatient() {
-		PatientArray X = PatientManger.getAllPatient();
+		CustomClass<PatientArray, ServerResponse> X = PatientManger.getAllPatient();
+		ServerResponse serverResponse = X.getSecond();
+		PatientArray patientArray = X.getFirst();
 		if (X.equals(null)) {
 			return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build();
 		}
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		if (serverResponse != null) {
+			return Response.ok(serverResponse).header("Access-Control-Allow-Origin", "*").build();
+
+		}
+		return Response.ok(patientArray).header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -881,11 +888,17 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getPatientByNID(PatientModel patientModel) {
-		PatientArray X = PatientManger.getPatientByNId(patientModel.getPatientNationalID());
+		CustomClass<PatientArray, ServerResponse> X = PatientManger.getPatientByNId(patientModel.getPatientNationalID());
+		ServerResponse serverResponse = X.getSecond();
+		PatientArray patientArray = X.getFirst();
 		if (X.equals(null)) {
-			return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build();
+			return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build();
 		}
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		if (serverResponse != null) {
+			return Response.ok(serverResponse).header("Access-Control-Allow-Origin", "*").build();
+
+		}
+		return Response.ok(patientArray).header("Access-Control-Allow-Origin", "*").build();
 
 	}
 

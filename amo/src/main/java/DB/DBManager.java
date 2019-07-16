@@ -3,6 +3,7 @@ package DB;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import Models.CustomClass;
 
 public class DBManager {
 
@@ -33,5 +34,21 @@ public class DBManager {
 			e.printStackTrace();
 		}
 		return conn;
+	}
+	
+	public static CustomClass<Connection,Boolean> getDBConn1() {
+		CustomClass<Connection,Boolean> connBool= new CustomClass<Connection,Boolean>();
+		try {
+			Class.forName(db_class_string);
+			conn = DriverManager.getConnection(db_server + db_name, db_userid, db_password);
+			connBool.setFirst(conn);
+			connBool.setSecond(true);
+			System.out.println("Connection Open");
+		} catch (Exception e) {
+			connBool.setSecond(false);
+				
+			e.printStackTrace();
+		}
+		return connBool;
 	}
 }
