@@ -32,6 +32,7 @@ public class AmbulanceMapDAL {
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
 			currentAmbulanceMap.setStatusMap(rs.getString(5));
+			currentAmbulanceMap.setBatchID(rs.getLong(6));
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -67,7 +68,8 @@ public class AmbulanceMapDAL {
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
 			currentAmbulanceMap.setStatusMap(rs.getString(5));
-
+			currentAmbulanceMap.setBatchID(rs.getLong(6));
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -102,7 +104,8 @@ public class AmbulanceMapDAL {
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
 			currentAmbulanceMap.setStatusMap(rs.getString(5));
-
+			currentAmbulanceMap.setBatchID(rs.getLong(6));
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -137,7 +140,8 @@ public class AmbulanceMapDAL {
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
 			currentAmbulanceMap.setStatusMap(rs.getString(5));
-
+			currentAmbulanceMap.setBatchID(rs.getLong(6));
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
