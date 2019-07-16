@@ -263,20 +263,17 @@ public class PatientDAL {
 		return _ServerResponse;
 	}
 
-	public static PatientArray getDataByID(Integer patientID, Connection conn) throws Exception {
+	public static PatientModel getDataByID(Integer patientID, Connection conn) throws Exception {
 		String SPsql = "USE KAN_AMO; EXEC usp_Patient_getByID ?";
 
-		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
-		PatientArray OBJ = new PatientArray();
 		PatientModel patient = new PatientModel();
 		CallableStatement cstmt = conn.prepareCall(SPsql);
 		cstmt.setInt(1, patientID);
 
 		ResultSet rs = cstmt.executeQuery();
 
-		while (rs.next()) {
+		rs.next();
 
-			patient = new PatientModel();
 			patient.setPatientID(rs.getInt("patientID"));
 			patient.setPatientFName(rs.getString("patientFName"));
 			patient.setPatientLName(rs.getString("patientLName"));
@@ -291,11 +288,9 @@ public class PatientDAL {
 			patient.setPatientStatus(rs.getString("patientStatus"));
 			patient.setPatientNationalID(rs.getString("patientNationalID"));
 
-			Array.add(patient);
-		}
+		
 
-		OBJ.setPatientArray(Array);
-		return OBJ;
+		return patient;
 	}
 
 }
