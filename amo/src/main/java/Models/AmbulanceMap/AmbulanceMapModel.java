@@ -6,6 +6,7 @@ public class AmbulanceMapModel {
 	private Integer driverID;
 	private Integer yellopadID;
 	private String statusMap;
+	private Long batchID;
 
 	public Integer getYellopadID() {
 		return yellopadID;
@@ -45,6 +46,14 @@ public class AmbulanceMapModel {
 
 	public void setStatusMap(String statusMap) {
 		this.statusMap = statusMap;
+	}
+
+	public Long getBatchID() {
+		return batchID;
+	}
+
+	public void setBatchID(Long batchID) {
+		this.batchID = batchID;
 	}
 
 }
