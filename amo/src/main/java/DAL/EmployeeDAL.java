@@ -311,6 +311,15 @@ public class EmployeeDAL {
 				currentEmployee.setEmployeeStatus(RS.getString(8));
 				currentEmployee.setPhoto(RS.getString(9));
 				currentEmployee.setAge(RS.getString(10));
+				currentEmployee.setGender(RS.getString(11));
+				currentEmployee.setBirthDate(RS.getString(12));
+				currentEmployee.setCountry(RS.getString(13));
+				currentEmployee.setCity(RS.getString(14));
+				currentEmployee.setSubscriptionDate(RS.getString(15));
+				currentEmployee.setLogInStamp(RS.getString(16));
+				currentEmployee.setLogInGPS(RS.getString(17));
+				currentEmployee.setSuperSSN(RS.getInt(18));
+				currentEmployee.setJobID(RS.getInt(19));
 
 		} catch (SQLException e) {
 
