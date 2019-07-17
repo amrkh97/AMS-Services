@@ -1,13 +1,9 @@
 package BLL;
 
-//---This Data type is the one that works with DATETIME in SQL---
-//import java.sql.Timestamp;
-//---------------------------------------------------------------
-import java.util.ArrayList;
-
 import DAL.ReportsDal;
 import Models.ServerResponse;
 import Models.Reports.*;
+
 public class ReportManager {
 	public static ReportList selectByReportTitle( String reportTitle) {
 		System.out.println("Manager");

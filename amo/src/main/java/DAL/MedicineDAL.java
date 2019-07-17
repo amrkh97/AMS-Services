@@ -61,10 +61,10 @@ public class MedicineDAL {
 	public static Medicine getMedicineByBC(String BarCode, Connection conn) {
 
 		String SPsql = "USE KAN_AMO; EXEC usp_Medicine_SelectByBCode ?";
-		
-		//Check To Diffrentiate Between internal Calls and External Calls To This API Happened
-		if(conn == null)
-		{
+
+		// Check To Diffrentiate Between internal Calls and External Calls To This API
+		// Happened
+		if (conn == null) {
 			conn = DBManager.getDBConn();
 		}
 		Medicine medicine = new Medicine();
@@ -94,12 +94,11 @@ public class MedicineDAL {
 			e.printStackTrace();
 		} finally {
 			try {
-				if(conn == null)
-				{
+				if (!(conn == null)) {
 					conn.close();
 					System.out.println("Connention Closed");
 				}
-				
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 
@@ -163,14 +162,14 @@ public class MedicineDAL {
 
 		// check if the medicine with this bar code exists
 		Medicine medicineSearchedByBC = getMedicineByBC(medicine.getBarCode(), conn);
-		
+
 		if (medicineSearchedByBC.equals(null)) {
 			serverResponse = new ServerResponse();
 			serverResponse.setResponseHexCode("FF");
 			serverResponse.setResponseMsg("Medicine was Not found in database");
 			return serverResponse;
 		}
-		
+
 		// At this point the if condition tells me that the search was not null
 		try {
 
@@ -225,7 +224,7 @@ public class MedicineDAL {
 			serverResponse.setResponseMsg("Not found medicine in database");
 			return serverResponse;
 		}
-		
+
 		try {
 
 			CallableStatement cstmt = conn.prepareCall(SPsql);

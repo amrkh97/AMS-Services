@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import DB.DBManager;
+import Models.ServerResponse;
 import Models.AmbulanceMap.AllAmbulanceMapDataModel;
 import Models.AmbulanceMap.AmbulanceMapModel;
 import Models.Data.DataModel;
@@ -31,6 +32,7 @@ public class AmbulanceMapDAL {
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
 			currentAmbulanceMap.setStatusMap(rs.getString(5));
+			currentAmbulanceMap.setBatchID(rs.getLong(6));
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -66,7 +68,8 @@ public class AmbulanceMapDAL {
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
 			currentAmbulanceMap.setStatusMap(rs.getString(5));
-
+			currentAmbulanceMap.setBatchID(rs.getLong(6));
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -101,7 +104,8 @@ public class AmbulanceMapDAL {
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
 			currentAmbulanceMap.setStatusMap(rs.getString(5));
-
+			currentAmbulanceMap.setBatchID(rs.getLong(6));
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -136,7 +140,8 @@ public class AmbulanceMapDAL {
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
 			currentAmbulanceMap.setStatusMap(rs.getString(5));
-
+			currentAmbulanceMap.setBatchID(rs.getLong(6));
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -153,8 +158,8 @@ public class AmbulanceMapDAL {
 
 	// ------------------------------------------------------------------------//
 
-	public static DataModel addAmbulanceMap(AmbulanceMapModel currentAmbulanceMap) {
-		DataModel _dataModel = new DataModel();
+	public static ServerResponse addAmbulanceMap(AmbulanceMapModel currentAmbulanceMap) {
+		ServerResponse _dataModel = new ServerResponse();
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_AmbulanceMap_Insert] ?,?,?,?,?";
 		Connection conn = DBManager.getDBConn();
 		String addStatus = "FF";
@@ -177,22 +182,34 @@ public class AmbulanceMapDAL {
 				e.printStackTrace();
 			}
 		}
-		_dataModel.setSentStatus(addStatus);
+		_dataModel.setResponseHexCode(addStatus);
+		if(_dataModel.getResponseHexCode().equals("00")) {
+			_dataModel.setResponseMsg("Insertion Successful");
+		}else if(_dataModel.getResponseHexCode().equals("01")) {
+			_dataModel.setResponseMsg("Failed To insert because the car already has resources assigned");
+		}else {
+			_dataModel.setResponseMsg("Failed to insert because car is already assigned elsewhere");
+		}
+		
+		
+		
 		return _dataModel;
 	}
 
 	// -------------------------------------------------------------------//
 
-	public static DataModel deleteAmbulanceMap(Integer currentAmbulanceMap) {
-		DataModel _dataModel = new DataModel();
-		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_deleteAmbulanceMap] ?";
+	public static ServerResponse deleteAmbulanceMap(Integer currentAmbulanceMap) {
+		ServerResponse _ServerResponse = new ServerResponse();
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_deleteAmbulanceMap] ?,?";
 		Connection conn = DBManager.getDBConn();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 
 			cstmt.setInt(1, currentAmbulanceMap);
+			cstmt.registerOutParameter(2, Types.NVARCHAR);
 			cstmt.executeUpdate();
-
+			_ServerResponse.setResponseHexCode(cstmt.getString(2));
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -203,8 +220,13 @@ public class AmbulanceMapDAL {
 				e.printStackTrace();
 			}
 		}
-		_dataModel.setSentID(currentAmbulanceMap);
-		return _dataModel;
+		if(_ServerResponse.getResponseHexCode().equals("00")) {
+			_ServerResponse.setResponseMsg("Deleted Successfully");	
+		}else {
+			_ServerResponse.setResponseMsg("Failed to delete as it doesn't exist");
+		}
+		
+		return _ServerResponse;
 	}
 
 	public static AllAmbulanceMapDataModel getRelevantData(DataModel vin,Connection intermediateConnection) {

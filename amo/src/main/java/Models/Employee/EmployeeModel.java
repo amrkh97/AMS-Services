@@ -14,7 +14,19 @@ public class EmployeeModel {
 	private String employeeStatus;
 	private String photo;
 	private String age;
-
+	
+	private String birthDate;
+	private String country;
+	private String city;
+	private String subscriptionDate;
+	private String logInStamp;
+	private String logInGPS;
+	private Integer superSSN;
+	private Integer jobID;
+	private String logOutStamp;
+	private String logInStatus;
+	
+	
 	public Integer getEid() {
 		return eid;
 	}
@@ -101,6 +113,86 @@ public class EmployeeModel {
 
 	public void setAge(String age) {
 		this.age = age;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getSubscriptionDate() {
+		return subscriptionDate;
+	}
+
+	public void setSubscriptionDate(String subscriptionDate) {
+		this.subscriptionDate = subscriptionDate;
+	}
+
+	public String getLogInStamp() {
+		return logInStamp;
+	}
+
+	public void setLogInStamp(String logInStamp) {
+		this.logInStamp = logInStamp;
+	}
+
+	public String getLogInGPS() {
+		return logInGPS;
+	}
+
+	public void setLogInGPS(String logInGPS) {
+		this.logInGPS = logInGPS;
+	}
+
+	public Integer getSuperSSN() {
+		return superSSN;
+	}
+
+	public void setSuperSSN(Integer superSSN) {
+		this.superSSN = superSSN;
+	}
+
+	public Integer getJobID() {
+		return jobID;
+	}
+
+	public void setJobID(Integer jobID) {
+		this.jobID = jobID;
+	}
+
+	public String getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public String getLogOutStamp() {
+		return logOutStamp;
+	}
+
+	public void setLogOutStamp(String logOutStamp) {
+		this.logOutStamp = logOutStamp;
+	}
+
+	public String getLogInStatus() {
+		return logInStatus;
+	}
+
+	public void setLogInStatus(String logInStatus) {
+		this.logInStatus = logInStatus;
 	}
 
 }

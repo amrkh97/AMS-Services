@@ -1,6 +1,7 @@
 package BLL;
 
 import DAL.CompanyDAL;
+import Models.ServerResponse;
 import Models.Company.CompanyArray;
 import Models.Company.CompanyModel;
 import Models.Data.DataModel;
@@ -23,15 +24,15 @@ public class CompanyManager {
 		return CompanyDAL.getCompanyByStatus(companyStatus);
 	}
 
-	public static DataModel addCompany(CompanyModel companyToBeAdded) {
+	public static ServerResponse addCompany(CompanyModel companyToBeAdded) {
 		return CompanyDAL.addCompany(companyToBeAdded);
 	}
 
-	public static DataModel updateCompany(CompanyModel companyToBeAdded) {
+	public static ServerResponse updateCompany(CompanyModel companyToBeAdded) {
 		return CompanyDAL.updateCompany(companyToBeAdded);
 	}
 
-	public static DataModel deleteCompany(DataModel companyToBeDeleted) {
+	public static ServerResponse deleteCompany(DataModel companyToBeDeleted) {
 		return CompanyDAL.deleteCompany(companyToBeDeleted);
 	}
 }

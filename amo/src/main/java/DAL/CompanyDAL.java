@@ -8,6 +8,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 
 import DB.DBManager;
+import Models.ServerResponse;
 import Models.Company.CompanyArray;
 import Models.Company.CompanyModel;
 import Models.Data.DataModel;
@@ -171,12 +172,12 @@ public class CompanyDAL {
 		return OBJ;
 	}
 
-	public static DataModel addCompany(CompanyModel companyToBeAdded) {
+	public static ServerResponse addCompany(CompanyModel companyToBeAdded) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_Insert] ?,?,?,?,?";
 		String resultofQuery = "04";
 		Connection conn = DBManager.getDBConn();
-		DataModel OBJ = new DataModel();
+		ServerResponse OBJ = new ServerResponse();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 
@@ -201,16 +202,23 @@ public class CompanyDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.setSentStatus(resultofQuery);
+		OBJ.setResponseHexCode(resultofQuery);
+		if(OBJ.getResponseHexCode().equals("00")) {
+			OBJ.setResponseMsg("Insertion Success");
+		}else if(OBJ.getResponseHexCode().equals("01")) {
+			OBJ.setResponseMsg("Company Already Exists");
+		}else {
+			OBJ.setResponseMsg("Company Name was not sent correctly!");
+		}
 		return OBJ;
 	}
 
-	public static DataModel updateCompany(CompanyModel companyToBeAdded) {
+	public static ServerResponse updateCompany(CompanyModel companyToBeAdded) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_Update] ?,?,?,?,?,?";
 		String resultofQuery = "04";
 		Connection conn = DBManager.getDBConn();
-		DataModel OBJ = new DataModel();
+		ServerResponse OBJ = new ServerResponse();
 
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -236,16 +244,21 @@ public class CompanyDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.setSentStatus(resultofQuery);
+		OBJ.setResponseHexCode(resultofQuery);
+		if(OBJ.getResponseHexCode().equals("00")) {
+			OBJ.setResponseMsg("Update Succesfull");
+		}else {
+			OBJ.setResponseMsg("Update Failed! Company Doesn't exist");
+		}
 		return OBJ;
 	}
 
-	public static DataModel deleteCompany(DataModel companyToBeDeleted) {
+	public static ServerResponse deleteCompany(DataModel companyToBeDeleted) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_Delete] ?,?";
 		String resultofQuery = "04";
 		Connection conn = DBManager.getDBConn();
-		DataModel OBJ = new DataModel();
+		ServerResponse OBJ = new ServerResponse();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 
@@ -267,7 +280,12 @@ public class CompanyDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ.setSentStatus(resultofQuery);
+		OBJ.setResponseHexCode(resultofQuery);
+		if(OBJ.getResponseHexCode().equals("00")) {
+			OBJ.setResponseMsg("Deletion Succesfull");
+		}else {
+			OBJ.setResponseMsg("Delete Failed!");
+		}
 		return OBJ;
 	}
 

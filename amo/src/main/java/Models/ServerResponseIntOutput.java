@@ -2,14 +2,16 @@ package Models;
 
 public class ServerResponseIntOutput extends ServerResponse{
 	 
-	private Integer Output;
+	private Integer medicalRecordID;
 
-	public Integer getOutput() {
-		return Output;
+	public Integer getMedicalRecordID() {
+		return medicalRecordID;
 	}
 
-	public void setOutput(Integer output) {
-		Output = output;
-	} 
+	public void setMedicalRecordID(Integer medicalRecordID) {
+		this.medicalRecordID = medicalRecordID;
+	}
+
+
 
 }
