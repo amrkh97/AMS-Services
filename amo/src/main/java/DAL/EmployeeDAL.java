@@ -421,7 +421,12 @@ public class EmployeeDAL {
 				attendanceTimes.setLogOutDate(arrayStrings[0]);
 				attendanceTimes.setLogOutTime(arrayStrings[1]);
 				
-				attendanceTimes.setWorkingHours(RS.getString(3));
+				Integer inMinutes = Integer.parseInt(RS.getString(3));
+				Double inHours = (double) (inMinutes/60);
+				Integer workHours = (int) Math.floor(inHours);
+				Double workMinutes = (workHours - Math.floor(inHours))*60;
+				attendanceTimes.setWorkingHours(workHours.toString());
+				attendanceTimes.setWorkingMinutes(workMinutes.toString());
 				
 				allAttendanceTimes.add(attendanceTimes);
 			}
