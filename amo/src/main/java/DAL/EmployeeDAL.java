@@ -7,13 +7,68 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DB.DBManager;
-import Models.Data.DataModel;
 import Models.Employee.EmployeeArray;
 import Models.Employee.EmployeeModel;
+import Models.Employee.EmployeeSentModel;
 
 public class EmployeeDAL {
+	
+	public static EmployeeArray getAllEmployees(EmployeeSentModel superSSN) {
 
-	public static EmployeeArray getAllParamedics(DataModel superSSN) {
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_getAll] ?,?";
+		ResultSet RS;
+		Connection conn = DBManager.getDBConn();
+		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
+		EmployeeArray OBJ = new EmployeeArray();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setInt(1, superSSN.getSentID());
+			cstmt.setInt(2, superSSN.getJobID());
+			RS = cstmt.executeQuery();
+
+			while (RS.next()) {
+
+				EmployeeModel currentEmployee = new EmployeeModel();
+				currentEmployee.setEid(RS.getInt(1));
+				currentEmployee.setFullName(RS.getString(2)+" "+RS.getString(3));
+				currentEmployee.setFirstName(RS.getString(2));
+				currentEmployee.setLastName(RS.getString(3));
+				currentEmployee.setEmail(RS.getString(4));
+				currentEmployee.setContactNumber(RS.getString(5));
+				currentEmployee.setPan(RS.getString(6));
+				currentEmployee.setNationalID(RS.getString(7));
+				currentEmployee.setEmployeeStatus(RS.getString(8));
+				currentEmployee.setPhoto(RS.getString(9));
+				currentEmployee.setAge(RS.getString(10));
+				currentEmployee.setGender(RS.getString(11));
+				currentEmployee.setCity(RS.getString(12));
+				currentEmployee.setJobID(RS.getInt(13));
+				currentEmployee.setJobTitle(RS.getString(14));
+				
+				
+				
+				allParamedics.add(currentEmployee);
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+		}
+		OBJ.setEmployeeArray(allParamedics);
+		return OBJ;
+	}
+
+	
+	
+	public static EmployeeArray getAllParamedics(EmployeeSentModel superSSN) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AllParamedics] ?";
 		ResultSet RS;
@@ -58,7 +113,7 @@ public class EmployeeDAL {
 		return OBJ;
 	}
 
-	public static EmployeeArray getActiveParamedics(DataModel superSSN) {
+	public static EmployeeArray getActiveParamedics(EmployeeSentModel superSSN) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_Paramedics] ?";
 		ResultSet RS;
@@ -103,7 +158,7 @@ public class EmployeeDAL {
 		return OBJ;
 	}
 
-	public static EmployeeArray getInActiveParamedics(DataModel superSSN) {
+	public static EmployeeArray getInActiveParamedics(EmployeeSentModel superSSN) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_InActiveParamedics] ?";
 		ResultSet RS;
@@ -150,7 +205,7 @@ public class EmployeeDAL {
 
 	// ------------------------------------------------------------//
 
-	public static EmployeeArray getAllDrivers(DataModel superSSN) {
+	public static EmployeeArray getAllDrivers(EmployeeSentModel superSSN) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AllDrivers] ?";
 		ResultSet RS;
@@ -195,7 +250,7 @@ public class EmployeeDAL {
 		return OBJ;
 	}
 
-	public static EmployeeArray getActiveDrivers(DataModel superSSN) {
+	public static EmployeeArray getActiveDrivers(EmployeeSentModel superSSN) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_Drivers] ?";
 		ResultSet RS;
@@ -240,7 +295,7 @@ public class EmployeeDAL {
 		return OBJ;
 	}
 
-	public static EmployeeArray getInActiveDrivers(DataModel superSSN) {
+	public static EmployeeArray getInActiveDrivers(EmployeeSentModel superSSN) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_InActiveDrivers] ?";
 		ResultSet RS;
@@ -288,7 +343,7 @@ public class EmployeeDAL {
 	
 	//-----------------------------------------------------------------------------//
 	
-	public static EmployeeModel getDatabyEmployeeID(DataModel superSSN) {
+	public static EmployeeModel getDatabyEmployeeID(EmployeeSentModel superSSN) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_getDatabyEmployeeID] ?";
 		ResultSet RS;
