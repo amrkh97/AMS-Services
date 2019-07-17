@@ -1,12 +1,18 @@
 package BLL;
 
 import DAL.EmployeeDAL;
+import Models.Employee.AttendanceTimeArray;
 import Models.Employee.EmployeeArray;
 import Models.Employee.EmployeeModel;
 import Models.Employee.EmployeeSentModel;
 
 public class EmployeeManager {
 
+	public static AttendanceTimeArray getAllAttendanceTimes(EmployeeSentModel employeeID) {
+		
+		return EmployeeDAL.getAllAttendanceTimes(employeeID);
+	}
+	
 	
 	public static EmployeeArray getAllEmployees(EmployeeSentModel superSSN) {
 

@@ -385,6 +385,22 @@ public class Services {
 	
 	
 	/**
+	 * Gets All the attendance times of a specific Employee based on their Employee ID
+	 * @param superSSN: ID of the Employee to get their data.
+	 * @return AttendanceTimeArray
+	 */
+	@Path("employee/getLogTimes")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getLogTimes(EmployeeSentModel superSSN) {
+
+		return Response.ok(EmployeeManager.getAllAttendanceTimes(superSSN)).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+	
+	
+	/**
 	 * Returns Array with all registered Employees.
 	 * @param superSSN: ID of Supervisor and JobID.
 	 * @return EmployeeArray
