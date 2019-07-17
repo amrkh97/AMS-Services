@@ -35,6 +35,8 @@ import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.Data.DataModel;
 import Models.Employee.EmployeeSentModel;
+import BLL.FeedbackManger;
+import Models.Feedback.FeedbackModel;
 import Models.Job.Job;
 import Models.Locations.Location;
 import Models.MedicalRecord.MedicalRecord;
@@ -1393,6 +1395,36 @@ public class Services {
 //-----------------------------------------------------------------------------------------------------------------------//
 	
 	
-	
+	//Region -------------Feedback--------------------
+	@Path("insertFeedback")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response InsertNewFeedback(FeedbackModel feedbackModel) {
+		System.out.println("InsertNewFeedback Service start");
+		return Response.ok(FeedbackManger.insertFeedback(feedbackModel)  ).build();
+ 
+	}
+	@Path("editFeedback")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response editFeedback(FeedbackModel feedbackModel) {
+		System.out.println("editFeedback Service start");
+		return Response.ok(FeedbackManger.updateFeedback(feedbackModel)  ).build();
+ 
+	}
+
+	@Path("deleteFeedback")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteFeedback(FeedbackModel feedbackModel) {
+		System.out.println("editFeedback Service start");
+		return Response.ok(FeedbackManger.deleteFeedback(feedbackModel.getFeedbackID())  ).build();
+ 
+	}
+	 
+	//endRegion -------------Feedback--------------------
 	
 }
