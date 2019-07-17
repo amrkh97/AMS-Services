@@ -34,7 +34,7 @@ import Models.AmbulanceVehicle.AmbulanceArray;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.Data.DataModel;
-import Models.Feedback.FeedbackManger;
+import BLL.FeedbackManger;
 import Models.Feedback.FeedbackModel;
 import Models.Job.Job;
 import Models.Locations.Location;
