@@ -34,6 +34,7 @@ import Models.AmbulanceVehicle.AmbulanceArray;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.Data.DataModel;
+import Models.Employee.EmployeeSentModel;
 import Models.Job.Job;
 import Models.Locations.Location;
 import Models.MedicalRecord.MedicalRecord;
@@ -381,7 +382,41 @@ public class Services {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// -----------------------------------------Start of Employee
 	// Services-------------------------------------------//
+	
+	
+	/**
+	 * Gets All the attendance times of a specific Employee based on their Employee ID
+	 * @param superSSN: ID of the Employee to get their data.
+	 * @return AttendanceTimeArray
+	 */
+	@Path("employee/getLogTimes")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getLogTimes(EmployeeSentModel superSSN) {
 
+		return Response.ok(EmployeeManager.getAllAttendanceTimes(superSSN)).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+	
+	
+	/**
+	 * Returns Array with all registered Employees.
+	 * @param superSSN: ID of Supervisor and JobID.
+	 * @return EmployeeArray
+	 */
+	@Path("employee/getAllEmployees")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllEmployees(EmployeeSentModel superSSN) {
+
+		return Response.ok(EmployeeManager.getAllEmployees(superSSN)).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+	
+	
+	
 	/**
 	 * Returns Array with all Paramedics
 	 * @param superSSN: ID of Supervisor.
@@ -391,7 +426,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllParamedics(DataModel superSSN) {
+	public Response getAllParamedics(EmployeeSentModel superSSN) {
 
 		return Response.ok(EmployeeManager.getAllParamedics(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
@@ -406,7 +441,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getActiveParamedics(DataModel superSSN) {
+	public Response getActiveParamedics(EmployeeSentModel superSSN) {
 
 		return Response.ok(EmployeeManager.getActiveParamedics(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
@@ -421,7 +456,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getInActiveParamedics(DataModel superSSN) {
+	public Response getInActiveParamedics(EmployeeSentModel superSSN) {
 
 		return Response.ok(EmployeeManager.getInActiveParamedics(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
@@ -436,7 +471,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllDrivers(DataModel superSSN) {
+	public Response getAllDrivers(EmployeeSentModel superSSN) {
 
 		return Response.ok(EmployeeManager.getAllDrivers(superSSN)).header("Access-Control-Allow-Origin", "*").build();
 	}
@@ -450,7 +485,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getActiveDrivers(DataModel superSSN) {
+	public Response getActiveDrivers(EmployeeSentModel superSSN) {
 
 		return Response.ok(EmployeeManager.getActiveDrivers(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
@@ -465,7 +500,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getInActiveDrivers(DataModel superSSN) {
+	public Response getInActiveDrivers(EmployeeSentModel superSSN) {
 
 		return Response.ok(EmployeeManager.getInActiveDrivers(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
@@ -480,7 +515,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getDatabyEmployeeID(DataModel EID) {
+	public Response getDatabyEmployeeID(EmployeeSentModel EID) {
 
 		return Response.ok(EmployeeManager.getDatabyEmployeeID(EID)).header("Access-Control-Allow-Origin", "*")
 				.build();
