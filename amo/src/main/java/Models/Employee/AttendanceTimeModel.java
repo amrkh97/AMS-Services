@@ -7,6 +7,7 @@ public class AttendanceTimeModel {
 	private String logOutDate;
 	private String logOutTime;
 	private String workingHours;
+	private String workingMinutes;
 	
 	public String getLogInDate() {
 		return logInDate;
@@ -37,5 +38,11 @@ public class AttendanceTimeModel {
 	}
 	public void setWorkingHours(String workingHours) {
 		this.workingHours = workingHours;
+	}
+	public String getWorkingMinutes() {
+		return workingMinutes;
+	}
+	public void setWorkingMinutes(String workingMinutes) {
+		this.workingMinutes = workingMinutes;
 	}
 }
