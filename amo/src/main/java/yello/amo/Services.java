@@ -34,6 +34,7 @@ import Models.AmbulanceVehicle.AmbulanceArray;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.Data.DataModel;
+import Models.Employee.EmployeeSentModel;
 import BLL.FeedbackManger;
 import Models.Feedback.FeedbackModel;
 import Models.Job.Job;
@@ -49,6 +50,7 @@ import Models.Users.LoginCredentialsRequest;
 import Models.Users.LoginResponse;
 import Models.Users.LogoutResponse;
 import Models.Users.SignUp;
+import Models.Users.SignUpResponse;
 import Models.Reports.Report;
 
 /**
@@ -74,16 +76,25 @@ public class Services {
 	{
 		LoginResponse loginResponse = UserManager.login(req.getEmailOrPAN(), req.getPassword());
 		String hex = loginResponse.getResponseHexCode();
-		String message =loginResponse.getResponseMsg();
 		switch (hex) {
 		case "02": // Incorrect Password
 			return Response.status(400).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
-		case "FA": // Wrong Email or PAN or National ID
+		case "03": // User is already logged in
 			return Response.status(401).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
-		case "FB": // Password length is less than 8
+		case "04": // This user is not verified
 			return Response.status(402).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
-		case "FF": // Not found
+		case "FA": // Wrong Email or PAN or National ID
 			return Response.status(403).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FB": // Password length is less than 8
+			return Response.status(405).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FC": // Catch Block
+			return Response.status(406).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FD": // FAILED: Email or Password is NULL
+			return Response.status(407).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FE": // User status undefined
+			return Response.status(408).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FF": // Not found
+			return Response.status(409).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(loginResponse)
 				.header("Access-Control-Allow-Origin", "*").build();
@@ -95,8 +106,30 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response logout(LogoutResponse req) {
-
-		return Response.ok(UserManager.logout(req.getUserID())).header("Access-Control-Allow-Origin", "*").build();
+		LogoutResponse logoutResponse = UserManager.logout(req.getUserID());
+		String hex = logoutResponse.getResponseHexCode();
+		switch (hex) {
+		case "01": // User is already logged out
+			return Response.status(401).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "02": // User is awaiting verification
+			return Response.status(402).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "03": // User is already logged in
+			return Response.status(403).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "04": // This user is not verified
+			return Response.status(405).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FC": // Catch Block
+			return Response.status(406).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FD": // FAILED: User ID is NULL
+			return Response.status(407).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FE": // User status undefined
+			return Response.status(408).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FF": // No user found with given email or pan or national id
+			return Response.status(409).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			// Logged out successfully
+			return Response.ok(logoutResponse)
+				.header("Access-Control-Allow-Origin", "*").build();
+		}
 	}
 
 	@Path("signup")
@@ -104,8 +137,28 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response signup(SignUp req) {
-
-		return Response.ok(UserManager.signup(req)).header("Access-Control-Allow-Origin", "*").build();
+		SignUpResponse signUpResponse = UserManager.signup(req);
+		String hex = signUpResponse.getResponseHexCode();
+		switch (hex) {
+		case "F8": // PAN length is not between 16 and 20 numbers
+			return Response.status(401).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "F9": // A registered user is using this PAN
+			return Response.status(402).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FA": // National ID length is not 14 numbers
+			return Response.status(403).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FB": // A registered user is using this National ID
+			return Response.status(405).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FF": // User already registered with this email. Try signing in
+			return Response.status(406).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FC": // Catch Block
+			return Response.status(407).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FD": // FAILED: Email or Password is NULL
+			return Response.status(408).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			// Logged out successfully
+			return Response.ok(signUpResponse)
+				.header("Access-Control-Allow-Origin", "*").build();
+		}
 	}
 
 	// ----------------------------------------End Of
@@ -383,7 +436,41 @@ public class Services {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// -----------------------------------------Start of Employee
 	// Services-------------------------------------------//
+	
+	
+	/**
+	 * Gets All the attendance times of a specific Employee based on their Employee ID
+	 * @param superSSN: ID of the Employee to get their data.
+	 * @return AttendanceTimeArray
+	 */
+	@Path("employee/getLogTimes")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getLogTimes(EmployeeSentModel superSSN) {
 
+		return Response.ok(EmployeeManager.getAllAttendanceTimes(superSSN)).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+	
+	
+	/**
+	 * Returns Array with all registered Employees.
+	 * @param superSSN: ID of Supervisor and JobID.
+	 * @return EmployeeArray
+	 */
+	@Path("employee/getAllEmployees")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllEmployees(EmployeeSentModel superSSN) {
+
+		return Response.ok(EmployeeManager.getAllEmployees(superSSN)).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+	
+	
+	
 	/**
 	 * Returns Array with all Paramedics
 	 * @param superSSN: ID of Supervisor.
@@ -393,7 +480,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllParamedics(DataModel superSSN) {
+	public Response getAllParamedics(EmployeeSentModel superSSN) {
 
 		return Response.ok(EmployeeManager.getAllParamedics(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
@@ -408,7 +495,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getActiveParamedics(DataModel superSSN) {
+	public Response getActiveParamedics(EmployeeSentModel superSSN) {
 
 		return Response.ok(EmployeeManager.getActiveParamedics(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
@@ -423,7 +510,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getInActiveParamedics(DataModel superSSN) {
+	public Response getInActiveParamedics(EmployeeSentModel superSSN) {
 
 		return Response.ok(EmployeeManager.getInActiveParamedics(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
@@ -438,7 +525,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllDrivers(DataModel superSSN) {
+	public Response getAllDrivers(EmployeeSentModel superSSN) {
 
 		return Response.ok(EmployeeManager.getAllDrivers(superSSN)).header("Access-Control-Allow-Origin", "*").build();
 	}
@@ -452,7 +539,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getActiveDrivers(DataModel superSSN) {
+	public Response getActiveDrivers(EmployeeSentModel superSSN) {
 
 		return Response.ok(EmployeeManager.getActiveDrivers(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
@@ -467,7 +554,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getInActiveDrivers(DataModel superSSN) {
+	public Response getInActiveDrivers(EmployeeSentModel superSSN) {
 
 		return Response.ok(EmployeeManager.getInActiveDrivers(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
@@ -482,7 +569,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getDatabyEmployeeID(DataModel EID) {
+	public Response getDatabyEmployeeID(EmployeeSentModel EID) {
 
 		return Response.ok(EmployeeManager.getDatabyEmployeeID(EID)).header("Access-Control-Allow-Origin", "*")
 				.build();

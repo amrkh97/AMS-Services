@@ -1,43 +1,55 @@
 package BLL;
 
 import DAL.EmployeeDAL;
-import Models.Data.DataModel;
+import Models.Employee.AttendanceTimeArray;
 import Models.Employee.EmployeeArray;
 import Models.Employee.EmployeeModel;
+import Models.Employee.EmployeeSentModel;
 
 public class EmployeeManager {
 
-	public static EmployeeArray getAllParamedics(DataModel superSSN) {
+	public static AttendanceTimeArray getAllAttendanceTimes(EmployeeSentModel employeeID) {
+		
+		return EmployeeDAL.getAllAttendanceTimes(employeeID);
+	}
+	
+	
+	public static EmployeeArray getAllEmployees(EmployeeSentModel superSSN) {
+
+		return EmployeeDAL.getAllEmployees(superSSN);
+	}
+	
+	public static EmployeeArray getAllParamedics(EmployeeSentModel superSSN) {
 
 		return EmployeeDAL.getAllParamedics(superSSN);
 	}
 
-	public static EmployeeArray getActiveParamedics(DataModel superSSN) {
+	public static EmployeeArray getActiveParamedics(EmployeeSentModel superSSN) {
 
 		return EmployeeDAL.getActiveParamedics(superSSN);
 	}
 
-	public static EmployeeArray getInActiveParamedics(DataModel superSSN) {
+	public static EmployeeArray getInActiveParamedics(EmployeeSentModel superSSN) {
 
 		return EmployeeDAL.getInActiveParamedics(superSSN);
 	}
 
-	public static EmployeeArray getAllDrivers(DataModel superSSN) {
+	public static EmployeeArray getAllDrivers(EmployeeSentModel superSSN) {
 
 		return EmployeeDAL.getAllDrivers(superSSN);
 	}
 
-	public static EmployeeArray getActiveDrivers(DataModel superSSN) {
+	public static EmployeeArray getActiveDrivers(EmployeeSentModel superSSN) {
 
 		return EmployeeDAL.getActiveDrivers(superSSN);
 	}
 
-	public static EmployeeArray getInActiveDrivers(DataModel superSSN) {
+	public static EmployeeArray getInActiveDrivers(EmployeeSentModel superSSN) {
 
 		return EmployeeDAL.getInActiveDrivers(superSSN);
 	}
 	
-	public static EmployeeModel getDatabyEmployeeID(DataModel EID) {
+	public static EmployeeModel getDatabyEmployeeID(EmployeeSentModel EID) {
 		
 		return EmployeeDAL.getDatabyEmployeeID(EID);
 	}
