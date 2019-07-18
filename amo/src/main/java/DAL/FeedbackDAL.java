@@ -54,7 +54,7 @@ public class FeedbackDAL {
 		serverResponse.setResponseHexCode(cstmt.getString(6));
 		serverResponse.setResponseMsg(cstmt.getString(7));
 
-		System.out.println("Insertion Result: " + cstmt.getString(5));
+		System.out.println("Insertion Result: " + cstmt.getString(7));
 
 		return serverResponse;
 	}
