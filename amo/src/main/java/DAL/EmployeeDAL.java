@@ -435,7 +435,7 @@ public class EmployeeDAL {
 				Double workMinutes = (inHours - Math.floor(inHours)) * 60;
 				attendanceTimes.setWorkingHours(workHours.toString());
 				attendanceTimes.setWorkingMinutes(workMinutes.toString());
-
+				attendanceTimes.setWorkingTime(attendanceTimes.getWorkingHours()+":"+attendanceTimes.getWorkingMinutes());
 				allAttendanceTimes.add(attendanceTimes);
 			}
 
