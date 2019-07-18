@@ -60,7 +60,7 @@ public class FeedbackManger {
 
 		S= FeedbackDAL.updateFeedback(feedbackModel,conn);
 		} catch (Exception e) {
-			System.out.println("i hav error");
+			System.out.println("i have error");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 
