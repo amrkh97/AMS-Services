@@ -111,18 +111,14 @@ public class Services {
 			return Response.status(401).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "02": // User is awaiting verification
 			return Response.status(402).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
-		case "03": // User is already logged in
-			return Response.status(403).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
-		case "04": // This user is not verified
-			return Response.status(405).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FC": // Catch Block
-			return Response.status(406).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(403).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FD": // FAILED: User ID is NULL
-			return Response.status(407).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(405).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FE": // User status undefined
-			return Response.status(408).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(406).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FF": // No user found with given email or pan or national id
-			return Response.status(409).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(407).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			// Logged out successfully
 			return Response.ok(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
