@@ -1,7 +1,7 @@
 package Models;
 
-public class ServerResponseIntOutput extends ServerResponse{
-	 
+public class ServerResponseIntOutput extends ServerResponse {
+
 	private Integer medicalRecordID;
 
 	public Integer getMedicalRecordID() {
@@ -11,7 +11,5 @@ public class ServerResponseIntOutput extends ServerResponse{
 	public void setMedicalRecordID(Integer medicalRecordID) {
 		this.medicalRecordID = medicalRecordID;
 	}
-
-
 
 }

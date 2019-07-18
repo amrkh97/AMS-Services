@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+
 import DB.DBManager;
 import Models.ServerResponse;
 import Models.AmbulanceVehicle.AmbulanceArray;
@@ -46,6 +47,7 @@ public class AmbulanceVehicleDAL {
 
 				Array.add(_AmbulanceVehicle);
 			}
+			rs.close();
 
 		} catch (SQLException e) {
 
@@ -63,7 +65,6 @@ public class AmbulanceVehicleDAL {
 		OBJ.setAmbulanceArray(Array);
 		return OBJ;
 	}
-
 
 	public static AmbulanceVehicleModel getCarByID(int VIN) {
 
@@ -85,26 +86,26 @@ public class AmbulanceVehicleDAL {
 			}
 
 			ResultSet resultSet = cstmt.executeQuery();
-				resultSet.next();
-				_AmbulanceVehicle = new AmbulanceVehicleModel();
-				_AmbulanceVehicle.setVin(resultSet.getInt("Vin"));
-				_AmbulanceVehicle.setImplication(resultSet.getString("Implication"));
-				_AmbulanceVehicle.setMake(resultSet.getString("Make"));
-				_AmbulanceVehicle.setType(resultSet.getString("Type"));
-				_AmbulanceVehicle.setProductionYear(resultSet.getString("ProductionYear"));
-				_AmbulanceVehicle.setRegYear(resultSet.getString("RegYear"));
-				_AmbulanceVehicle.setLicencePlate(resultSet.getString("LicencePlate"));
-				_AmbulanceVehicle.setOwnerName(resultSet.getString("OwnerName"));
-				_AmbulanceVehicle.setLicenceStateOrProvince(resultSet.getString("LicenceStateOrProvince"));
-				_AmbulanceVehicle.setServiceStartDate(resultSet.getString("ServiceStartDate"));
-				_AmbulanceVehicle.setEngineNumber(resultSet.getString("EngineNumber"));
-				_AmbulanceVehicle.setBrand(resultSet.getString("Brand"));
-				_AmbulanceVehicle.setChasiahNumber(resultSet.getString("ChasiahNumber"));
-				_AmbulanceVehicle.setModel(resultSet.getString("Model"));
-				_AmbulanceVehicle.setDriverPhoneNumber(resultSet.getString("DriverPhoneNumber"));
-				_AmbulanceVehicle.setVehicleStatus(resultSet.getString("VehicleStatus"));
-				_AmbulanceVehicle.setAmbulanceVehiclePicture(resultSet.getString("AmbulanceVehiclePicture"));
-
+			resultSet.next();
+			_AmbulanceVehicle = new AmbulanceVehicleModel();
+			_AmbulanceVehicle.setVin(resultSet.getInt("Vin"));
+			_AmbulanceVehicle.setImplication(resultSet.getString("Implication"));
+			_AmbulanceVehicle.setMake(resultSet.getString("Make"));
+			_AmbulanceVehicle.setType(resultSet.getString("Type"));
+			_AmbulanceVehicle.setProductionYear(resultSet.getString("ProductionYear"));
+			_AmbulanceVehicle.setRegYear(resultSet.getString("RegYear"));
+			_AmbulanceVehicle.setLicencePlate(resultSet.getString("LicencePlate"));
+			_AmbulanceVehicle.setOwnerName(resultSet.getString("OwnerName"));
+			_AmbulanceVehicle.setLicenceStateOrProvince(resultSet.getString("LicenceStateOrProvince"));
+			_AmbulanceVehicle.setServiceStartDate(resultSet.getString("ServiceStartDate"));
+			_AmbulanceVehicle.setEngineNumber(resultSet.getString("EngineNumber"));
+			_AmbulanceVehicle.setBrand(resultSet.getString("Brand"));
+			_AmbulanceVehicle.setChasiahNumber(resultSet.getString("ChasiahNumber"));
+			_AmbulanceVehicle.setModel(resultSet.getString("Model"));
+			_AmbulanceVehicle.setDriverPhoneNumber(resultSet.getString("DriverPhoneNumber"));
+			_AmbulanceVehicle.setVehicleStatus(resultSet.getString("VehicleStatus"));
+			_AmbulanceVehicle.setAmbulanceVehiclePicture(resultSet.getString("AmbulanceVehiclePicture"));
+			resultSet.close();
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -157,6 +158,7 @@ public class AmbulanceVehicleDAL {
 
 				Array.add(_AmbulanceVehicle);
 			}
+			rs.close();
 
 		} catch (SQLException e) {
 
@@ -210,7 +212,7 @@ public class AmbulanceVehicleDAL {
 				_AmbulanceVehicle.setAmbulanceVehiclePicture(rs.getString("AmbulanceVehiclePicture"));
 				Array.add(_AmbulanceVehicle);
 			}
-
+			rs.close();
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -226,7 +228,7 @@ public class AmbulanceVehicleDAL {
 		OBJ.setAmbulanceArray(Array);
 		return OBJ;
 	}
-	
+
 	// New Car insertion
 	public static ServerResponse insertCar(AmbulanceVehicleModel Car) {
 		String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_Insert ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
@@ -278,7 +280,7 @@ public class AmbulanceVehicleDAL {
 		return _ServerResponse;
 
 	}
-	
+
 	public static ServerResponse UpdateCar(AmbulanceVehicleModel Car) {
 
 		String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_Update ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
@@ -365,7 +367,6 @@ public class AmbulanceVehicleDAL {
 		}
 		return _ServerResponse;
 	}
-
 
 	public static ServerResponse DeleteCars(int vin) {
 

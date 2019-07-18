@@ -39,7 +39,7 @@ public class MedicineDAL {
 				medicine.setMedicineName(rs.getString("MedicineName"));
 				medicineList.add(medicine);
 			}
-
+			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -89,6 +89,7 @@ public class MedicineDAL {
 				// At This Point I Know That There Is No Entries at the database
 				// TODO return an Error Indicating there was no data returned
 			}
+			resultSet.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -278,7 +279,7 @@ public class MedicineDAL {
 				medicine.setMedicineName(rs.getString("MedicineName"));
 				medicineList.add(medicine);
 			}
-
+			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -323,7 +324,7 @@ public class MedicineDAL {
 				medicine.setMedicineName(rs.getString("MedicineName"));
 				medicineList.add(medicine);
 			}
-
+			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -368,7 +369,7 @@ public class MedicineDAL {
 				medicine.setMedicineName(rs.getString("MedicineName"));
 				medicineList.add(medicine);
 			}
-
+			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -413,7 +414,7 @@ public class MedicineDAL {
 				medicine.setMedicineName(rs.getString("MedicineName"));
 				medicineList.add(medicine);
 			}
-
+			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -456,7 +457,7 @@ public class MedicineDAL {
 			} else {
 				// TODO Handle What To Return if No Single Row Was Found
 			}
-
+			resultSet.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -500,7 +501,7 @@ public class MedicineDAL {
 				medicine.setMedicineName(resultSet.getString("MedicineName"));
 				medicineList.add(medicine);
 			}
-
+			resultSet.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

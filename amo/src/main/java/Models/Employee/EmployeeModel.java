@@ -14,7 +14,7 @@ public class EmployeeModel {
 	private String employeeStatus;
 	private String photo;
 	private String age;
-	
+
 	private String birthDate;
 	private String country;
 	private String city;
@@ -25,10 +25,10 @@ public class EmployeeModel {
 	private Integer jobID;
 	private String logOutStamp;
 	private String logInStatus;
-	
+
 	private String fullName;
 	private String jobTitle;
-	
+
 	public Integer getEid() {
 		return eid;
 	}

@@ -29,6 +29,7 @@ public class IncidentPriorityDAL {
 				incidentPriority.setPriorityName(rs.getString("PriorityName"));
 				incidentPriorityArray.add(incidentPriority);
 			}
+			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

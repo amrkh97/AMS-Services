@@ -14,12 +14,13 @@ import Models.Locations.LocationArray;
 
 public class PatientLocationDAL {
 
-	public static DataModel addPatientLocation(int nationalID, String addressPatient, String latitude, String longitude) {
+	public static DataModel addPatientLocation(int nationalID, String addressPatient, String latitude,
+			String longitude) {
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_Patient_Locations] ?,?,?,?,?";
 		String Result = "";
 		Connection conn = DBManager.getDBConn();
-		DataModel OBJ =new DataModel();
-		
+		DataModel OBJ = new DataModel();
+
 		try {
 
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -73,7 +74,7 @@ public class PatientLocationDAL {
 				_location.setLongitude(RS.getString("Longitude"));
 				patientLocations.add(_location);
 			}
-
+			RS.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

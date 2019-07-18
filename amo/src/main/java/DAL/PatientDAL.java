@@ -8,7 +8,6 @@ import java.sql.Types;
 import java.util.ArrayList;
 
 import DB.DBManager;
-import Models.CustomClass;
 import Models.ServerResponse;
 import Models.ServerResponse_ID;
 import Models.Patient.PatientArray;
@@ -45,6 +44,7 @@ public class PatientDAL {
 
 			Array.add(patient);
 		}
+		rs.close();
 		OBJ.setPatientArray(Array);
 		return OBJ;
 	}
@@ -81,7 +81,7 @@ public class PatientDAL {
 
 			Array.add(patient);
 		}
-
+		rs.close();
 		OBJ.setPatientArray(Array);
 		return OBJ;
 	}
@@ -118,7 +118,7 @@ public class PatientDAL {
 
 			Array.add(patient);
 		}
-
+		rs.close();
 		OBJ.setPatientArray(Array);
 		return OBJ;
 	}
@@ -272,8 +272,7 @@ public class PatientDAL {
 
 		ResultSet rs = cstmt.executeQuery();
 
-		while(rs.next())
-		{
+		while (rs.next()) {
 			patient.setPatientID(rs.getInt("patientID"));
 			patient.setPatientFName(rs.getString("patientFName"));
 			patient.setPatientLName(rs.getString("patientLName"));
@@ -289,7 +288,7 @@ public class PatientDAL {
 			patient.setPatientNationalID(rs.getString("patientNationalID"));
 
 		}
-		
+		rs.next();
 		return patient;
 	}
 

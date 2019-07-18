@@ -12,5 +12,5 @@ public class LocationArray {
 	public void setLocationArray(ArrayList<Location> locationArray) {
 		this.locationArray = locationArray;
 	}
-	
+
 }

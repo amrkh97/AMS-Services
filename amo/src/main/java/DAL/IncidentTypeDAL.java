@@ -31,6 +31,7 @@ public class IncidentTypeDAL {
 				incidentType.setTypeNote(rs.getString("TypeNote"));
 				incidentTypeArray.add(incidentType);
 			}
+			rs.close();
 		} catch (SQLException e) {
 
 			e.printStackTrace();

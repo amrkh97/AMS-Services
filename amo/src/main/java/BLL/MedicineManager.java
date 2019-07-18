@@ -64,12 +64,12 @@ public class MedicineManager {
 	}
 
 	public static ServerResponse UpdateMedicine(Medicine MED) {
-		
+
 		return MedicineDAL.UpdateMedicine(MED);
 	}
 
 	public static ServerResponse DeleteMedicine(String BarCode) {
-		
+
 		return MedicineDAL.DeleteMedicine(BarCode);
 	}
 

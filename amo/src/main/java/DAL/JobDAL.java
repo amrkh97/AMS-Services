@@ -36,7 +36,7 @@ public class JobDAL {
 
 				allJobs.add(currentJob);
 			}
-
+			RS.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,7 +61,7 @@ public class JobDAL {
 		Connection conn = DBManager.getDBConn();
 		ArrayList<Job> allJobs = new ArrayList<>();
 		JobArray OBJ = new JobArray();
-		
+
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setString(1, jobTitle);
@@ -81,6 +81,7 @@ public class JobDAL {
 
 			}
 
+			RS.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -124,6 +125,7 @@ public class JobDAL {
 
 			}
 
+			RS.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

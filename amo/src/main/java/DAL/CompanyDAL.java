@@ -38,6 +38,7 @@ public class CompanyDAL {
 
 				allCompanies.add(currentCompany);
 			}
+			RS.close();
 
 		} catch (SQLException e) {
 
@@ -76,7 +77,7 @@ public class CompanyDAL {
 			currentCompany.setCompanyName(RS.getString("CompanyName"));
 			currentCompany.setCompanyStatus(RS.getString("CompanyStatus"));
 			currentCompany.setCompanyPhoneNumber(RS.getString("CompanyPhone"));
-
+			RS.close();
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -115,6 +116,7 @@ public class CompanyDAL {
 			currentCompany.setCompanyStatus(RS.getString("CompanyStatus"));
 			currentCompany.setCompanyPhoneNumber(RS.getString("CompanyPhone"));
 
+			RS.close();
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -155,7 +157,7 @@ public class CompanyDAL {
 				currentCompany.setCompanyPhoneNumber(RS.getString("CompanyPhone"));
 				AllcurrentCompany.add(currentCompany);
 			}
-
+			RS.close();
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -203,11 +205,11 @@ public class CompanyDAL {
 			}
 		}
 		OBJ.setResponseHexCode(resultofQuery);
-		if(OBJ.getResponseHexCode().equals("00")) {
+		if (OBJ.getResponseHexCode().equals("00")) {
 			OBJ.setResponseMsg("Insertion Success");
-		}else if(OBJ.getResponseHexCode().equals("01")) {
+		} else if (OBJ.getResponseHexCode().equals("01")) {
 			OBJ.setResponseMsg("Company Already Exists");
-		}else {
+		} else {
 			OBJ.setResponseMsg("Company Name was not sent correctly!");
 		}
 		return OBJ;
@@ -245,9 +247,9 @@ public class CompanyDAL {
 			}
 		}
 		OBJ.setResponseHexCode(resultofQuery);
-		if(OBJ.getResponseHexCode().equals("00")) {
+		if (OBJ.getResponseHexCode().equals("00")) {
 			OBJ.setResponseMsg("Update Succesfull");
-		}else {
+		} else {
 			OBJ.setResponseMsg("Update Failed! Company Doesn't exist");
 		}
 		return OBJ;
@@ -281,9 +283,9 @@ public class CompanyDAL {
 			}
 		}
 		OBJ.setResponseHexCode(resultofQuery);
-		if(OBJ.getResponseHexCode().equals("00")) {
+		if (OBJ.getResponseHexCode().equals("00")) {
 			OBJ.setResponseMsg("Deletion Succesfull");
-		}else {
+		} else {
 			OBJ.setResponseMsg("Delete Failed!");
 		}
 		return OBJ;

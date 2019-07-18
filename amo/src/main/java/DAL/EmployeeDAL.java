@@ -49,6 +49,7 @@ public class EmployeeDAL {
 
 				allParamedics.add(currentEmployee);
 			}
+			RS.close();
 
 		} catch (SQLException e) {
 
@@ -94,6 +95,7 @@ public class EmployeeDAL {
 
 				allParamedics.add(currentEmployee);
 			}
+			RS.close();
 
 		} catch (SQLException e) {
 
@@ -139,6 +141,7 @@ public class EmployeeDAL {
 
 				allParamedics.add(currentEmployee);
 			}
+			RS.close();
 
 		} catch (SQLException e) {
 
@@ -184,6 +187,7 @@ public class EmployeeDAL {
 
 				allParamedics.add(currentEmployee);
 			}
+			RS.close();
 
 		} catch (SQLException e) {
 
@@ -231,6 +235,7 @@ public class EmployeeDAL {
 
 				allParamedics.add(currentEmployee);
 			}
+			RS.close();
 
 		} catch (SQLException e) {
 
@@ -276,6 +281,7 @@ public class EmployeeDAL {
 
 				allParamedics.add(currentEmployee);
 			}
+			RS.close();
 
 		} catch (SQLException e) {
 
@@ -321,6 +327,7 @@ public class EmployeeDAL {
 
 				allParamedics.add(currentEmployee);
 			}
+			RS.close();
 
 		} catch (SQLException e) {
 
@@ -398,8 +405,8 @@ public class EmployeeDAL {
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<AttendanceTimeModel> allAttendanceTimes = new ArrayList<AttendanceTimeModel>();
-		AttendanceTimeArray OBJ = new AttendanceTimeArray(); 
-		
+		AttendanceTimeArray OBJ = new AttendanceTimeArray();
+
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setInt(1, employeeID.getSentID());
@@ -408,27 +415,27 @@ public class EmployeeDAL {
 			while (RS.next()) {
 
 				AttendanceTimeModel attendanceTimes = new AttendanceTimeModel();
-				
+
 				String logDate = RS.getString(1);
 				String arrayStrings[] = logDate.split(" ");
-				
+
 				attendanceTimes.setLogInDate(arrayStrings[0]);
 				attendanceTimes.setLogInTime(arrayStrings[1]);
-				
-			    logDate = RS.getString(2);
-			    arrayStrings = logDate.split(" ");
-				
+
+				logDate = RS.getString(2);
+				arrayStrings = logDate.split(" ");
+
 				attendanceTimes.setLogOutDate(arrayStrings[0]);
 				attendanceTimes.setLogOutTime(arrayStrings[1]);
-				
+
 				Integer inMinutes = Integer.parseInt(RS.getString(3));
-				
-				Double inHours = (double) (inMinutes/60);
+
+				Double inHours = (double) (inMinutes / 60);
 				Integer workHours = (int) Math.floor(inHours);
-				Double workMinutes = (inHours - Math.floor(inHours))*60;
+				Double workMinutes = (inHours - Math.floor(inHours)) * 60;
 				attendanceTimes.setWorkingHours(workHours.toString());
 				attendanceTimes.setWorkingMinutes(workMinutes.toString());
-				
+
 				allAttendanceTimes.add(attendanceTimes);
 			}
 
@@ -444,7 +451,7 @@ public class EmployeeDAL {
 				e.printStackTrace();
 			}
 		}
-		OBJ. setAttendanceArray(allAttendanceTimes);
+		OBJ.setAttendanceArray(allAttendanceTimes);
 		return OBJ;
 
 	}

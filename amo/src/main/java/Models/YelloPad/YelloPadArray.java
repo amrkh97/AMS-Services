@@ -13,5 +13,4 @@ public class YelloPadArray {
 		this.yelloPadArray = yelloPadArray;
 	}
 
-	
 }
