@@ -25,8 +25,8 @@ public class YelloPadDAL {
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<YelloPadModel> allYelloPads = new ArrayList<YelloPadModel>();
-		YelloPadArray OBJ = new 	YelloPadArray()  ;
-	
+		YelloPadArray OBJ = new YelloPadArray();
+
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
@@ -42,7 +42,7 @@ public class YelloPadDAL {
 
 				allYelloPads.add(currentYelloPad);
 			}
-
+			RS.close();
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -67,8 +67,8 @@ public class YelloPadDAL {
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<YelloPadModel> allYelloPads = new ArrayList<YelloPadModel>();
-		YelloPadArray OBJ = new 	YelloPadArray()  ;
-	
+		YelloPadArray OBJ = new YelloPadArray();
+
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
@@ -84,7 +84,7 @@ public class YelloPadDAL {
 
 				allYelloPads.add(currentYelloPad);
 			}
-
+			RS.close();
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -110,8 +110,8 @@ public class YelloPadDAL {
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<YelloPadModel> allYelloPads = new ArrayList<YelloPadModel>();
-		YelloPadArray OBJ = new 	YelloPadArray();
-	
+		YelloPadArray OBJ = new YelloPadArray();
+
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
@@ -127,7 +127,7 @@ public class YelloPadDAL {
 
 				allYelloPads.add(currentYelloPad);
 			}
-
+			RS.close();
 		} catch (SQLException e) {
 
 			e.printStackTrace();
@@ -173,7 +173,7 @@ public class YelloPadDAL {
 			currentYelloPad.setNetworkCard(RS.getString(3));
 			currentYelloPad.setStatus(RS.getString(14));
 			currentYelloPad.setPicture(RS.getString(15));
-
+			RS.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -206,7 +206,7 @@ public class YelloPadDAL {
 			RS.next();
 
 			currentYelloPad.setStatus(RS.getString(1));
-
+			RS.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -237,6 +237,7 @@ public class YelloPadDAL {
 			RS = cstmt.executeQuery();
 			RS.next();
 			currentYelloPad.setNetworkCard(RS.getString(1));
+			RS.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

@@ -19,7 +19,7 @@ public class CompanyManager {
 	public static CompanyModel getCompanyByID(DataModel companyID) {
 		return CompanyDAL.getCompanyByID(companyID);
 	}
-	
+
 	public static CompanyArray getCompanyByStatus(DataModel companyStatus) {
 		return CompanyDAL.getCompanyByStatus(companyStatus);
 	}

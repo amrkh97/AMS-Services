@@ -2,16 +2,10 @@ package DAL;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
 
-import DB.DBManager;
 import Models.ServerResponse;
 import Models.Feedback.FeedbackModel;
-import Models.Priority.IncidentPriority;
-import Models.Priority.IncidentPriorityJson;
 
 public class FeedbackDAL {
 	public static ServerResponse insertFeedback(FeedbackModel feedbackModel, Connection conn) throws Exception {

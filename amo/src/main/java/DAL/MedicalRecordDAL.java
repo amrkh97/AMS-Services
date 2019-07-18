@@ -121,7 +121,7 @@ public class MedicalRecordDAL {
 
 				allMedicalRecords.add(currentMedicalRecord);
 			}
-
+			RS.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -186,7 +186,7 @@ public class MedicalRecordDAL {
 				allMedicalRecords.add(currentMedicalRecord);
 
 			}
-
+			RS.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -251,7 +251,7 @@ public class MedicalRecordDAL {
 				allMedicalRecords.add(currentMedicalRecord);
 
 			}
-
+			RS.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -275,7 +275,7 @@ public class MedicalRecordDAL {
 		ResultSet RS;
 		Connection conn = DBManager.getDBConn();
 		ArrayList<MedicalRecord> allMedicalRecords = new ArrayList<>();
-		MedicalRecordArray OBJ =new MedicalRecordArray();
+		MedicalRecordArray OBJ = new MedicalRecordArray();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setNString(1, medicalRecordStatus);
@@ -316,7 +316,7 @@ public class MedicalRecordDAL {
 				allMedicalRecords.add(currentMedicalRecord);
 
 			}
-
+			RS.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -421,7 +421,8 @@ public class MedicalRecordDAL {
 		return _ServerResponse;
 
 	}
-	public static ServerResponse deleteMedicalRecordByPatient(Integer patientID) throws Exception  {
+
+	public static ServerResponse deleteMedicalRecordByPatient(Integer patientID) throws Exception {
 		String SPsql = "EXEC usp_MedicalRecord_DeleteByPatient ?,?,?";
 		Connection conn = DBManager.getDBConn();
 		ServerResponse _ServerResponse = new ServerResponse();
@@ -450,6 +451,5 @@ public class MedicalRecordDAL {
 		return _ServerResponse;
 
 	}
-
 
 }

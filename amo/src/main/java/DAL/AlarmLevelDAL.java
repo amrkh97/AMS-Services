@@ -30,6 +30,7 @@ public class AlarmLevelDAL {
 				alarmLevel.setAlarmLevelNote(rs.getString("AlarmLevelNote"));
 				alarmLevelArray.add(alarmLevel);
 			}
+			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

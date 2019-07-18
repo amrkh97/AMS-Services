@@ -35,7 +35,7 @@ public class AmbulanceMapManager {
 	public static ServerResponse deleteAmbulanceMap(DataModel currentAmbulanceMap) {
 		return AmbulanceMapDAL.deleteAmbulanceMap(currentAmbulanceMap.getSentID());
 	}
-	
+
 	public static AllAmbulanceMapDataModel getRelevantData(DataModel vin) {
 		Connection intermediateConnection = DBManager.getDBConn();
 		AllAmbulanceMapDataModel obj = new AllAmbulanceMapDataModel();

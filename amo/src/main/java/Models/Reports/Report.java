@@ -1,5 +1,6 @@
 package Models.Reports;
 //---This Data type is the one that works with DATETIME in SQL---
+
 //import java.sql.Timestamp;
 //---------------------------------------------------------------
 
@@ -9,8 +10,9 @@ public class Report {
 	private String reportIssueTime;
 	private int patientId;
 	private String reportDestination;
-    private String reportStatus;
- 	public int getReportId() {
+	private String reportStatus;
+
+	public int getReportId() {
 		return reportId;
 	}
 
@@ -57,5 +59,5 @@ public class Report {
 	public void setReportStatus(String reportStatus) {
 		this.reportStatus = reportStatus;
 	}
-		
+
 }

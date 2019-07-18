@@ -8,7 +8,6 @@ public class ServerResponse_ID {
 	protected String responseMsg;
 	protected List<Errors> errors;
 	private int Id;
-	
 
 	/**
 	 * @return the responseHexCode

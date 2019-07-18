@@ -1,8 +1,8 @@
 package BLL;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
+
 import DAL.MedicalRecordDAL;
 import DAL.PatientDAL;
 import DB.DBManager;
@@ -141,9 +141,9 @@ public class PatientManger {
 		return response;
 
 	}
-	
-	//---------------------------------------------------------------Insert-------------------------------------------------------//
-	
+
+	// ---------------------------------------------------------------Insert-------------------------------------------------------//
+
 	public static ServerResponse_ID addNewPatient(PatientModel patientModel) {
 
 		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
@@ -195,8 +195,8 @@ public class PatientManger {
 		return S;
 
 	}
-	//---------------------------------------------------------------delete-------------------------------------------------------//
-	
+	// ---------------------------------------------------------------delete-------------------------------------------------------//
+
 	public static ServerResponse updatePatientData(PatientModel patientModel) {
 		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
 		ServerResponse S = new ServerResponse();
@@ -235,8 +235,8 @@ public class PatientManger {
 		return S;
 	}
 
-	//---------------------------------------------------------------delete-------------------------------------------------------//
-	
+	// ---------------------------------------------------------------delete-------------------------------------------------------//
+
 	public static ServerResponse deletePatient(PatientModel patient) {
 		int PatientID = patient.getPatientID();
 		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
@@ -249,20 +249,19 @@ public class PatientManger {
 			return S;
 
 		}
-			try {
-				Array = PatientDAL.getPatientById(patient.getPatientID(),conn).getPatientArray();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+		try {
+			Array = PatientDAL.getPatientById(patient.getPatientID(), conn).getPatientArray();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		if (Array.size() == 0) {
-		
+
 			S.setResponseHexCode("FF");
 			S.setResponseMsg("Patient NOT FOUND in database");
 			return S;
-		} 
-		else {
+		} else {
 			ServerResponse deleteLoc = null;
 			try {
 				deleteLoc = PatientDAL.deletePatientLoc(PatientID);
@@ -286,21 +285,20 @@ public class PatientManger {
 						e.printStackTrace();
 					}
 				} else {
-					
-				}
-					return deleteMedical;
-				}
 
-			
+				}
+				return deleteMedical;
+			}
+
 			else {
 				return deleteLoc;
 			}
 		}
-		
+
 	}
 
 	public static PatientModel getDataByID(Integer patientID) {
-		
+
 		Connection conn = DBManager.getDBConn();
 		PatientModel response = new PatientModel();
 		try {
@@ -322,9 +320,8 @@ public class PatientManger {
 			}
 
 		}
-		
+
 		return response;
 
 	}
 }
-	

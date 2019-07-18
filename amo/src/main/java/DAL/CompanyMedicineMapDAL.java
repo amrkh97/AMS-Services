@@ -37,6 +37,7 @@ public class CompanyMedicineMapDAL {
 				_Map.setMapStatus(rs.getString("MapStatus"));
 				Array.add(_Map);
 			}
+			rs.close();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

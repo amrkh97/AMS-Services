@@ -1,17 +1,13 @@
 package Models;
 
-public class CustomClass<T,U>
-{
+public class CustomClass<T, U> {
 	private T first;
 	private U second;
-	
-	
 
-	public CustomClass()
-	{
+	public CustomClass() {
 	}
-	public CustomClass(T first, U second)
-	{
+
+	public CustomClass(T first, U second) {
 		this.setFirst(first);
 		this.setSecond(second);
 	}
@@ -31,6 +27,5 @@ public class CustomClass<T,U>
 	public void setSecond(U second) {
 		this.second = second;
 	}
-	
-	
+
 }

@@ -14,6 +14,7 @@ import BLL.AmbulanceVehicleManger;
 import BLL.CompanyManager;
 import BLL.CompanyMedicineMapManager;
 import BLL.EmployeeManager;
+import BLL.FeedbackManger;
 import BLL.IncidentPriorityManager;
 import BLL.IncidentTypeManager;
 import BLL.JobManager;
@@ -22,10 +23,10 @@ import BLL.MedicalRecordManager;
 import BLL.MedicineManager;
 import BLL.PatientLocationManager;
 import BLL.PatientManger;
+import BLL.ReceiptsManager;
+import BLL.ReportManager;
 import BLL.UserManager;
 import BLL.YelloPadManager;
-import BLL.ReportManager;
-import BLL.ReceiptsManager;
 import Models.CustomClass;
 import Models.ServerResponse;
 import Models.ServerResponse_ID;
@@ -35,7 +36,6 @@ import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.Data.DataModel;
 import Models.Employee.EmployeeSentModel;
-import BLL.FeedbackManger;
 import Models.Feedback.FeedbackModel;
 import Models.Job.Job;
 import Models.Locations.Location;
@@ -46,12 +46,12 @@ import Models.Patient.PatientArray;
 import Models.Patient.PatientModel;
 import Models.PatientLocation.PatientLoc;
 import Models.Receipts.Receipt;
+import Models.Reports.Report;
 import Models.Users.LoginCredentialsRequest;
 import Models.Users.LoginResponse;
 import Models.Users.LogoutResponse;
 import Models.Users.SignUp;
 import Models.Users.SignUpResponse;
-import Models.Reports.Report;
 
 /**
  * Root resource (exposed at "api" path)
@@ -72,8 +72,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response login(LoginCredentialsRequest req) 
-	{
+	public Response login(LoginCredentialsRequest req) {
 		LoginResponse loginResponse = UserManager.login(req.getEmailOrPAN(), req.getPassword());
 		String hex = loginResponse.getResponseHexCode();
 		switch (hex) {
@@ -96,8 +95,7 @@ public class Services {
 		case "FF": // Not found
 			return Response.status(409).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
-			return Response.ok(loginResponse)
-				.header("Access-Control-Allow-Origin", "*").build();
+			return Response.ok(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
 
@@ -127,8 +125,7 @@ public class Services {
 			return Response.status(409).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			// Logged out successfully
-			return Response.ok(logoutResponse)
-				.header("Access-Control-Allow-Origin", "*").build();
+			return Response.ok(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
 
@@ -156,8 +153,7 @@ public class Services {
 			return Response.status(408).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			// Logged out successfully
-			return Response.ok(signUpResponse)
-				.header("Access-Control-Allow-Origin", "*").build();
+			return Response.ok(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
 
@@ -315,7 +311,8 @@ public class Services {
 
 	/**
 	 * Adds an AmbulanceMap with A paramedic, A driver and a YelloPad.
-	 * @param AmbulanceToBeAdded: Ambulance Map Model that contains All the IDs. 
+	 * 
+	 * @param AmbulanceToBeAdded: Ambulance Map Model that contains All the IDs.
 	 * @return ServerResponse
 	 */
 	@Path("ambulanceMap/addAmbulanceMap")
@@ -327,21 +324,19 @@ public class Services {
 		response = AmbulanceMapManager.addAmbulanceMap(AmbulanceToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01":
-			return Response.status(401).entity(response)
-					.header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02":
-			return Response.status(402).entity(response)
-					.header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default:
-			return Response.ok(response)
-					.header("Access-Control-Allow-Origin", "*").build();
-		
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+
 		}
-		}
+	}
 
 	/**
 	 * Returns all data of an ambulance map based on the car's Vin.
-	 * @param ID: VIN of the Ambulance Vehicle 
+	 * 
+	 * @param ID: VIN of the Ambulance Vehicle
 	 * @return AmbulanceMapModel
 	 */
 	@Path("ambulanceMap/getByCarID")
@@ -352,9 +347,10 @@ public class Services {
 		return Response.ok(AmbulanceMapManager.getAmbulanceCarMapByCarID(ID)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
-	
+
 	/**
 	 * Returns all data of an ambulance map based on the Driver's ID.
+	 * 
 	 * @param ID: Employee ID of the Driver.
 	 * @return AmbulanceMapModel
 	 */
@@ -369,9 +365,10 @@ public class Services {
 
 	/**
 	 * Returns all data of an ambulance map based on the Paramedic's ID.
+	 * 
 	 * @param ID: Employee Id of the paramedic
 	 * @return AmbulanceMapModel
-	 */	
+	 */
 	@Path("ambulanceMap/getByParamedicID")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -383,6 +380,7 @@ public class Services {
 
 	/**
 	 * Returns all data of an ambulance map based on the YelloPad's ID.
+	 * 
 	 * @param ID: ID of the YelloPad
 	 * @return AmbulanceMapModel
 	 */
@@ -397,6 +395,7 @@ public class Services {
 
 	/**
 	 * Deletes an AmbulanceMap by changing its status.
+	 * 
 	 * @param AmbulanceToBeAdded: VIN of the Ambulance Vehicle.
 	 * @return ServerResponse
 	 */
@@ -408,17 +407,16 @@ public class Services {
 		ServerResponse response = new ServerResponse();
 		response = AmbulanceMapManager.deleteAmbulanceMap(AmbulanceToBeAdded);
 		switch (response.getResponseHexCode()) {
-		case "01": //Deletion Failed
-			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*")
-					.build();
-		default:  //Deletion Successful
-			return Response.ok(response).header("Access-Control-Allow-Origin", "*")
-					.build();
+		case "01": // Deletion Failed
+			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		default: // Deletion Successful
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
-	
+
 	/**
-	 * Returns the data contained in the 
+	 * Returns the data contained in the
+	 * 
 	 * @param vin: VIN of the Ambulance Vehicle
 	 * @return AllAmbulanceMapDataModel
 	 */
@@ -427,8 +425,7 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRelevantData(DataModel vin) {
-		return Response.ok(AmbulanceMapManager.getRelevantData(vin))
-				.header("Access-Control-Allow-Origin", "*").build();
+		return Response.ok(AmbulanceMapManager.getRelevantData(vin)).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 	// -----------------------------------------End Of Ambulance Map
@@ -436,10 +433,11 @@ public class Services {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// -----------------------------------------Start of Employee
 	// Services-------------------------------------------//
-	
-	
+
 	/**
-	 * Gets All the attendance times of a specific Employee based on their Employee ID
+	 * Gets All the attendance times of a specific Employee based on their Employee
+	 * ID
+	 * 
 	 * @param superSSN: ID of the Employee to get their data.
 	 * @return AttendanceTimeArray
 	 */
@@ -452,10 +450,10 @@ public class Services {
 		return Response.ok(EmployeeManager.getAllAttendanceTimes(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
-	
-	
+
 	/**
 	 * Returns Array with all registered Employees.
+	 * 
 	 * @param superSSN: ID of Supervisor and JobID.
 	 * @return EmployeeArray
 	 */
@@ -468,11 +466,10 @@ public class Services {
 		return Response.ok(EmployeeManager.getAllEmployees(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
-	
-	
-	
+
 	/**
 	 * Returns Array with all Paramedics
+	 * 
 	 * @param superSSN: ID of Supervisor.
 	 * @return EmployeeArray
 	 */
@@ -485,9 +482,10 @@ public class Services {
 		return Response.ok(EmployeeManager.getAllParamedics(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
-	
+
 	/**
 	 * Returns Array with all Active Paramedics
+	 * 
 	 * @param superSSN: ID of Supervisor.
 	 * @return EmployeeArray
 	 */
@@ -503,6 +501,7 @@ public class Services {
 
 	/**
 	 * Returns Array with all INActive Paramedics
+	 * 
 	 * @param superSSN: ID of Supervisor.
 	 * @return EmployeeArray
 	 */
@@ -518,6 +517,7 @@ public class Services {
 
 	/**
 	 * Returns Array with all Drivers
+	 * 
 	 * @param superSSN: ID of Supervisor.
 	 * @return EmployeeArray
 	 */
@@ -532,6 +532,7 @@ public class Services {
 
 	/**
 	 * Returns Array with all Active Drivers
+	 * 
 	 * @param superSSN: ID of Supervisor.
 	 * @return EmployeeArray
 	 */
@@ -547,6 +548,7 @@ public class Services {
 
 	/**
 	 * Returns Array with all Inactive Drivers
+	 * 
 	 * @param superSSN: ID of Supervisor.
 	 * @return EmployeeArray
 	 */
@@ -562,6 +564,7 @@ public class Services {
 
 	/**
 	 * Returns relevant Data of a specific Employee.
+	 * 
 	 * @param EID: ID of the Employee.
 	 * @return EmployeeArray
 	 */
@@ -571,8 +574,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getDatabyEmployeeID(EmployeeSentModel EID) {
 
-		return Response.ok(EmployeeManager.getDatabyEmployeeID(EID)).header("Access-Control-Allow-Origin", "*")
-				.build();
+		return Response.ok(EmployeeManager.getDatabyEmployeeID(EID)).header("Access-Control-Allow-Origin", "*").build();
 	}
 	// -----------------------------------------End Of Employee
 	// Services---------------------------------------------//
@@ -977,7 +979,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getPatientByNID(PatientModel patientModel) {
-		CustomClass<PatientArray, ServerResponse> X = PatientManger.getPatientByNId(patientModel.getPatientNationalID());
+		CustomClass<PatientArray, ServerResponse> X = PatientManger
+				.getPatientByNId(patientModel.getPatientNationalID());
 		ServerResponse serverResponse = X.getSecond();
 		PatientArray patientArray = X.getFirst();
 		if (X.equals(null)) {
@@ -990,16 +993,16 @@ public class Services {
 		return Response.ok(patientArray).header("Access-Control-Allow-Origin", "*").build();
 
 	}
-	
-	
+
 	@Path("patient/getDatabyID")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getDataByID(PatientModel patientModel) {
-		
-		return Response.ok(PatientManger.getDataByID(patientModel.getPatientID())).header("Access-Control-Allow-Origin", "*").build();
-		
+
+		return Response.ok(PatientManger.getDataByID(patientModel.getPatientID()))
+				.header("Access-Control-Allow-Origin", "*").build();
+
 	}
 
 	@Path("patient/deletePatient")
@@ -1023,6 +1026,7 @@ public class Services {
 
 	/**
 	 * Gets All Companies in DataBase
+	 * 
 	 * @return CompanyArray
 	 */
 	@Path("pharmaCompany/getAllCompanies")
@@ -1035,6 +1039,7 @@ public class Services {
 
 	/**
 	 * Returns A specific Company based on its ID
+	 * 
 	 * @param companyID: ID of the Company.
 	 * @return CompanyModel
 	 */
@@ -1048,6 +1053,7 @@ public class Services {
 
 	/**
 	 * Returns Array of Companies having same Status Code
+	 * 
 	 * @param companyStatus: Status of the Company
 	 * @return CompanyArray
 	 */
@@ -1062,6 +1068,7 @@ public class Services {
 
 	/**
 	 * Returns A company that matches the specific name.
+	 * 
 	 * @param companyName: Name of the Company
 	 * @return CompanyModel
 	 */
@@ -1076,7 +1083,9 @@ public class Services {
 
 	/**
 	 * Adds a Pharma Company.
-	 * @param companyToBeAdded: Model Containing relevant data of the company for its addition.
+	 * 
+	 * @param companyToBeAdded: Model Containing relevant data of the company for
+	 *                          its addition.
 	 * @return ServerResponse
 	 */
 	@Path("pharmaCompany/addCompany")
@@ -1087,21 +1096,19 @@ public class Services {
 		ServerResponse response = new ServerResponse();
 		response = CompanyManager.addCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
-		case "01": //Company found with same data.
-			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*")
-					.build();
-		case "02": //Company name that was sent is null.
-			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*")
-					.build();
-		default:  //Addition Successful
-			return Response.ok(response).header("Access-Control-Allow-Origin", "*")
-					.build();
+		case "01": // Company found with same data.
+			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		case "02": // Company name that was sent is null.
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		default: // Addition Successful
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
 		}
-		
+
 	}
 
 	/**
 	 * Update the company with this specific ID to the new data.
+	 * 
 	 * @param companyToBeAdded: relevant data to be updated in a specific company.
 	 * @return ServerResponse
 	 */
@@ -1113,18 +1120,17 @@ public class Services {
 		ServerResponse response = new ServerResponse();
 		response = CompanyManager.updateCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
-		case "01": //Update failed
-			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*")
-					.build();
-		default: //Update Successful
-			return Response.ok(response).header("Access-Control-Allow-Origin", "*")
-					.build();
+		case "01": // Update failed
+			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		default: // Update Successful
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
 		}
-		
+
 	}
-	
+
 	/**
 	 * Delete the company with this specific ID
+	 * 
 	 * @param companyToBeAdded: ID of the Company to be deleted.
 	 * @return ServerResponse
 	 */
@@ -1136,12 +1142,10 @@ public class Services {
 		ServerResponse response = new ServerResponse();
 		response = CompanyManager.deleteCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
-		case "01": //Deletion failed
-			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*")
-					.build();
-		default: //Deletion Successful
-			return Response.ok(response).header("Access-Control-Allow-Origin", "*")
-					.build();
+		case "01": // Deletion failed
+			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		default: // Deletion Successful
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
 
@@ -1150,9 +1154,10 @@ public class Services {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// ---------------------------------------------Start Of YelloPad
 	// Services--------------------------------------//
-	
+
 	/**
-	 * Gets All YelloPads in DataBase. 
+	 * Gets All YelloPads in DataBase.
+	 * 
 	 * @return YelloPadArray
 	 */
 	@Path("yelloPad/getAllYelloPads")
@@ -1162,9 +1167,10 @@ public class Services {
 
 		return Response.ok(YelloPadManager.getAllYelloPads()).header("Access-Control-Allow-Origin", "*").build();
 	}
-	
+
 	/**
 	 * Gets All Active YelloPads in DataBase.
+	 * 
 	 * @return YelloPadArray
 	 */
 	@Path("yelloPad/getAllActiveYelloPads")
@@ -1177,6 +1183,7 @@ public class Services {
 
 	/**
 	 * Gets All InActive YelloPads in DataBase.
+	 * 
 	 * @return YelloPadArray
 	 */
 	@Path("yelloPad/getAllInActiveYelloPads")
@@ -1190,6 +1197,7 @@ public class Services {
 
 	/**
 	 * Returns All relevant Data about a YelloPad given its UniqueID.
+	 * 
 	 * @param ID: ID of the YelloPad to search for
 	 * @return YelloPadModel
 	 */
@@ -1205,6 +1213,7 @@ public class Services {
 
 	/**
 	 * Returns Status of YelloPad given its UniqueID.
+	 * 
 	 * @param ID: Id of Specific Yellopad.
 	 * @return YelloPadModel
 	 */
@@ -1220,6 +1229,7 @@ public class Services {
 
 	/**
 	 * Returns Network Card Number of YelloPad given its UniqueID.
+	 * 
 	 * @param ID: Id of Specific YelloPad.
 	 * @return YelloPadModel
 	 */
@@ -1393,26 +1403,26 @@ public class Services {
 //-----------------------------------------------------------------------------------------------------------------------//
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------------------------------------------------//
-	
-	
-	//Region -------------Feedback--------------------
+
+	// Region -------------Feedback--------------------
 	@Path("insertFeedback")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response InsertNewFeedback(FeedbackModel feedbackModel) {
 		System.out.println("InsertNewFeedback Service start");
-		return Response.ok(FeedbackManger.insertFeedback(feedbackModel)  ).build();
- 
+		return Response.ok(FeedbackManger.insertFeedback(feedbackModel)).build();
+
 	}
+
 	@Path("editFeedback")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response editFeedback(FeedbackModel feedbackModel) {
 		System.out.println("editFeedback Service start");
-		return Response.ok(FeedbackManger.updateFeedback(feedbackModel)  ).build();
- 
+		return Response.ok(FeedbackManger.updateFeedback(feedbackModel)).build();
+
 	}
 
 	@Path("deleteFeedback")
@@ -1421,10 +1431,10 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteFeedback(FeedbackModel feedbackModel) {
 		System.out.println("editFeedback Service start");
-		return Response.ok(FeedbackManger.deleteFeedback(feedbackModel.getFeedbackID())  ).build();
- 
+		return Response.ok(FeedbackManger.deleteFeedback(feedbackModel.getFeedbackID())).build();
+
 	}
-	 
-	//endRegion -------------Feedback--------------------
-	
+
+	// endRegion -------------Feedback--------------------
+
 }

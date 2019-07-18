@@ -6,7 +6,8 @@ import Models.Locations.LocationArray;
 
 public class PatientLocationManager {
 
-	public static DataModel addPatientLocation(int nationalID, String addressPatient, String latitude, String longitude) {
+	public static DataModel addPatientLocation(int nationalID, String addressPatient, String latitude,
+			String longitude) {
 
 		return PatientLocationDAL.addPatientLocation(nationalID, addressPatient, latitude, longitude);
 	}

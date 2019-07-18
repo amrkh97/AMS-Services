@@ -9,16 +9,15 @@ import Models.Employee.EmployeeSentModel;
 public class EmployeeManager {
 
 	public static AttendanceTimeArray getAllAttendanceTimes(EmployeeSentModel employeeID) {
-		
+
 		return EmployeeDAL.getAllAttendanceTimes(employeeID);
 	}
-	
-	
+
 	public static EmployeeArray getAllEmployees(EmployeeSentModel superSSN) {
 
 		return EmployeeDAL.getAllEmployees(superSSN);
 	}
-	
+
 	public static EmployeeArray getAllParamedics(EmployeeSentModel superSSN) {
 
 		return EmployeeDAL.getAllParamedics(superSSN);
@@ -48,9 +47,9 @@ public class EmployeeManager {
 
 		return EmployeeDAL.getInActiveDrivers(superSSN);
 	}
-	
+
 	public static EmployeeModel getDatabyEmployeeID(EmployeeSentModel EID) {
-		
+
 		return EmployeeDAL.getDatabyEmployeeID(EID);
 	}
 
