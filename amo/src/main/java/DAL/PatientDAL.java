@@ -148,7 +148,7 @@ public class PatientDAL {
 		cstmt.setString(11, patientModel.getPatientStatus());
 		cstmt.setString(12, patientModel.getPatientNationalID());
 
-		cstmt.registerOutParameter(13, Types.NVARCHAR);
+		cstmt.registerOutParameter(13, Types.INTEGER);
 		cstmt.registerOutParameter(14, Types.NVARCHAR);
 		cstmt.registerOutParameter(15, Types.NVARCHAR);
 		cstmt.execute();
