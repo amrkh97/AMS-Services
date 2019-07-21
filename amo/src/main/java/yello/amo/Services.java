@@ -424,6 +424,15 @@ public class Services {
 		return Response.ok(AmbulanceMapManager.getRelevantData(vin)).header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	
+	@Path("ambulanceMap/getAllBatches")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllBatches(DataModel vin) {
+		return Response.ok(AmbulanceMapManager.getAllBatches(vin)).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
 	// -----------------------------------------End Of Ambulance Map
 	// ------------------------------------------------//
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
