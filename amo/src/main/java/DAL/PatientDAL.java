@@ -8,6 +8,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 
 import DB.DBManager;
+import HelperClasses.UniqueIdGenerator;
 import Models.ServerResponse;
 import Models.ServerResponse_ID;
 import Models.Patient.PatientArray;
@@ -127,10 +128,10 @@ public class PatientDAL {
 	/////////////////////////////////////////////////////////////////////////////////
 
 	public static ServerResponse_ID addNewPatient(PatientModel patientModel, Connection conn) throws Exception {
-		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_add_New_Patient] ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_add_New_Patient] ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
 
-		// CustomClass<ServerResponse_ID, Boolean> test1 = new CustomClass<T, U>(first,
-		// true);
+		Long id = UniqueIdGenerator.generateLongId();
+		
 		ServerResponse_ID _ServerResponse = new ServerResponse_ID();
 		CallableStatement cstmt = conn.prepareCall(SPsql);
 
@@ -147,7 +148,8 @@ public class PatientDAL {
 		cstmt.setString(10, patientModel.getNextOfKenPhone());
 		cstmt.setString(11, patientModel.getPatientStatus());
 		cstmt.setString(12, patientModel.getPatientNationalID());
-
+		cstmt.setLong(13, id);
+		
 		cstmt.registerOutParameter(13, Types.INTEGER);
 		cstmt.registerOutParameter(14, Types.NVARCHAR);
 		cstmt.registerOutParameter(15, Types.NVARCHAR);
