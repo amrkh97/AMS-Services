@@ -4,7 +4,6 @@ import DAL.CompanyDAL;
 import Models.ServerResponse;
 import Models.Company.CompanyArray;
 import Models.Company.CompanyModel;
-import Models.Data.DataModel;
 
 public class CompanyManager {
 
