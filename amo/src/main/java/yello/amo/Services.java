@@ -424,7 +424,12 @@ public class Services {
 		return Response.ok(AmbulanceMapManager.getRelevantData(vin)).header("Access-Control-Allow-Origin", "*").build();
 	}
 
-	
+	/**
+	 * Returns all batches available on a certain vehicle.
+	 * 
+	 * @param vin : VIN of the Ambulance Vehicle
+	 * @return AmbulanceBatches
+	 */
 	@Path("ambulanceMap/getAllBatches")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
