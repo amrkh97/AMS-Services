@@ -1,25 +1,8 @@
 package Models.Medicine;
 
-/*
---CREATE TABLE Medicine
---(
---	BarCode NVARCHAR(64),
---	MedicineName NVARCHAR(64) NOT NULL UNIQUE, 
---    CountInStock NVARCHAR(64),
---    Price NVARCHAR(32),
---    Implications NVARCHAR(MAX),
---    MedicineUsage NVARCHAR(MAX),
---    SideEffects NVARCHAR(MAX),
---    ActiveComponent NVARCHAR(MAX),
---	MedicineStatus NVARCHAR(32) DEFAULT(1)
-
---    PRIMARY KEY(BarCode),
---	FOREIGN KEY(MedicineStatus) REFERENCES EntityStatus(EntityStatusID), 
---	CHECK (Price > 0)
-
---);
-*/
 public class Medicine {
+	
+	private Integer companyID;
 	private String barCode;
 	private String medicineName;
 	private String price;
@@ -100,6 +83,14 @@ public class Medicine {
 
 	public void setMedicineStatus(String medicineStatus) {
 		this.medicineStatus = medicineStatus;
+	}
+
+	public Integer getCompanyID() {
+		return companyID;
+	}
+
+	public void setCompanyID(Integer companyID) {
+		this.companyID = companyID;
 	}
 
 }

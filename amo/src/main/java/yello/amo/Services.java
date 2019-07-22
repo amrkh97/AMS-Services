@@ -751,12 +751,16 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response insert_Medicine(Medicine MED) {
 		System.out.println(MED);
+		ServerResponse response = new ServerResponse();
 		if (MED.getBarCode() == null) {
-			return Response.ok("Bad Request No BarCode").header("Access-Control-Allow-Origin", "*").build();
+			response.setResponseHexCode("FA");
+			response.setResponseMsg("Bad Request No BarCode");
+			
+			return Response.status(400).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 		ServerResponse X = MedicineManager.insertMedicine(MED);
 		if (X == null) {
-			return Response.ok("400 the Medicine already there ").header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(401).entity(X).header("Access-Control-Allow-Origin", "*").build();
 		}
 
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
@@ -769,7 +773,7 @@ public class Services {
 	public Response Update_Medicine(Medicine MED) {
 		ServerResponse X = MedicineManager.UpdateMedicine(MED);
 		if (X == null) {
-			return Response.ok("404 the medicine not found").header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(401).entity(X).header("Access-Control-Allow-Origin", "*").build();
 		}
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 	}

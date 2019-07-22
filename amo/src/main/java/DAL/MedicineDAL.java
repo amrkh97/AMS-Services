@@ -112,7 +112,7 @@ public class MedicineDAL {
 
 	public static ServerResponse insertMedicine(Medicine medicine) {
 
-		String SPsql = "EXEC usp_Medicine_Insert ?,?,?,?,?,?,?,?,?,?";
+		String SPsql = "EXEC usp_Medicine_Insert ?,?,?,?,?,?,?,?,?,?,?";
 		Connection conn = DBManager.getDBConn();
 		ServerResponse serverResponse = new ServerResponse();
 
@@ -128,9 +128,10 @@ public class MedicineDAL {
 			cstmt.setString(6, medicine.getMedicineUsage());
 			cstmt.setString(7, medicine.getSideEffects());
 			cstmt.setString(8, medicine.getActiveComponent());
+			cstmt.setInt(9, medicine.getCompanyID());
 
-			cstmt.registerOutParameter(9, Types.NVARCHAR);
 			cstmt.registerOutParameter(10, Types.NVARCHAR);
+			cstmt.registerOutParameter(11, Types.NVARCHAR);
 			cstmt.execute();
 
 			serverResponse.setResponseHexCode(cstmt.getString("responseCode"));
