@@ -59,7 +59,7 @@ public class AmbulanceMapManager {
 		Connection intermediateConnection = DBManager.getDBConn();
 		AmbulanceBatches obj = new AmbulanceBatches();
 		try {
-			obj = AmbulanceMapDAL.getAllbatches(vin, intermediateConnection);
+			obj = AmbulanceMapDAL.getAllbatches(vin.getSentID(), intermediateConnection);
 		} finally {
 			try {
 				intermediateConnection.close();

@@ -265,7 +265,7 @@ public class AmbulanceMapDAL {
 		return obj;
 	}
 
-	public static AmbulanceBatches getAllbatches(DataModel vin, Connection intermediateConnection) {
+	public static AmbulanceBatches getAllbatches(Integer vin, Connection intermediateConnection) {
 		Connection conn = intermediateConnection;
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_AmbulanceMap_getAllBatches] ?";
 		AmbBatch ambBatch = new AmbBatch();
@@ -275,7 +275,7 @@ public class AmbulanceMapDAL {
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 
-			cstmt.setInt(1, vin.getSentID());
+			cstmt.setInt(1, vin);
 			resultSet = cstmt.executeQuery();
 
 			while(resultSet.next()){
