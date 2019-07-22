@@ -12,15 +12,15 @@ public class CompanyManager {
 		return CompanyDAL.getAllCompanies();
 	}
 
-	public static CompanyModel getCompanyByName(DataModel companyName) {
+	public static CompanyModel getCompanyByName(CompanyModel companyName) {
 		return CompanyDAL.getCompanyByName(companyName);
 	}
 
-	public static CompanyModel getCompanyByID(DataModel companyID) {
+	public static CompanyModel getCompanyByID(CompanyModel companyID) {
 		return CompanyDAL.getCompanyByID(companyID);
 	}
 
-	public static CompanyArray getCompanyByStatus(DataModel companyStatus) {
+	public static CompanyArray getCompanyByStatus(CompanyModel companyStatus) {
 		return CompanyDAL.getCompanyByStatus(companyStatus);
 	}
 
@@ -32,7 +32,7 @@ public class CompanyManager {
 		return CompanyDAL.updateCompany(companyToBeAdded);
 	}
 
-	public static ServerResponse deleteCompany(DataModel companyToBeDeleted) {
+	public static ServerResponse deleteCompany(CompanyModel companyToBeDeleted) {
 		return CompanyDAL.deleteCompany(companyToBeDeleted);
 	}
 }

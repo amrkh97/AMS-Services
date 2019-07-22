@@ -56,7 +56,7 @@ public class CompanyDAL {
 		return OBJ;
 	}
 
-	public static CompanyModel getCompanyByName(DataModel companyName) {
+	public static CompanyModel getCompanyByName(CompanyModel companyName) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_Select] ?";
 		ResultSet RS;
@@ -65,7 +65,7 @@ public class CompanyDAL {
 		CompanyModel currentCompany = new CompanyModel();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
-			cstmt.setString(1, companyName.getSentStatus());
+			cstmt.setString(1, companyName.getCompanyName());
 			RS = cstmt.executeQuery();
 
 			RS.next();
@@ -94,7 +94,7 @@ public class CompanyDAL {
 		return currentCompany;
 	}
 
-	public static CompanyModel getCompanyByID(DataModel companyID) {
+	public static CompanyModel getCompanyByID(CompanyModel companyID) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_SelectByID] ?";
 		ResultSet RS;
@@ -103,7 +103,7 @@ public class CompanyDAL {
 		CompanyModel currentCompany = new CompanyModel();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
-			cstmt.setInt(1, companyID.getSentID());
+			cstmt.setInt(1, companyID.getCompanyID());
 			RS = cstmt.executeQuery();
 
 			RS.next();
@@ -133,7 +133,7 @@ public class CompanyDAL {
 		return currentCompany;
 	}
 
-	public static CompanyArray getCompanyByStatus(DataModel companyStatus) {
+	public static CompanyArray getCompanyByStatus(CompanyModel companyStatus) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_SelectBySts] ?";
 		ResultSet RS;
@@ -142,7 +142,7 @@ public class CompanyDAL {
 		ArrayList<CompanyModel> AllcurrentCompany = new ArrayList<CompanyModel>();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
-			cstmt.setString(1, companyStatus.getSentStatus());
+			cstmt.setString(1, companyStatus.getCompanyStatus());
 			RS = cstmt.executeQuery();
 
 			while (RS.next()) {
@@ -255,7 +255,7 @@ public class CompanyDAL {
 		return OBJ;
 	}
 
-	public static ServerResponse deleteCompany(DataModel companyToBeDeleted) {
+	public static ServerResponse deleteCompany(CompanyModel companyToBeDeleted) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_Delete] ?,?";
 		String resultofQuery = "04";
@@ -264,7 +264,7 @@ public class CompanyDAL {
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 
-			cstmt.setInt(1, companyToBeDeleted.getSentID());
+			cstmt.setInt(1, companyToBeDeleted.getCompanyID());
 			cstmt.registerOutParameter(2, Types.NVARCHAR);
 			cstmt.execute();
 

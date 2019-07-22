@@ -1043,7 +1043,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCompanyByID(DataModel companyID) {
+	public Response getCompanyByID(CompanyModel companyID) {
 		return Response.ok(CompanyManager.getCompanyByID(companyID)).header("Access-Control-Allow-Origin", "*").build();
 	}
 
@@ -1057,7 +1057,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCompanyByStatus(DataModel companyStatus) {
+	public Response getCompanyByStatus(CompanyModel companyStatus) {
 		return Response.ok(CompanyManager.getCompanyByStatus(companyStatus)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
@@ -1072,7 +1072,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCompanyByName(DataModel companyName) {
+	public Response getCompanyByName(CompanyModel companyName) {
 		return Response.ok(CompanyManager.getCompanyByName(companyName)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
@@ -1134,7 +1134,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteCompany(DataModel companyToBeAdded) {
+	public Response deleteCompany(CompanyModel companyToBeAdded) {
 		ServerResponse response = new ServerResponse();
 		response = CompanyManager.deleteCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
