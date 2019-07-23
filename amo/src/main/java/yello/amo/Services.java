@@ -765,12 +765,16 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response insert_Medicine(Medicine MED) {
 		System.out.println(MED);
+		ServerResponse response = new ServerResponse();
 		if (MED.getBarCode() == null) {
-			return Response.ok("Bad Request No BarCode").header("Access-Control-Allow-Origin", "*").build();
+			response.setResponseHexCode("FA");
+			response.setResponseMsg("Bad Request No BarCode");
+			
+			return Response.status(400).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 		ServerResponse X = MedicineManager.insertMedicine(MED);
 		if (X == null) {
-			return Response.ok("400 the Medicine already there ").header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(401).entity(X).header("Access-Control-Allow-Origin", "*").build();
 		}
 
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
@@ -783,7 +787,7 @@ public class Services {
 	public Response Update_Medicine(Medicine MED) {
 		ServerResponse X = MedicineManager.UpdateMedicine(MED);
 		if (X == null) {
-			return Response.ok("404 the medicine not found").header("Access-Control-Allow-Origin", "*").build();
+			return Response.status(401).entity(X).header("Access-Control-Allow-Origin", "*").build();
 		}
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 	}
@@ -1057,7 +1061,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCompanyByID(DataModel companyID) {
+	public Response getCompanyByID(CompanyModel companyID) {
 		return Response.ok(CompanyManager.getCompanyByID(companyID)).header("Access-Control-Allow-Origin", "*").build();
 	}
 
@@ -1071,7 +1075,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCompanyByStatus(DataModel companyStatus) {
+	public Response getCompanyByStatus(CompanyModel companyStatus) {
 		return Response.ok(CompanyManager.getCompanyByStatus(companyStatus)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
@@ -1086,7 +1090,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getCompanyByName(DataModel companyName) {
+	public Response getCompanyByName(CompanyModel companyName) {
 		return Response.ok(CompanyManager.getCompanyByName(companyName)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
@@ -1148,7 +1152,7 @@ public class Services {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteCompany(DataModel companyToBeAdded) {
+	public Response deleteCompany(CompanyModel companyToBeAdded) {
 		ServerResponse response = new ServerResponse();
 		response = CompanyManager.deleteCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
