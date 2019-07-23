@@ -433,21 +433,22 @@ public class EmployeeDAL {
 
 				String logDate = RS.getString(1);
 				String arrayStrings[] = logDate.split(" ");
-
 				attendanceTimes.setLogInDate(arrayStrings[0]);
-				attendanceTimes.setLogInTime(arrayStrings[1]);
-
+				String arrayLogInStrings[] = arrayStrings[1].split(".");
+				attendanceTimes.setLogInTime(arrayLogInStrings[0]);
+					
+				
 				logDate = RS.getString(2);
 				arrayStrings = logDate.split(" ");
-
 				attendanceTimes.setLogOutDate(arrayStrings[0]);
-				attendanceTimes.setLogOutTime(arrayStrings[1]);
+				arrayLogInStrings = arrayStrings[1].split(".");
+				attendanceTimes.setLogOutTime(arrayLogInStrings[0]);
 
 				Integer inMinutes = Integer.parseInt(RS.getString(3));
 
 				Double inHours = (double) (inMinutes / 60.0);
 				Integer workHours = (int) Math.floor(inHours);
-				Double workMinutes = (inHours - Math.floor(inHours)) * 60.0;
+				Double workMinutes = Math.ceil((inHours - Math.floor(inHours)) * 60.0);
 				attendanceTimes.setWorkingHours(workHours.toString());
 				attendanceTimes.setWorkingMinutes(workMinutes.toString());
 				attendanceTimes
@@ -479,19 +480,19 @@ public class EmployeeDAL {
 			ArrayList<AttendanceTimeModel> arrayList = new ArrayList<AttendanceTimeModel>();
 
 			arrayList = EmployeeDAL.getAllAttendanceTimes(employeeID).getAttendanceArray();
-			System.out.println("Recieved Response: "+arrayList.get(0).getLogInTime());
-			
+			System.out.println("Recieved Response: " + arrayList.get(0).getLogInTime());
+
 			JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(arrayList);
 			Map<String, Object> parameters = new HashMap<String, Object>();
 			parameters.put("AttendanceDataSource", itemsJRBean);
 			String path = new File("C:\\Users\\amrkh\\Desktop\\AttendanceReport.pdf").getAbsolutePath();
-			JasperReport reportJas = JasperCompileManager.compileReport("C:\\\\Users\\\\amrkh\\\\Desktop\\\\attendanceRecords.jrxml");
+			JasperReport reportJas = JasperCompileManager
+					.compileReport("C:\\\\Users\\\\amrkh\\\\Desktop\\\\attendanceRecords.jrxml");
 			JasperPrint filledreport = JasperFillManager.fillReport(reportJas, parameters, new JREmptyDataSource());
 			OutputStream outputStream = new FileOutputStream(new File(path));
 			JasperExportManager.exportReportToPdfStream(filledreport, outputStream);
 			outputStream.close();
 
-			
 			response.setResponseHexCode("00");
 			response.setResponseMsg("Printed Successfully.");
 		} catch (NullPointerException | JRException | IOException e) {
