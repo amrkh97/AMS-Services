@@ -16,7 +16,7 @@ public class AmbulanceVehicleDAL {
 
 	public static AmbulanceArray getAllCars() {
 
-		String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_SelectAll";
+		String SPsql = "USE KAN_AMO; EXEC usp_Ambulance_GetAll";
 		Connection conn = DBManager.getDBConn();
 		ArrayList<AmbulanceVehicleModel> Array = new ArrayList<AmbulanceVehicleModel>();
 		AmbulanceArray OBJ = new AmbulanceArray();
