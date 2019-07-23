@@ -1162,6 +1162,16 @@ public class Services {
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
+	
+	
+	
+	@Path("pharmaCompany/getAllMedicines")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllMedicinesbyCompany(CompanyModel companyID) {
+			return Response.ok(CompanyManager.getAllMedicinesbyCompany(companyID)).header("Access-Control-Allow-Origin", "*").build();
+		}
 
 	// ---------------------------------------------End Of
 	// PharmaCompany--------------------------------------------//
