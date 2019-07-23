@@ -1,17 +1,29 @@
 package DAL;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import DB.DBManager;
 import Models.ServerResponse;
 import Models.ServerResponseIntOutput;
 import Models.MedicalRecord.MedicalRecord;
 import Models.MedicalRecord.MedicalRecordArray;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 public class MedicalRecordDAL {
 
@@ -146,7 +158,9 @@ public class MedicalRecordDAL {
 		Connection conn = DBManager.getDBConn();
 		ArrayList<MedicalRecord> allMedicalRecords = new ArrayList<>();
 		MedicalRecordArray OBJ = new MedicalRecordArray();
+
 		try {
+		
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 			cstmt.setInt(1, PatientID);
 			RS = cstmt.executeQuery();
@@ -175,7 +189,6 @@ public class MedicalRecordDAL {
 				currentMedicalRecord.setOther(RS.getNString("other"));
 				currentMedicalRecord.setPatientID(RS.getInt("patientID"));
 				currentMedicalRecord.setPhysicalExaminationImage(RS.getNString("physicalExaminationImage"));
-				currentMedicalRecord.setPhysicalExaminationImage(RS.getNString("physicalExaminationImage"));
 				currentMedicalRecord.setPregnancy(RS.getNString("pregnancy"));
 				currentMedicalRecord.setProcedureDoneInCar(RS.getNString("procedureDoneInCar"));
 				currentMedicalRecord.setPulse(RS.getNString("pulse"));
@@ -184,10 +197,19 @@ public class MedicalRecordDAL {
 				currentMedicalRecord.setRespSQN(RS.getInt("respSQN"));
 
 				allMedicalRecords.add(currentMedicalRecord);
-
 			}
 			RS.close();
-		} catch (SQLException e) {
+			
+			JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(allMedicalRecords);
+			Map<String, Object> parameters = new HashMap<String, Object>();
+            parameters.put("ItemDataSource", itemsJRBean);
+			String path = new File("C:\\Users\\amrkh\\Desktop\\Report.pdf").getAbsolutePath();
+			JasperPrint filledreport = JasperFillManager.fillReport("C:\\\\Users\\\\amrkh\\\\Desktop\\\\medicalRecord.jasper", parameters, new JREmptyDataSource());
+            OutputStream outputStream = new FileOutputStream(new File(path));
+            JasperExportManager.exportReportToPdfStream(filledreport, outputStream);
+            outputStream.close();
+			
+		} catch (SQLException | JRException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

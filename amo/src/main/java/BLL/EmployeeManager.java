@@ -1,6 +1,7 @@
 package BLL;
 
 import DAL.EmployeeDAL;
+import Models.ServerResponse;
 import Models.Employee.AttendanceTimeArray;
 import Models.Employee.EmployeeArray;
 import Models.Employee.EmployeeModel;
@@ -51,6 +52,11 @@ public class EmployeeManager {
 	public static EmployeeModel getDatabyEmployeeID(EmployeeSentModel EID) {
 
 		return EmployeeDAL.getDatabyEmployeeID(EID);
+	}
+
+	public static ServerResponse printEmployeeLogsByID(EmployeeSentModel employeeID) {
+		
+		return EmployeeDAL.printEmployeeLogsByID(employeeID);
 	}
 
 }

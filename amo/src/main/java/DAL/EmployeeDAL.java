@@ -1,17 +1,32 @@
 package DAL;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import DB.DBManager;
+import Models.ServerResponse;
 import Models.Employee.AttendanceTimeArray;
 import Models.Employee.AttendanceTimeModel;
 import Models.Employee.EmployeeArray;
 import Models.Employee.EmployeeModel;
 import Models.Employee.EmployeeSentModel;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 public class EmployeeDAL {
 
@@ -435,7 +450,8 @@ public class EmployeeDAL {
 				Double workMinutes = (inHours - Math.floor(inHours)) * 60.0;
 				attendanceTimes.setWorkingHours(workHours.toString());
 				attendanceTimes.setWorkingMinutes(workMinutes.toString());
-				attendanceTimes.setWorkingTime(attendanceTimes.getWorkingHours()+":"+attendanceTimes.getWorkingMinutes());
+				attendanceTimes
+						.setWorkingTime(attendanceTimes.getWorkingHours() + ":" + attendanceTimes.getWorkingMinutes());
 				allAttendanceTimes.add(attendanceTimes);
 			}
 
@@ -454,6 +470,39 @@ public class EmployeeDAL {
 		OBJ.setAttendanceArray(allAttendanceTimes);
 		return OBJ;
 
+	}
+
+	public static ServerResponse printEmployeeLogsByID(EmployeeSentModel employeeID) {
+
+		ServerResponse response = new ServerResponse();
+		try {
+			ArrayList<AttendanceTimeModel> arrayList = new ArrayList<AttendanceTimeModel>();
+
+			arrayList = EmployeeDAL.getAllAttendanceTimes(employeeID).getAttendanceArray();
+			System.out.println("Recieved Response: "+arrayList.get(0).getLogInTime());
+			
+			JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(arrayList);
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("AttendanceDataSource", itemsJRBean);
+			String path = new File("C:\\Users\\amrkh\\Desktop\\AttendanceReport.pdf").getAbsolutePath();
+			JasperReport reportJas = JasperCompileManager.compileReport("C:\\\\Users\\\\amrkh\\\\Desktop\\\\attendanceRecords.jrxml");
+			JasperPrint filledreport = JasperFillManager.fillReport(reportJas, parameters, new JREmptyDataSource());
+			OutputStream outputStream = new FileOutputStream(new File(path));
+			JasperExportManager.exportReportToPdfStream(filledreport, outputStream);
+			outputStream.close();
+
+			
+			response.setResponseHexCode("00");
+			response.setResponseMsg("Printed Successfully.");
+		} catch (NullPointerException | JRException | IOException e) {
+			e.printStackTrace();
+
+			response.setResponseHexCode("01");
+			response.setResponseMsg("Error In Printing!");
+
+		}
+
+		return response;
 	}
 
 }
