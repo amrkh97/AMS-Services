@@ -164,7 +164,7 @@ public class Services {
 	public Response GetAllAmbulanceVehicle() {
 		return Response.ok(AmbulanceVehicleManger.getAllCars()).header("Access-Control-Allow-Origin", "*").build();
 	}
-	
+
 	@Path("ambulance/getAmbulanceVehicles/ID")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -443,7 +443,7 @@ public class Services {
 	public Response getAllBatches(DataModel vin) {
 		return Response.ok(AmbulanceMapManager.getAllBatches(vin)).header("Access-Control-Allow-Origin", "*").build();
 	}
-	
+
 	// -----------------------------------------End Of Ambulance Map
 	// ------------------------------------------------//
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -465,6 +465,31 @@ public class Services {
 
 		return Response.ok(EmployeeManager.getAllAttendanceTimes(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
+	}
+
+	/**
+	 * Prints All the attendance times of a specific Employee based on their
+	 * Employee ID
+	 * 
+	 * @param employeeID: ID of the Employee to get their data.
+	 * @return AttendanceTimeArray
+	 */
+	@Path("employee/printLogTimes")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response printLogTimes(EmployeeSentModel employeeID) {
+
+		ServerResponse response = new ServerResponse();
+		System.out.println("Awaiting Response!");
+		response = EmployeeManager.printEmployeeLogsByID(employeeID);
+		System.out.println("Response Arrived");
+		switch (response.getResponseHexCode()) {
+		case "01":
+			return Response.status(400).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+		}
 	}
 
 	/**
@@ -775,7 +800,7 @@ public class Services {
 		if (MED.getBarCode() == null) {
 			response.setResponseHexCode("FA");
 			response.setResponseMsg("Bad Request No BarCode");
-			
+
 			return Response.status(400).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 		ServerResponse X = MedicineManager.insertMedicine(MED);
@@ -1168,16 +1193,15 @@ public class Services {
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
-	
-	
-	
+
 	@Path("pharmaCompany/getAllMedicines")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllMedicinesbyCompany(CompanyModel companyID) {
-			return Response.ok(CompanyManager.getAllMedicinesbyCompany(companyID)).header("Access-Control-Allow-Origin", "*").build();
-		}
+		return Response.ok(CompanyManager.getAllMedicinesbyCompany(companyID))
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
 
 	// ---------------------------------------------End Of
 	// PharmaCompany--------------------------------------------//
