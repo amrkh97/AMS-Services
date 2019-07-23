@@ -158,7 +158,13 @@ public class Services {
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// ----------------------------------------Start Of Ambulance Services
 	// ------------------------------------------//
-
+	@Path("ambulance/getAllAmbulanceVehicles")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response GetAllAmbulanceVehicle() {
+		return Response.ok(AmbulanceVehicleManger.getAllCars()).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
 	@Path("ambulance/getAmbulanceVehicles/ID")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
