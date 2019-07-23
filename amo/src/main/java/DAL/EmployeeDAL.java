@@ -434,14 +434,14 @@ public class EmployeeDAL {
 				String logDate = RS.getString(1);
 				String arrayStrings[] = logDate.split(" ");
 				attendanceTimes.setLogInDate(arrayStrings[0]);
-				String arrayLogInStrings[] = arrayStrings[1].split(".");
+				String arrayLogInStrings[] = arrayStrings[1].split("\\.");
 				attendanceTimes.setLogInTime(arrayLogInStrings[0]);
 					
 				
 				logDate = RS.getString(2);
 				arrayStrings = logDate.split(" ");
 				attendanceTimes.setLogOutDate(arrayStrings[0]);
-				arrayLogInStrings = arrayStrings[1].split(".");
+				arrayLogInStrings = arrayStrings[1].split("\\.");
 				attendanceTimes.setLogOutTime(arrayLogInStrings[0]);
 
 				Integer inMinutes = Integer.parseInt(RS.getString(3));
@@ -449,6 +449,7 @@ public class EmployeeDAL {
 				Double inHours = (double) (inMinutes / 60.0);
 				Integer workHours = (int) Math.floor(inHours);
 				Double workMinutes = Math.ceil((inHours - Math.floor(inHours)) * 60.0);
+				
 				attendanceTimes.setWorkingHours(workHours.toString());
 				attendanceTimes.setWorkingMinutes(workMinutes.toString());
 				attendanceTimes
