@@ -150,15 +150,16 @@ public class PatientDAL {
 		cstmt.setString(12, patientModel.getPatientNationalID());
 		cstmt.setLong(13, id);
 		
-		cstmt.registerOutParameter(13, Types.INTEGER);
-		cstmt.registerOutParameter(14, Types.NVARCHAR);
+		cstmt.registerOutParameter(14, Types.INTEGER);
 		cstmt.registerOutParameter(15, Types.NVARCHAR);
-		cstmt.execute();
-		_ServerResponse.setId(cstmt.getInt(13));
+		cstmt.registerOutParameter(16, Types.NVARCHAR);
+		cstmt.executeUpdate();
+		
+		_ServerResponse.setId(cstmt.getInt(14));
 
-		_ServerResponse.setResponseHexCode(cstmt.getString(14));
+		_ServerResponse.setResponseHexCode(cstmt.getString(15));
 
-		_ServerResponse.setResponseMsg(cstmt.getString(15));
+		_ServerResponse.setResponseMsg(cstmt.getString(16));
 
 		return _ServerResponse;
 	}

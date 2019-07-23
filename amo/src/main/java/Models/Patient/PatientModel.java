@@ -1,7 +1,7 @@
 package Models.Patient;
 
 public class PatientModel {
-	private int patientID;
+	private Integer patientID;
 	private String patientFName;
 	private String patientLName;
 	private String gender;
@@ -15,11 +15,11 @@ public class PatientModel {
 	private String patientStatus;
 	private String patientNationalID;
 
-	public int getPatientID() {
+	public Integer getPatientID() {
 		return patientID;
 	}
 
-	public void setPatientID(int patientID) {
+	public void setPatientID(Integer patientID) {
 		this.patientID = patientID;
 	}
 
