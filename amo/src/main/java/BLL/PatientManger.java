@@ -32,8 +32,6 @@ public class PatientManger {
 
 			patientArray = PatientDAL.getAllPatients(conn);
 		} catch (Exception e) {
-			System.out.println("i hav error");
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		} finally {
