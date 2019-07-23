@@ -456,6 +456,7 @@ public class EmployeeDAL {
 						.setWorkingTime(attendanceTimes.getWorkingHours() + ":" + attendanceTimes.getWorkingMinutes());
 				allAttendanceTimes.add(attendanceTimes);
 			}
+			RS.close();
 
 		} catch (SQLException e) {
 
