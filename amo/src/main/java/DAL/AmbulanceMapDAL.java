@@ -5,10 +5,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 
 import DB.DBManager;
 import Models.ServerResponse;
 import Models.AmbulanceMap.AllAmbulanceMapDataModel;
+import Models.AmbulanceMap.AmbBatch;
+import Models.AmbulanceMap.AmbulanceBatches;
 import Models.AmbulanceMap.AmbulanceMapModel;
 import Models.Data.DataModel;
 
@@ -259,6 +262,36 @@ public class AmbulanceMapDAL {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return obj;
+	}
+
+	public static AmbulanceBatches getAllbatches(Integer vin, Connection intermediateConnection) {
+		Connection conn = intermediateConnection;
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_AmbulanceMap_getAllBatches] ?";
+		AmbBatch ambBatch = new AmbBatch();
+		AmbulanceBatches obj = new AmbulanceBatches();
+		ArrayList<AmbBatch> batchs = new ArrayList<AmbBatch>();
+		ResultSet resultSet;
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+
+			cstmt.setInt(1, vin);
+			resultSet = cstmt.executeQuery();
+
+			while(resultSet.next()){
+				ambBatch = new AmbBatch();
+				ambBatch.setBatchID(resultSet.getLong(1));
+				
+				batchs.add(ambBatch);
+			}
+			
+			resultSet.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		obj.setArrayOfBatches(batchs);
 		return obj;
 	}
 
