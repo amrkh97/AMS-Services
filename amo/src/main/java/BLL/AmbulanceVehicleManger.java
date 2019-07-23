@@ -7,6 +7,10 @@ import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 
 public class AmbulanceVehicleManger {
 
+	public static AmbulanceArray getAllCars() {
+		return AmbulanceVehicleDAL.getAllCars();
+	}
+	
 	public static AmbulanceArray getDeletedCars() {
 		return AmbulanceVehicleDAL.getCarsBySts("FF");
 	}
