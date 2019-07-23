@@ -199,7 +199,7 @@ public class MedicalRecordDAL {
 				allMedicalRecords.add(currentMedicalRecord);
 			}
 			RS.close();
-			
+			/*
 			JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(allMedicalRecords);
 			Map<String, Object> parameters = new HashMap<String, Object>();
             parameters.put("ItemDataSource", itemsJRBean);
@@ -210,6 +210,9 @@ public class MedicalRecordDAL {
             outputStream.close();
 			
 		} catch (SQLException | JRException | IOException e) {
+		*/
+		} catch (SQLException e) {
+			
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
