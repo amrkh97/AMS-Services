@@ -154,11 +154,12 @@ public class PatientDAL {
 		cstmt.registerOutParameter(15, Types.NVARCHAR);
 		cstmt.registerOutParameter(16, Types.NVARCHAR);
 		cstmt.executeUpdate();
-		_ServerResponse.setId(cstmt.getInt(13));
+		
+		_ServerResponse.setId(cstmt.getInt(14));
 
-		_ServerResponse.setResponseHexCode(cstmt.getString(14));
+		_ServerResponse.setResponseHexCode(cstmt.getString(15));
 
-		_ServerResponse.setResponseMsg(cstmt.getString(15));
+		_ServerResponse.setResponseMsg(cstmt.getString(16));
 
 		return _ServerResponse;
 	}
