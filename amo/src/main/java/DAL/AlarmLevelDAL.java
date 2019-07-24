@@ -6,16 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import DB.DBManager;
 import Models.AlarmLevel.AlarmLevel;
 import Models.AlarmLevel.AlarmLevelJson;
 
 public class AlarmLevelDAL {
 
-	public static AlarmLevelJson getAlarmLevels() {
+	public static AlarmLevelJson getAlarmLevels(Connection intermediateConnection) {
 
 		String incidentSP = "EXEC usp_AlarmLevel_GetAll";
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ArrayList<AlarmLevel> alarmLevelArray = new ArrayList<AlarmLevel>();
 		AlarmLevelJson alarmJson = new AlarmLevelJson();
 		AlarmLevel alarmLevel;
@@ -34,16 +33,7 @@ public class AlarmLevelDAL {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connention Closed");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-
-				e.printStackTrace();
-			}
-		}
+		} 
 		alarmJson.setAlarmJson(alarmLevelArray);
 		return alarmJson;
 	}
