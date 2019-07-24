@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import DB.DBManager;
 import Models.ServerResponse;
 import Models.Employee.AttendanceTimeArray;
 import Models.Employee.AttendanceTimeModel;
@@ -30,11 +29,11 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 public class EmployeeDAL {
 
-	public static EmployeeArray getAllEmployees(EmployeeSentModel superSSN) {
+	public static EmployeeArray getAllEmployees(EmployeeSentModel superSSN, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_getAll] ?,?";
 		ResultSet RS;
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		EmployeeArray OBJ = new EmployeeArray();
 		try {
@@ -69,24 +68,17 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
+		} 
+		
 		OBJ.setEmployeeArray(allParamedics);
 		return OBJ;
 	}
 
-	public static EmployeeArray getAllParamedics(EmployeeSentModel superSSN) {
+	public static EmployeeArray getAllParamedics(EmployeeSentModel superSSN, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AllParamedics] ?";
 		ResultSet RS;
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		EmployeeArray OBJ = new EmployeeArray();
 		try {
@@ -115,24 +107,17 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
+		} 
+		
 		OBJ.setEmployeeArray(allParamedics);
 		return OBJ;
 	}
 
-	public static EmployeeArray getActiveParamedics(EmployeeSentModel superSSN) {
+	public static EmployeeArray getActiveParamedics(EmployeeSentModel superSSN, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_Paramedics] ?";
 		ResultSet RS;
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		EmployeeArray OBJ = new EmployeeArray();
 		try {
@@ -161,24 +146,17 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
+		} 
+		
 		OBJ.setEmployeeArray(allParamedics);
 		return OBJ;
 	}
 
-	public static EmployeeArray getInActiveParamedics(EmployeeSentModel superSSN) {
+	public static EmployeeArray getInActiveParamedics(EmployeeSentModel superSSN, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_InActiveParamedics] ?";
 		ResultSet RS;
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		EmployeeArray OBJ = new EmployeeArray();
 		try {
@@ -207,26 +185,19 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
+		} 
+		
 		OBJ.setEmployeeArray(allParamedics);
 		return OBJ;
 	}
 
 	// ------------------------------------------------------------//
 
-	public static EmployeeArray getAllDrivers(EmployeeSentModel superSSN) {
+	public static EmployeeArray getAllDrivers(EmployeeSentModel superSSN, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AllDrivers] ?";
 		ResultSet RS;
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		EmployeeArray OBJ = new EmployeeArray();
 		try {
@@ -255,24 +226,17 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
+		} 
+		
 		OBJ.setEmployeeArray(allParamedics);
 		return OBJ;
 	}
 
-	public static EmployeeArray getActiveDrivers(EmployeeSentModel superSSN) {
+	public static EmployeeArray getActiveDrivers(EmployeeSentModel superSSN, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_Drivers] ?";
 		ResultSet RS;
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		EmployeeArray OBJ = new EmployeeArray();
 		try {
@@ -301,24 +265,17 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
+		} 
+		
 		OBJ.setEmployeeArray(allParamedics);
 		return OBJ;
 	}
 
-	public static EmployeeArray getInActiveDrivers(EmployeeSentModel superSSN) {
+	public static EmployeeArray getInActiveDrivers(EmployeeSentModel superSSN, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_InActiveDrivers] ?";
 		ResultSet RS;
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		EmployeeArray OBJ = new EmployeeArray();
 		try {
@@ -347,14 +304,6 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
 		}
 		OBJ.setEmployeeArray(allParamedics);
 		return OBJ;
@@ -362,11 +311,11 @@ public class EmployeeDAL {
 
 	// -----------------------------------------------------------------------------//
 
-	public static EmployeeModel getDatabyEmployeeID(EmployeeSentModel superSSN) {
+	public static EmployeeModel getDatabyEmployeeID(EmployeeSentModel superSSN, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_getDatabyEmployeeID] ?";
 		ResultSet RS;
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		EmployeeModel currentEmployee = new EmployeeModel();
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -397,28 +346,21 @@ public class EmployeeDAL {
 			currentEmployee.setLogOutStamp(RS.getString(20));
 			currentEmployee.setLogInStatus(RS.getString(21));
 
+			RS.close();
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
+		} 
 		return currentEmployee;
 	}
 
 	// -----------------------------------------------------------------------------//
 
-	public static AttendanceTimeArray getAllAttendanceTimes(EmployeeSentModel employeeID) {
+	public static AttendanceTimeArray getAllAttendanceTimes(EmployeeSentModel employeeID, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_getLogTimes] ?";
 		ResultSet RS;
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ArrayList<AttendanceTimeModel> allAttendanceTimes = new ArrayList<AttendanceTimeModel>();
 		AttendanceTimeArray OBJ = new AttendanceTimeArray();
 
@@ -461,27 +403,19 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
+		} 
 		OBJ.setAttendanceArray(allAttendanceTimes);
 		return OBJ;
 
 	}
 
-	public static ServerResponse printEmployeeLogsByID(EmployeeSentModel employeeID) {
+	public static ServerResponse printEmployeeLogsByID(EmployeeSentModel employeeID,Connection intermediateConnection) {
 
 		ServerResponse response = new ServerResponse();
 		try {
 			ArrayList<AttendanceTimeModel> arrayList = new ArrayList<AttendanceTimeModel>();
 
-			arrayList = EmployeeDAL.getAllAttendanceTimes(employeeID).getAttendanceArray();
+			arrayList = EmployeeDAL.getAllAttendanceTimes(employeeID,intermediateConnection).getAttendanceArray();
 			System.out.println("Recieved Response: " + arrayList.get(0).getLogInTime());
 
 			JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(arrayList);
