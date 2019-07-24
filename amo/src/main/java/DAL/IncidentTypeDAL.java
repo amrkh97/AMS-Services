@@ -6,16 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import DB.DBManager;
 import Models.IncidentType.IncidentType;
 import Models.IncidentType.IncidentTypeJson;
 
 public class IncidentTypeDAL {
 
-	public static IncidentTypeJson getIncidentType() {
+	public static IncidentTypeJson getIncidentType(Connection intermediateConnection) {
 
 		String incidentSP = "EXEC usp_IncidentType_GetAll";
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ArrayList<IncidentType> incidentTypeArray = new ArrayList<IncidentType>();
 
 		IncidentTypeJson typeJson = new IncidentTypeJson();
@@ -35,15 +34,7 @@ public class IncidentTypeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connention Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
+		} 
 		typeJson.setIncidentTypeJson(incidentTypeArray);
 		return typeJson;
 	}
