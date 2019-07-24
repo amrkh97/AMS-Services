@@ -7,18 +7,17 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 
-import DB.DBManager;
 import Models.Data.DataModel;
 import Models.Locations.Location;
 import Models.Locations.LocationArray;
 
 public class PatientLocationDAL {
 
-	public static DataModel addPatientLocation(int nationalID, String addressPatient, String latitude,
-			String longitude) {
+	public static DataModel addPatientLocation(Integer nationalID, String addressPatient, String latitude,
+			String longitude, Connection intermediateConnection) {
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_Patient_Locations] ?,?,?,?,?";
 		String Result = "";
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		DataModel OBJ = new DataModel();
 
 		try {
@@ -31,32 +30,22 @@ public class PatientLocationDAL {
 			cstmt.setString(4, longitude);
 			cstmt.registerOutParameter(5, Types.NVARCHAR);
 
-			// RS = cstmt.executeQuery();
-			cstmt.execute();
+			cstmt.executeUpdate();
 
 			Result = cstmt.getString(5);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
-
-		System.out.println("Result is:" + Result);
+		} 
+		
 		OBJ.setSentStatus(Result);
 		return OBJ;
 	}
 
-	public static LocationArray getAllPatientLocations(int nationalID) {
+	public static LocationArray getAllPatientLocations(Integer nationalID, Connection intermediateConnection) {
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_Patient_getAllLocations] ?";
 		ResultSet RS = null;
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ArrayList<Location> patientLocations = new ArrayList<>();
 		Location _location = new Location();
 		LocationArray OBJ = new LocationArray();
@@ -77,15 +66,7 @@ public class PatientLocationDAL {
 			RS.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
-		}
+		} 
 		OBJ.setLocationArray(patientLocations);
 		return OBJ;
 	}

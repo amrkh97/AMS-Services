@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import DB.DBManager;
 import Models.YelloPad.YelloPadArray;
 import Models.YelloPad.YelloPadModel;
 
