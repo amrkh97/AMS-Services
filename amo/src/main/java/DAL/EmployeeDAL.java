@@ -8,6 +8,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,8 +69,8 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} 
-		
+		}
+
 		OBJ.setEmployeeArray(allParamedics);
 		return OBJ;
 	}
@@ -107,8 +108,8 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} 
-		
+		}
+
 		OBJ.setEmployeeArray(allParamedics);
 		return OBJ;
 	}
@@ -146,8 +147,8 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} 
-		
+		}
+
 		OBJ.setEmployeeArray(allParamedics);
 		return OBJ;
 	}
@@ -185,8 +186,8 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} 
-		
+		}
+
 		OBJ.setEmployeeArray(allParamedics);
 		return OBJ;
 	}
@@ -226,8 +227,8 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} 
-		
+		}
+
 		OBJ.setEmployeeArray(allParamedics);
 		return OBJ;
 	}
@@ -265,8 +266,8 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} 
-		
+		}
+
 		OBJ.setEmployeeArray(allParamedics);
 		return OBJ;
 	}
@@ -350,13 +351,14 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} 
+		}
 		return currentEmployee;
 	}
 
 	// -----------------------------------------------------------------------------//
 
-	public static AttendanceTimeArray getAllAttendanceTimes(EmployeeSentModel employeeID, Connection intermediateConnection) {
+	public static AttendanceTimeArray getAllAttendanceTimes(EmployeeSentModel employeeID,
+			Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_getLogTimes] ?";
 		ResultSet RS;
@@ -378,8 +380,7 @@ public class EmployeeDAL {
 				attendanceTimes.setLogInDate(arrayStrings[0]);
 				String arrayLogInStrings[] = arrayStrings[1].split("\\.");
 				attendanceTimes.setLogInTime(arrayLogInStrings[0]);
-					
-				
+
 				logDate = RS.getString(2);
 				arrayStrings = logDate.split(" ");
 				attendanceTimes.setLogOutDate(arrayStrings[0]);
@@ -391,7 +392,7 @@ public class EmployeeDAL {
 				Double inHours = (double) (inMinutes / 60.0);
 				Integer workHours = (int) Math.floor(inHours);
 				Double workMinutes = Math.ceil((inHours - Math.floor(inHours)) * 60.0);
-				
+
 				attendanceTimes.setWorkingHours(workHours.toString());
 				attendanceTimes.setWorkingMinutes(workMinutes.toString());
 				attendanceTimes
@@ -403,19 +404,20 @@ public class EmployeeDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} 
+		}
 		OBJ.setAttendanceArray(allAttendanceTimes);
 		return OBJ;
 
 	}
 
-	public static ServerResponse printEmployeeLogsByID(EmployeeSentModel employeeID,Connection intermediateConnection) {
+	public static ServerResponse printEmployeeLogsByID(EmployeeSentModel employeeID,
+			Connection intermediateConnection) {
 
 		ServerResponse response = new ServerResponse();
 		try {
 			ArrayList<AttendanceTimeModel> arrayList = new ArrayList<AttendanceTimeModel>();
 
-			arrayList = EmployeeDAL.getAllAttendanceTimes(employeeID,intermediateConnection).getAttendanceArray();
+			arrayList = EmployeeDAL.getAllAttendanceTimes(employeeID, intermediateConnection).getAttendanceArray();
 			System.out.println("Recieved Response: " + arrayList.get(0).getLogInTime());
 
 			JRBeanCollectionDataSource itemsJRBean = new JRBeanCollectionDataSource(arrayList);
@@ -437,6 +439,74 @@ public class EmployeeDAL {
 			response.setResponseHexCode("01");
 			response.setResponseMsg("Error In Printing!");
 
+		}
+
+		return response;
+	}
+
+	public static EmployeeArray getUnverifiedEmployees(Connection intermediateConnection) {
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_getUnverified]";
+		ResultSet RS;
+		Connection conn = intermediateConnection;
+		ArrayList<EmployeeModel> allUnverified = new ArrayList<EmployeeModel>();
+		EmployeeArray OBJ = new EmployeeArray();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			RS = cstmt.executeQuery();
+
+			while (RS.next()) {
+
+				EmployeeModel currentEmployee = new EmployeeModel();
+				currentEmployee.setEid(RS.getInt(1));
+				currentEmployee.setFullName(RS.getString(2) + " " + RS.getString(3));
+				currentEmployee.setFirstName(RS.getString(2));
+				currentEmployee.setLastName(RS.getString(3));
+				currentEmployee.setEmail(RS.getString(4));
+				currentEmployee.setContactNumber(RS.getString(5));
+				currentEmployee.setPan(RS.getString(6));
+				currentEmployee.setNationalID(RS.getString(7));
+				currentEmployee.setEmployeeStatus(RS.getString(8));
+				currentEmployee.setPhoto(RS.getString(9));
+				currentEmployee.setAge(RS.getString(10));
+				currentEmployee.setGender(RS.getString(11));
+				currentEmployee.setCity(RS.getString(12));
+				currentEmployee.setJobID(RS.getInt(13));
+				currentEmployee.setJobTitle(RS.getString(14));
+
+				allUnverified.add(currentEmployee);
+			}
+			RS.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		OBJ.setEmployeeArray(allUnverified);
+		return OBJ;
+	}
+
+	public static ServerResponse verifyEmployee(EmployeeSentModel employeeToBeVerified, Connection intermediateConnection) {
+		
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_Employee_Verify] ?,?,?";
+		ServerResponse response = new ServerResponse();
+		Connection conn = intermediateConnection;
+		try {
+			
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setInt(1,  employeeToBeVerified.getSentID());
+			cstmt.setInt(2,  employeeToBeVerified.getSuperSSN());
+			cstmt.registerOutParameter(3, Types.NVARCHAR);
+			cstmt.executeUpdate();
+			
+			response.setResponseHexCode(cstmt.getString(3));
+			if(response.getResponseHexCode().equals("00"))
+				response.setResponseMsg("Verified Succesfully!");
+			else
+				response.setResponseMsg("Verification Error!");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 
 		return response;

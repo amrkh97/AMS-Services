@@ -485,7 +485,32 @@ public class Services {
 		return Response.ok(EmployeeManager.getAllAttendanceTimes(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@Path("employee/getUnverifiedEmployees")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getUnverifiedEmployees() {
 
+		return Response.ok(EmployeeManager.getUnverifiedEmployees()).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}	
+	
+	@Path("employee/verifyEmployee")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response verifyEmployee(EmployeeSentModel employeeToBeVerified) {
+
+		return Response.ok(EmployeeManager.verifyEmployee(employeeToBeVerified)).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}	
+	
+	
 	/**
 	 * Prints All the attendance times of a specific Employee based on their
 	 * Employee ID

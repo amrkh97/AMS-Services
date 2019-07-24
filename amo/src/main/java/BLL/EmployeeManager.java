@@ -180,4 +180,37 @@ public class EmployeeManager {
 		return model;
 	}
 
+	public static EmployeeArray getUnverifiedEmployees() {
+		Connection intermediateConnection = DBManager.getDBConn();
+		EmployeeArray model = new EmployeeArray();
+		try {
+			model = EmployeeDAL.getUnverifiedEmployees(intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
+	
+	}
+
+	public static ServerResponse verifyEmployee(EmployeeSentModel employeeToBeVerified) {
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse model = new ServerResponse();
+		try {
+			model = EmployeeDAL.verifyEmployee(employeeToBeVerified,intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
+	}
+
 }
