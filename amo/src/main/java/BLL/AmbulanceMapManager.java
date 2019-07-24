@@ -14,27 +14,99 @@ import Models.Data.DataModel;
 public class AmbulanceMapManager {
 
 	public static AmbulanceMapModel getAmbulanceCarMapByCarID(DataModel ID) {
-		return AmbulanceMapDAL.getAmbulanceCarMapByCarID(ID.getSentID());
+		Connection intermediateConnection = DBManager.getDBConn();
+		AmbulanceMapModel model = new AmbulanceMapModel();
+		try {
+			model = AmbulanceMapDAL.getAmbulanceCarMapByCarID(ID.getSentID(), intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
 	}
 
 	public static AmbulanceMapModel getAmbulanceCarMapByDriverID(DataModel ID) {
-		return AmbulanceMapDAL.getAmbulanceCarMapByDriverID(ID.getSentID());
+		Connection intermediateConnection = DBManager.getDBConn();
+		AmbulanceMapModel model = new AmbulanceMapModel();
+		try {
+			model = AmbulanceMapDAL.getAmbulanceCarMapByDriverID(ID.getSentID(), intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
 	}
 
 	public static AmbulanceMapModel getAmbulanceCarMapByParamedicID(DataModel ID) {
-		return AmbulanceMapDAL.getAmbulanceCarMapByParamedicID(ID.getSentID());
+		Connection intermediateConnection = DBManager.getDBConn();
+		AmbulanceMapModel model = new AmbulanceMapModel();
+		try {
+			model = AmbulanceMapDAL.getAmbulanceCarMapByParamedicID(ID.getSentID(), intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
 	}
 
 	public static AmbulanceMapModel getAmbulanceCarMapByYelloPadID(DataModel ID) {
-		return AmbulanceMapDAL.getAmbulanceCarMapByYelloPadID(ID.getSentID());
+		Connection intermediateConnection = DBManager.getDBConn();
+		AmbulanceMapModel model = new AmbulanceMapModel();
+		try {
+			model = AmbulanceMapDAL.getAmbulanceCarMapByYelloPadID(ID.getSentID(), intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
 	}
 
 	public static ServerResponse addAmbulanceMap(AmbulanceMapModel currentAmbulanceMap) {
-		return AmbulanceMapDAL.addAmbulanceMap(currentAmbulanceMap);
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse model = new ServerResponse();
+		try {
+			model = AmbulanceMapDAL.addAmbulanceMap(currentAmbulanceMap, intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
 	}
 
 	public static ServerResponse deleteAmbulanceMap(DataModel currentAmbulanceMap) {
-		return AmbulanceMapDAL.deleteAmbulanceMap(currentAmbulanceMap.getSentID());
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse model = new ServerResponse();
+		try {
+			model = AmbulanceMapDAL.deleteAmbulanceMap(currentAmbulanceMap.getSentID(), intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
 	}
 
 	public static AllAmbulanceMapDataModel getRelevantData(DataModel vin) {
@@ -53,9 +125,9 @@ public class AmbulanceMapManager {
 
 		return obj;
 	}
-	
+
 	public static AmbulanceBatches getAllBatches(DataModel vin) {
-		
+
 		Connection intermediateConnection = DBManager.getDBConn();
 		AmbulanceBatches obj = new AmbulanceBatches();
 		try {
@@ -71,5 +143,24 @@ public class AmbulanceMapManager {
 
 		return obj;
 	}
+	
+	public static ServerResponse updateAmbulanceMap(AmbulanceMapModel currentAmbulanceMap) {
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse model = new ServerResponse();
+		try {
+			model = AmbulanceMapDAL.updateAmbulanceMap(currentAmbulanceMap, intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
+
+	} 
+	
+	
 
 }

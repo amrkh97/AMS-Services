@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import DB.DBManager;
 import Models.YelloPad.YelloPadArray;
 import Models.YelloPad.YelloPadModel;
 
@@ -16,14 +15,15 @@ public class YelloPadDAL {
 	 * This Function returns all relevant data of the YelloPads which is:
 	 * -YelloPad's Unique ID -YelloPad's Status Name -YelloPad's Status Code
 	 * -YelloPad's Network Card Number -YelloPad's Picture
+	 * @param intermediateConnection 
 	 * 
 	 * @return ArrayList<YelloPadModel>: Return an ArrayList of YelloPads
 	 */
-	public static YelloPadArray getAllYelloPads() {
+	public static YelloPadArray getAllYelloPads(Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_SelectAll]";
 		ResultSet RS;
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ArrayList<YelloPadModel> allYelloPads = new ArrayList<YelloPadModel>();
 		YelloPadArray OBJ = new YelloPadArray();
 
@@ -46,26 +46,19 @@ public class YelloPadDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
 		}
+		
 		OBJ.setYelloPadArray(allYelloPads);
 		return OBJ;
 	}
 
 	// -----------------------------------------------------------//
 
-	public static YelloPadArray getAllActiveYelloPads() {
+	public static YelloPadArray getAllActiveYelloPads(Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_selectActive]";
 		ResultSet RS;
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ArrayList<YelloPadModel> allYelloPads = new ArrayList<YelloPadModel>();
 		YelloPadArray OBJ = new YelloPadArray();
 
@@ -88,14 +81,6 @@ public class YelloPadDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
 		}
 
 		OBJ.setYelloPadArray(allYelloPads);
@@ -104,11 +89,11 @@ public class YelloPadDAL {
 
 	// -----------------------------------------------------------//
 
-	public static YelloPadArray getAllInActiveYelloPads() {
+	public static YelloPadArray getAllInActiveYelloPads(Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_selectInActive]";
 		ResultSet RS;
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ArrayList<YelloPadModel> allYelloPads = new ArrayList<YelloPadModel>();
 		YelloPadArray OBJ = new YelloPadArray();
 
@@ -131,16 +116,8 @@ public class YelloPadDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
 		}
-
+		
 		OBJ.setYelloPadArray(allYelloPads);
 		return OBJ;
 	}
@@ -150,15 +127,16 @@ public class YelloPadDAL {
 	 * This Function returns all relevant data of the YelloPad with the matching ID:
 	 * -YelloPad's Unique ID -YelloPad's Status Name -YelloPad's Status Code
 	 * -YelloPad's Network Card Number -YelloPad's Picture
+	 * @param intermediateConnection 
 	 * 
 	 * @param ID: Unique ID of YelloPad
 	 * @return YelloPadModel: Return the relevant data concerning the yelloPad with
 	 *         the same ID
 	 */
-	public static YelloPadModel searchYelloPad(String ID) {
+	public static YelloPadModel searchYelloPad(String ID, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_Search] ?";
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		YelloPadModel currentYelloPad = new YelloPadModel();
 		ResultSet RS;
 		try {
@@ -176,13 +154,6 @@ public class YelloPadDAL {
 			RS.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 
 		return currentYelloPad;
@@ -190,10 +161,10 @@ public class YelloPadDAL {
 
 	// -----------------------------------------------------------//
 
-	public static YelloPadModel getYelloPadStatus(String ID) {
+	public static YelloPadModel getYelloPadStatus(String ID, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_Status] ?";
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		YelloPadModel currentYelloPad = new YelloPadModel();
 		ResultSet RS;
 		try {
@@ -209,24 +180,16 @@ public class YelloPadDAL {
 			RS.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
-
 		return currentYelloPad;
 	}
 
 	// -----------------------------------------------------------//
 
-	public static YelloPadModel getYelloPadNetworkCardNo(String ID) {
+	public static YelloPadModel getYelloPadNetworkCardNo(String ID, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_NetworkCard] ?";
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ResultSet RS;
 		YelloPadModel currentYelloPad = new YelloPadModel();
 
@@ -240,13 +203,6 @@ public class YelloPadDAL {
 			RS.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 
 		return currentYelloPad;

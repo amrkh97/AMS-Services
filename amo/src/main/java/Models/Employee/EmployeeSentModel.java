@@ -3,6 +3,7 @@ package Models.Employee;
 public class EmployeeSentModel {
 
 	private Integer sentID;
+	private Integer superSSN;
 	private Integer jobID;
 
 	public Integer getSentID() {
@@ -19,6 +20,14 @@ public class EmployeeSentModel {
 
 	public void setJobID(Integer jobID) {
 		this.jobID = jobID;
+	}
+
+	public Integer getSuperSSN() {
+		return superSSN;
+	}
+
+	public void setSuperSSN(Integer superSSN) {
+		this.superSSN = superSSN;
 	}
 
 }
