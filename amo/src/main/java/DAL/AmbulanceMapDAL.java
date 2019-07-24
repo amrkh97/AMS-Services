@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 
-import DB.DBManager;
 import Models.ServerResponse;
 import Models.AmbulanceMap.AllAmbulanceMapDataModel;
 import Models.AmbulanceMap.AmbBatch;
@@ -17,10 +16,10 @@ import Models.Data.DataModel;
 
 public class AmbulanceMapDAL {
 
-	public static AmbulanceMapModel getAmbulanceCarMapByCarID(Integer ID) {
+	public static AmbulanceMapModel getAmbulanceCarMapByCarID(Integer ID, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_getAmbulanceCarMapByCarID] ?";
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ResultSet rs;
 		AmbulanceMapModel currentAmbulanceMap = new AmbulanceMapModel();
 
@@ -39,24 +38,16 @@ public class AmbulanceMapDAL {
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
+		} 
 		return currentAmbulanceMap;
 	}
 
 	// ------------------------------------------------------------------------//
 
-	public static AmbulanceMapModel getAmbulanceCarMapByDriverID(Integer ID) {
+	public static AmbulanceMapModel getAmbulanceCarMapByDriverID(Integer ID, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_getAmbulanceCarMapByDriverID] ?";
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ResultSet rs;
 		AmbulanceMapModel currentAmbulanceMap = new AmbulanceMapModel();
 
@@ -75,13 +66,6 @@ public class AmbulanceMapDAL {
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
 
 		return currentAmbulanceMap;
@@ -89,10 +73,10 @@ public class AmbulanceMapDAL {
 
 	// ------------------------------------------------------------------------//
 
-	public static AmbulanceMapModel getAmbulanceCarMapByParamedicID(Integer ID) {
+	public static AmbulanceMapModel getAmbulanceCarMapByParamedicID(Integer ID, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_getAmbulanceCarMapByParamedicID] ?";
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ResultSet rs;
 		AmbulanceMapModel currentAmbulanceMap = new AmbulanceMapModel();
 
@@ -111,24 +95,16 @@ public class AmbulanceMapDAL {
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
-
 		return currentAmbulanceMap;
 	}
 
 	// ------------------------------------------------------------------------//
 
-	public static AmbulanceMapModel getAmbulanceCarMapByYelloPadID(Integer ID) {
+	public static AmbulanceMapModel getAmbulanceCarMapByYelloPadID(Integer ID,Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_getAmbulanceCarMapByYelloPadID] ?";
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		ResultSet rs;
 		AmbulanceMapModel currentAmbulanceMap = new AmbulanceMapModel();
 
@@ -147,24 +123,16 @@ public class AmbulanceMapDAL {
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
-
 		return currentAmbulanceMap;
 	}
 
 	// ------------------------------------------------------------------------//
 
-	public static ServerResponse addAmbulanceMap(AmbulanceMapModel currentAmbulanceMap) {
+	public static ServerResponse addAmbulanceMap(AmbulanceMapModel currentAmbulanceMap,Connection intermediateConnection) {
 		ServerResponse _dataModel = new ServerResponse();
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_AmbulanceMap_Insert] ?,?,?,?,?";
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		String addStatus = "FF";
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
@@ -177,14 +145,8 @@ public class AmbulanceMapDAL {
 			addStatus = cstmt.getString(5);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
+		
 		_dataModel.setResponseHexCode(addStatus);
 		if (_dataModel.getResponseHexCode().equals("00")) {
 			_dataModel.setResponseMsg("Insertion Successful");
@@ -199,10 +161,10 @@ public class AmbulanceMapDAL {
 
 	// -------------------------------------------------------------------//
 
-	public static ServerResponse deleteAmbulanceMap(Integer currentAmbulanceMap) {
+	public static ServerResponse deleteAmbulanceMap(Integer currentAmbulanceMap,Connection intermediateConnection) {
 		ServerResponse _ServerResponse = new ServerResponse();
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_deleteAmbulanceMap] ?,?";
-		Connection conn = DBManager.getDBConn();
+		Connection conn = intermediateConnection;
 		try {
 			CallableStatement cstmt = conn.prepareCall(SPsql);
 
@@ -213,14 +175,8 @@ public class AmbulanceMapDAL {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}
+		
 		if (_ServerResponse.getResponseHexCode().equals("00")) {
 			_ServerResponse.setResponseMsg("Deleted Successfully");
 		} else {
@@ -293,6 +249,51 @@ public class AmbulanceMapDAL {
 		
 		obj.setArrayOfBatches(batchs);
 		return obj;
+	}
+	
+	public static ServerResponse updateAmbulanceMap(AmbulanceMapModel model,Connection intermediateConnection) {
+		ServerResponse response = new ServerResponse();
+		Connection conn = intermediateConnection;
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_AmbulanceMap_Update] ?,?,?,?,?,?";
+		
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			
+			cstmt.setInt(1, model.getVin());
+			
+			try {	
+				cstmt.setInt(2, model.getDriverID());
+			}catch(NullPointerException e) {
+				model.setDriverID(0);
+				cstmt.setInt(2, model.getDriverID());
+			}
+			
+			try {	
+				cstmt.setInt(3, model.getParamedicID());
+			}catch(NullPointerException e) {
+				model.setParamedicID(0);
+				cstmt.setInt(3, model.getParamedicID());
+			}
+			
+			try {	
+				cstmt.setInt(4, model.getYellopadID());
+			}catch(NullPointerException e) {
+				model.setYellopadID(0);;
+				cstmt.setInt(4, model.getYellopadID());
+			}
+			
+			cstmt.registerOutParameter(5, Types.NVARCHAR);
+			cstmt.registerOutParameter(6, Types.NVARCHAR);
+			cstmt.executeUpdate();
+			
+			response.setResponseHexCode(cstmt.getString(5));
+			response.setResponseMsg(cstmt.getString(6));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return response;
 	}
 
 }
