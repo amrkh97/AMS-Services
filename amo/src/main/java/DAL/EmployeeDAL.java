@@ -391,12 +391,12 @@ public class EmployeeDAL {
 
 				Double inHours = (double) (inMinutes / 60.0);
 				Integer workHours = (int) Math.floor(inHours);
-				Double workMinutes = Math.ceil((inHours - Math.floor(inHours)) * 60.0);
-
+				
+				Integer workMinutes = (int)(Math.ceil((inHours - Math.floor(inHours)) * 60.0));
+				System.out.println("InMinutes: "+workMinutes);
 				attendanceTimes.setWorkingHours(workHours.toString());
 				attendanceTimes.setWorkingMinutes(workMinutes.toString());
-				attendanceTimes
-						.setWorkingTime(attendanceTimes.getWorkingHours() + ":" + attendanceTimes.getWorkingMinutes());
+				attendanceTimes.setWorkingTime(attendanceTimes.getWorkingHours() + ":" + attendanceTimes.getWorkingMinutes());
 				allAttendanceTimes.add(attendanceTimes);
 			}
 			RS.close();

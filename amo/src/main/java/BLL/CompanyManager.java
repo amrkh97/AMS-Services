@@ -12,31 +12,123 @@ import Models.Medicine.MedicineArray;
 public class CompanyManager {
 
 	public static CompanyArray getAllCompanies() {
-		return CompanyDAL.getAllCompanies();
+		Connection intermediateConnection = DBManager.getDBConn();
+		CompanyArray obj = new CompanyArray();
+		try {
+			obj = CompanyDAL.getAllCompanies(intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return obj;
 	}
 
 	public static CompanyModel getCompanyByName(CompanyModel companyName) {
-		return CompanyDAL.getCompanyByName(companyName);
+		Connection intermediateConnection = DBManager.getDBConn();
+		CompanyModel obj = new CompanyModel();
+		try {
+			obj = CompanyDAL.getCompanyByName(companyName, intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return obj;
 	}
 
 	public static CompanyModel getCompanyByID(CompanyModel companyID) {
-		return CompanyDAL.getCompanyByID(companyID);
+		Connection intermediateConnection = DBManager.getDBConn();
+		CompanyModel obj = new CompanyModel();
+		try {
+			obj = CompanyDAL.getCompanyByID(companyID, intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return obj;
 	}
 
 	public static CompanyArray getCompanyByStatus(CompanyModel companyStatus) {
-		return CompanyDAL.getCompanyByStatus(companyStatus);
+		Connection intermediateConnection = DBManager.getDBConn();
+		CompanyArray obj = new CompanyArray();
+		try {
+			obj = CompanyDAL.getCompanyByStatus(companyStatus, intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return obj;
 	}
 
 	public static ServerResponse addCompany(CompanyModel companyToBeAdded) {
-		return CompanyDAL.addCompany(companyToBeAdded);
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse obj = new ServerResponse();
+		try {
+			obj = CompanyDAL.addCompany(companyToBeAdded, intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return obj;
 	}
 
 	public static ServerResponse updateCompany(CompanyModel companyToBeAdded) {
-		return CompanyDAL.updateCompany(companyToBeAdded);
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse obj = new ServerResponse();
+		try {
+			obj = CompanyDAL.updateCompany(companyToBeAdded, intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return obj;
 	}
 
 	public static ServerResponse deleteCompany(CompanyModel companyToBeDeleted) {
-		return CompanyDAL.deleteCompany(companyToBeDeleted);
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse obj = new ServerResponse();
+		try {
+			obj = CompanyDAL.deleteCompany(companyToBeDeleted, intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return obj;
+
 	}
 
 	public static MedicineArray getAllMedicinesbyCompany(CompanyModel companyID) {
