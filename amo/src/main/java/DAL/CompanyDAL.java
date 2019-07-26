@@ -60,8 +60,7 @@ public class CompanyDAL {
 			cstmt.setString(1, companyName.getCompanyName());
 			RS = cstmt.executeQuery();
 
-			RS.next();
-
+			if(RS.next()) {
 			currentCompany = new CompanyModel();
 			currentCompany.setCompanyID(RS.getInt("CompanyID"));
 			currentCompany.setCompanyAddress(RS.getString("CompanyAddress"));
@@ -69,6 +68,7 @@ public class CompanyDAL {
 			currentCompany.setCompanyName(RS.getString("CompanyName"));
 			currentCompany.setCompanyStatus(RS.getString("CompanyStatus"));
 			currentCompany.setCompanyPhoneNumber(RS.getString("CompanyPhone"));
+			}
 			RS.close();
 		} catch (SQLException e) {
 

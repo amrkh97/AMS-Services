@@ -28,13 +28,14 @@ public class AmbulanceMapDAL {
 
 			cstmt.setInt(1, ID);
 			rs = cstmt.executeQuery();
-			rs.next();
+			if(rs.next()) {
 			currentAmbulanceMap.setVin(rs.getInt(1));
 			currentAmbulanceMap.setParamedicID(rs.getInt(2));
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
 			currentAmbulanceMap.setStatusMap(rs.getString(5));
 			currentAmbulanceMap.setBatchID(rs.getLong(6));
+			}
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -56,13 +57,14 @@ public class AmbulanceMapDAL {
 
 			cstmt.setInt(1, ID);
 			rs = cstmt.executeQuery();
-			rs.next();
+			if(rs.next()) {
 			currentAmbulanceMap.setVin(rs.getInt(1));
 			currentAmbulanceMap.setParamedicID(rs.getInt(2));
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
 			currentAmbulanceMap.setStatusMap(rs.getString(5));
 			currentAmbulanceMap.setBatchID(rs.getLong(6));
+			}
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -85,13 +87,14 @@ public class AmbulanceMapDAL {
 
 			cstmt.setInt(1, ID);
 			rs = cstmt.executeQuery();
-			rs.next();
+			if(rs.next()) {
 			currentAmbulanceMap.setVin(rs.getInt(1));
 			currentAmbulanceMap.setParamedicID(rs.getInt(2));
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
 			currentAmbulanceMap.setStatusMap(rs.getString(5));
 			currentAmbulanceMap.setBatchID(rs.getLong(6));
+			}
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -113,13 +116,14 @@ public class AmbulanceMapDAL {
 
 			cstmt.setInt(1, ID);
 			rs = cstmt.executeQuery();
-			rs.next();
+			if(rs.next()){
 			currentAmbulanceMap.setVin(rs.getInt(1));
 			currentAmbulanceMap.setParamedicID(rs.getInt(2));
 			currentAmbulanceMap.setDriverID(rs.getInt(3));
 			currentAmbulanceMap.setYellopadID(rs.getInt(4));
 			currentAmbulanceMap.setStatusMap(rs.getString(5));
 			currentAmbulanceMap.setBatchID(rs.getLong(6));
+			}
 			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

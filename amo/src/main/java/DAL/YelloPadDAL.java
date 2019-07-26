@@ -145,12 +145,13 @@ public class YelloPadDAL {
 			cstmt.setString(1, ID);
 
 			RS = cstmt.executeQuery();
-			RS.next();
+			if(RS.next()) {
 			currentYelloPad.setYelloPadID(RS.getInt(1));
 			currentYelloPad.setUniqueID(RS.getString(2));
 			currentYelloPad.setNetworkCard(RS.getString(3));
 			currentYelloPad.setStatus(RS.getString(14));
 			currentYelloPad.setPicture(RS.getString(15));
+			}
 			RS.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -174,9 +175,9 @@ public class YelloPadDAL {
 
 			RS = cstmt.executeQuery();
 
-			RS.next();
-
+			if(RS.next())
 			currentYelloPad.setStatus(RS.getString(1));
+			
 			RS.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -198,8 +199,9 @@ public class YelloPadDAL {
 
 			cstmt.setString(1, ID);
 			RS = cstmt.executeQuery();
-			RS.next();
+			if(RS.next())
 			currentYelloPad.setNetworkCard(RS.getString(1));
+			
 			RS.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
