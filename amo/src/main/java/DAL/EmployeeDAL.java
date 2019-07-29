@@ -34,11 +34,11 @@ public class EmployeeDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_getAll] ?,?";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		EmployeeArray OBJ = new EmployeeArray();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setInt(1, superSSN.getSentID());
 			cstmt.setInt(2, superSSN.getJobID());
 			RS = cstmt.executeQuery();
@@ -79,11 +79,11 @@ public class EmployeeDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AllParamedics] ?";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		EmployeeArray OBJ = new EmployeeArray();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setInt(1, superSSN.getSentID());
 			RS = cstmt.executeQuery();
 
@@ -118,11 +118,11 @@ public class EmployeeDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_Paramedics] ?";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		EmployeeArray OBJ = new EmployeeArray();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setInt(1, superSSN.getSentID());
 			RS = cstmt.executeQuery();
 
@@ -157,11 +157,11 @@ public class EmployeeDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_InActiveParamedics] ?";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		EmployeeArray OBJ = new EmployeeArray();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setInt(1, superSSN.getSentID());
 			RS = cstmt.executeQuery();
 
@@ -198,11 +198,11 @@ public class EmployeeDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AllDrivers] ?";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		EmployeeArray OBJ = new EmployeeArray();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setInt(1, superSSN.getSentID());
 			RS = cstmt.executeQuery();
 
@@ -237,11 +237,11 @@ public class EmployeeDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_Drivers] ?";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		EmployeeArray OBJ = new EmployeeArray();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setInt(1, superSSN.getSentID());
 			RS = cstmt.executeQuery();
 
@@ -276,11 +276,11 @@ public class EmployeeDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_InActiveDrivers] ?";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
 		EmployeeArray OBJ = new EmployeeArray();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setInt(1, superSSN.getSentID());
 			RS = cstmt.executeQuery();
 
@@ -316,10 +316,10 @@ public class EmployeeDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_getDatabyEmployeeID] ?";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		EmployeeModel currentEmployee = new EmployeeModel();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setInt(1, superSSN.getSentID());
 			RS = cstmt.executeQuery();
 
@@ -362,12 +362,12 @@ public class EmployeeDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_getLogTimes] ?";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<AttendanceTimeModel> allAttendanceTimes = new ArrayList<AttendanceTimeModel>();
 		AttendanceTimeArray OBJ = new AttendanceTimeArray();
 
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setInt(1, employeeID.getSentID());
 			RS = cstmt.executeQuery();
 
@@ -447,11 +447,11 @@ public class EmployeeDAL {
 	public static EmployeeArray getUnverifiedEmployees(Connection intermediateConnection) {
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_getUnverified]";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<EmployeeModel> allUnverified = new ArrayList<EmployeeModel>();
 		EmployeeArray OBJ = new EmployeeArray();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
 
 			while (RS.next()) {
@@ -490,10 +490,10 @@ public class EmployeeDAL {
 		
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_Employee_Verify] ?,?,?";
 		ServerResponse response = new ServerResponse();
-		Connection conn = intermediateConnection;
+		 
 		try {
 			
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setInt(1,  employeeToBeVerified.getSentID());
 			cstmt.setInt(2,  employeeToBeVerified.getSuperSSN());
 			cstmt.registerOutParameter(3, Types.NVARCHAR);

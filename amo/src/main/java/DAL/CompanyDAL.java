@@ -18,11 +18,11 @@ public class CompanyDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_SelectAll]";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<CompanyModel> allCompanies = new ArrayList<>();
 		CompanyArray OBJ = new CompanyArray();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
 
 			while (RS.next()) {
@@ -52,11 +52,11 @@ public class CompanyDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_Select] ?";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 
 		CompanyModel currentCompany = new CompanyModel();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setString(1, companyName.getCompanyName());
 			RS = cstmt.executeQuery();
 
@@ -82,11 +82,11 @@ public class CompanyDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_SelectByID] ?";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 
 		CompanyModel currentCompany = new CompanyModel();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setInt(1, companyID.getCompanyID());
 			RS = cstmt.executeQuery();
 
@@ -113,11 +113,11 @@ public class CompanyDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_SelectBySts] ?";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		CompanyArray OBJ = new CompanyArray();
 		ArrayList<CompanyModel> AllcurrentCompany = new ArrayList<CompanyModel>();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setString(1, companyStatus.getCompanyStatus());
 			RS = cstmt.executeQuery();
 
@@ -147,10 +147,10 @@ public class CompanyDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_Insert] ?,?,?,?,?";
 		String resultofQuery = "04";
-		Connection conn = intermediateConnection;
+		 
 		ServerResponse OBJ = new ServerResponse();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 
 			cstmt.setString(1, companyToBeAdded.getCompanyName().toLowerCase());
 			cstmt.setString(2, companyToBeAdded.getCompanyContactPerson());
@@ -181,11 +181,11 @@ public class CompanyDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_Update] ?,?,?,?,?,?";
 		String resultofQuery = "04";
-		Connection conn = intermediateConnection;
+		 
 		ServerResponse OBJ = new ServerResponse();
 
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setInt(1, companyToBeAdded.getCompanyID());
 			cstmt.setString(2, companyToBeAdded.getCompanyName().toLowerCase());
 			cstmt.setString(3, companyToBeAdded.getCompanyContactPerson());
@@ -214,10 +214,10 @@ public class CompanyDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_PharmaCompany_Delete] ?,?";
 		String resultofQuery = "04";
-		Connection conn = intermediateConnection;
+		 
 		ServerResponse OBJ = new ServerResponse();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 
 			cstmt.setInt(1, companyToBeDeleted.getCompanyID());
 			cstmt.registerOutParameter(2, Types.NVARCHAR);
@@ -241,13 +241,13 @@ public class CompanyDAL {
 
 	public static MedicineArray getAllMedicinesbyCompany(Integer companyID,Connection intermediateConnection) {
 		String SPsql = "USE KAN_AMO; EXEC usp_PharmaCompany_SelectAllMedicines ?";
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<Medicine> medicineList = new ArrayList<Medicine>();
 		MedicineArray medicineArray = new MedicineArray();
 
 		Medicine medicine = new Medicine();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setInt(1, companyID);
 			ResultSet rs = cstmt.executeQuery();
 

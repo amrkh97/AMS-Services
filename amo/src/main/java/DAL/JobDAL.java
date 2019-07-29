@@ -15,11 +15,11 @@ public class JobDAL {
 	public static JobArray getAllJobs(Connection intermediateConnection) {
 		String SPsql = "EXEC usp_Jobs_SelectAll";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<Job> allJobs = new ArrayList<>();
 		JobArray OBJ = new JobArray();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
 
 			while (RS.next()) {
@@ -49,12 +49,12 @@ public class JobDAL {
 		String SPsql = "EXEC usp_Job_SelectByTitle ?";
 
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<Job> allJobs = new ArrayList<>();
 		JobArray OBJ = new JobArray();
 
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setString(1, jobTitle);
 			RS = cstmt.executeQuery();
 
@@ -87,11 +87,11 @@ public class JobDAL {
 		String SPsql = "EXEC usp_Job_SelectByJobStatus ?";
 
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<Job> allJobs = new ArrayList<>();
 		JobArray OBJ = new JobArray();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setString(1, jobStatus);
 			RS = cstmt.executeQuery();
 
@@ -123,10 +123,10 @@ public class JobDAL {
 	public static ServerResponse addJob(Job Joba, Connection intermediateConnection) {
 
 		String SPsql = "EXEC usp_Job_Insert ?,?,?,?,?,?,?";
-		Connection conn = intermediateConnection;
+		 
 		ServerResponse _ServerResponse = new ServerResponse();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setString(1, Joba.getJobID());
 			cstmt.setString(2, Joba.getTitle());
 			cstmt.setString(3, Joba.getNote());
@@ -150,10 +150,10 @@ public class JobDAL {
 	public static ServerResponse updateJob(Job Joba, Connection intermediateConnection) {
 		String SPsql = "EXEC usp_Job_Update ?,?,?,?,?,?,?";
 		ServerResponse _ServerResponse = new ServerResponse();
-		Connection conn = intermediateConnection;
+		 
 
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setString(1, Joba.getJobID());
 			cstmt.setString(2, Joba.getTitle());
 			cstmt.setString(3, Joba.getNote());
@@ -176,10 +176,10 @@ public class JobDAL {
 	public static ServerResponse deleteJob(String jobID, Connection intermediateConnection) {
 
 		String SPsql = "EXEC usp_Job_Delete ?,?,?";
-		Connection conn = intermediateConnection;
+		 
 		ServerResponse _ServerResponse = new ServerResponse();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setString(1, jobID);
 			cstmt.registerOutParameter(2, Types.NVARCHAR);
 			cstmt.registerOutParameter(3, Types.NVARCHAR);

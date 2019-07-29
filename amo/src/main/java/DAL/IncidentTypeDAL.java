@@ -14,13 +14,12 @@ public class IncidentTypeDAL {
 	public static IncidentTypeJson getIncidentType(Connection intermediateConnection) {
 
 		String incidentSP = "EXEC usp_IncidentType_GetAll";
-		Connection conn = intermediateConnection;
 		ArrayList<IncidentType> incidentTypeArray = new ArrayList<IncidentType>();
 
 		IncidentTypeJson typeJson = new IncidentTypeJson();
 		IncidentType incidentType;
 		try {
-			CallableStatement cstmt = conn.prepareCall(incidentSP);
+			CallableStatement cstmt = intermediateConnection.prepareCall(incidentSP);
 			ResultSet rs = cstmt.executeQuery();
 
 			while (rs.next()) {

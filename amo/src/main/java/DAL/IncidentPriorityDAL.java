@@ -14,12 +14,12 @@ public class IncidentPriorityDAL {
 	public static IncidentPriorityJson getIncidentPriority(Connection intermediateConnection) {
 
 		String incidentSP = "EXEC usp_IncidentPriority_GetAll";
-		Connection conn = intermediateConnection;
+		
 		ArrayList<IncidentPriority> incidentPriorityArray = new ArrayList<IncidentPriority>();
 		IncidentPriorityJson priorityJson = new IncidentPriorityJson();
 		IncidentPriority incidentPriority;
 		try {
-			CallableStatement cstmt = conn.prepareCall(incidentSP);
+			CallableStatement cstmt = intermediateConnection.prepareCall(incidentSP);
 			ResultSet rs = cstmt.executeQuery();
 
 			while (rs.next()) {

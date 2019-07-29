@@ -19,12 +19,12 @@ public class AmbulanceMapDAL {
 	public static AmbulanceMapModel getAmbulanceCarMapByCarID(Integer ID, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_getAmbulanceCarMapByCarID] ?";
-		Connection conn = intermediateConnection;
+		 
 		ResultSet rs;
 		AmbulanceMapModel currentAmbulanceMap = new AmbulanceMapModel();
 
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 
 			cstmt.setInt(1, ID);
 			rs = cstmt.executeQuery();
@@ -48,12 +48,12 @@ public class AmbulanceMapDAL {
 	public static AmbulanceMapModel getAmbulanceCarMapByDriverID(Integer ID, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_getAmbulanceCarMapByDriverID] ?";
-		Connection conn = intermediateConnection;
+		 
 		ResultSet rs;
 		AmbulanceMapModel currentAmbulanceMap = new AmbulanceMapModel();
 
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 
 			cstmt.setInt(1, ID);
 			rs = cstmt.executeQuery();
@@ -78,12 +78,12 @@ public class AmbulanceMapDAL {
 	public static AmbulanceMapModel getAmbulanceCarMapByParamedicID(Integer ID, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_getAmbulanceCarMapByParamedicID] ?";
-		Connection conn = intermediateConnection;
+		 
 		ResultSet rs;
 		AmbulanceMapModel currentAmbulanceMap = new AmbulanceMapModel();
 
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 
 			cstmt.setInt(1, ID);
 			rs = cstmt.executeQuery();
@@ -107,12 +107,12 @@ public class AmbulanceMapDAL {
 	public static AmbulanceMapModel getAmbulanceCarMapByYelloPadID(Integer ID,Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_getAmbulanceCarMapByYelloPadID] ?";
-		Connection conn = intermediateConnection;
+		 
 		ResultSet rs;
 		AmbulanceMapModel currentAmbulanceMap = new AmbulanceMapModel();
 
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 
 			cstmt.setInt(1, ID);
 			rs = cstmt.executeQuery();
@@ -136,10 +136,10 @@ public class AmbulanceMapDAL {
 	public static ServerResponse addAmbulanceMap(AmbulanceMapModel currentAmbulanceMap,Connection intermediateConnection) {
 		ServerResponse _dataModel = new ServerResponse();
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_AmbulanceMap_Insert] ?,?,?,?,?";
-		Connection conn = intermediateConnection;
+		 
 		String addStatus = "FF";
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setInt(1, currentAmbulanceMap.getVin());
 			cstmt.setInt(2, currentAmbulanceMap.getParamedicID());
 			cstmt.setInt(3, currentAmbulanceMap.getDriverID());
@@ -168,9 +168,9 @@ public class AmbulanceMapDAL {
 	public static ServerResponse deleteAmbulanceMap(Integer currentAmbulanceMap,Connection intermediateConnection) {
 		ServerResponse _ServerResponse = new ServerResponse();
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_deleteAmbulanceMap] ?,?";
-		Connection conn = intermediateConnection;
+		 
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 
 			cstmt.setInt(1, currentAmbulanceMap);
 			cstmt.registerOutParameter(2, Types.NVARCHAR);
@@ -191,11 +191,11 @@ public class AmbulanceMapDAL {
 	}
 
 	public static AllAmbulanceMapDataModel getRelevantData(DataModel vin, Connection intermediateConnection) {
-		Connection conn = intermediateConnection;
+		 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_AmbulanceMap_getRelevantData] ?,?,?,?,?,?,?,?,?,?";
 		AllAmbulanceMapDataModel obj = new AllAmbulanceMapDataModel();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 
 			cstmt.setInt(1, vin.getSentID());
 			cstmt.registerOutParameter(2, Types.NVARCHAR); // License Plate
@@ -226,14 +226,14 @@ public class AmbulanceMapDAL {
 	}
 
 	public static AmbulanceBatches getAllbatches(Integer vin, Connection intermediateConnection) {
-		Connection conn = intermediateConnection;
+		 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_AmbulanceMap_getAllBatches] ?";
 		AmbBatch ambBatch = new AmbBatch();
 		AmbulanceBatches obj = new AmbulanceBatches();
 		ArrayList<AmbBatch> batchs = new ArrayList<AmbBatch>();
 		ResultSet resultSet;
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 
 			cstmt.setInt(1, vin);
 			resultSet = cstmt.executeQuery();
@@ -257,11 +257,11 @@ public class AmbulanceMapDAL {
 	
 	public static ServerResponse updateAmbulanceMap(AmbulanceMapModel model,Connection intermediateConnection) {
 		ServerResponse response = new ServerResponse();
-		Connection conn = intermediateConnection;
+		 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_AmbulanceMap_Update] ?,?,?,?,?,?";
 		
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			
 			cstmt.setInt(1, model.getVin());
 			

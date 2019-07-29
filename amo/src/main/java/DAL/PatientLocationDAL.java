@@ -17,12 +17,12 @@ public class PatientLocationDAL {
 			String longitude, Connection intermediateConnection) {
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_Patient_Locations] ?,?,?,?,?";
 		String Result = "";
-		Connection conn = intermediateConnection;
+		 
 		DataModel OBJ = new DataModel();
 
 		try {
 
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 
 			cstmt.setInt(1, nationalID);
 			cstmt.setString(2, addressPatient);
@@ -45,13 +45,13 @@ public class PatientLocationDAL {
 	public static LocationArray getAllPatientLocations(Integer nationalID, Connection intermediateConnection) {
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_Patient_getAllLocations] ?";
 		ResultSet RS = null;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<Location> patientLocations = new ArrayList<>();
 		Location _location = new Location();
 		LocationArray OBJ = new LocationArray();
 		try {
 
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setInt(1, nationalID);
 			RS = cstmt.executeQuery();
 
