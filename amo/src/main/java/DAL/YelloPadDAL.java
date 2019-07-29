@@ -23,12 +23,12 @@ public class YelloPadDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_SelectAll]";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<YelloPadModel> allYelloPads = new ArrayList<YelloPadModel>();
 		YelloPadArray OBJ = new YelloPadArray();
 
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
 
 			while (RS.next()) {
@@ -58,12 +58,12 @@ public class YelloPadDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_selectActive]";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<YelloPadModel> allYelloPads = new ArrayList<YelloPadModel>();
 		YelloPadArray OBJ = new YelloPadArray();
 
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
 
 			while (RS.next()) {
@@ -93,12 +93,12 @@ public class YelloPadDAL {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_selectInActive]";
 		ResultSet RS;
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<YelloPadModel> allYelloPads = new ArrayList<YelloPadModel>();
 		YelloPadArray OBJ = new YelloPadArray();
 
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
 
 			while (RS.next()) {
@@ -136,21 +136,22 @@ public class YelloPadDAL {
 	public static YelloPadModel searchYelloPad(String ID, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_Search] ?";
-		Connection conn = intermediateConnection;
+		 
 		YelloPadModel currentYelloPad = new YelloPadModel();
 		ResultSet RS;
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 
 			cstmt.setString(1, ID);
 
 			RS = cstmt.executeQuery();
-			RS.next();
+			if(RS.next()) {
 			currentYelloPad.setYelloPadID(RS.getInt(1));
 			currentYelloPad.setUniqueID(RS.getString(2));
 			currentYelloPad.setNetworkCard(RS.getString(3));
 			currentYelloPad.setStatus(RS.getString(14));
 			currentYelloPad.setPicture(RS.getString(15));
+			}
 			RS.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -164,19 +165,19 @@ public class YelloPadDAL {
 	public static YelloPadModel getYelloPadStatus(String ID, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_Status] ?";
-		Connection conn = intermediateConnection;
+		 
 		YelloPadModel currentYelloPad = new YelloPadModel();
 		ResultSet RS;
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 
 			cstmt.setString(1, ID);
 
 			RS = cstmt.executeQuery();
 
-			RS.next();
-
+			if(RS.next())
 			currentYelloPad.setStatus(RS.getString(1));
+			
 			RS.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -189,17 +190,18 @@ public class YelloPadDAL {
 	public static YelloPadModel getYelloPadNetworkCardNo(String ID, Connection intermediateConnection) {
 
 		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_YelloPads_NetworkCard] ?";
-		Connection conn = intermediateConnection;
+		 
 		ResultSet RS;
 		YelloPadModel currentYelloPad = new YelloPadModel();
 
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 
 			cstmt.setString(1, ID);
 			RS = cstmt.executeQuery();
-			RS.next();
+			if(RS.next())
 			currentYelloPad.setNetworkCard(RS.getString(1));
+			
 			RS.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

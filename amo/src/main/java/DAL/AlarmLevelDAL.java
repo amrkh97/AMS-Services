@@ -14,12 +14,12 @@ public class AlarmLevelDAL {
 	public static AlarmLevelJson getAlarmLevels(Connection intermediateConnection) {
 
 		String incidentSP = "EXEC usp_AlarmLevel_GetAll";
-		Connection conn = intermediateConnection;
+		 
 		ArrayList<AlarmLevel> alarmLevelArray = new ArrayList<AlarmLevel>();
 		AlarmLevelJson alarmJson = new AlarmLevelJson();
 		AlarmLevel alarmLevel;
 		try {
-			CallableStatement cstmt = conn.prepareCall(incidentSP);
+			CallableStatement cstmt = intermediateConnection.prepareCall(incidentSP);
 			ResultSet rs = cstmt.executeQuery();
 
 			while (rs.next()) {

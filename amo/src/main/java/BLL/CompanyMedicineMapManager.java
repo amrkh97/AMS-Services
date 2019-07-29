@@ -6,6 +6,12 @@ import DAL.CompanyMedicineMapDAL;
 import Models.ServerResponse;
 import Models.Medicine.CompanyMedicineMap;
 
+/*
+ * A redundant class that won't be needed.
+ * We added the CompanyID in the Medicine Model so this table and its operations became redundant. 
+ * 
+ */
+
 public class CompanyMedicineMapManager {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////

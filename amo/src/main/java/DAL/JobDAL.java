@@ -6,22 +6,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-
-import DB.DBManager;
 import Models.ServerResponse;
 import Models.Job.Job;
 import Models.Job.JobArray;
 
 public class JobDAL {
 
-	public static JobArray getAllJobs() {
+	public static JobArray getAllJobs(Connection intermediateConnection) {
 		String SPsql = "EXEC usp_Jobs_SelectAll";
 		ResultSet RS;
-		Connection conn = DBManager.getDBConn();
+		 
 		ArrayList<Job> allJobs = new ArrayList<>();
 		JobArray OBJ = new JobArray();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			RS = cstmt.executeQuery();
 
 			while (RS.next()) {
@@ -40,30 +38,23 @@ public class JobDAL {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		} 
+		
 		OBJ.setJobArray(allJobs);
 		return OBJ;
 
 	}
 
-	public static JobArray getJobByTitle(String jobTitle) {
+	public static JobArray getJobByTitle(String jobTitle, Connection intermediateConnection) {
 		String SPsql = "EXEC usp_Job_SelectByTitle ?";
 
 		ResultSet RS;
-		Connection conn = DBManager.getDBConn();
+		 
 		ArrayList<Job> allJobs = new ArrayList<>();
 		JobArray OBJ = new JobArray();
 
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setString(1, jobTitle);
 			RS = cstmt.executeQuery();
 
@@ -85,29 +76,22 @@ public class JobDAL {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		} 
+		
 		OBJ.setJobArray(allJobs);
 		return OBJ;
 
 	}
 
-	public static JobArray getJobByStatus(String jobStatus) {
+	public static JobArray getJobByStatus(String jobStatus, Connection intermediateConnection) {
 		String SPsql = "EXEC usp_Job_SelectByJobStatus ?";
 
 		ResultSet RS;
-		Connection conn = DBManager.getDBConn();
+		 
 		ArrayList<Job> allJobs = new ArrayList<>();
 		JobArray OBJ = new JobArray();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setString(1, jobStatus);
 			RS = cstmt.executeQuery();
 
@@ -129,27 +113,20 @@ public class JobDAL {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		} 
+		
 		OBJ.setJobArray(allJobs);
 		return OBJ;
 
 	}
 
-	public static ServerResponse addJob(Job Joba) {
+	public static ServerResponse addJob(Job Joba, Connection intermediateConnection) {
 
 		String SPsql = "EXEC usp_Job_Insert ?,?,?,?,?,?,?";
-		Connection conn = DBManager.getDBConn();
+		 
 		ServerResponse _ServerResponse = new ServerResponse();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setString(1, Joba.getJobID());
 			cstmt.setString(2, Joba.getTitle());
 			cstmt.setString(3, Joba.getNote());
@@ -164,27 +141,19 @@ public class JobDAL {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connention Closed");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
+		} 
+		
 		return _ServerResponse;
 
 	}
 
-	public static ServerResponse updateJob(Job Joba) {
+	public static ServerResponse updateJob(Job Joba, Connection intermediateConnection) {
 		String SPsql = "EXEC usp_Job_Update ?,?,?,?,?,?,?";
 		ServerResponse _ServerResponse = new ServerResponse();
-		Connection conn = DBManager.getDBConn();
+		 
 
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setString(1, Joba.getJobID());
 			cstmt.setString(2, Joba.getTitle());
 			cstmt.setString(3, Joba.getNote());
@@ -199,26 +168,18 @@ public class JobDAL {
 		} catch (SQLException e) {
 
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connection Closed");
-			} catch (SQLException e) {
-
-				e.printStackTrace();
-			}
 		}
-
+		
 		return _ServerResponse;
 	}
 
-	public static ServerResponse deleteJob(String jobID) {
+	public static ServerResponse deleteJob(String jobID, Connection intermediateConnection) {
 
 		String SPsql = "EXEC usp_Job_Delete ?,?,?";
-		Connection conn = DBManager.getDBConn();
+		 
 		ServerResponse _ServerResponse = new ServerResponse();
 		try {
-			CallableStatement cstmt = conn.prepareCall(SPsql);
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
 			cstmt.setString(1, jobID);
 			cstmt.registerOutParameter(2, Types.NVARCHAR);
 			cstmt.registerOutParameter(3, Types.NVARCHAR);
@@ -229,16 +190,8 @@ public class JobDAL {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-				System.out.println("Connention Closed");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
+		} 
+		
 		return _ServerResponse;
 
 	}
