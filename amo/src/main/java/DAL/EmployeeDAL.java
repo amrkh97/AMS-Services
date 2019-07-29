@@ -503,7 +503,7 @@ public class EmployeeDAL {
 			if(response.getResponseHexCode().equals("00"))
 				response.setResponseMsg("Verified Succesfully!");
 			else
-				response.setResponseMsg("Verification Error!");
+				response.setResponseMsg("User Already Verified!");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
