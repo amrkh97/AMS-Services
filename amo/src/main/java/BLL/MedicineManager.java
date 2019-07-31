@@ -1,9 +1,14 @@
 package BLL;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import DAL.MedicineDAL;
+import DB.DBManager;
 import Models.ServerResponse;
 import Models.Medicine.Medicine;
 import Models.Medicine.MedicineArray;
+
 
 public class MedicineManager {
 
@@ -71,6 +76,22 @@ public class MedicineManager {
 	public static ServerResponse DeleteMedicine(String BarCode) {
 
 		return MedicineDAL.DeleteMedicine(BarCode);
+	}
+
+	public static MedicineArray getMedicinesWithThreshold(Integer count) {
+		Connection intermediateConnection = DBManager.getDBConn();
+		MedicineArray model = new MedicineArray();
+		try {
+			model = MedicineDAL.getMedicinesWithThreshold(count,intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
 	}
 
 }

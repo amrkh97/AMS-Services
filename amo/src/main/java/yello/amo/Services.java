@@ -42,6 +42,7 @@ import Models.Locations.Location;
 import Models.MedicalRecord.MedicalRecord;
 import Models.Medicine.CompanyMedicineMap;
 import Models.Medicine.Medicine;
+import Models.MedicineThreshold.ThresholdModel;
 import Models.Patient.PatientArray;
 import Models.Patient.PatientModel;
 import Models.PatientLocation.PatientLoc;
@@ -875,6 +876,29 @@ public class Services {
 		System.out.println(MED.getBarCode());
 		ServerResponse X = MedicineManager.DeleteMedicine(MED.getBarCode());
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	
+	@Path("medicine/getMedicinesWithThreshold")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getMedicinesWithThreshold(ThresholdModel model) {
+
+		Integer count = -1;
+		try {
+			count = model.getCount();
+		}catch(NullPointerException e){
+			e.printStackTrace();
+			count =  -1;
+		}
+		if(count < 0 ) {
+			
+			return Response.ok(MedicineManager.getAllMedicines()).header("Access-Control-Allow-Origin", "*").build();
+		}else {
+			return Response.ok(MedicineManager.getMedicinesWithThreshold(count)).header("Access-Control-Allow-Origin", "*").build();
+		}
+		
 	}
 
 	// -------------------------------------------End Of Medicine
