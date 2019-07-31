@@ -10,6 +10,7 @@ public class Location {
 	private String postalCode;
 	private String floorLevel;
 	private String houseNumber;
+	private String encodedFFA;
 
 	public String getFreeFormatAddress() {
 		return freeFormatAddress;
@@ -81,6 +82,14 @@ public class Location {
 
 	public void setHouseNumber(String houseNumber) {
 		this.houseNumber = houseNumber;
+	}
+
+	public String getEncodedFFA() {
+		return encodedFFA;
+	}
+
+	public void setEncodedFFA(String encodedFFA) {
+		this.encodedFFA = encodedFFA;
 	}
 
 }

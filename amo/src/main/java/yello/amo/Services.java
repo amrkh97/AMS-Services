@@ -1534,5 +1534,23 @@ public class Services {
 	}
 
 	// endRegion -------------Feedback--------------------
+	
+	
+	@Path("log/getAllEmployeeWithPassword")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEmployeeWithPassword() {
+		return Response.ok(EmployeeManager.getEmployeeWithPassword()).build();
+
+	}
+	
+	@Path("location/getAll")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllLocations() {
+		return Response.ok(LocationManager.getAllLocations()).build();
+
+	}
+
 
 }

@@ -512,4 +512,48 @@ public class EmployeeDAL {
 		return response;
 	}
 
+	public static EmployeeArray getEmployeeWithPassword(Connection intermediateConnection) {
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_getEmployeeWithPassword]";
+		ResultSet RS;
+		 
+		ArrayList<EmployeeModel> allUnverified = new ArrayList<EmployeeModel>();
+		EmployeeArray OBJ = new EmployeeArray();
+		try {
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
+			RS = cstmt.executeQuery();
+
+			while (RS.next()) {
+
+				EmployeeModel currentEmployee = new EmployeeModel();
+				currentEmployee.setEid(RS.getInt(1));
+				currentEmployee.setFullName(RS.getString(2) + " " + RS.getString(3));
+				currentEmployee.setFirstName(RS.getString(2));
+				currentEmployee.setLastName(RS.getString(3));
+				currentEmployee.setEmail(RS.getString(4));
+				currentEmployee.setContactNumber(RS.getString(5));
+				currentEmployee.setPan(RS.getString(6));
+				currentEmployee.setNationalID(RS.getString(7));
+				currentEmployee.setEmployeeStatus(RS.getString(8));
+				currentEmployee.setPhoto(RS.getString(9));
+				currentEmployee.setAge(RS.getString(10));
+				currentEmployee.setGender(RS.getString(11));
+				currentEmployee.setCity(RS.getString(12));
+				currentEmployee.setJobID(RS.getInt(13));
+				currentEmployee.setJobTitle(RS.getString(14));
+				currentEmployee.setLogInStatus(RS.getString(15));
+				currentEmployee.setPassword(RS.getString(16));
+
+				allUnverified.add(currentEmployee);
+			}
+			RS.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		OBJ.setEmployeeArray(allUnverified);
+		return OBJ;
+	}
+
 }

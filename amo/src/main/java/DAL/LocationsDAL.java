@@ -4,10 +4,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.ArrayList;
 
 import Models.Locations.Location;
+import Models.Locations.LocationArray;
 import Models.Locations.LocationResponse;
 
 public class LocationsDAL {
@@ -39,6 +42,33 @@ public class LocationsDAL {
 			e.printStackTrace();
 		}
 
+		return locResponse;
+	}
+
+	public static LocationArray getAllLocations(Connection conn) {
+		String SPsql = "EXEC usp_Locations_SelectAll";
+		LocationArray locResponse = new LocationArray();
+		ArrayList<Location> list = new ArrayList<Location>();
+		
+		ResultSet RS;
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			RS = cstmt.executeQuery();
+			 while(RS.next()) {
+				 Location location = new Location();
+				 location.setFreeFormatAddress(RS.getString("FreeFormatAddress"));
+				 location.setLatitude(RS.getString("Latitude"));
+				 location.setLongitude(RS.getString("Longitude"));
+				 location.setEncodedFFA(RS.getString("FFAEncoded"));
+				 list.add(location);
+			 }
+			RS.close();
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		locResponse.setLocationArray(list);
 		return locResponse;
 	}
 
