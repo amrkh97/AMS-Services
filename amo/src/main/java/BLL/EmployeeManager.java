@@ -213,4 +213,22 @@ public class EmployeeManager {
 		return model;
 	}
 
+	public static EmployeeArray getEmployeeWithPassword() {
+		Connection intermediateConnection = DBManager.getDBConn();
+		EmployeeArray model = new EmployeeArray();
+		try {
+			model = EmployeeDAL.getEmployeeWithPassword(intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
+	
+	
+	}
+
 }

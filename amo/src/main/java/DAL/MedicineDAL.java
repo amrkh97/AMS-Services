@@ -555,4 +555,39 @@ public class MedicineDAL {
 		return serverResponse;
 	}
 
+	public static MedicineArray getMedicinesWithThreshold(Integer count, Connection conn) {
+		String SPsql = "USE KAN_AMO; EXEC  usp_Medicines_SelectThreshold ?";
+		
+		ArrayList<Medicine> medicineList = new ArrayList<Medicine>();
+		MedicineArray medicineArray = new MedicineArray();
+
+		Medicine medicine = new Medicine();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setInt(1, count);
+			ResultSet rs = cstmt.executeQuery();
+
+			while (rs.next()) {
+				medicine = new Medicine();
+				medicine.setBarCode(rs.getString("BarCode"));
+				medicine.setPrice(rs.getString("Price"));
+				medicine.setCountInStock(rs.getInt("CountInStock"));
+				medicine.setImplications(rs.getString("Implications"));
+				medicine.setMedicineUsage(rs.getString("MedicineUsage"));
+				medicine.setSideEffects(rs.getString("SideEffects"));
+				medicine.setActiveComponent(rs.getString("ActiveComponent"));
+				medicine.setMedicineStatus(rs.getString("MedicineStatus"));
+				medicine.setMedicineName(rs.getString("MedicineName"));
+				medicineList.add(medicine);
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		medicineArray.setMedicineArray(medicineList);
+		return medicineArray;
+	}
+
 }

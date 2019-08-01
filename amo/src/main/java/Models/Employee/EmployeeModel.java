@@ -28,6 +28,8 @@ public class EmployeeModel {
 
 	private String fullName;
 	private String jobTitle;
+	
+	private String password;
 
 	public Integer getEid() {
 		return eid;
@@ -211,6 +213,14 @@ public class EmployeeModel {
 
 	public void setJobTitle(String jobTitle) {
 		this.jobTitle = jobTitle;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }
