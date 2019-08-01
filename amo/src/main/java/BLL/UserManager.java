@@ -17,6 +17,28 @@ public class UserManager {
 			return res;
 		}
 	}
+	
+	public static LoginResponse loginFrontend(String emailOrPAN, String Password) {
+		LoginResponse res = new LoginResponse();
+		if (isEmail(emailOrPAN) || isPAN(emailOrPAN) || isNationalID(emailOrPAN)) {
+			return UserDAL.loginFrontend(emailOrPAN, Password);
+		} else {
+			res.setResponseMsg("Wrong Email or PAN or National ID format");
+			res.setResponseHexCode("FA");
+			return res;
+		}
+	}
+	
+	public static LoginResponse loginAndroid(String emailOrPAN, String Password) {
+		LoginResponse res = new LoginResponse();
+		if (isEmail(emailOrPAN) || isPAN(emailOrPAN) || isNationalID(emailOrPAN)) {
+			return UserDAL.loginAndroid(emailOrPAN, Password);
+		} else {
+			res.setResponseMsg("Wrong Email or PAN or National ID format");
+			res.setResponseHexCode("FA");
+			return res;
+		}
+	}
 
 	public static SignUpResponse signup(SignUp user) {
 

@@ -99,6 +99,68 @@ public class Services {
 			return Response.ok(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		}
 	}
+	
+	@Path("login-frontend")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response loginFrontend(LoginCredentialsRequest req) {
+		LoginResponse loginResponse = UserManager.loginFrontend(req.getEmailOrPAN(), req.getPassword());
+		String hex = loginResponse.getResponseHexCode();
+		switch (hex) {
+		case "02": // Incorrect Password
+			return Response.status(400).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "03": // User is already logged in
+			return Response.status(401).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "04": // This user is not verified
+			return Response.status(402).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FA": // Wrong Email or PAN or National ID
+			return Response.status(403).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FB": // Password length is less than 8
+			return Response.status(405).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FC": // Catch Block
+			return Response.status(406).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FD": // FAILED: Email or Password is NULL
+			return Response.status(407).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FE": // User status undefined
+			return Response.status(408).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FF": // Not found
+			return Response.status(409).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
+	
+	@Path("login-android")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response loginAndroid(LoginCredentialsRequest req) {
+		LoginResponse loginResponse = UserManager.loginAndroid(req.getEmailOrPAN(), req.getPassword());
+		String hex = loginResponse.getResponseHexCode();
+		switch (hex) {
+		case "02": // Incorrect Password
+			return Response.status(400).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "03": // User is already logged in
+			return Response.status(401).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "04": // This user is not verified
+			return Response.status(402).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FA": // Wrong Email or PAN or National ID
+			return Response.status(403).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FB": // Password length is less than 8
+			return Response.status(405).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FC": // Catch Block
+			return Response.status(406).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FD": // FAILED: Email or Password is NULL
+			return Response.status(407).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FE": // User status undefined
+			return Response.status(408).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FF": // Not found
+			return Response.status(409).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		}
+	}
 
 	@Path("logout")
 	@POST

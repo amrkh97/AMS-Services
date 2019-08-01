@@ -58,6 +58,98 @@ public class UserDAL {
 
 		return _LoginResponse;
 	}
+	
+	public static LoginResponse loginFrontend(String emailOrPAN, String Password) {
+		// ResultSet RS = null;
+		String SPsql = "use KAN_AMO; EXEC [dbo].[usp_Employee_Login_Frontend] ?,?,?,?,?,?,?,?";
+		Connection conn = DBManager.getDBConn();
+		LoginResponse _LoginResponse = new LoginResponse();
+
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setString(1, emailOrPAN);
+			cstmt.setString(2, Password);
+			cstmt.registerOutParameter(3, Types.NVARCHAR); // Hex
+			cstmt.registerOutParameter(4, Types.NVARCHAR); // Response
+			cstmt.registerOutParameter(5, Types.INTEGER); // JobID
+			cstmt.registerOutParameter(6, Types.NVARCHAR); // JobTitle
+			cstmt.registerOutParameter(7, Types.INTEGER); // EmployeeID
+			cstmt.registerOutParameter(8, Types.NVARCHAR); // UserPhoto
+
+			cstmt.executeUpdate();
+			_LoginResponse.setResponseHexCode(cstmt.getString(3));
+			_LoginResponse.setResponseMsg(cstmt.getString(4));
+			if (cstmt.getString(3).equals("00")) {
+				_LoginResponse.setJobID(cstmt.getInt(5));
+				_LoginResponse.setTitle(cstmt.getString(6));
+				_LoginResponse.setEmployeeID(cstmt.getInt(7));
+				_LoginResponse.setUserPhoto(cstmt.getString(8));
+				// Tokenize
+				// Dummy token
+				_LoginResponse.setToken(emailOrPAN + "," + Password);
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+		}
+
+		return _LoginResponse;
+	}
+	
+	public static LoginResponse loginAndroid(String emailOrPAN, String Password) {
+		// ResultSet RS = null;
+		String SPsql = "use KAN_AMO; EXEC [dbo].[usp_Employee_Login_Android] ?,?,?,?,?,?,?,?";
+		Connection conn = DBManager.getDBConn();
+		LoginResponse _LoginResponse = new LoginResponse();
+
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			cstmt.setString(1, emailOrPAN);
+			cstmt.setString(2, Password);
+			cstmt.registerOutParameter(3, Types.NVARCHAR); // Hex
+			cstmt.registerOutParameter(4, Types.NVARCHAR); // Response
+			cstmt.registerOutParameter(5, Types.INTEGER); // JobID
+			cstmt.registerOutParameter(6, Types.NVARCHAR); // JobTitle
+			cstmt.registerOutParameter(7, Types.INTEGER); // EmployeeID
+			cstmt.registerOutParameter(8, Types.NVARCHAR); // UserPhoto
+
+			cstmt.executeUpdate();
+			_LoginResponse.setResponseHexCode(cstmt.getString(3));
+			_LoginResponse.setResponseMsg(cstmt.getString(4));
+			if (cstmt.getString(3).equals("00")) {
+				_LoginResponse.setJobID(cstmt.getInt(5));
+				_LoginResponse.setTitle(cstmt.getString(6));
+				_LoginResponse.setEmployeeID(cstmt.getInt(7));
+				_LoginResponse.setUserPhoto(cstmt.getString(8));
+				// Tokenize
+				// Dummy token
+				_LoginResponse.setToken(emailOrPAN + "," + Password);
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+				System.out.println("Connention Closed");
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+		}
+
+		return _LoginResponse;
+	}
 
 	public static SignUpResponse signup(SignUp user) {
 		// ResultSet RS;
