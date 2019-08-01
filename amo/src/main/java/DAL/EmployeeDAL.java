@@ -379,21 +379,39 @@ public class EmployeeDAL {
 				String arrayStrings[] = logDate.split(" ");
 				attendanceTimes.setLogInDate(arrayStrings[0]);
 				String arrayLogInStrings[] = arrayStrings[1].split("\\.");
-				attendanceTimes.setLogInTime(arrayLogInStrings[0]);
+				
+				String lengthLog = arrayLogInStrings[0];
+				
+				if(lengthLog.length() < 8) {
+					lengthLog = "0"+lengthLog;
+				}
+				attendanceTimes.setLogInTime(lengthLog);
 
 				logDate = RS.getString(2);
 				arrayStrings = logDate.split(" ");
 				attendanceTimes.setLogOutDate(arrayStrings[0]);
 				arrayLogInStrings = arrayStrings[1].split("\\.");
-				attendanceTimes.setLogOutTime(arrayLogInStrings[0]);
-
+				
+				lengthLog = arrayLogInStrings[0];
+				
+				if(lengthLog.length() < 8) {
+					lengthLog = "0"+lengthLog;
+				}
+				
+				attendanceTimes.setLogOutTime(lengthLog);
+				
+				if(attendanceTimes.getLogInTime().equals(attendanceTimes.getLogOutTime())) {
+					attendanceTimes.setLogOutTime("Still Active");
+				}
+				
+				
 				Integer inMinutes = Integer.parseInt(RS.getString(3));
 
 				Double inHours = (double) (inMinutes / 60.0);
 				Integer workHours = (int) Math.floor(inHours);
 				
 				Integer workMinutes = (int)(Math.ceil((inHours - Math.floor(inHours)) * 60.0));
-				System.out.println("InMinutes: "+workMinutes);
+				
 				attendanceTimes.setWorkingHours(workHours.toString());
 				attendanceTimes.setWorkingMinutes(workMinutes.toString());
 				attendanceTimes.setWorkingTime(attendanceTimes.getWorkingHours() + ":" + attendanceTimes.getWorkingMinutes());
