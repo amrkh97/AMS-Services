@@ -108,6 +108,8 @@ public class Services {
 		LoginResponse loginResponse = UserManager.loginFrontend(req.getEmailOrPAN(), req.getPassword());
 		String hex = loginResponse.getResponseHexCode();
 		switch (hex) {
+		case "01": // Not Allowed
+			return Response.status(410).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "02": // Incorrect Password
 			return Response.status(400).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "03": // User is already logged in
@@ -139,6 +141,8 @@ public class Services {
 		LoginResponse loginResponse = UserManager.loginAndroid(req.getEmailOrPAN(), req.getPassword());
 		String hex = loginResponse.getResponseHexCode();
 		switch (hex) {
+		case "01": // Not Allowed
+			return Response.status(410).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "02": // Incorrect Password
 			return Response.status(400).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "03": // User is already logged in
