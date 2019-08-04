@@ -1,6 +1,7 @@
 package yello.amo;
 
 import java.security.Key;
+import java.util.Arrays;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -22,6 +23,8 @@ import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.jose4j.keys.AesKey;
 import org.jose4j.lang.ByteUtil;
 import org.jose4j.lang.JoseException;
+
+import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import BLL.AlarmLevelManager;
 import BLL.AmbulanceMapManager;
@@ -90,6 +93,12 @@ public class Services {
 		
 		//--------- Creating A Token ---------------//
 		
+		String tryConvert = "AmrKhaledZakySol"; // 128-bit key must be 16 characters
+		byte[] arr = tryConvert.getBytes();
+		System.out.println(Arrays.toString(arr));
+		
+		Key trailKey = new AesKey(arr);
+		
 		byte[] KeyArray = ByteUtil.randomBytes(16);
 
 		Key key = new AesKey(KeyArray);
@@ -106,7 +115,7 @@ public class Services {
 		jwe.setPayload(claims.toJson());
 		jwe.setAlgorithmHeaderValue(KeyManagementAlgorithmIdentifiers.A128KW);
 		jwe.setEncryptionMethodHeaderParameter(ContentEncryptionAlgorithmIdentifiers.AES_128_CBC_HMAC_SHA_256);
-		jwe.setKey(key);
+		jwe.setKey(trailKey);
 		
 		String serializedJwe = "Failed to get Token!";
 		try {
@@ -129,13 +138,13 @@ public class Services {
 		jweNew.setContentEncryptionAlgorithmConstraints(
 				new AlgorithmConstraints(ConstraintType.WHITELIST,
 				ContentEncryptionAlgorithmIdentifiers.AES_128_CBC_HMAC_SHA_256));
-		jweNew.setKey(key);
+		jweNew.setKey(trailKey);
 		
 		try {
 			
 			jweNew.setCompactSerialization(serializedJwe);
 			JwtConsumer consumer = new JwtConsumerBuilder()
-					.setDecryptionKey(key)
+					.setDecryptionKey(trailKey)
 					.setDisableRequireSignature() //Can be enabled if it was sent by the token but not necessary
 					.setRequireIssuedAt() //If a token wasn't issued with "iat" then it will be ignored.
 					.build(); // create the JwtConsumer instance.build();
