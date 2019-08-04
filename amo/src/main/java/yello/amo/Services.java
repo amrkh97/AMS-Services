@@ -84,7 +84,7 @@ public class Services {
 	
 	@Path("testToken")
 	@GET
-	//@Secured
+	@Secured
 	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
 	public Response trialToken() {
 		
@@ -136,7 +136,8 @@ public class Services {
 			jweNew.setCompactSerialization(serializedJwe);
 			JwtConsumer consumer = new JwtConsumerBuilder()
 					.setDecryptionKey(key)
-					.setDisableRequireSignature()
+					.setDisableRequireSignature() //Can be enabled if it was sent by the token but not necessary
+					.setRequireIssuedAt() //If a token wasn't issued with "iat" then it will be ignored.
 					.build(); // create the JwtConsumer instance.build();
 			
 			JwtClaims jwtClaims = consumer.processToClaims(serializedJwe);
