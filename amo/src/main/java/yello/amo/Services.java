@@ -15,6 +15,7 @@ import BLL.CompanyManager;
 import BLL.CompanyMedicineMapManager;
 import BLL.EmployeeManager;
 import BLL.FeedbackManger;
+import BLL.HospitalManager;
 import BLL.IncidentPriorityManager;
 import BLL.IncidentTypeManager;
 import BLL.JobManager;
@@ -1584,6 +1585,14 @@ public class Services {
 	public Response getAssignedNotInTrip() {
 		
 		return Response.ok(AmbulanceVehicleManger.getAllAssignedNotInTripCars()).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@Path("hospital/getAll")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllHospitals() {
+		return Response.ok(HospitalManager.getAllHospitals()).build();
+
 	}
 
 
