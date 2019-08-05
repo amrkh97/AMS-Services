@@ -266,17 +266,22 @@ public class AmbulanceMapDAL {
 			cstmt.setInt(1, model.getVin());
 			
 			try {	
-				cstmt.setInt(2, model.getDriverID());
+				cstmt.setInt(3, model.getDriverID());
+				
 			}catch(NullPointerException e) {
 				model.setDriverID(0);
-				cstmt.setInt(2, model.getDriverID());
+				
+				cstmt.setInt(3, model.getDriverID());
 			}
 			
 			try {	
-				cstmt.setInt(3, model.getParamedicID());
+				cstmt.setInt(2, model.getParamedicID());
+				
+				
 			}catch(NullPointerException e) {
+			
 				model.setParamedicID(0);
-				cstmt.setInt(3, model.getParamedicID());
+				cstmt.setInt(2, model.getParamedicID());
 			}
 			
 			try {	
