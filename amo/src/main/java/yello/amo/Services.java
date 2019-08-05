@@ -1,8 +1,5 @@
 package yello.amo;
 
-import java.security.Key;
-import java.util.Arrays;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -10,18 +7,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import org.jose4j.jwa.AlgorithmConstraints;
-import org.jose4j.jwa.AlgorithmConstraints.ConstraintType;
-import org.jose4j.jwe.ContentEncryptionAlgorithmIdentifiers;
-import org.jose4j.jwe.JsonWebEncryption;
-import org.jose4j.jwe.KeyManagementAlgorithmIdentifiers;
-import org.jose4j.jwt.JwtClaims;
-import org.jose4j.jwt.consumer.InvalidJwtException;
-import org.jose4j.jwt.consumer.JwtConsumer;
-import org.jose4j.jwt.consumer.JwtConsumerBuilder;
-import org.jose4j.keys.AesKey;
-import org.jose4j.lang.JoseException;
 
 import BLL.AlarmLevelManager;
 import BLL.AmbulanceMapManager;
@@ -82,83 +67,7 @@ public class Services {
 		return "Server is Running ..!";
 	}
 	
-	@Path("testToken")
-	@GET
-	@Secured
-	@Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
-	public Response trialToken() {
-		
-		//--------- Creating A Token ---------------//
-		
-		String tryConvert = "AmrKhaledZakySol"; // 128-bit key must be 16 characters
-		byte[] arr = tryConvert.getBytes();
-		System.out.println(Arrays.toString(arr));
-		
-		Key trailKey = new AesKey(arr);
-		
-		/*
-		byte[] KeyArray = ByteUtil.randomBytes(16);
-		Key key = new AesKey(KeyArray);
-		System.out.println("Key:" + KeyArray.toString());
-		*/
-		JsonWebEncryption jwe = new JsonWebEncryption();
-		
-		JwtClaims claims = new JwtClaims();
-		claims.setClaim("email", "amrkh97@gmail.com");
-		claims.setClaim("password", "Fa123");
-		claims.setIssuedAtToNow();
-		
-		jwe.setPayload(claims.toJson());
-		jwe.setAlgorithmHeaderValue(KeyManagementAlgorithmIdentifiers.A128KW);
-		jwe.setEncryptionMethodHeaderParameter(ContentEncryptionAlgorithmIdentifiers.AES_128_CBC_HMAC_SHA_256);
-		jwe.setKey(trailKey);
-		
-		String serializedJwe = "Failed to get Token!";
-		try {
-			 serializedJwe = jwe.getCompactSerialization();
-			 
-		} catch (JoseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		//---------- Token Created ------------//
-		
-		//---------- Token DeCoding ----------//
-		
-		JsonWebEncryption jweNew = new JsonWebEncryption();
-		jweNew.setAlgorithmConstraints(
-				new AlgorithmConstraints(ConstraintType.WHITELIST,
-					KeyManagementAlgorithmIdentifiers.A128KW));
-		
-		jweNew.setContentEncryptionAlgorithmConstraints(
-				new AlgorithmConstraints(ConstraintType.WHITELIST,
-				ContentEncryptionAlgorithmIdentifiers.AES_128_CBC_HMAC_SHA_256));
-		jweNew.setKey(trailKey);
-		
-		try {
-			
-			jweNew.setCompactSerialization(serializedJwe);
-			JwtConsumer consumer = new JwtConsumerBuilder()
-					.setDecryptionKey(trailKey)
-					.setDisableRequireSignature() //Can be enabled if it was sent by the token but not necessary
-					.setRequireIssuedAt() //If a token wasn't issued with "iat" then it will be ignored.
-					.build(); // create the JwtConsumer instance.build();
-			
-			JwtClaims jwtClaims = consumer.processToClaims(serializedJwe);
-			
-			System.out.println(jwtClaims.getClaimValue("email"));
-			System.out.println(jwtClaims.getClaimValue("password"));
-			
-		} catch (JoseException | InvalidJwtException  e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		//---------- Token Decoded -----------//
-		
-		return Response.ok(serializedJwe).header("Access-Control-Allow-Origin", "*").header("Authorization", "Bearer "+serializedJwe).build();
-	}
+	
 	// ----------------------------------------Start Of
 	// LogIn/LogOut/SignUp--------------------------------------------//
 
