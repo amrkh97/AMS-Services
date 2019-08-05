@@ -6,8 +6,6 @@ import org.jose4j.jwe.ContentEncryptionAlgorithmIdentifiers;
 import org.jose4j.jwe.JsonWebEncryption;
 import org.jose4j.jwe.KeyManagementAlgorithmIdentifiers;
 import org.jose4j.jwt.JwtClaims;
-import org.jose4j.keys.AesKey;
-import org.jose4j.lang.ByteUtil;
 import org.jose4j.lang.JoseException;
 
 import Models.ServerResponse;
@@ -17,12 +15,6 @@ public class TokenClass {
 	
 	public static String CreateToken(LoginCredentialsRequest model, Key encryptionKey) {
 		
-		//Key Creation:
-		/*
-		byte[] KeyArray = ByteUtil.randomBytes(16);
-		Key key = new AesKey(KeyArray);
-		System.out.println("Key:" + KeyArray.toString());
-		*/
 		JsonWebEncryption jwe = new JsonWebEncryption();
 		
 		JwtClaims claims = new JwtClaims();

@@ -99,12 +99,11 @@ public class Services {
 		
 		Key trailKey = new AesKey(arr);
 		
+		/*
 		byte[] KeyArray = ByteUtil.randomBytes(16);
-
 		Key key = new AesKey(KeyArray);
-		
-		//System.out.println("Key:" + KeyArray.toString());
-		
+		System.out.println("Key:" + KeyArray.toString());
+		*/
 		JsonWebEncryption jwe = new JsonWebEncryption();
 		
 		JwtClaims claims = new JwtClaims();
