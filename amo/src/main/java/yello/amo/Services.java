@@ -21,10 +21,7 @@ import org.jose4j.jwt.consumer.InvalidJwtException;
 import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
 import org.jose4j.keys.AesKey;
-import org.jose4j.lang.ByteUtil;
 import org.jose4j.lang.JoseException;
-
-import com.sun.xml.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import BLL.AlarmLevelManager;
 import BLL.AmbulanceMapManager;
@@ -1670,6 +1667,14 @@ public class Services {
 	public Response getAllLocations() {
 		return Response.ok(LocationManager.getAllLocations()).build();
 
+	}
+	
+	@Path("ambulance/getAssignedNotInTrip")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAssignedNotInTrip() {
+		
+		return Response.ok(AmbulanceVehicleManger.getAllAssignedNotInTripCars()).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 
