@@ -15,6 +15,7 @@ import BLL.CompanyManager;
 import BLL.CompanyMedicineMapManager;
 import BLL.EmployeeManager;
 import BLL.FeedbackManger;
+import BLL.HospitalManager;
 import BLL.IncidentPriorityManager;
 import BLL.IncidentTypeManager;
 import BLL.JobManager;
@@ -1573,6 +1574,14 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllLocations() {
 		return Response.ok(LocationManager.getAllLocations()).build();
+
+	}
+	
+	@Path("hospital/getAll")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllHospitals() {
+		return Response.ok(HospitalManager.getAllHospitals()).build();
 
 	}
 
