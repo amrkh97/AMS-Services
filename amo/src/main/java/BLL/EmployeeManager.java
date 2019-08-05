@@ -231,4 +231,36 @@ public class EmployeeManager {
 	
 	}
 
+	public static EmployeeArray getAssignedParamedics() {
+		Connection intermediateConnection = DBManager.getDBConn();
+		EmployeeArray model = new EmployeeArray();
+		try {
+			model = EmployeeDAL.getAssignedParamedics(intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
+	}
+	
+	public static EmployeeArray getNotAssignedParamedics() {
+		Connection intermediateConnection = DBManager.getDBConn();
+		EmployeeArray model = new EmployeeArray();
+		try {
+			model = EmployeeDAL.getNotAssignedParamedics(intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
+	}
+
 }

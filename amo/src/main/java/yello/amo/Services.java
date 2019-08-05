@@ -665,6 +665,29 @@ public class Services {
 
 		return Response.ok(EmployeeManager.getDatabyEmployeeID(EID)).header("Access-Control-Allow-Origin", "*").build();
 	}
+	
+	
+	@Path("employee/getAssignedParamedics")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAssignedParamedics() {
+
+		return Response.ok(EmployeeManager.getAssignedParamedics()).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+	
+	@Path("employee/getNotAssignedParamedics")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getNotAssignedParamedics() {
+
+		return Response.ok(EmployeeManager.getNotAssignedParamedics()).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+	
+	
 	// -----------------------------------------End Of Employee
 	// Services---------------------------------------------//
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
