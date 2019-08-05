@@ -665,6 +665,49 @@ public class Services {
 
 		return Response.ok(EmployeeManager.getDatabyEmployeeID(EID)).header("Access-Control-Allow-Origin", "*").build();
 	}
+	
+	
+	@Path("employee/getAssignedParamedics")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAssignedParamedics() {
+
+		return Response.ok(EmployeeManager.getAssignedParamedics()).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+	
+	@Path("employee/getNotAssignedParamedics")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getNotAssignedParamedics() {
+
+		return Response.ok(EmployeeManager.getNotAssignedParamedics()).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+	
+	@Path("employee/getAssignedDrivers")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAssignedDrivers() {
+
+		return Response.ok(EmployeeManager.getAssignedDrivers()).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+	
+	@Path("employee/getNotAssignedDrivers")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getNotAssignedDrivers() {
+
+		return Response.ok(EmployeeManager.getNotAssignedParamedics()).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+	
+	
 	// -----------------------------------------End Of Employee
 	// Services---------------------------------------------//
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1292,6 +1335,26 @@ public class Services {
 
 		return Response.ok(YelloPadManager.getAllYelloPads()).header("Access-Control-Allow-Origin", "*").build();
 	}
+	
+	
+	@Path("yelloPad/getAssigned")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAssignedYelloPads() {
+
+		return Response.ok(YelloPadManager.getAssignedYelloPads()).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	
+	@Path("yelloPad/getNotAssigned")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getNotAssignedYelloPads() {
+
+		return Response.ok(YelloPadManager.getNotAssignedYelloPads()).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	
 
 	/**
 	 * Gets All Active YelloPads in DataBase.
@@ -1594,6 +1657,7 @@ public class Services {
 		return Response.ok(HospitalManager.getAllHospitals()).build();
 
 	}
+	
 
 
 }

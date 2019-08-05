@@ -584,4 +584,154 @@ public class EmployeeDAL {
 		return OBJ;
 	}
 
+	public static EmployeeArray getAssignedParamedics(Connection intermediateConnection) {
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AssignedParamedics] ";
+		ResultSet RS;
+		 
+		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
+		EmployeeArray OBJ = new EmployeeArray();
+		try {
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
+			RS = cstmt.executeQuery();
+
+			while (RS.next()) {
+
+				EmployeeModel currentEmployee = new EmployeeModel();
+				currentEmployee.setEid(RS.getInt(1));
+				currentEmployee.setFirstName(RS.getString(2));
+				currentEmployee.setLastName(RS.getString(3));
+				currentEmployee.setEmail(RS.getString(4));
+				currentEmployee.setContactNumber(RS.getString(5));
+				currentEmployee.setPan(RS.getString(6));
+				currentEmployee.setNationalID(RS.getString(7));
+				currentEmployee.setEmployeeStatus(RS.getString(8));
+				currentEmployee.setPhoto(RS.getString(9));
+				currentEmployee.setAge(RS.getString(10));
+
+				allParamedics.add(currentEmployee);
+			}
+			RS.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		OBJ.setEmployeeArray(allParamedics);
+		return OBJ;
+	}
+	
+	public static EmployeeArray getNotAssignedParamedics(Connection intermediateConnection) {
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_NotAssignedParamedics] ";
+		ResultSet RS;
+		 
+		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
+		EmployeeArray OBJ = new EmployeeArray();
+		try {
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
+			RS = cstmt.executeQuery();
+
+			while (RS.next()) {
+
+				EmployeeModel currentEmployee = new EmployeeModel();
+				currentEmployee.setEid(RS.getInt(1));
+				currentEmployee.setFirstName(RS.getString(2));
+				currentEmployee.setLastName(RS.getString(3));
+				currentEmployee.setEmail(RS.getString(4));
+				currentEmployee.setContactNumber(RS.getString(5));
+				currentEmployee.setPan(RS.getString(6));
+				currentEmployee.setNationalID(RS.getString(7));
+				currentEmployee.setEmployeeStatus(RS.getString(8));
+				currentEmployee.setPhoto(RS.getString(9));
+				currentEmployee.setAge(RS.getString(10));
+
+				allParamedics.add(currentEmployee);
+			}
+			RS.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		OBJ.setEmployeeArray(allParamedics);
+		return OBJ;
+	}
+
+	public static EmployeeArray getNotAssignedDrivers(Connection intermediateConnection) {
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_NotAssignedDrivers] ";
+		ResultSet RS;
+		 
+		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
+		EmployeeArray OBJ = new EmployeeArray();
+		try {
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
+			RS = cstmt.executeQuery();
+
+			while (RS.next()) {
+
+				EmployeeModel currentEmployee = new EmployeeModel();
+				currentEmployee.setEid(RS.getInt(1));
+				currentEmployee.setFirstName(RS.getString(2));
+				currentEmployee.setLastName(RS.getString(3));
+				currentEmployee.setEmail(RS.getString(4));
+				currentEmployee.setContactNumber(RS.getString(5));
+				currentEmployee.setPan(RS.getString(6));
+				currentEmployee.setNationalID(RS.getString(7));
+				currentEmployee.setEmployeeStatus(RS.getString(8));
+				currentEmployee.setPhoto(RS.getString(9));
+				currentEmployee.setAge(RS.getString(10));
+
+				allParamedics.add(currentEmployee);
+			}
+			RS.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		OBJ.setEmployeeArray(allParamedics);
+		return OBJ;
+	}
+	
+	
+	public static EmployeeArray getAssignedDrivers(Connection intermediateConnection) {
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AssignedDrivers] ";
+		ResultSet RS;
+		 
+		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
+		EmployeeArray OBJ = new EmployeeArray();
+		try {
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
+			RS = cstmt.executeQuery();
+
+			while (RS.next()) {
+
+				EmployeeModel currentEmployee = new EmployeeModel();
+				currentEmployee.setEid(RS.getInt(1));
+				currentEmployee.setFirstName(RS.getString(2));
+				currentEmployee.setLastName(RS.getString(3));
+				currentEmployee.setEmail(RS.getString(4));
+				currentEmployee.setContactNumber(RS.getString(5));
+				currentEmployee.setPan(RS.getString(6));
+				currentEmployee.setNationalID(RS.getString(7));
+				currentEmployee.setEmployeeStatus(RS.getString(8));
+				currentEmployee.setPhoto(RS.getString(9));
+				currentEmployee.setAge(RS.getString(10));
+
+				allParamedics.add(currentEmployee);
+			}
+			RS.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		OBJ.setEmployeeArray(allParamedics);
+		return OBJ;
+	}
+	
+
 }

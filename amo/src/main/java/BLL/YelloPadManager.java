@@ -111,4 +111,36 @@ public class YelloPadManager {
 		return model;
 	}
 
+	public static YelloPadArray getNotAssignedYelloPads() {
+		Connection intermediateConnection = DBManager.getDBConn();
+		YelloPadArray model = new YelloPadArray();
+		try {
+			model = YelloPadDAL.getNotAssignedYelloPads(intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
+	}
+	
+	public static YelloPadArray getAssignedYelloPads() {
+		Connection intermediateConnection = DBManager.getDBConn();
+		YelloPadArray model = new YelloPadArray();
+		try {
+			model = YelloPadDAL.getAssignedYelloPads(intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
+	}
+
 }
