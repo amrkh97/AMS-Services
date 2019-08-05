@@ -703,7 +703,7 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getNotAssignedDrivers() {
 
-		return Response.ok(EmployeeManager.getNotAssignedParamedics()).header("Access-Control-Allow-Origin", "*")
+		return Response.ok(EmployeeManager.getNotAssignedDrivers()).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
 	

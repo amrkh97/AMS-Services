@@ -600,6 +600,7 @@ public class EmployeeDAL {
 				currentEmployee.setEid(RS.getInt(1));
 				currentEmployee.setFirstName(RS.getString(2));
 				currentEmployee.setLastName(RS.getString(3));
+				currentEmployee.setFullName(currentEmployee.getFirstName() +" "+currentEmployee.getLastName());
 				currentEmployee.setEmail(RS.getString(4));
 				currentEmployee.setContactNumber(RS.getString(5));
 				currentEmployee.setPan(RS.getString(6));
@@ -637,6 +638,7 @@ public class EmployeeDAL {
 				currentEmployee.setEid(RS.getInt(1));
 				currentEmployee.setFirstName(RS.getString(2));
 				currentEmployee.setLastName(RS.getString(3));
+				currentEmployee.setFullName(currentEmployee.getFirstName() +" "+currentEmployee.getLastName());
 				currentEmployee.setEmail(RS.getString(4));
 				currentEmployee.setContactNumber(RS.getString(5));
 				currentEmployee.setPan(RS.getString(6));
@@ -674,6 +676,7 @@ public class EmployeeDAL {
 				currentEmployee.setEid(RS.getInt(1));
 				currentEmployee.setFirstName(RS.getString(2));
 				currentEmployee.setLastName(RS.getString(3));
+				currentEmployee.setFullName(currentEmployee.getFirstName() +" "+currentEmployee.getLastName());
 				currentEmployee.setEmail(RS.getString(4));
 				currentEmployee.setContactNumber(RS.getString(5));
 				currentEmployee.setPan(RS.getString(6));
@@ -712,6 +715,7 @@ public class EmployeeDAL {
 				currentEmployee.setEid(RS.getInt(1));
 				currentEmployee.setFirstName(RS.getString(2));
 				currentEmployee.setLastName(RS.getString(3));
+				currentEmployee.setFullName(currentEmployee.getFirstName() +" "+currentEmployee.getLastName());
 				currentEmployee.setEmail(RS.getString(4));
 				currentEmployee.setContactNumber(RS.getString(5));
 				currentEmployee.setPan(RS.getString(6));
