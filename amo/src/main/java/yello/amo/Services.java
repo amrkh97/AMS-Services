@@ -1292,6 +1292,26 @@ public class Services {
 
 		return Response.ok(YelloPadManager.getAllYelloPads()).header("Access-Control-Allow-Origin", "*").build();
 	}
+	
+	
+	@Path("yelloPad/getAssigned")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAssignedYelloPads() {
+
+		return Response.ok(YelloPadManager.getAssignedYelloPads()).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	
+	@Path("yelloPad/getNotAssigned")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getNotAssignedYelloPads() {
+
+		return Response.ok(YelloPadManager.getNotAssignedYelloPads()).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	
 
 	/**
 	 * Gets All Active YelloPads in DataBase.
@@ -1594,6 +1614,7 @@ public class Services {
 		return Response.ok(HospitalManager.getAllHospitals()).build();
 
 	}
+	
 
 
 }
