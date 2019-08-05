@@ -412,8 +412,18 @@ public class EmployeeDAL {
 				
 				Integer workMinutes = (int)(Math.ceil((inHours - Math.floor(inHours)) * 60.0));
 				
-				attendanceTimes.setWorkingHours(workHours.toString());
-				attendanceTimes.setWorkingMinutes(workMinutes.toString());
+				String hoursInString = workHours.toString();
+				String minutesInString = workMinutes.toString();
+				
+				if(hoursInString.length() == 1) {
+					hoursInString = "0" + hoursInString;
+				}
+				
+				if(minutesInString.length() == 1) {
+					minutesInString = "0" + minutesInString;
+				}
+				attendanceTimes.setWorkingHours(hoursInString);
+				attendanceTimes.setWorkingMinutes(minutesInString);
 				attendanceTimes.setWorkingTime(attendanceTimes.getWorkingHours() + ":" + attendanceTimes.getWorkingMinutes());
 				allAttendanceTimes.add(attendanceTimes);
 			}
