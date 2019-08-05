@@ -54,6 +54,7 @@ import Models.Users.LogoutResponse;
 import Models.Users.SignUp;
 import Models.Users.SignUpResponse;
 
+
 /**
  * Root resource (exposed at "api" path)
  */
@@ -65,7 +66,8 @@ public class Services {
 	public String getIt() {
 		return "Server is Running ..!";
 	}
-
+	
+	
 	// ----------------------------------------Start Of
 	// LogIn/LogOut/SignUp--------------------------------------------//
 
@@ -1574,6 +1576,14 @@ public class Services {
 	public Response getAllLocations() {
 		return Response.ok(LocationManager.getAllLocations()).build();
 
+	}
+	
+	@Path("ambulance/getAssignedNotInTrip")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAssignedNotInTrip() {
+		
+		return Response.ok(AmbulanceVehicleManger.getAllAssignedNotInTripCars()).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 
