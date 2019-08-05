@@ -687,6 +687,26 @@ public class Services {
 				.build();
 	}
 	
+	@Path("employee/getAssignedDrivers")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAssignedDrivers() {
+
+		return Response.ok(EmployeeManager.getAssignedDrivers()).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+	
+	@Path("employee/getNotAssignedDrivers")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getNotAssignedDrivers() {
+
+		return Response.ok(EmployeeManager.getNotAssignedParamedics()).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+	
 	
 	// -----------------------------------------End Of Employee
 	// Services---------------------------------------------//
