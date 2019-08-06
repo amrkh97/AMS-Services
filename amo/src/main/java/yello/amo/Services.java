@@ -38,6 +38,7 @@ import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.Data.DataModel;
 import Models.Employee.EmployeeSentModel;
+import Models.Equipment.AddEquipmentModel;
 import Models.Equipment.EquipmentModel;
 import Models.Feedback.FeedbackModel;
 import Models.Hospital.HospitalModel;
@@ -1747,8 +1748,61 @@ public class Services {
 	}
 	
 	
+	@Path("equipment/assignToAmbulance")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response assignEquipmentToAmbulance(AddEquipmentModel model) {
 	
-	
+		ServerResponse response = new ServerResponse();
+		response = EquipmentManager.assignEquipmentToAmbulance(model);
+		switch (response.getResponseHexCode()) {
+		case "01":
+			
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
+		case "02":
+			
+			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
+
+		default:
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+			
+		}
+		
+	}
+	
+	@Path("equipment/getEquipmentOnAmbulance")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEquipmentOnAmbulance(AddEquipmentModel model) {
+	
+		return Response.ok(EquipmentManager.getEquipmentOnAmbulance(model)).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@Path("equipment/deleteEquipmentOnAmbulance")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteEquipmentOnAmbulance(AddEquipmentModel model) {
+	
+		ServerResponse response = new ServerResponse();
+		response = EquipmentManager.deleteEquipmentOnAmbulance(model);
+		switch (response.getResponseHexCode()) {
+		case "01":
+			
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+
+		case "02":
+			
+			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
+
+		default:
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+			
+		}
+		
+	}
 
 }
