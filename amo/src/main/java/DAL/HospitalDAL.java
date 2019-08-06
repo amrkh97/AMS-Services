@@ -53,4 +53,47 @@ public class HospitalDAL {
 		return OBJ;
 	}
 
+	public static HospitalModel getHospitalByName(String hospitalName, Connection intermediateConnection) {
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_Hospital_getByName] ?";
+		ResultSet RS;
+		 
+		
+		HospitalModel currentHospital  = new HospitalModel();
+
+		try {
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
+			cstmt.setString(1, hospitalName);
+			RS = cstmt.executeQuery();
+
+			if (RS.next()) {
+
+				
+				currentHospital.setHospitalID(RS.getInt(1));
+				currentHospital.setHospitalName(RS.getString(2));
+				currentHospital.setDescription(RS.getString(3));
+				currentHospital.setLatitude(RS.getString(4));
+				currentHospital.setLongitude(RS.getString(5));
+				currentHospital.setHospitalStatus(RS.getString(6));
+				currentHospital.setNumberOfBeds(RS.getInt(7));
+				currentHospital.setNumberOfAvailableBeds(RS.getInt(8));
+				currentHospital.setNumberOfICUBeds(RS.getInt(9));
+				currentHospital.setNumberOfAvialbleICUBeds(RS.getInt(10));
+				currentHospital.setNumberOfRegularBeds(RS.getInt(11));
+				currentHospital.setNumberOfAvailableRegularBeds(RS.getInt(12));
+				currentHospital.setNumberOfBabyBeds(RS.getInt(13));
+				currentHospital.setNumberOfAvailableBabyBeds(RS.getInt(14));
+				
+				
+				
+			}
+			RS.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		
+		return currentHospital;
+	}
+
 }
