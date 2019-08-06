@@ -110,8 +110,8 @@ public class EquipmentDAL {
 			cstmt.registerOutParameter(4, Types.NVARCHAR);
 			cstmt.executeUpdate();
 			
-			OBJ.setResponseHexCode(cstmt.getString(4));
-			OBJ.setResponseMsg(cstmt.getString(5));
+			OBJ.setResponseHexCode(cstmt.getString(3));
+			OBJ.setResponseMsg(cstmt.getString(4));
 			
 		
 		} catch (SQLException e) {
