@@ -14,6 +14,7 @@ import BLL.AmbulanceVehicleManger;
 import BLL.CompanyManager;
 import BLL.CompanyMedicineMapManager;
 import BLL.EmployeeManager;
+import BLL.EquipmentManager;
 import BLL.FeedbackManger;
 import BLL.HospitalManager;
 import BLL.IncidentPriorityManager;
@@ -37,6 +38,8 @@ import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.Data.DataModel;
 import Models.Employee.EmployeeSentModel;
+import Models.Equipment.AddEquipmentModel;
+import Models.Equipment.EquipmentModel;
 import Models.Feedback.FeedbackModel;
 import Models.Hospital.HospitalModel;
 import Models.Job.Job;
@@ -55,6 +58,7 @@ import Models.Users.LoginResponse;
 import Models.Users.LogoutResponse;
 import Models.Users.SignUp;
 import Models.Users.SignUpResponse;
+import Models.YelloPad.YelloPadModel;
 
 
 /**
@@ -1639,7 +1643,7 @@ public class Services {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllLocations() {
-		return Response.ok(LocationManager.getAllLocations()).build();
+		return Response.ok(LocationManager.getAllLocations()).header("Access-Control-Allow-Origin", "*").build();
 
 	}
 	
@@ -1655,7 +1659,7 @@ public class Services {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllHospitals() {
-		return Response.ok(HospitalManager.getAllHospitals()).build();
+		return Response.ok(HospitalManager.getAllHospitals()).header("Access-Control-Allow-Origin", "*").build();
 
 	}
 	
@@ -1664,12 +1668,141 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getHospitalByName(HospitalModel hospital) {
-		return Response.ok(HospitalManager.getHospitalByName(hospital)).build();
+		return Response.ok(HospitalManager.getHospitalByName(hospital)).header("Access-Control-Allow-Origin", "*").build();
 
 	}
 	
-	
-	
+	@Path("yelloPad/insert")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response insertYelloPad(YelloPadModel yelloPad) {
+		ServerResponse response = new ServerResponse();
+		response = YelloPadManager.insertYelloPad(yelloPad);
+		
+		switch (response.getResponseHexCode()) {
+		case "01":
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		case "02":
+			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(response).build();
+		}
+		
 
+	}
+	
+	@Path("yelloPad/updateLocation")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateYelloPadLocation(YelloPadModel yelloPad) {
+		ServerResponse response = new ServerResponse();
+		response = YelloPadManager.updateYelloPadLocation(yelloPad);
+		
+		switch (response.getResponseHexCode()) {
+		case "01":
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		case "02":
+			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(response).build();
+		}
+		
+	}
+	
+	@Path("equipment/addEquipment")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addEquipment(EquipmentModel equipment) {
+		ServerResponse response = new ServerResponse();
+		response = EquipmentManager.insertEquipment(equipment);
+		
+		switch (response.getResponseHexCode()) {
+		case "01":
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		case "02":
+			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(response).build();
+		}
+		
+	}
+	
+	@Path("equipment/getByName")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEquipmentByName(EquipmentModel equipment) {
+	
+		return Response.ok(EquipmentManager.getEquipmentByName(equipment)).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@Path("equipment/getAll")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllEquipment() {
+	
+		return Response.ok(EquipmentManager.getAllEquipment()).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	
+	@Path("equipment/assignToAmbulance")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response assignEquipmentToAmbulance(AddEquipmentModel model) {
+	
+		ServerResponse response = new ServerResponse();
+		response = EquipmentManager.assignEquipmentToAmbulance(model);
+		switch (response.getResponseHexCode()) {
+		case "01":
+			
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+
+		case "02":
+			
+			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
+
+		default:
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+			
+		}
+		
+	}
+	
+	@Path("equipment/getEquipmentOnAmbulance")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEquipmentOnAmbulance(AddEquipmentModel model) {
+	
+		return Response.ok(EquipmentManager.getEquipmentOnAmbulance(model)).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@Path("equipment/deleteEquipmentOnAmbulance")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteEquipmentOnAmbulance(AddEquipmentModel model) {
+	
+		ServerResponse response = new ServerResponse();
+		response = EquipmentManager.deleteEquipmentOnAmbulance(model);
+		switch (response.getResponseHexCode()) {
+		case "01":
+			
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+
+		case "02":
+			
+			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
+
+		default:
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+			
+		}
+		
+	}
 
 }
