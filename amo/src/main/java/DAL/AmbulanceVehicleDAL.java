@@ -444,5 +444,47 @@ public class AmbulanceVehicleDAL {
 		OBJ.setAmbulanceArray(Array);
 		return OBJ;
 	}
+
+	public static AmbulanceArray getAssignedCarsLoggedIn(Connection conn) {
+		String SPsql = "USE KAN_AMO; EXEC usp_AmbulanceVehicle_getAssignedCarsLoggedIn";
+		ArrayList<AmbulanceVehicleModel> Array = new ArrayList<AmbulanceVehicleModel>();
+		AmbulanceArray OBJ = new AmbulanceArray();
+		AmbulanceVehicleModel _AmbulanceVehicle = new AmbulanceVehicleModel();
+		try {
+			CallableStatement cstmt = conn.prepareCall(SPsql);
+			ResultSet rs = cstmt.executeQuery();
+
+			while (rs.next()) {
+				_AmbulanceVehicle = new AmbulanceVehicleModel();
+
+				_AmbulanceVehicle.setVin(rs.getInt("Vin"));
+				_AmbulanceVehicle.setImplication(rs.getNString("Implication"));
+				_AmbulanceVehicle.setMake(rs.getString("Make"));
+				_AmbulanceVehicle.setType(rs.getString("Type"));
+				_AmbulanceVehicle.setProductionYear(rs.getString("ProductionYear"));
+				_AmbulanceVehicle.setRegYear(rs.getString("RegYear"));
+				_AmbulanceVehicle.setLicencePlate(rs.getString("LicencePlate"));
+				_AmbulanceVehicle.setOwnerName(rs.getString("OwnerName"));
+				_AmbulanceVehicle.setLicenceStateOrProvince(rs.getString("LicenceStateOrProvince"));
+				_AmbulanceVehicle.setServiceStartDate(rs.getString("ServiceStartDate"));
+				_AmbulanceVehicle.setEngineNumber(rs.getString("EngineNumber"));
+				_AmbulanceVehicle.setBrand(rs.getString("Brand"));
+				_AmbulanceVehicle.setChasiahNumber(rs.getString("ChasiahNumber"));
+				_AmbulanceVehicle.setModel(rs.getString("Model"));
+				_AmbulanceVehicle.setDriverPhoneNumber(rs.getString("DriverPhoneNumber"));
+				_AmbulanceVehicle.setVehicleStatus(rs.getString("VehicleStatus"));
+				_AmbulanceVehicle.setAmbulanceVehiclePicture(rs.getString("AmbulanceVehiclePicture"));
+				Array.add(_AmbulanceVehicle);
+			}
+			rs.close();
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		
+		OBJ.setAmbulanceArray(Array);
+		return OBJ;
+		
+	}
 	
 }

@@ -33,7 +33,19 @@ public class AmbulanceVehicleManger {
 	}
 
 	public static AmbulanceArray getAssignedCars() {
-		return AmbulanceVehicleDAL.getCarsBySts("05");
+		Connection intermediateConnection = DBManager.getDBConn();
+		AmbulanceArray model = new AmbulanceArray();
+		try {
+			model = AmbulanceVehicleDAL.getAssignedCarsLoggedIn(intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
 	}
 
 	public static AmbulanceArray getFreeCars() {
