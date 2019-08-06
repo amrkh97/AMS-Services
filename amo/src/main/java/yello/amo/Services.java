@@ -38,6 +38,7 @@ import Models.Company.CompanyModel;
 import Models.Data.DataModel;
 import Models.Employee.EmployeeSentModel;
 import Models.Feedback.FeedbackModel;
+import Models.Hospital.HospitalModel;
 import Models.Job.Job;
 import Models.Locations.Location;
 import Models.MedicalRecord.MedicalRecord;
@@ -1657,6 +1658,17 @@ public class Services {
 		return Response.ok(HospitalManager.getAllHospitals()).build();
 
 	}
+	
+	@Path("hospital/getByName")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getHospitalByName(HospitalModel hospital) {
+		return Response.ok(HospitalManager.getHospitalByName(hospital)).build();
+
+	}
+	
+	
 	
 
 
