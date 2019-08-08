@@ -304,5 +304,56 @@ public class AmbulanceMapDAL {
 		
 		return response;
 	}
+	
+	public static ServerResponse exchangeAmbulanceMap(AmbulanceMapModel model,Connection intermediateConnection) {
+		ServerResponse response = new ServerResponse();
+		 
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[usp_AmbulanceMap_Exchange] ?,?,?,?,?,?";
+		
+		try {
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
+			
+			cstmt.setInt(1, model.getVin());
+			
+			try {	
+				cstmt.setInt(3, model.getDriverID());
+				
+			}catch(NullPointerException e) {
+				model.setDriverID(0);
+				
+				cstmt.setInt(3, model.getDriverID());
+			}
+			
+			try {	
+				cstmt.setInt(2, model.getParamedicID());
+				
+				
+			}catch(NullPointerException e) {
+			
+				model.setParamedicID(0);
+				cstmt.setInt(2, model.getParamedicID());
+			}
+			
+			try {	
+				cstmt.setInt(4, model.getYellopadID());
+			}catch(NullPointerException e) {
+				model.setYellopadID(0);;
+				cstmt.setInt(4, model.getYellopadID());
+			}
+			
+			cstmt.registerOutParameter(5, Types.NVARCHAR);
+			cstmt.registerOutParameter(6, Types.NVARCHAR);
+			cstmt.executeUpdate();
+			
+			response.setResponseHexCode(cstmt.getString(5));
+			response.setResponseMsg(cstmt.getString(6));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return response;
+	}
+
 
 }
