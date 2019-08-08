@@ -162,5 +162,22 @@ public class AmbulanceMapManager {
 	} 
 	
 	
+	public static ServerResponse exchangeAmbulanceMap(AmbulanceMapModel currentAmbulanceMap) {
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse model = new ServerResponse();
+		try {
+			model = AmbulanceMapDAL.exchangeAmbulanceMap(currentAmbulanceMap, intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
+
+	} 
+	
 
 }

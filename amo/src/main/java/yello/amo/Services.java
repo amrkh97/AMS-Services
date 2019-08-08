@@ -468,6 +468,24 @@ public class Services {
 
 		}
 	}
+	
+	@Path("ambulanceMap/exchangeAmbulanceMap")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response exchangeAmbulanceMap(AmbulanceMapModel AmbulanceToBeAdded) {
+		ServerResponse response = new ServerResponse();
+		response = AmbulanceMapManager.exchangeAmbulanceMap(AmbulanceToBeAdded);
+		switch (response.getResponseHexCode()) {
+		case "01":
+			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		case "02":
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+
+		}
+	}
 
 	// -----------------------------------------End Of Ambulance Map
 	// ------------------------------------------------//
