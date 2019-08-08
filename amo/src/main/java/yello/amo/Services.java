@@ -1092,7 +1092,10 @@ public class Services {
 		ServerResponse serverResponse = X.getSecond();
 		PatientArray patientArray = X.getFirst();
 		if (X.equals(null)) {
-			return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build();
+			ServerResponse response = new ServerResponse();
+			response.setResponseHexCode("FF");
+			response.setResponseMsg("Server Error");
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 		if (serverResponse != null) {
 			return Response.ok(serverResponse).header("Access-Control-Allow-Origin", "*").build();
@@ -1125,7 +1128,10 @@ public class Services {
 	public Response editPatient(PatientModel patientModel) {
 		ServerResponse X = PatientManger.updatePatientData(patientModel);
 		if (X.equals(null)) {
-			return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build();
+			ServerResponse response = new ServerResponse();
+			response.setResponseHexCode("FF");
+			response.setResponseMsg("The patient was not found");
+			return Response.status(404).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 
