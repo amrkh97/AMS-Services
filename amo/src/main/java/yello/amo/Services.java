@@ -1109,7 +1109,10 @@ public class Services {
 	public Response addNewPatient(PatientModel patientModel) {
 		ServerResponse_ID X = PatientManger.addNewPatient(patientModel);
 		if (X.equals(null)) {
-			return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build();
+			ServerResponse response = new ServerResponse();
+			response.setResponseHexCode("FF");
+			response.setResponseMsg("The patient was not Added");
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 
