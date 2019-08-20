@@ -1823,5 +1823,29 @@ public class Services {
 		}
 
 	}
+	
+	@Path("yelloPad/checkDB")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response yelloPadCheckDB(YelloPadModel model) {
+		
+		ServerResponse response = new ServerResponse();
+		response = YelloPadManager.yelloPadCheckDB(model);
+		
+		return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@Path("yelloPad/setDB")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response yelloPadSetDB(YelloPadModel model) {
+		
+		ServerResponse response = new ServerResponse();
+		response = YelloPadManager.yelloPadSetDB(model);
+		
+		return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+	}
 
 }

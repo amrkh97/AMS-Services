@@ -176,4 +176,36 @@ public class YelloPadManager {
 		return model;
 	}
 
+	public static ServerResponse yelloPadCheckDB(YelloPadModel model) {
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse response = new ServerResponse();
+		try {
+			response = YelloPadDAL.yelloPadCheckDB(model,intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return response;
+	}
+
+	public static ServerResponse yelloPadSetDB(YelloPadModel model) {
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse response = new ServerResponse();
+		try {
+			response = YelloPadDAL.yelloPadSetDB(model,intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return response;
+	}
+
 }

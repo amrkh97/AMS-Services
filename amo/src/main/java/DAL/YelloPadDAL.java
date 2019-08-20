@@ -326,4 +326,49 @@ public class YelloPadDAL {
 		return OBJ;
 	}
 
+	public static ServerResponse yelloPadCheckDB(YelloPadModel model, Connection intermediateConnection) {
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[YelloPad_Check_Database] ?,?";
+		 
+		ServerResponse OBJ = new ServerResponse();
+
+		try {
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
+			cstmt.setString(1, model.getYelloPadUniqueID());
+			cstmt.registerOutParameter(2, Types.NVARCHAR);
+			cstmt.executeUpdate();
+			
+			OBJ.setResponseHexCode(cstmt.getString(2));
+			OBJ.setResponseMsg("Success");
+			
+		
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return OBJ;
+	}
+
+	public static ServerResponse yelloPadSetDB(YelloPadModel model, Connection intermediateConnection) {
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[YelloPad_Check_Database] ?,?,?";
+		 
+		ServerResponse OBJ = new ServerResponse();
+
+		try {
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
+			cstmt.setString(1, model.getYelloPadUniqueID());
+			cstmt.registerOutParameter(2, Types.NVARCHAR);
+			cstmt.registerOutParameter(3, Types.NVARCHAR);
+			cstmt.executeUpdate();
+			
+			OBJ.setResponseHexCode(cstmt.getString(2));
+			OBJ.setResponseMsg(cstmt.getString(3));
+			
+		
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return OBJ;
+	}
+
 }
