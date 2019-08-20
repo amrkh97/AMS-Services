@@ -1460,7 +1460,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetReportByStatus(Report report) {
-		return Response.ok(ReportManager.selectByReportStatus(report.getReportStatus())).build();
+		return Response.ok(ReportManager.selectByReportStatus(report.getReportStatus()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1469,7 +1470,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetReportByIssueTime(Report report) {
-		return Response.ok(ReportManager.selectByReportIssueTime(report.getReportIssueTime())).build();
+		return Response.ok(ReportManager.selectByReportIssueTime(report.getReportIssueTime()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1478,7 +1480,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetReportByPatientId(Report report) {
-		return Response.ok(ReportManager.selectByPatientId(report.getPatientId())).build();
+		return Response.ok(ReportManager.selectByPatientId(report.getPatientId()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1489,7 +1492,7 @@ public class Services {
 	public Response GetReportByReportTitleAndStatus(Report report) {
 		return Response
 				.ok(ReportManager.selectByReportTitleAndStatus(report.getReportTitle(), report.getReportStatus()))
-				.build();
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1498,7 +1501,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response reportInsert(Report report) {
-		return Response.ok(ReportManager.insertReport(report)).build();
+		return Response.ok(ReportManager.insertReport(report))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1507,7 +1511,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response removeReport(Report report) {
-		return Response.ok(ReportManager.deleteReport(report.getReportId())).build();
+		return Response.ok(ReportManager.deleteReport(report.getReportId()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1516,7 +1521,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetReportByTitle(Report report) {
-		return Response.ok(ReportManager.selectByReportTitle(report.getReportTitle())).build();
+		return Response.ok(ReportManager.selectByReportTitle(report.getReportTitle()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1530,7 +1536,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response receiptInsert(Receipt receiptIN) {
-		return Response.ok(ReceiptsManager.insertReceipt(receiptIN)).build();
+		return Response.ok(ReceiptsManager.insertReceipt(receiptIN))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1539,7 +1546,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response receiptRemove(Receipt receiptIN) {
-		return Response.ok(ReceiptsManager.deleteReceipt(receiptIN.getReceiptID())).build();
+		return Response.ok(ReceiptsManager.deleteReceipt(receiptIN.getReceiptID()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1548,7 +1556,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRecByRespSQN(Receipt receiptIN) {
-		return Response.ok(ReceiptsManager.getRecByRespSQN(receiptIN.getRespSQN())).build();
+		return Response.ok(ReceiptsManager.getRecByRespSQN(receiptIN.getRespSQN()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1558,7 +1567,8 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRecByCasheirSSN(Receipt receiptIN) {
 		System.out.println("Service");
-		return Response.ok(ReceiptsManager.getRecByCasheirSSN(receiptIN.getCasheirSSN())).build();
+		return Response.ok(ReceiptsManager.getRecByCasheirSSN(receiptIN.getCasheirSSN()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1567,7 +1577,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRecByFTPFileLocation(Receipt receiptIN) {
-		return Response.ok(ReceiptsManager.getRecByFTPFileLocation(receiptIN.getFTPFileLocation())).build();
+		return Response.ok(ReceiptsManager.getRecByFTPFileLocation(receiptIN.getFTPFileLocation()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1576,7 +1587,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRecByReceiptStatus(Receipt receiptIN) {
-		return Response.ok(ReceiptsManager.getRecByReceiptStatus(receiptIN.getReceiptStatus())).build();
+		return Response.ok(ReceiptsManager.getRecByReceiptStatus(receiptIN.getReceiptStatus()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1585,7 +1597,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRecByCost(Receipt receiptIN) {
-		return Response.ok(ReceiptsManager.getRecByCost(receiptIN.getCost())).build();
+		return Response.ok(ReceiptsManager.getRecByCost(receiptIN.getCost()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1594,7 +1607,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRecByPaymentMethod(Receipt receiptIN) {
-		return Response.ok(ReceiptsManager.getRecByPaymentMethod(receiptIN.getPaymentMethod())).build();
+		return Response.ok(ReceiptsManager.getRecByPaymentMethod(receiptIN.getPaymentMethod()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1604,7 +1618,8 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetRecByCreationTime(Report receiptIN) {
 		System.out.println("Service");
-		return Response.ok(ReceiptsManager.selectByReceiptCreationTime(receiptIN.getReportIssueTime())).build();
+		return Response.ok(ReceiptsManager.selectByReceiptCreationTime(receiptIN.getReportIssueTime()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -1618,7 +1633,8 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response InsertNewFeedback(FeedbackModel feedbackModel) {
 		System.out.println("InsertNewFeedback Service start");
-		return Response.ok(FeedbackManger.insertFeedback(feedbackModel)).build();
+		return Response.ok(FeedbackManger.insertFeedback(feedbackModel))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1628,7 +1644,8 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response editFeedback(FeedbackModel feedbackModel) {
 		System.out.println("editFeedback Service start");
-		return Response.ok(FeedbackManger.updateFeedback(feedbackModel)).build();
+		return Response.ok(FeedbackManger.updateFeedback(feedbackModel))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1638,7 +1655,8 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteFeedback(FeedbackModel feedbackModel) {
 		System.out.println("editFeedback Service start");
-		return Response.ok(FeedbackManger.deleteFeedback(feedbackModel.getFeedbackID())).build();
+		return Response.ok(FeedbackManger.deleteFeedback(feedbackModel.getFeedbackID()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1648,7 +1666,8 @@ public class Services {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getEmployeeWithPassword() {
-		return Response.ok(EmployeeManager.getEmployeeWithPassword()).build();
+		return Response.ok(EmployeeManager.getEmployeeWithPassword())
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1720,7 +1739,7 @@ public class Services {
 		case "02":
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default:
-			return Response.ok(response).build();
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 
 	}
@@ -1739,7 +1758,7 @@ public class Services {
 		case "02":
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default:
-			return Response.ok(response).build();
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 
 	}
