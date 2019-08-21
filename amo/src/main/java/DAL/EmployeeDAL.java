@@ -61,6 +61,7 @@ public class EmployeeDAL {
 				currentEmployee.setCity(RS.getString(12));
 				currentEmployee.setJobID(RS.getInt(13));
 				currentEmployee.setJobTitle(RS.getString(14));
+				currentEmployee.setLogInStatus(RS.getString(15));
 
 				allParamedics.add(currentEmployee);
 			}
