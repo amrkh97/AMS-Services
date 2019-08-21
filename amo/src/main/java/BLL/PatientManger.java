@@ -196,7 +196,6 @@ public class PatientManger {
 	// ---------------------------------------------------------------delete-------------------------------------------------------//
 
 	public static ServerResponse updatePatientData(PatientModel patientModel) {
-		ArrayList<PatientModel> Array = new ArrayList<PatientModel>();
 		ServerResponse S = new ServerResponse();
 		CustomClass<Connection, Boolean> connbool = DBManager.getDBConn1();
 		Connection conn = connbool.getFirst();
@@ -207,13 +206,6 @@ public class PatientManger {
 
 		}
 		try {
-			Array = PatientDAL.getPatientByNId(patientModel.getPatientNationalID(), conn).getPatientArray();
-			if (Array.size() == 0) {
-
-				S.setResponseHexCode("FF");
-				S.setResponseMsg("Patient NOT FOUND in database");
-				return S;
-			}
 			S = PatientDAL.updatePatientData(patientModel, conn);
 		} catch (Exception e) {
 			System.out.println("i hav error");

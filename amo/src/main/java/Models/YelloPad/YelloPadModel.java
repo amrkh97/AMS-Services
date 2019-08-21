@@ -5,97 +5,64 @@ public class YelloPadModel {
 	private String yelloPadUniqueID;
 	private String yelloPadStatus;
 	private String yelloPadStatusCode;
-	private String yelloPadNetwrokCard;
+	private String yelloPadNetworkCard;
 	private String yelloPadPicture;
-
-	/**
-	 * 
-	 * @return YelloPad's Unique ID.
-	 */
-	public String getUniqueID() {
-
-		return yelloPadUniqueID;
-	}
-
-	/**
-	 * 
-	 * @return YelloPad's Picture.
-	 */
-	public String getPicture() {
-
-		return yelloPadPicture;
-	}
-
-	/**
-	 * 
-	 * @return YelloPad's Status.
-	 */
-	public String getStatus() {
-		return yelloPadStatus;
-	}
-
-	/**
-	 * 
-	 * @return YelloPad's Status Code.
-	 */
-	public String getStatusCode() {
-		return yelloPadStatusCode;
-	}
-
-	/**
-	 * 
-	 * @return Number of YelloPad's Network Card.
-	 */
-	public String getNetwrokCardNo() {
-		return yelloPadNetwrokCard;
-	}
-
-	/**
-	 * 
-	 * @param ID: ID of current YelloPad
-	 */
-	public void setUniqueID(String ID) {
-		yelloPadUniqueID = ID;
-	}
-
-	/**
-	 * 
-	 * @param Status: Status of current YelloPad
-	 */
-	public void setStatus(String Status) {
-		yelloPadStatus = Status;
-	}
-
-	/**
-	 * 
-	 * @param Status: Status of current YelloPad
-	 */
-	public void setStatusCode(String StatusCode) {
-		yelloPadStatusCode = StatusCode;
-	}
-
-	/**
-	 * 
-	 * @param Num: Number of current YelloPad's Network Card
-	 */
-	public void setNetworkCard(String Num) {
-		yelloPadNetwrokCard = Num;
-	}
-
-	/**
-	 * 
-	 * @param Picture:Picture of current YelloPad
-	 */
-	public void setPicture(String Picture) {
-		yelloPadPicture = Picture;
-	}
-
+	private String yelloPadMaintenanceNote;
+	private String yelloPadLatitude;
+	private String yelloPadLongitude;
 	public Integer getYelloPadID() {
 		return yelloPadID;
 	}
-
 	public void setYelloPadID(Integer yelloPadID) {
 		this.yelloPadID = yelloPadID;
 	}
-
+	public String getYelloPadUniqueID() {
+		return yelloPadUniqueID;
+	}
+	public void setYelloPadUniqueID(String yelloPadUniqueID) {
+		this.yelloPadUniqueID = yelloPadUniqueID;
+	}
+	public String getYelloPadStatus() {
+		return yelloPadStatus;
+	}
+	public void setYelloPadStatus(String yelloPadStatus) {
+		this.yelloPadStatus = yelloPadStatus;
+	}
+	public String getYelloPadStatusCode() {
+		return yelloPadStatusCode;
+	}
+	public void setYelloPadStatusCode(String yelloPadStatusCode) {
+		this.yelloPadStatusCode = yelloPadStatusCode;
+	}
+	public String getYelloPadNetworkCard() {
+		return yelloPadNetworkCard;
+	}
+	public void setYelloPadNetworkCard(String yelloPadNetworkCard) {
+		this.yelloPadNetworkCard = yelloPadNetworkCard;
+	}
+	public String getYelloPadPicture() {
+		return yelloPadPicture;
+	}
+	public void setYelloPadPicture(String yelloPadPicture) {
+		this.yelloPadPicture = yelloPadPicture;
+	}
+	public String getYelloPadMaintenanceNote() {
+		return yelloPadMaintenanceNote;
+	}
+	public void setYelloPadMaintenanceNote(String yelloPadMaintenanceNote) {
+		this.yelloPadMaintenanceNote = yelloPadMaintenanceNote;
+	}
+	public String getYelloPadLatitude() {
+		return yelloPadLatitude;
+	}
+	public void setYelloPadLatitude(String yelloPadLatitude) {
+		this.yelloPadLatitude = yelloPadLatitude;
+	}
+	public String getYelloPadLongitude() {
+		return yelloPadLongitude;
+	}
+	public void setYelloPadLongitude(String yelloPadLongitude) {
+		this.yelloPadLongitude = yelloPadLongitude;
+	}
+	
 }

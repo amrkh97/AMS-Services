@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import DAL.YelloPadDAL;
 import DB.DBManager;
+import Models.ServerResponse;
 import Models.YelloPad.YelloPadArray;
 import Models.YelloPad.YelloPadModel;
 
@@ -109,6 +110,102 @@ public class YelloPadManager {
 		}
 		
 		return model;
+	}
+
+	public static YelloPadArray getNotAssignedYelloPads() {
+		Connection intermediateConnection = DBManager.getDBConn();
+		YelloPadArray model = new YelloPadArray();
+		try {
+			model = YelloPadDAL.getNotAssignedYelloPads(intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
+	}
+	
+	public static YelloPadArray getAssignedYelloPads() {
+		Connection intermediateConnection = DBManager.getDBConn();
+		YelloPadArray model = new YelloPadArray();
+		try {
+			model = YelloPadDAL.getAssignedYelloPads(intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
+	}
+
+	public static ServerResponse insertYelloPad(YelloPadModel yelloPad) {
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse model = new ServerResponse();
+		try {
+			model = YelloPadDAL.insertYelloPad(yelloPad,intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
+	}
+	
+	public static ServerResponse updateYelloPadLocation(YelloPadModel yelloPad) {
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse model = new ServerResponse();
+		try {
+			model = YelloPadDAL.updateYelloPadLocation(yelloPad,intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
+	}
+
+	public static ServerResponse yelloPadCheckDB(YelloPadModel model) {
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse response = new ServerResponse();
+		try {
+			response = YelloPadDAL.yelloPadCheckDB(model,intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return response;
+	}
+
+	public static ServerResponse yelloPadSetDB(YelloPadModel model) {
+		Connection intermediateConnection = DBManager.getDBConn();
+		ServerResponse response = new ServerResponse();
+		try {
+			response = YelloPadDAL.yelloPadSetDB(model,intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return response;
 	}
 
 }

@@ -1,6 +1,10 @@
 package BLL;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import DAL.AmbulanceVehicleDAL;
+import DB.DBManager;
 import Models.ServerResponse;
 import Models.AmbulanceVehicle.AmbulanceArray;
 import Models.AmbulanceVehicle.AmbulanceVehicleModel;
@@ -29,7 +33,19 @@ public class AmbulanceVehicleManger {
 	}
 
 	public static AmbulanceArray getAssignedCars() {
-		return AmbulanceVehicleDAL.getCarsBySts("05");
+		Connection intermediateConnection = DBManager.getDBConn();
+		AmbulanceArray model = new AmbulanceArray();
+		try {
+			model = AmbulanceVehicleDAL.getAssignedCarsLoggedIn(intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
 	}
 
 	public static AmbulanceArray getFreeCars() {
@@ -140,4 +156,24 @@ public class AmbulanceVehicleManger {
 		}
 		return AmbulanceVehicleDAL.DeleteCars(vin);
 	}
+	
+	
+	public static AmbulanceArray getAllAssignedNotInTripCars() {
+		Connection intermediateConnection = DBManager.getDBConn();
+		AmbulanceArray model = new AmbulanceArray();
+		try {
+			model = AmbulanceVehicleDAL.getAssignedNotInTripCars(intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return model;
+	}
+	
+	
+	
 }

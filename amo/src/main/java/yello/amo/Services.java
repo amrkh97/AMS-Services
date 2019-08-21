@@ -14,7 +14,9 @@ import BLL.AmbulanceVehicleManger;
 import BLL.CompanyManager;
 import BLL.CompanyMedicineMapManager;
 import BLL.EmployeeManager;
+import BLL.EquipmentManager;
 import BLL.FeedbackManger;
+import BLL.HospitalManager;
 import BLL.IncidentPriorityManager;
 import BLL.IncidentTypeManager;
 import BLL.JobManager;
@@ -36,7 +38,10 @@ import Models.AmbulanceVehicle.AmbulanceVehicleModel;
 import Models.Company.CompanyModel;
 import Models.Data.DataModel;
 import Models.Employee.EmployeeSentModel;
+import Models.Equipment.AddEquipmentModel;
+import Models.Equipment.EquipmentModel;
 import Models.Feedback.FeedbackModel;
+import Models.Hospital.HospitalModel;
 import Models.Job.Job;
 import Models.Locations.Location;
 import Models.MedicalRecord.MedicalRecord;
@@ -53,6 +58,7 @@ import Models.Users.LoginResponse;
 import Models.Users.LogoutResponse;
 import Models.Users.SignUp;
 import Models.Users.SignUpResponse;
+import Models.YelloPad.YelloPadModel;
 
 /**
  * Root resource (exposed at "api" path)
@@ -510,7 +516,7 @@ public class Services {
 	public Response getAllBatches(DataModel vin) {
 		return Response.ok(AmbulanceMapManager.getAllBatches(vin)).header("Access-Control-Allow-Origin", "*").build();
 	}
-	
+
 	@Path("ambulanceMap/updateAmbulanceMap")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -528,7 +534,24 @@ public class Services {
 
 		}
 	}
+	
+	@Path("ambulanceMap/exchangeAmbulanceMap")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response exchangeAmbulanceMap(AmbulanceMapModel AmbulanceToBeAdded) {
+		ServerResponse response = new ServerResponse();
+		response = AmbulanceMapManager.exchangeAmbulanceMap(AmbulanceToBeAdded);
+		switch (response.getResponseHexCode()) {
+		case "01":
+			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		case "02":
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
 
+		}
+	}
 
 	// -----------------------------------------End Of Ambulance Map
 	// ------------------------------------------------//
@@ -552,7 +575,7 @@ public class Services {
 		return Response.ok(EmployeeManager.getAllAttendanceTimes(superSSN)).header("Access-Control-Allow-Origin", "*")
 				.build();
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -563,21 +586,19 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getUnverifiedEmployees() {
 
-		return Response.ok(EmployeeManager.getUnverifiedEmployees()).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}	
-	
+		return Response.ok(EmployeeManager.getUnverifiedEmployees()).header("Access-Control-Allow-Origin", "*").build();
+	}
+
 	@Path("employee/verifyEmployee")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response verifyEmployee(EmployeeSentModel employeeToBeVerified) {
 
-		return Response.ok(EmployeeManager.verifyEmployee(employeeToBeVerified)).header("Access-Control-Allow-Origin", "*")
-				.build();
-	}	
-	
-	
+		return Response.ok(EmployeeManager.verifyEmployee(employeeToBeVerified))
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
+
 	/**
 	 * Prints All the attendance times of a specific Employee based on their
 	 * Employee ID
@@ -728,6 +749,44 @@ public class Services {
 
 		return Response.ok(EmployeeManager.getDatabyEmployeeID(EID)).header("Access-Control-Allow-Origin", "*").build();
 	}
+
+	@Path("employee/getAssignedParamedics")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAssignedParamedics() {
+
+		return Response.ok(EmployeeManager.getAssignedParamedics()).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("employee/getNotAssignedParamedics")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getNotAssignedParamedics() {
+
+		return Response.ok(EmployeeManager.getNotAssignedParamedics()).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("employee/getAssignedDrivers")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAssignedDrivers() {
+
+		return Response.ok(EmployeeManager.getAssignedDrivers()).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("employee/getNotAssignedDrivers")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getNotAssignedDrivers() {
+
+		return Response.ok(EmployeeManager.getNotAssignedDrivers()).header("Access-Control-Allow-Origin", "*").build();
+	}
+
 	// -----------------------------------------End Of Employee
 	// Services---------------------------------------------//
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -943,8 +1002,7 @@ public class Services {
 		ServerResponse X = MedicineManager.DeleteMedicine(MED.getBarCode());
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 	}
-	
-	
+
 	@Path("medicine/getMedicinesWithThreshold")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -954,17 +1012,18 @@ public class Services {
 		Integer count = -1;
 		try {
 			count = model.getCount();
-		}catch(NullPointerException e){
+		} catch (NullPointerException e) {
 			e.printStackTrace();
-			count =  -1;
+			count = -1;
 		}
-		if(count < 0 ) {
-			
+		if (count < 0) {
+
 			return Response.ok(MedicineManager.getAllMedicines()).header("Access-Control-Allow-Origin", "*").build();
-		}else {
-			return Response.ok(MedicineManager.getMedicinesWithThreshold(count)).header("Access-Control-Allow-Origin", "*").build();
+		} else {
+			return Response.ok(MedicineManager.getMedicinesWithThreshold(count))
+					.header("Access-Control-Allow-Origin", "*").build();
 		}
-		
+
 	}
 
 	// -------------------------------------------End Of Medicine
@@ -1117,7 +1176,10 @@ public class Services {
 		ServerResponse serverResponse = X.getSecond();
 		PatientArray patientArray = X.getFirst();
 		if (X.equals(null)) {
-			return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build();
+			ServerResponse response = new ServerResponse();
+			response.setResponseHexCode("FF");
+			response.setResponseMsg("Server Error");
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 		if (serverResponse != null) {
 			return Response.ok(serverResponse).header("Access-Control-Allow-Origin", "*").build();
@@ -1134,7 +1196,10 @@ public class Services {
 	public Response addNewPatient(PatientModel patientModel) {
 		ServerResponse_ID X = PatientManger.addNewPatient(patientModel);
 		if (X.equals(null)) {
-			return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build();
+			ServerResponse response = new ServerResponse();
+			response.setResponseHexCode("FF");
+			response.setResponseMsg("The patient was not Added");
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 
@@ -1147,7 +1212,10 @@ public class Services {
 	public Response editPatient(PatientModel patientModel) {
 		ServerResponse X = PatientManger.updatePatientData(patientModel);
 		if (X.equals(null)) {
-			return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build();
+			ServerResponse response = new ServerResponse();
+			response.setResponseHexCode("FF");
+			response.setResponseMsg("The patient was not found");
+			return Response.status(404).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 
@@ -1356,6 +1424,23 @@ public class Services {
 		return Response.ok(YelloPadManager.getAllYelloPads()).header("Access-Control-Allow-Origin", "*").build();
 	}
 
+	@Path("yelloPad/getAssigned")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAssignedYelloPads() {
+
+		return Response.ok(YelloPadManager.getAssignedYelloPads()).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("yelloPad/getNotAssigned")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getNotAssignedYelloPads() {
+
+		return Response.ok(YelloPadManager.getNotAssignedYelloPads()).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
 	/**
 	 * Gets All Active YelloPads in DataBase.
 	 * 
@@ -1441,7 +1526,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetReportByStatus(Report report) {
-		return Response.ok(ReportManager.selectByReportStatus(report.getReportStatus())).build();
+		return Response.ok(ReportManager.selectByReportStatus(report.getReportStatus()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1450,7 +1536,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetReportByIssueTime(Report report) {
-		return Response.ok(ReportManager.selectByReportIssueTime(report.getReportIssueTime())).build();
+		return Response.ok(ReportManager.selectByReportIssueTime(report.getReportIssueTime()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1459,7 +1546,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetReportByPatientId(Report report) {
-		return Response.ok(ReportManager.selectByPatientId(report.getPatientId())).build();
+		return Response.ok(ReportManager.selectByPatientId(report.getPatientId()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1470,7 +1558,7 @@ public class Services {
 	public Response GetReportByReportTitleAndStatus(Report report) {
 		return Response
 				.ok(ReportManager.selectByReportTitleAndStatus(report.getReportTitle(), report.getReportStatus()))
-				.build();
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1479,7 +1567,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response reportInsert(Report report) {
-		return Response.ok(ReportManager.insertReport(report)).build();
+		return Response.ok(ReportManager.insertReport(report))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1488,7 +1577,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response removeReport(Report report) {
-		return Response.ok(ReportManager.deleteReport(report.getReportId())).build();
+		return Response.ok(ReportManager.deleteReport(report.getReportId()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1497,7 +1587,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetReportByTitle(Report report) {
-		return Response.ok(ReportManager.selectByReportTitle(report.getReportTitle())).build();
+		return Response.ok(ReportManager.selectByReportTitle(report.getReportTitle()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1511,7 +1602,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response receiptInsert(Receipt receiptIN) {
-		return Response.ok(ReceiptsManager.insertReceipt(receiptIN)).build();
+		return Response.ok(ReceiptsManager.insertReceipt(receiptIN))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1520,7 +1612,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response receiptRemove(Receipt receiptIN) {
-		return Response.ok(ReceiptsManager.deleteReceipt(receiptIN.getReceiptID())).build();
+		return Response.ok(ReceiptsManager.deleteReceipt(receiptIN.getReceiptID()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1529,7 +1622,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRecByRespSQN(Receipt receiptIN) {
-		return Response.ok(ReceiptsManager.getRecByRespSQN(receiptIN.getRespSQN())).build();
+		return Response.ok(ReceiptsManager.getRecByRespSQN(receiptIN.getRespSQN()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1539,7 +1633,8 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRecByCasheirSSN(Receipt receiptIN) {
 		System.out.println("Service");
-		return Response.ok(ReceiptsManager.getRecByCasheirSSN(receiptIN.getCasheirSSN())).build();
+		return Response.ok(ReceiptsManager.getRecByCasheirSSN(receiptIN.getCasheirSSN()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1548,7 +1643,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRecByFTPFileLocation(Receipt receiptIN) {
-		return Response.ok(ReceiptsManager.getRecByFTPFileLocation(receiptIN.getFTPFileLocation())).build();
+		return Response.ok(ReceiptsManager.getRecByFTPFileLocation(receiptIN.getFTPFileLocation()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1557,7 +1653,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRecByReceiptStatus(Receipt receiptIN) {
-		return Response.ok(ReceiptsManager.getRecByReceiptStatus(receiptIN.getReceiptStatus())).build();
+		return Response.ok(ReceiptsManager.getRecByReceiptStatus(receiptIN.getReceiptStatus()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1566,7 +1663,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRecByCost(Receipt receiptIN) {
-		return Response.ok(ReceiptsManager.getRecByCost(receiptIN.getCost())).build();
+		return Response.ok(ReceiptsManager.getRecByCost(receiptIN.getCost()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1575,7 +1673,8 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getRecByPaymentMethod(Receipt receiptIN) {
-		return Response.ok(ReceiptsManager.getRecByPaymentMethod(receiptIN.getPaymentMethod())).build();
+		return Response.ok(ReceiptsManager.getRecByPaymentMethod(receiptIN.getPaymentMethod()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1585,7 +1684,8 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response GetRecByCreationTime(Report receiptIN) {
 		System.out.println("Service");
-		return Response.ok(ReceiptsManager.selectByReceiptCreationTime(receiptIN.getReportIssueTime())).build();
+		return Response.ok(ReceiptsManager.selectByReceiptCreationTime(receiptIN.getReportIssueTime()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 //-----------------------------------------------------------------------------------------------------------------------//
@@ -1599,7 +1699,8 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response InsertNewFeedback(FeedbackModel feedbackModel) {
 		System.out.println("InsertNewFeedback Service start");
-		return Response.ok(FeedbackManger.insertFeedback(feedbackModel)).build();
+		return Response.ok(FeedbackManger.insertFeedback(feedbackModel))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1609,7 +1710,8 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response editFeedback(FeedbackModel feedbackModel) {
 		System.out.println("editFeedback Service start");
-		return Response.ok(FeedbackManger.updateFeedback(feedbackModel)).build();
+		return Response.ok(FeedbackManger.updateFeedback(feedbackModel))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
@@ -1619,28 +1721,216 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteFeedback(FeedbackModel feedbackModel) {
 		System.out.println("editFeedback Service start");
-		return Response.ok(FeedbackManger.deleteFeedback(feedbackModel.getFeedbackID())).build();
+		return Response.ok(FeedbackManger.deleteFeedback(feedbackModel.getFeedbackID()))
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
 	// endRegion -------------Feedback--------------------
-	
-	
+
 	@Path("log/getAllEmployeeWithPassword")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getEmployeeWithPassword() {
-		return Response.ok(EmployeeManager.getEmployeeWithPassword()).build();
+		return Response.ok(EmployeeManager.getEmployeeWithPassword())
+				.header("Access-Control-Allow-Origin", "*").build();
 
 	}
-	
+
 	@Path("location/getAll")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllLocations() {
-		return Response.ok(LocationManager.getAllLocations()).build();
+		return Response.ok(LocationManager.getAllLocations()).header("Access-Control-Allow-Origin", "*").build();
 
 	}
 
+	@Path("ambulance/getAssignedNotInTrip")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAssignedNotInTrip() {
+
+		return Response.ok(AmbulanceVehicleManger.getAllAssignedNotInTripCars())
+				.header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("hospital/getAll")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllHospitals() {
+		return Response.ok(HospitalManager.getAllHospitals()).header("Access-Control-Allow-Origin", "*").build();
+
+	}
+
+	@Path("hospital/getByName")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getHospitalByName(HospitalModel hospital) {
+		return Response.ok(HospitalManager.getHospitalByName(hospital)).header("Access-Control-Allow-Origin", "*")
+				.build();
+
+	}
+
+	@Path("yelloPad/insert")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response insertYelloPad(YelloPadModel yelloPad) {
+		ServerResponse response = new ServerResponse();
+		response = YelloPadManager.insertYelloPad(yelloPad);
+
+		switch (response.getResponseHexCode()) {
+		case "01":
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		case "02":
+			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(response).build();
+		}
+
+	}
+
+	@Path("yelloPad/updateLocation")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateYelloPadLocation(YelloPadModel yelloPad) {
+		ServerResponse response = new ServerResponse();
+		response = YelloPadManager.updateYelloPadLocation(yelloPad);
+
+		switch (response.getResponseHexCode()) {
+		case "01":
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		case "02":
+			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+		}
+
+	}
+
+	@Path("equipment/addEquipment")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addEquipment(EquipmentModel equipment) {
+		ServerResponse response = new ServerResponse();
+		response = EquipmentManager.insertEquipment(equipment);
+
+		switch (response.getResponseHexCode()) {
+		case "01":
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		case "02":
+			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+		}
+
+	}
+
+	@Path("equipment/getByName")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEquipmentByName(EquipmentModel equipment) {
+
+		return Response.ok(EquipmentManager.getEquipmentByName(equipment)).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("equipment/getAll")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllEquipment() {
+
+		return Response.ok(EquipmentManager.getAllEquipment()).header("Access-Control-Allow-Origin", "*").build();
+	}
+
+	@Path("equipment/assignToAmbulance")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response assignEquipmentToAmbulance(AddEquipmentModel model) {
+
+		ServerResponse response = new ServerResponse();
+		response = EquipmentManager.assignEquipmentToAmbulance(model);
+		switch (response.getResponseHexCode()) {
+		case "01":
+
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+
+		case "02":
+
+			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
+
+		case "03":
+
+			return Response.status(405).entity(response).header("Access-Control-Allow-Origin", "*").build();
+
+		default:
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+
+		}
+
+	}
+
+	@Path("equipment/getEquipmentOnAmbulance")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEquipmentOnAmbulance(AddEquipmentModel model) {
+
+		return Response.ok(EquipmentManager.getEquipmentOnAmbulance(model)).header("Access-Control-Allow-Origin", "*")
+				.build();
+	}
+
+	@Path("equipment/deleteEquipmentOnAmbulance")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteEquipmentOnAmbulance(AddEquipmentModel model) {
+
+		ServerResponse response = new ServerResponse();
+		response = EquipmentManager.deleteEquipmentOnAmbulance(model);
+		switch (response.getResponseHexCode()) {
+		case "01":
+
+			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+
+		case "02":
+
+			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
+
+		default:
+			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+
+		}
+
+	}
+	
+	@Path("yelloPad/checkDB")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response yelloPadCheckDB(YelloPadModel model) {
+		
+		ServerResponse response = new ServerResponse();
+		response = YelloPadManager.yelloPadCheckDB(model);
+		
+		return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@Path("yelloPad/setDB")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response yelloPadSetDB(YelloPadModel model) {
+		
+		ServerResponse response = new ServerResponse();
+		response = YelloPadManager.yelloPadSetDB(model);
+		
+		return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+	}
 
 }

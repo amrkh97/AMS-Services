@@ -379,23 +379,51 @@ public class EmployeeDAL {
 				String arrayStrings[] = logDate.split(" ");
 				attendanceTimes.setLogInDate(arrayStrings[0]);
 				String arrayLogInStrings[] = arrayStrings[1].split("\\.");
-				attendanceTimes.setLogInTime(arrayLogInStrings[0]);
+				
+				String lengthLog = arrayLogInStrings[0];
+				
+				if(lengthLog.length() < 8) {
+					lengthLog = "0"+lengthLog;
+				}
+				attendanceTimes.setLogInTime(lengthLog);
 
 				logDate = RS.getString(2);
 				arrayStrings = logDate.split(" ");
 				attendanceTimes.setLogOutDate(arrayStrings[0]);
 				arrayLogInStrings = arrayStrings[1].split("\\.");
-				attendanceTimes.setLogOutTime(arrayLogInStrings[0]);
-
+				
+				lengthLog = arrayLogInStrings[0];
+				
+				if(lengthLog.length() < 8) {
+					lengthLog = "0"+lengthLog;
+				}
+				
+				attendanceTimes.setLogOutTime(lengthLog);
+				
+				if(attendanceTimes.getLogInTime().equals(attendanceTimes.getLogOutTime())) {
+					attendanceTimes.setLogOutTime("Still Active");
+				}
+				
+				
 				Integer inMinutes = Integer.parseInt(RS.getString(3));
 
 				Double inHours = (double) (inMinutes / 60.0);
 				Integer workHours = (int) Math.floor(inHours);
 				
 				Integer workMinutes = (int)(Math.ceil((inHours - Math.floor(inHours)) * 60.0));
-				System.out.println("InMinutes: "+workMinutes);
-				attendanceTimes.setWorkingHours(workHours.toString());
-				attendanceTimes.setWorkingMinutes(workMinutes.toString());
+				
+				String hoursInString = workHours.toString();
+				String minutesInString = workMinutes.toString();
+				
+				if(hoursInString.length() == 1) {
+					hoursInString = "0" + hoursInString;
+				}
+				
+				if(minutesInString.length() == 1) {
+					minutesInString = "0" + minutesInString;
+				}
+				attendanceTimes.setWorkingHours(hoursInString);
+				attendanceTimes.setWorkingMinutes(minutesInString);
 				attendanceTimes.setWorkingTime(attendanceTimes.getWorkingHours() + ":" + attendanceTimes.getWorkingMinutes());
 				allAttendanceTimes.add(attendanceTimes);
 			}
@@ -555,5 +583,159 @@ public class EmployeeDAL {
 		OBJ.setEmployeeArray(allUnverified);
 		return OBJ;
 	}
+
+	public static EmployeeArray getAssignedParamedics(Connection intermediateConnection) {
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AssignedParamedics] ";
+		ResultSet RS;
+		 
+		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
+		EmployeeArray OBJ = new EmployeeArray();
+		try {
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
+			RS = cstmt.executeQuery();
+
+			while (RS.next()) {
+
+				EmployeeModel currentEmployee = new EmployeeModel();
+				currentEmployee.setEid(RS.getInt(1));
+				currentEmployee.setFirstName(RS.getString(2));
+				currentEmployee.setLastName(RS.getString(3));
+				currentEmployee.setFullName(currentEmployee.getFirstName() +" "+currentEmployee.getLastName());
+				currentEmployee.setEmail(RS.getString(4));
+				currentEmployee.setContactNumber(RS.getString(5));
+				currentEmployee.setPan(RS.getString(6));
+				currentEmployee.setNationalID(RS.getString(7));
+				currentEmployee.setEmployeeStatus(RS.getString(8));
+				currentEmployee.setPhoto(RS.getString(9));
+				currentEmployee.setAge(RS.getString(10));
+
+				allParamedics.add(currentEmployee);
+			}
+			RS.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		OBJ.setEmployeeArray(allParamedics);
+		return OBJ;
+	}
+	
+	public static EmployeeArray getNotAssignedParamedics(Connection intermediateConnection) {
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_NotAssignedParamedics] ";
+		ResultSet RS;
+		 
+		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
+		EmployeeArray OBJ = new EmployeeArray();
+		try {
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
+			RS = cstmt.executeQuery();
+
+			while (RS.next()) {
+
+				EmployeeModel currentEmployee = new EmployeeModel();
+				currentEmployee.setEid(RS.getInt(1));
+				currentEmployee.setFirstName(RS.getString(2));
+				currentEmployee.setLastName(RS.getString(3));
+				currentEmployee.setFullName(currentEmployee.getFirstName() +" "+currentEmployee.getLastName());
+				currentEmployee.setEmail(RS.getString(4));
+				currentEmployee.setContactNumber(RS.getString(5));
+				currentEmployee.setPan(RS.getString(6));
+				currentEmployee.setNationalID(RS.getString(7));
+				currentEmployee.setEmployeeStatus(RS.getString(8));
+				currentEmployee.setPhoto(RS.getString(9));
+				currentEmployee.setAge(RS.getString(10));
+
+				allParamedics.add(currentEmployee);
+			}
+			RS.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		OBJ.setEmployeeArray(allParamedics);
+		return OBJ;
+	}
+
+	public static EmployeeArray getNotAssignedDrivers(Connection intermediateConnection) {
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_NotAssignedDrivers] ";
+		ResultSet RS;
+		 
+		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
+		EmployeeArray OBJ = new EmployeeArray();
+		try {
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
+			RS = cstmt.executeQuery();
+
+			while (RS.next()) {
+
+				EmployeeModel currentEmployee = new EmployeeModel();
+				currentEmployee.setEid(RS.getInt(1));
+				currentEmployee.setFirstName(RS.getString(2));
+				currentEmployee.setLastName(RS.getString(3));
+				currentEmployee.setFullName(currentEmployee.getFirstName() +" "+currentEmployee.getLastName());
+				currentEmployee.setEmail(RS.getString(4));
+				currentEmployee.setContactNumber(RS.getString(5));
+				currentEmployee.setPan(RS.getString(6));
+				currentEmployee.setNationalID(RS.getString(7));
+				currentEmployee.setEmployeeStatus(RS.getString(8));
+				currentEmployee.setPhoto(RS.getString(9));
+				currentEmployee.setAge(RS.getString(10));
+
+				allParamedics.add(currentEmployee);
+			}
+			RS.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		OBJ.setEmployeeArray(allParamedics);
+		return OBJ;
+	}
+	
+	
+	public static EmployeeArray getAssignedDrivers(Connection intermediateConnection) {
+		String SPsql = "USE KAN_AMO;  EXEC [dbo].[get_Employee_AssignedDrivers] ";
+		ResultSet RS;
+		 
+		ArrayList<EmployeeModel> allParamedics = new ArrayList<EmployeeModel>();
+		EmployeeArray OBJ = new EmployeeArray();
+		try {
+			CallableStatement cstmt = intermediateConnection.prepareCall(SPsql);
+			RS = cstmt.executeQuery();
+
+			while (RS.next()) {
+
+				EmployeeModel currentEmployee = new EmployeeModel();
+				currentEmployee.setEid(RS.getInt(1));
+				currentEmployee.setFirstName(RS.getString(2));
+				currentEmployee.setLastName(RS.getString(3));
+				currentEmployee.setFullName(currentEmployee.getFirstName() +" "+currentEmployee.getLastName());
+				currentEmployee.setEmail(RS.getString(4));
+				currentEmployee.setContactNumber(RS.getString(5));
+				currentEmployee.setPan(RS.getString(6));
+				currentEmployee.setNationalID(RS.getString(7));
+				currentEmployee.setEmployeeStatus(RS.getString(8));
+				currentEmployee.setPhoto(RS.getString(9));
+				currentEmployee.setAge(RS.getString(10));
+
+				allParamedics.add(currentEmployee);
+			}
+			RS.close();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+		OBJ.setEmployeeArray(allParamedics);
+		return OBJ;
+	}
+	
 
 }
