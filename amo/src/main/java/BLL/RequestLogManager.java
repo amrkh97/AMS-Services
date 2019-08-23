@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import DAL.RequestLogDAL;
 import DB.DBManager;
+import Models.ActivityLog.RequestLogArray;
 import Models.ActivityLog.RequestLogData;
 
 public class RequestLogManager {
@@ -22,6 +23,22 @@ public class RequestLogManager {
 			}
 		}
 		return;	
+	}
+
+	public static RequestLogArray getAllActivityLogs() {
+		Connection intermediateConnection = DBManager.getDBConn();
+		RequestLogArray logArray = new RequestLogArray();
+		try {
+			logArray = RequestLogDAL.getAllActivityLogs(intermediateConnection);
+		} finally {
+			try {
+				intermediateConnection.close();
+				System.out.println("Connection Closed");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return logArray;
 	}
 	
 	
