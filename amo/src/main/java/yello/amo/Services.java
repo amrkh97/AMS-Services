@@ -336,6 +336,10 @@ public class Services {
 			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02":
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		case "03":
+			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		case "04":
+			return Response.status(406).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
 
