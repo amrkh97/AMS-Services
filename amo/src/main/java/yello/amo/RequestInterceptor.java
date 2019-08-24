@@ -28,9 +28,9 @@ public class RequestInterceptor implements ContainerRequestFilter {
 		System.out.println("Entered the filter!");
 		// Get the Authorization header from the request
 		//String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-		System.out.println("IP Address:"+ sr.getRemoteAddr());
+		System.out.println("IP Address: "+ sr.getRemoteAddr());
 		System.out.println("URI PATH: "+ requestContext.getUriInfo().getAbsolutePath());
-		
+		System.out.println("REQUEST METHOD: " + requestContext.getRequest().getMethod().toString());
 		RequestLogData logData = new RequestLogData();
 		logData.setIpAddress(sr.getRemoteAddr());
 		logData.setRequestURL(requestContext.getUriInfo().getAbsolutePath().toString());
