@@ -45,6 +45,7 @@ import Models.Feedback.FeedbackModel;
 import Models.Hospital.HospitalModel;
 import Models.Job.Job;
 import Models.Locations.Location;
+import Models.Locations.LocationResponse;
 import Models.MedicalRecord.MedicalRecord;
 import Models.Medicine.CompanyMedicineMap;
 import Models.Medicine.Medicine;
@@ -1005,8 +1006,15 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response InsertCompanyMedicineMap(CompanyMedicineMap Map) {
 		ServerResponse X = CompanyMedicineMapManager.insertRelation(Map);
+		switch (X.getResponseHexCode()) {
+		case "01":
+			X.setResponseMsg("A01001067001");
+			return Response.status(401).entity(X).header("Access-Control-Allow-Origin", "*").build();	
 
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		}
+		
 	}
 
 	@Path("medicineMap/delete")
@@ -1015,8 +1023,14 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteCompanyMedicineMap(CompanyMedicineMap Map) {
 		ServerResponse X = CompanyMedicineMapManager.DeleteRelation(Map);
+		switch (X.getResponseHexCode()) {
+		case "01":
+			X.setResponseMsg("A01001068001");
+			return Response.status(401).entity(X).header("Access-Control-Allow-Origin", "*").build();	
 
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		}
 	}
 
 	// -------------------------------------------End Of Medicine
@@ -1102,8 +1116,20 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response insertLocation(Location location) {
+		LocationResponse locationResponse = new LocationResponse();
+		locationResponse = LocationManager.addLocation(location);
+		switch (locationResponse.getReturnHex()) {
+		case "EF":
+			locationResponse.setResponseMessage("A01001076001");
+			return Response.status(401).entity(locationResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FF":
+			locationResponse.setResponseMessage("A01001076002");
+			return Response.status(402).entity(locationResponse).header("Access-Control-Allow-Origin", "*").build();
 
-		return Response.ok(LocationManager.addLocation(location)).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(locationResponse).header("Access-Control-Allow-Origin", "*").build();
+		}
+		
 	}
 
 	// -------------------------------------------End Of Operator Services
@@ -1165,8 +1191,11 @@ public class Services {
 		if (X.equals(null)) {
 			ServerResponse response = new ServerResponse();
 			response.setResponseHexCode("FF");
-			response.setResponseMsg("The patient was not Added");
+			response.setResponseMsg("A01001080002");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		}else if(X.getResponseHexCode().equals("EF")) {
+			X.setResponseMsg("A01001080001");
+			return Response.status(401).entity(X).header("Access-Control-Allow-Origin", "*").build();
 		}
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 
@@ -1198,7 +1227,9 @@ public class Services {
 		ServerResponse serverResponse = X.getSecond();
 		PatientArray patientArray = X.getFirst();
 		if (X.equals(null)) {
-			return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build();
+			serverResponse = new ServerResponse();
+			serverResponse.setResponseMsg("A01001082001");
+			return Response.status(402).entity(serverResponse).header("Access-Control-Allow-Origin", "*").build();
 		}
 		if (serverResponse != null) {
 			return Response.ok(serverResponse).header("Access-Control-Allow-Origin", "*").build();
@@ -1226,7 +1257,9 @@ public class Services {
 	public Response deletePatient(PatientModel patientModel) {
 		ServerResponse X = PatientManger.deletePatient(patientModel);
 		if (X.equals(null)) {
-			return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build();
+			X = new ServerResponse();
+			X.setResponseMsg("A01001084001");
+			return Response.status(401).entity(X).header("Access-Control-Allow-Origin", "*").build();
 		}
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 
@@ -1311,8 +1344,10 @@ public class Services {
 		response = CompanyManager.addCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01": // Company found with same data.
+			response.setResponseMsg("A01001089001");
 			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02": // Company name that was sent is null.
+			response.setResponseMsg("A01001089002");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default: // Addition Successful
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -1335,6 +1370,7 @@ public class Services {
 		response = CompanyManager.updateCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01": // Update failed
+			response.setResponseMsg("A01001090001");
 			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default: // Update Successful
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -1357,6 +1393,7 @@ public class Services {
 		response = CompanyManager.deleteCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01": // Deletion failed
+			response.setResponseMsg("A01001091001");
 			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default: // Deletion Successful
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -1749,8 +1786,10 @@ public class Services {
 
 		switch (response.getResponseHexCode()) {
 		case "01":
+			response.setResponseMsg("A01001124001");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02":
+			response.setResponseMsg("A01001124002");
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(response).build();
@@ -1768,8 +1807,10 @@ public class Services {
 
 		switch (response.getResponseHexCode()) {
 		case "01":
+			response.setResponseMsg("A01001125001");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02":
+			response.setResponseMsg("A01001125002");
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -1787,6 +1828,7 @@ public class Services {
 
 		switch (response.getResponseHexCode()) {
 		case "01":
+			response.setResponseMsg("A01001126001");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02":
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
@@ -1824,15 +1866,15 @@ public class Services {
 		response = EquipmentManager.assignEquipmentToAmbulance(model);
 		switch (response.getResponseHexCode()) {
 		case "01":
-
+			response.setResponseMsg("A01001129001");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
 		case "02":
-
+			response.setResponseMsg("A01001129002");
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
 		case "03":
-
+			response.setResponseMsg("A01001129003");
 			return Response.status(405).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
 		default:
@@ -1862,11 +1904,11 @@ public class Services {
 		response = EquipmentManager.deleteEquipmentOnAmbulance(model);
 		switch (response.getResponseHexCode()) {
 		case "01":
-
+			response.setResponseMsg("A01001131001");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
 		case "02":
-
+			response.setResponseMsg("A01001131002");
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
 		default:
