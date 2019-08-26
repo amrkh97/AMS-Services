@@ -562,9 +562,19 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response verifyEmployee(EmployeeSentModel employeeToBeVerified) {
+		ServerResponse response = new ServerResponse();
+		response = EmployeeManager.verifyEmployee(employeeToBeVerified);
+		switch (response.getResponseHexCode()) {
+		case "01":
+			response.setResponseMsg("A01001032001");
+			return Response.status(401).entity(response)
+					.header("Access-Control-Allow-Origin", "*").build();
 
-		return Response.ok(EmployeeManager.verifyEmployee(employeeToBeVerified))
-				.header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(response)
+					.header("Access-Control-Allow-Origin", "*").build();
+		}
+		
 	}
 
 	/**
