@@ -27,6 +27,7 @@ import BLL.PatientLocationManager;
 import BLL.PatientManger;
 import BLL.ReceiptsManager;
 import BLL.ReportManager;
+import BLL.RequestLogManager;
 import BLL.UserManager;
 import BLL.YelloPadManager;
 import Models.CustomClass;
@@ -1869,6 +1870,14 @@ public class Services {
 		response = YelloPadManager.yelloPadSetDB(model);
 		
 		return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
+	}
+	
+	@Path("log/getAll")
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllActivityLogs() {
+	
+		return Response.ok(RequestLogManager.getAllActivityLogs()).header("Access-Control-Allow-Origin", "*").build();
 	}
 
 }
