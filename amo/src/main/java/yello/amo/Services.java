@@ -45,6 +45,7 @@ import Models.Feedback.FeedbackModel;
 import Models.Hospital.HospitalModel;
 import Models.Job.Job;
 import Models.Locations.Location;
+import Models.Locations.LocationResponse;
 import Models.MedicalRecord.MedicalRecord;
 import Models.Medicine.CompanyMedicineMap;
 import Models.Medicine.Medicine;
@@ -85,22 +86,31 @@ public class Services {
 		String hex = loginResponse.getResponseHexCode();
 		switch (hex) {
 		case "02": // Incorrect Password
+			loginResponse.setResponseMsg("A01001001001");
 			return Response.status(400).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "03": // User is already logged in
+			loginResponse.setResponseMsg("A01001001002");
 			return Response.status(401).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "04": // This user is not verified
+			loginResponse.setResponseMsg("A01001001003");
 			return Response.status(402).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FA": // Wrong Email or PAN or National ID
+			loginResponse.setResponseMsg("A01001001004");
 			return Response.status(403).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FB": // Password length is less than 8
+			loginResponse.setResponseMsg("A01001001005");
 			return Response.status(405).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FC": // Catch Block
+			loginResponse.setResponseMsg("A01001001009");
 			return Response.status(406).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FD": // FAILED: Email or Password is NULL
+			loginResponse.setResponseMsg("A01001001006");
 			return Response.status(407).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FE": // User status undefined
+			loginResponse.setResponseMsg("A01001001007");
 			return Response.status(408).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FF": // Not found
+			loginResponse.setResponseMsg("A01001001008");
 			return Response.status(409).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(loginResponse).header("Access-Control-Allow-Origin", "*").build();
@@ -116,16 +126,22 @@ public class Services {
 		String hex = logoutResponse.getResponseHexCode();
 		switch (hex) {
 		case "01": // User is already logged out
+			logoutResponse.setResponseMsg("A01001002001");
 			return Response.status(401).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "02": // User is awaiting verification
+			logoutResponse.setResponseMsg("A01001002002");
 			return Response.status(402).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FC": // Catch Block
+			logoutResponse.setResponseMsg("A01001002006");
 			return Response.status(403).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FD": // FAILED: User ID is NULL
+			logoutResponse.setResponseMsg("A01001002003");
 			return Response.status(405).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FE": // User status undefined
+			logoutResponse.setResponseMsg("A01001002004");
 			return Response.status(406).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FF": // No user found with given email or pan or national id
+			logoutResponse.setResponseMsg("A01001002005");
 			return Response.status(407).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			// Logged out successfully
@@ -142,18 +158,25 @@ public class Services {
 		String hex = signUpResponse.getResponseHexCode();
 		switch (hex) {
 		case "F8": // PAN length is not between 16 and 20 numbers
+			signUpResponse.setResponseMsg("A01001003001");
 			return Response.status(401).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "F9": // A registered user is using this PAN
+			signUpResponse.setResponseMsg("A01001003002");
 			return Response.status(402).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FA": // National ID length is not 14 numbers
+			signUpResponse.setResponseMsg("A01001003003");
 			return Response.status(403).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FB": // A registered user is using this National ID
+			signUpResponse.setResponseMsg("A01001003004");
 			return Response.status(405).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FF": // User already registered with this email. Try signing in
+			signUpResponse.setResponseMsg("A01001003005");
 			return Response.status(406).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FC": // Catch Block
+			signUpResponse.setResponseMsg("A01001003007");
 			return Response.status(407).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FD": // FAILED: Email or Password is NULL
+			signUpResponse.setResponseMsg("A01001003006");
 			return Response.status(408).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			// Logged out successfully
@@ -334,12 +357,16 @@ public class Services {
 		response = AmbulanceMapManager.addAmbulanceMap(AmbulanceToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01":
+			response.setResponseMsg("A01001020001");
 			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02":
+			response.setResponseMsg("A01001020002");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "03":
+			response.setResponseMsg("A01001020003");
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "04":
+			response.setResponseMsg("A01001020004");
 			return Response.status(406).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -465,8 +492,10 @@ public class Services {
 		response = AmbulanceMapManager.updateAmbulanceMap(AmbulanceToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01":
+			response.setResponseMsg("A01001028001");
 			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02":
+			response.setResponseMsg("A01001028002");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -977,8 +1006,15 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response InsertCompanyMedicineMap(CompanyMedicineMap Map) {
 		ServerResponse X = CompanyMedicineMapManager.insertRelation(Map);
+		switch (X.getResponseHexCode()) {
+		case "01":
+			X.setResponseMsg("A01001067001");
+			return Response.status(401).entity(X).header("Access-Control-Allow-Origin", "*").build();	
 
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		}
+		
 	}
 
 	@Path("medicineMap/delete")
@@ -987,8 +1023,14 @@ public class Services {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deleteCompanyMedicineMap(CompanyMedicineMap Map) {
 		ServerResponse X = CompanyMedicineMapManager.DeleteRelation(Map);
+		switch (X.getResponseHexCode()) {
+		case "01":
+			X.setResponseMsg("A01001068001");
+			return Response.status(401).entity(X).header("Access-Control-Allow-Origin", "*").build();	
 
-		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
+		}
 	}
 
 	// -------------------------------------------End Of Medicine
@@ -1074,8 +1116,20 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response insertLocation(Location location) {
+		LocationResponse locationResponse = new LocationResponse();
+		locationResponse = LocationManager.addLocation(location);
+		switch (locationResponse.getReturnHex()) {
+		case "EF":
+			locationResponse.setResponseMessage("A01001076001");
+			return Response.status(401).entity(locationResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "FF":
+			locationResponse.setResponseMessage("A01001076002");
+			return Response.status(402).entity(locationResponse).header("Access-Control-Allow-Origin", "*").build();
 
-		return Response.ok(LocationManager.addLocation(location)).header("Access-Control-Allow-Origin", "*").build();
+		default:
+			return Response.ok(locationResponse).header("Access-Control-Allow-Origin", "*").build();
+		}
+		
 	}
 
 	// -------------------------------------------End Of Operator Services
@@ -1137,8 +1191,11 @@ public class Services {
 		if (X.equals(null)) {
 			ServerResponse response = new ServerResponse();
 			response.setResponseHexCode("FF");
-			response.setResponseMsg("The patient was not Added");
+			response.setResponseMsg("A01001080002");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
+		}else if(X.getResponseHexCode().equals("EF")) {
+			X.setResponseMsg("A01001080001");
+			return Response.status(401).entity(X).header("Access-Control-Allow-Origin", "*").build();
 		}
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 
@@ -1170,7 +1227,9 @@ public class Services {
 		ServerResponse serverResponse = X.getSecond();
 		PatientArray patientArray = X.getFirst();
 		if (X.equals(null)) {
-			return Response.ok("402 the patient not Added").header("Access-Control-Allow-Origin", "*").build();
+			serverResponse = new ServerResponse();
+			serverResponse.setResponseMsg("A01001082001");
+			return Response.status(402).entity(serverResponse).header("Access-Control-Allow-Origin", "*").build();
 		}
 		if (serverResponse != null) {
 			return Response.ok(serverResponse).header("Access-Control-Allow-Origin", "*").build();
@@ -1198,7 +1257,9 @@ public class Services {
 	public Response deletePatient(PatientModel patientModel) {
 		ServerResponse X = PatientManger.deletePatient(patientModel);
 		if (X.equals(null)) {
-			return Response.ok("404 the patient not found").header("Access-Control-Allow-Origin", "*").build();
+			X = new ServerResponse();
+			X.setResponseMsg("A01001084001");
+			return Response.status(401).entity(X).header("Access-Control-Allow-Origin", "*").build();
 		}
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
 
@@ -1283,8 +1344,10 @@ public class Services {
 		response = CompanyManager.addCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01": // Company found with same data.
+			response.setResponseMsg("A01001089001");
 			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02": // Company name that was sent is null.
+			response.setResponseMsg("A01001089002");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default: // Addition Successful
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -1307,6 +1370,7 @@ public class Services {
 		response = CompanyManager.updateCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01": // Update failed
+			response.setResponseMsg("A01001090001");
 			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default: // Update Successful
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -1329,6 +1393,7 @@ public class Services {
 		response = CompanyManager.deleteCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01": // Deletion failed
+			response.setResponseMsg("A01001091001");
 			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default: // Deletion Successful
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -1721,8 +1786,10 @@ public class Services {
 
 		switch (response.getResponseHexCode()) {
 		case "01":
+			response.setResponseMsg("A01001124001");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02":
+			response.setResponseMsg("A01001124002");
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(response).build();
@@ -1740,8 +1807,10 @@ public class Services {
 
 		switch (response.getResponseHexCode()) {
 		case "01":
+			response.setResponseMsg("A01001125001");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02":
+			response.setResponseMsg("A01001125002");
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -1759,6 +1828,7 @@ public class Services {
 
 		switch (response.getResponseHexCode()) {
 		case "01":
+			response.setResponseMsg("A01001126001");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02":
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
@@ -1796,15 +1866,15 @@ public class Services {
 		response = EquipmentManager.assignEquipmentToAmbulance(model);
 		switch (response.getResponseHexCode()) {
 		case "01":
-
+			response.setResponseMsg("A01001129001");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
 		case "02":
-
+			response.setResponseMsg("A01001129002");
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
 		case "03":
-
+			response.setResponseMsg("A01001129003");
 			return Response.status(405).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
 		default:
@@ -1834,11 +1904,11 @@ public class Services {
 		response = EquipmentManager.deleteEquipmentOnAmbulance(model);
 		switch (response.getResponseHexCode()) {
 		case "01":
-
+			response.setResponseMsg("A01001131001");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
 		case "02":
-
+			response.setResponseMsg("A01001131002");
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
 		default:
