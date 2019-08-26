@@ -1121,7 +1121,8 @@ public class Services {
 		switch (locationResponse.getReturnHex()) {
 		case "EF":
 			locationResponse.setResponseMessage("A01001076001");
-			return Response.status(401).entity(locationResponse).header("Access-Control-Allow-Origin", "*").build();
+			//Added Because it causes error in Sending to android.
+			return Response.ok(locationResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FF":
 			locationResponse.setResponseMessage("A01001076002");
 			return Response.status(402).entity(locationResponse).header("Access-Control-Allow-Origin", "*").build();
