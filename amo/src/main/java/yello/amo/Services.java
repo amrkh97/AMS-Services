@@ -1328,7 +1328,7 @@ public class Services {
 		PatientArray patientArray = X.getFirst();
 		if (X.equals(null)) {
 			serverResponse = new ServerResponse();
-			serverresponse.setResponseHexCode("A01001082001");
+			serverResponse.setResponseHexCode("A01001082001");
 			return Response.status(402).entity(serverResponse).header("Access-Control-Allow-Origin", "*").build();
 		}
 		if (serverResponse != null) {
