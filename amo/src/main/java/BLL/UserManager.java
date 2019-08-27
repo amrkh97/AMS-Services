@@ -29,10 +29,10 @@ public class UserManager {
 		}
 	}
 	
-	public static LoginResponse loginAndroid(String emailOrPAN, String Password) {
+	public static LoginResponse loginAndroid(String emailOrPAN, String Password, String yelloPadUniqueID) {
 		LoginResponse res = new LoginResponse();
 		if (isEmail(emailOrPAN) || isPAN(emailOrPAN) || isNationalID(emailOrPAN)) {
-			return UserDAL.loginAndroid(emailOrPAN, Password);
+			return UserDAL.loginAndroid(emailOrPAN, Password,yelloPadUniqueID);
 		} else {
 			res.setResponseMsg("Wrong Email or PAN or National ID format");
 			res.setResponseHexCode("FA");

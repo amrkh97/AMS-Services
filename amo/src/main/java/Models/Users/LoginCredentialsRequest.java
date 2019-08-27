@@ -5,20 +5,8 @@ public class LoginCredentialsRequest {
 	// private String domain;
 	private String emailOrPAN;
 	private String password;
+	private String yelloPadUniqueID;
 
-	/**
-	 * @return the domain
-	 */
-	// public String getDomain() {
-	// return domain;
-	// }
-	/**
-	 * @param domain the domain to set
-	 */
-
-	// public void setDomain(String domain) {
-	// this.domain = domain;
-	// }
 	/**
 	 * @return the emailOrPAN
 	 */
@@ -45,6 +33,14 @@ public class LoginCredentialsRequest {
 	 */
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getYelloPadUniqueID() {
+		return yelloPadUniqueID;
+	}
+
+	public void setYelloPadUniqueID(String yelloPadUniqueID) {
+		this.yelloPadUniqueID = yelloPadUniqueID;
 	}
 
 }

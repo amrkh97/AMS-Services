@@ -126,24 +126,34 @@ public class Services {
 		String hex = loginResponse.getResponseHexCode();
 		switch (hex) {
 		case "01": // Not Allowed
+			loginResponse.setResponseMsg("A01001001010");
 			return Response.status(410).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "02": // Incorrect Password
+			loginResponse.setResponseMsg("A01001001001");
 			return Response.status(400).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "03": // User is already logged in
+			loginResponse.setResponseMsg("A01001001002");
 			return Response.status(401).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "04": // This user is not verified
+			loginResponse.setResponseMsg("A01001001003");
 			return Response.status(402).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FA": // Wrong Email or PAN or National ID
+			loginResponse.setResponseMsg("A01001001004");
 			return Response.status(403).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FB": // Password length is less than 8
+			loginResponse.setResponseMsg("A01001001005");
 			return Response.status(405).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FC": // Catch Block
+			loginResponse.setResponseMsg("A01001001009");
 			return Response.status(406).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FD": // FAILED: Email or Password is NULL
+			loginResponse.setResponseMsg("A01001001006");
 			return Response.status(407).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FE": // User status undefined
+			loginResponse.setResponseMsg("A01001001007");
 			return Response.status(408).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FF": // Not found
+			loginResponse.setResponseMsg("A01001001008");
 			return Response.status(409).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(loginResponse).header("Access-Control-Allow-Origin", "*").build();
@@ -155,29 +165,42 @@ public class Services {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response loginAndroid(LoginCredentialsRequest req) {
-		LoginResponse loginResponse = UserManager.loginAndroid(req.getEmailOrPAN(), req.getPassword());
+		LoginResponse loginResponse = UserManager.loginAndroid(req.getEmailOrPAN(), req.getPassword(),req.getYelloPadUniqueID());
 		String hex = loginResponse.getResponseHexCode();
 		switch (hex) {
 		case "01": // Not Allowed
+			loginResponse.setResponseMsg("A01001001010");
 			return Response.status(410).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "02": // Incorrect Password
+			loginResponse.setResponseMsg("A01001001001");
 			return Response.status(400).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "03": // User is already logged in
+			loginResponse.setResponseMsg("A01001001002");
 			return Response.status(401).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "04": // This user is not verified
+			loginResponse.setResponseMsg("A01001001003");
 			return Response.status(402).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FA": // Wrong Email or PAN or National ID
+			loginResponse.setResponseMsg("A01001001004");
 			return Response.status(403).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FB": // Password length is less than 8
+			loginResponse.setResponseMsg("A01001001005");
 			return Response.status(405).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FC": // Catch Block
+			loginResponse.setResponseMsg("A01001001009");
 			return Response.status(406).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FD": // FAILED: Email or Password is NULL
+			loginResponse.setResponseMsg("A01001001006");
 			return Response.status(407).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FE": // User status undefined
+			loginResponse.setResponseMsg("A01001001007");
 			return Response.status(408).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FF": // Not found
+			loginResponse.setResponseMsg("A01001001008");
 			return Response.status(409).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
+		case "AA": // Not assigned to this YelloPad.
+			loginResponse.setResponseMsg("A01001001011");
+			return Response.status(410).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		}
