@@ -156,8 +156,14 @@ public class AmbulanceMapDAL {
 			_dataModel.setResponseMsg("Insertion Successful");
 		} else if (_dataModel.getResponseHexCode().equals("01")) {
 			_dataModel.setResponseMsg("Failed To insert because the car already has resources assigned");
-		} else {
+		} else if (_dataModel.getResponseHexCode().equals("02")){
 			_dataModel.setResponseMsg("Failed to insert because car is already assigned elsewhere");
+		} else if (_dataModel.getResponseHexCode().equals("03")){
+			_dataModel.setResponseMsg("Driver Or Paramedic Not available or already assigned.");
+		} else if (_dataModel.getResponseHexCode().equals("04")){
+			_dataModel.setResponseMsg("YelloPad Not Available Or Already Assigned.");
+		}else {
+			_dataModel.setResponseMsg("UnKnown Error!");
 		}
 
 		return _dataModel;
