@@ -86,31 +86,31 @@ public class Services {
 		String hex = loginResponse.getResponseHexCode();
 		switch (hex) {
 		case "02": // Incorrect Password
-			loginResponse.setResponseMsg("A01001001001");
+			loginResponse.setResponseHexCode("A01001001001");
 			return Response.status(400).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "03": // User is already logged in
-			loginResponse.setResponseMsg("A01001001002");
+			loginResponse.setResponseHexCode("A01001001002");
 			return Response.status(401).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "04": // This user is not verified
-			loginResponse.setResponseMsg("A01001001003");
+			loginResponse.setResponseHexCode("A01001001003");
 			return Response.status(402).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FA": // Wrong Email or PAN or National ID
-			loginResponse.setResponseMsg("A01001001004");
+			loginResponse.setResponseHexCode("A01001001004");
 			return Response.status(403).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FB": // Password length is less than 8
-			loginResponse.setResponseMsg("A01001001005");
+			loginResponse.setResponseHexCode("A01001001005");
 			return Response.status(405).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FC": // Catch Block
-			loginResponse.setResponseMsg("A01001001009");
+			loginResponse.setResponseHexCode("A01001001009");
 			return Response.status(406).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FD": // FAILED: Email or Password is NULL
-			loginResponse.setResponseMsg("A01001001006");
+			loginResponse.setResponseHexCode("A01001001006");
 			return Response.status(407).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FE": // User status undefined
-			loginResponse.setResponseMsg("A01001001007");
+			loginResponse.setResponseHexCode("A01001001007");
 			return Response.status(408).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FF": // Not found
-			loginResponse.setResponseMsg("A01001001008");
+			loginResponse.setResponseHexCode("A01001001008");
 			return Response.status(409).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(loginResponse).header("Access-Control-Allow-Origin", "*").build();
@@ -126,34 +126,34 @@ public class Services {
 		String hex = loginResponse.getResponseHexCode();
 		switch (hex) {
 		case "01": // Not Allowed
-			loginResponse.setResponseMsg("A01001001010");
+			loginResponse.setResponseHexCode("A01001001010");
 			return Response.status(410).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "02": // Incorrect Password
-			loginResponse.setResponseMsg("A01001001001");
+			loginResponse.setResponseHexCode("A01001001001");
 			return Response.status(400).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "03": // User is already logged in
-			loginResponse.setResponseMsg("A01001001002");
+			loginResponse.setResponseHexCode("A01001001002");
 			return Response.status(401).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "04": // This user is not verified
-			loginResponse.setResponseMsg("A01001001003");
+			loginResponse.setResponseHexCode("A01001001003");
 			return Response.status(402).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FA": // Wrong Email or PAN or National ID
-			loginResponse.setResponseMsg("A01001001004");
+			loginResponse.setResponseHexCode("A01001001004");
 			return Response.status(403).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FB": // Password length is less than 8
-			loginResponse.setResponseMsg("A01001001005");
+			loginResponse.setResponseHexCode("A01001001005");
 			return Response.status(405).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FC": // Catch Block
-			loginResponse.setResponseMsg("A01001001009");
+			loginResponse.setResponseHexCode("A01001001009");
 			return Response.status(406).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FD": // FAILED: Email or Password is NULL
-			loginResponse.setResponseMsg("A01001001006");
+			loginResponse.setResponseHexCode("A01001001006");
 			return Response.status(407).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FE": // User status undefined
-			loginResponse.setResponseMsg("A01001001007");
+			loginResponse.setResponseHexCode("A01001001007");
 			return Response.status(408).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FF": // Not found
-			loginResponse.setResponseMsg("A01001001008");
+			loginResponse.setResponseHexCode("A01001001008");
 			return Response.status(409).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(loginResponse).header("Access-Control-Allow-Origin", "*").build();
@@ -169,37 +169,37 @@ public class Services {
 		String hex = loginResponse.getResponseHexCode();
 		switch (hex) {
 		case "01": // Not Allowed
-			loginResponse.setResponseMsg("A01001001010");
+			loginResponse.setResponseHexCode("A01001001010");
 			return Response.status(410).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "02": // Incorrect Password
-			loginResponse.setResponseMsg("A01001001001");
+			loginResponse.setResponseHexCode("A01001001001");
 			return Response.status(400).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "03": // User is already logged in
-			loginResponse.setResponseMsg("A01001001002");
+			loginResponse.setResponseHexCode("A01001001002");
 			return Response.status(401).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "04": // This user is not verified
-			loginResponse.setResponseMsg("A01001001003");
+			loginResponse.setResponseHexCode("A01001001003");
 			return Response.status(402).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FA": // Wrong Email or PAN or National ID
-			loginResponse.setResponseMsg("A01001001004");
+			loginResponse.setResponseHexCode("A01001001004");
 			return Response.status(403).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FB": // Password length is less than 8
-			loginResponse.setResponseMsg("A01001001005");
+			loginResponse.setResponseHexCode("A01001001005");
 			return Response.status(405).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FC": // Catch Block
-			loginResponse.setResponseMsg("A01001001009");
+			loginResponse.setResponseHexCode("A01001001009");
 			return Response.status(406).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FD": // FAILED: Email or Password is NULL
-			loginResponse.setResponseMsg("A01001001006");
+			loginResponse.setResponseHexCode("A01001001006");
 			return Response.status(407).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FE": // User status undefined
-			loginResponse.setResponseMsg("A01001001007");
+			loginResponse.setResponseHexCode("A01001001007");
 			return Response.status(408).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FF": // Not found
-			loginResponse.setResponseMsg("A01001001008");
+			loginResponse.setResponseHexCode("A01001001008");
 			return Response.status(409).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "AA": // Not assigned to this YelloPad.
-			loginResponse.setResponseMsg("A01001001011");
+			loginResponse.setResponseHexCode("A01001001011");
 			return Response.status(410).entity(loginResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(loginResponse).header("Access-Control-Allow-Origin", "*").build();
@@ -215,22 +215,22 @@ public class Services {
 		String hex = logoutResponse.getResponseHexCode();
 		switch (hex) {
 		case "01": // User is already logged out
-			logoutResponse.setResponseMsg("A01001002001");
+			logoutResponse.setResponseHexCode("A01001002001");
 			return Response.status(401).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "02": // User is awaiting verification
-			logoutResponse.setResponseMsg("A01001002002");
+			logoutResponse.setResponseHexCode("A01001002002");
 			return Response.status(402).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FC": // Catch Block
-			logoutResponse.setResponseMsg("A01001002006");
+			logoutResponse.setResponseHexCode("A01001002006");
 			return Response.status(403).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FD": // FAILED: User ID is NULL
-			logoutResponse.setResponseMsg("A01001002003");
+			logoutResponse.setResponseHexCode("A01001002003");
 			return Response.status(405).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FE": // User status undefined
-			logoutResponse.setResponseMsg("A01001002004");
+			logoutResponse.setResponseHexCode("A01001002004");
 			return Response.status(406).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FF": // No user found with given email or pan or national id
-			logoutResponse.setResponseMsg("A01001002005");
+			logoutResponse.setResponseHexCode("A01001002005");
 			return Response.status(407).entity(logoutResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			// Logged out successfully
@@ -247,25 +247,25 @@ public class Services {
 		String hex = signUpResponse.getResponseHexCode();
 		switch (hex) {
 		case "F8": // PAN length is not between 16 and 20 numbers
-			signUpResponse.setResponseMsg("A01001003001");
+			signUpResponse.setResponseHexCode("A01001003001");
 			return Response.status(401).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "F9": // A registered user is using this PAN
-			signUpResponse.setResponseMsg("A01001003002");
+			signUpResponse.setResponseHexCode("A01001003002");
 			return Response.status(402).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FA": // National ID length is not 14 numbers
-			signUpResponse.setResponseMsg("A01001003003");
+			signUpResponse.setResponseHexCode("A01001003003");
 			return Response.status(403).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FB": // A registered user is using this National ID
-			signUpResponse.setResponseMsg("A01001003004");
+			signUpResponse.setResponseHexCode("A01001003004");
 			return Response.status(405).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FF": // User already registered with this email. Try signing in
-			signUpResponse.setResponseMsg("A01001003005");
+			signUpResponse.setResponseHexCode("A01001003005");
 			return Response.status(406).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FC": // Catch Block
-			signUpResponse.setResponseMsg("A01001003007");
+			signUpResponse.setResponseHexCode("A01001003007");
 			return Response.status(407).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		case "FD": // FAILED: Email or Password is NULL
-			signUpResponse.setResponseMsg("A01001003006");
+			signUpResponse.setResponseHexCode("A01001003006");
 			return Response.status(408).entity(signUpResponse).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			// Logged out successfully
@@ -446,16 +446,16 @@ public class Services {
 		response = AmbulanceMapManager.addAmbulanceMap(AmbulanceToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01":
-			response.setResponseMsg("A01001020001");
+			response.setResponseHexCode("A01001020001");
 			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02":
-			response.setResponseMsg("A01001020002");
+			response.setResponseHexCode("A01001020002");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "03":
-			response.setResponseMsg("A01001020003");
+			response.setResponseHexCode("A01001020003");
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "04":
-			response.setResponseMsg("A01001020004");
+			response.setResponseHexCode("A01001020004");
 			return Response.status(406).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -581,10 +581,10 @@ public class Services {
 		response = AmbulanceMapManager.updateAmbulanceMap(AmbulanceToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01":
-			response.setResponseMsg("A01001028001");
+			response.setResponseHexCode("A01001028001");
 			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02":
-			response.setResponseMsg("A01001028002");
+			response.setResponseHexCode("A01001028002");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -655,7 +655,7 @@ public class Services {
 		response = EmployeeManager.verifyEmployee(employeeToBeVerified);
 		switch (response.getResponseHexCode()) {
 		case "01":
-			response.setResponseMsg("A01001032001");
+			response.setResponseHexCode("A01001032001");
 			return Response.status(401).entity(response)
 					.header("Access-Control-Allow-Origin", "*").build();
 
@@ -1036,7 +1036,7 @@ public class Services {
 		ServerResponse response = new ServerResponse();
 		if (MED.getBarCode() == null) {
 			response.setResponseHexCode("FA");
-			response.setResponseMsg("Bad Request No BarCode");
+			response.setResponseHexCode("Bad Request No BarCode");
 
 			return Response.status(400).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
@@ -1271,7 +1271,7 @@ public class Services {
 		if (X.equals(null)) {
 			ServerResponse response = new ServerResponse();
 			response.setResponseHexCode("FF");
-			response.setResponseMsg("Server Error");
+			response.setResponseHexCode("Server Error");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 		if (serverResponse != null) {
@@ -1291,7 +1291,7 @@ public class Services {
 		if (X.equals(null)) {
 			ServerResponse response = new ServerResponse();
 			response.setResponseHexCode("FF");
-			response.setResponseMsg("A01001080002");
+			response.setResponseHexCode("A01001080002");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}else if(X.getResponseHexCode().equals("EF")) {
 			X.setResponseMsg("A01001080001");
@@ -1310,7 +1310,7 @@ public class Services {
 		if (X.equals(null)) {
 			ServerResponse response = new ServerResponse();
 			response.setResponseHexCode("FF");
-			response.setResponseMsg("The patient was not found");
+			response.setResponseHexCode("The patient was not found");
 			return Response.status(404).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		}
 		return Response.ok(X).header("Access-Control-Allow-Origin", "*").build();
@@ -1328,7 +1328,7 @@ public class Services {
 		PatientArray patientArray = X.getFirst();
 		if (X.equals(null)) {
 			serverResponse = new ServerResponse();
-			serverResponse.setResponseMsg("A01001082001");
+			serverresponse.setResponseHexCode("A01001082001");
 			return Response.status(402).entity(serverResponse).header("Access-Control-Allow-Origin", "*").build();
 		}
 		if (serverResponse != null) {
@@ -1444,10 +1444,10 @@ public class Services {
 		response = CompanyManager.addCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01": // Company found with same data.
-			response.setResponseMsg("A01001089001");
+			response.setResponseHexCode("A01001089001");
 			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02": // Company name that was sent is null.
-			response.setResponseMsg("A01001089002");
+			response.setResponseHexCode("A01001089002");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default: // Addition Successful
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -1470,7 +1470,7 @@ public class Services {
 		response = CompanyManager.updateCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01": // Update failed
-			response.setResponseMsg("A01001090001");
+			response.setResponseHexCode("A01001090001");
 			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default: // Update Successful
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -1493,7 +1493,7 @@ public class Services {
 		response = CompanyManager.deleteCompany(companyToBeAdded);
 		switch (response.getResponseHexCode()) {
 		case "01": // Deletion failed
-			response.setResponseMsg("A01001091001");
+			response.setResponseHexCode("A01001091001");
 			return Response.status(401).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default: // Deletion Successful
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -1886,10 +1886,10 @@ public class Services {
 
 		switch (response.getResponseHexCode()) {
 		case "01":
-			response.setResponseMsg("A01001124001");
+			response.setResponseHexCode("A01001124001");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02":
-			response.setResponseMsg("A01001124002");
+			response.setResponseHexCode("A01001124002");
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(response).build();
@@ -1907,10 +1907,10 @@ public class Services {
 
 		switch (response.getResponseHexCode()) {
 		case "01":
-			response.setResponseMsg("A01001125001");
+			response.setResponseHexCode("A01001125001");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02":
-			response.setResponseMsg("A01001125002");
+			response.setResponseHexCode("A01001125002");
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		default:
 			return Response.ok(response).header("Access-Control-Allow-Origin", "*").build();
@@ -1928,7 +1928,7 @@ public class Services {
 
 		switch (response.getResponseHexCode()) {
 		case "01":
-			response.setResponseMsg("A01001126001");
+			response.setResponseHexCode("A01001126001");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 		case "02":
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
@@ -1966,15 +1966,15 @@ public class Services {
 		response = EquipmentManager.assignEquipmentToAmbulance(model);
 		switch (response.getResponseHexCode()) {
 		case "01":
-			response.setResponseMsg("A01001129001");
+			response.setResponseHexCode("A01001129001");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
 		case "02":
-			response.setResponseMsg("A01001129002");
+			response.setResponseHexCode("A01001129002");
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
 		case "03":
-			response.setResponseMsg("A01001129003");
+			response.setResponseHexCode("A01001129003");
 			return Response.status(405).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
 		default:
@@ -2004,11 +2004,11 @@ public class Services {
 		response = EquipmentManager.deleteEquipmentOnAmbulance(model);
 		switch (response.getResponseHexCode()) {
 		case "01":
-			response.setResponseMsg("A01001131001");
+			response.setResponseHexCode("A01001131001");
 			return Response.status(402).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
 		case "02":
-			response.setResponseMsg("A01001131002");
+			response.setResponseHexCode("A01001131002");
 			return Response.status(403).entity(response).header("Access-Control-Allow-Origin", "*").build();
 
 		default:
