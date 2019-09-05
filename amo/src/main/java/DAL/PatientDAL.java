@@ -1,5 +1,6 @@
 package DAL;
 
+import java.net.URLDecoder;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -138,6 +139,18 @@ public class PatientDAL {
 		cstmt.setString(1, patientModel.getPatientFName());
 		cstmt.setString(1, patientModel.getPatientFName());
 		cstmt.setString(2, patientModel.getPatientLName());
+		System.err.println("PATIENT NAME: " + patientModel.getPatientFName());
+		System.err.println("PATIENT NAME: " + patientModel.getPatientLName());
+		
+		if(patientModel.getPatientFName() != null)
+		{
+			System.err.println("PatientFname: " + URLDecoder.decode(patientModel.getPatientFName(), "UTF-8"));
+		}
+		if(patientModel.getPatientLName() != null)
+		{
+			System.err.println("PatientLname: " + URLDecoder.decode(patientModel.getPatientLName(), "UTF-8"));
+		}
+
 		cstmt.setString(3, patientModel.getGender());
 		cstmt.setString(4, patientModel.getAge());
 		cstmt.setString(5, patientModel.getPhone());
@@ -279,6 +292,19 @@ public class PatientDAL {
 			patient.setPatientID(rs.getInt("patientID"));
 			patient.setPatientFName(rs.getString("patientFName"));
 			patient.setPatientLName(rs.getString("patientLName"));
+			
+			System.err.println("PatientFname: " + rs.getString("patientFName"));
+			System.err.println("PatientLname: " + rs.getString("patientLName"));
+			
+			if(rs.getString("patientFName") != null)
+			{
+				System.err.println("PatientFname: " + URLDecoder.decode(rs.getString("patientFName"), "UTF-8"));
+			}
+			if(rs.getString("patientLName") != null)
+			{
+				System.err.println("PatientLname: " + URLDecoder.decode(rs.getString("patientLName"), "UTF-8"));
+			}
+			
 			patient.setGender(rs.getString("gender"));
 			patient.setAge(rs.getString("age"));
 			patient.setPhone(rs.getString("phone"));

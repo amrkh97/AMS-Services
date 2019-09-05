@@ -158,7 +158,8 @@ public class PatientManger {
 
 			Array = PatientDAL.getPatientByNId(patientModel.getPatientNationalID(), conn).getPatientArray();
 
-			if (Array.size() != 0) {
+			if (Array.size() != 0) 
+			{
 				if (Array.get(0).getPatientStatus().equals("FF")) {
 					Array.get(0).setPatientStatus("00");
 					ServerResponse update = PatientDAL.updatePatientData(Array.get(0), conn);
