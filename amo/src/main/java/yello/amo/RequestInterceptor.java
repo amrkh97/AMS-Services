@@ -34,8 +34,9 @@ public class RequestInterceptor implements ContainerRequestFilter {
 		RequestLogData logData = new RequestLogData();
 		logData.setIpAddress(sr.getRemoteAddr());
 		logData.setRequestURL(requestContext.getUriInfo().getAbsolutePath().toString());
-		
+		/*
 		RequestLogManager.insertRequestData(logData);
+		*/
 		/*
 		Enumeration<String> trialEnum = sr.getHeaderNames();
 		

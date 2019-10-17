@@ -1,1 +1,1 @@
-web: java -cp target/classes:target/dependency/* yello.amo.heroku.Main
+web: java -cp -Dserver.port=$PORT target/classes:target/dependency/* yello.amo.heroku.Main
